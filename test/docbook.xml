@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article>
+ <title>A Sample Article</title>
+ <section>
+   <title>Article Section 1</title>
+   <para>
+   This is the first section of the article. Nothing terribly
+   interesting here, though.
+   </para>
+ </section>
+ <section>
+   <title>Another Section</title>
+   <para>
+   Just so you can see how these things work, here's an
+   itemized list:
+   </para>
+   <itemizedlist>
+     <listitem>
+       <para>The first item in the list</para>
+     </listitem>
+     <listitem>
+       <para>The second item in the list</para>
+     </listitem>
+     <listitem>
+       <para>The third item in the list</para>
+     </listitem>
+   </itemizedlist>
+ </section>
+</article>

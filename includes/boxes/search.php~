@@ -1,0 +1,173 @@
+<?php
+/*
+  $Id: search.php,v 1.22 2003/02/10 22:31:05 hpdl Exp $
+
+  osCommerce, Open Source E-Commerce Solutions
+  http://www.oscommerce.com
+
+  Copyright (c) 2003 osCommerce
+
+  Released under the GNU General Public License
+*/
+?>
+<!-- search //-->
+          <tr>
+            <td>
+<?php
+  $info_box_contents = array();
+  $info_box_contents[] = array('text' => BOX_HEADING_SEARCH);
+
+  new infoBoxHeading($info_box_contents, false, false);
+
+  $info_box_contents = array();
+  $info_box_contents[] = array('form' => tep_draw_form('quick_find', tep_href_link(FILENAME_ADVANCED_SEARCH_RESULT, '', 'NONSSL', false), 'get'),
+                               'align' => 'center',
+                               'text' => tep_draw_input_field('keywords', '', 'id="txtSearch" size="10" maxlength="30" style="width: ' . (BOX_WIDTH-30) . 'px"') . '&nbsp;' . tep_hide_session_id() . tep_image_submit('button_quick_find.gif', BOX_HEADING_SEARCH) . '<br>' . BOX_SEARCH_TEXT . '<br><a href="' . tep_href_link(FILENAME_ADVANCED_SEARCH) . '"><b>' . BOX_SEARCH_ADVANCED_SEARCH . '</b></a>');
+
+  new infoBox($info_box_contents);
+?>
+				<script language="JavaScript" type="text/javascript">
+/*----------------------------Suggest Code-------------------------*/
+/*
+	This is the JavaScript file for the osCommerce AJAX Search Suggest
+
+	You may use this code in your own projects as long as this
+	copyright is left	in place.  All code is provided AS-IS.
+	This code is distributed in the hope that it will be useful,
+ 	but WITHOUT ANY WARRANTY; without even the implied warranty of
+ 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+	For the rest of this code visit http://www.osCommerce-SSL.com
+
+	For a complete detailed tutorial on how this code works visit:
+	http://www.dynamicajax.com/fr/AJAX_Suggest_Tutorial-271_290_312.html
+
+	For more AJAX code and tutorials visit http://www.DynamicAJAX.com
+
+	Copyright 2006 Ryan Smith / 345 Technical / 345 Group.
+
+*/
+//Gets the browser specific XmlHttpRequest Object
+function getXmlHttpRequestObject() {
+	if (window.XMLHttpRequest) {
+		return new XMLHttpRequest();
+	} else if(window.ActiveXObject) {
+		return new ActiveXObject("Microsoft.XMLHTTP");
+	} else {
+		alert("Your Browser Sucks!\nIt's about time to upgrade don't you think?");
+	}
+}
+
+function OSCFieldSuggest(id) {
+  base = this;
+  base.FILE_XSLT_LAYOUT = 'includes/search_suggest.xsl';
+  base.FILE_XML_DATA = 'searchsuggest.php';
+  base._OBJ = document.getElementById(id);
+  if(base._OBJ) {
+    //define the functions..
+    base.createXmlHttpRequest = function() {
+      var requestIntance = false;
+      if (window.XMLHttpRequest) { //FE
+        requestIntance = new XMLHttpRequest();
+        if (requestIntance.overrideMimeType) {
+          requestIntance.overrideMimeType('text/xml');
+        }
+      } else if (window.ActiveXObject) { // IE
+        try {
+          requestIntance = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+          try { //last chance..
+            requestIntance = new ActiveXObject("Microsoft.XMLHTTP");
+          } catch (e) {}
+        }
+      }
+      if(!requestIntance) {
+        alert("Sorry, your browser don't support a little bit AJAX");
+      }
+      return(requestInstance);
+    };
+    base.loadDocument = function(file, funcAfterDocumentLoaded) {
+      var myRequest = getXmlHttpRequestObject();
+      myRequest.open('GET', file, true);
+      myRequest.onreadystatechange = function(e) {
+        if(myRequest.readyState == 4 && myRequest.status == 200) {
+          funcAfterDocumentLoaded(myRequest);
+        } else if(myRequest.readyState == 4) {
+          //error file isn't loaded.. 
+          alert("Sorry, the file " + file + " couldn't loaded!");
+        }
+      };
+      myRequest.send(null);
+    };
+    base.parseXmlDocument = function(xsltLayout, xmlData) {
+      if(document.all) {
+        return(xmlData.transformNode(xsltLayout));
+      } else {
+        var processor = new XSLTProcessor();
+        processor.importStylesheet(xsltLayout);
+        var result = processor.transformToDocument(xmlData);
+        var xmls = new XMLSerializer();
+        return(xmls.serializeToString(result));
+      }
+    };
+    base.getDocumentOffsetTop = function(obj) {
+      return(parseInt(obj.offsetTop) + ((obj.offsetParent) ? base.getDocumentOffsetTop(obj.offsetParent) : 0));
+    };
+    base.getDocumentOffsetLeft = function(obj) {
+      return(parseInt(obj.offsetLeft) + ((obj.offsetParent) ? base.getDocumentOffsetLeft(obj.offsetParent) : 0));
+    };
+    base.show = function() {
+      base._OBJ_panel.style.visibility = 'visible';
+    };
+    base.hide = function() {
+      base._OBJ_panel.style.visibility = 'hidden';
+    };
+    base.suggestList = function() {
+      base.loadDocument(base.FILE_XML_DATA + "?" + base._OBJ.name + "=" + base._OBJ.value, function(request) {
+        base._OBJ_panel.innerHTML = base.parseXmlDocument(base._xsltSheet, request.responseXML);
+        base._OBJ_panel.style.top = (base.getDocumentOffsetTop(base._OBJ) + base._OBJ.offsetHeight) + "px";
+        base._OBJ_panel.style.left = base.getDocumentOffsetLeft(base._OBJ) + "px";
+        base.show();
+      }); 
+    };
+    //load xslt layout
+    base.loadDocument(base.FILE_XSLT_LAYOUT, function(request) {
+      base._xsltSheet = request.responseXML;
+    });
+    //create html panel to show
+    base._OBJ_panel = document.createElement('div');
+    base._OBJ_panel.style.visibility = 'hidden';
+    base._OBJ_panel.style.position = 'absolute';
+    base._OBJ_panel.style.overflow = 'auto';
+    base._OBJ_panel.style.height = '200px';
+    base._OBJ_panel.style.border = '1px solid #CCCCCC';
+    base._OBJ_panel.style.top = 0 + "px";
+    base._OBJ_panel.style.left = 0 + "px";
+    base._OBJ.parentNode.appendChild(base._OBJ_panel);
+    base._OBJ.onkeyup = function(e) {
+      if(base._OBJ.value.length > 0) {
+        base.suggestList();
+      }
+    };
+    base._OBJ.onblur = function(e) { //lost focus
+      //waiting a few milli sec. .. before hide the clicked panel ;)
+      setTimeout(function() {
+        base.hide();
+      }, 500);
+    };
+    base._OBJ.onfocus = function(e) { //got focus
+      if(base._OBJ.value.length > 0) {
+        base.suggestList();
+      }
+    };
+  } else {
+    //no field found..
+    alert("Field with ID " + id + " couldn't found!");
+  }
+};
+var oscSearchSuggest = new OSCFieldSuggest('txtSearch');
+/*-------------------------End Suggest Code--------------------------------*/
+				</script>
+            </td>
+          </tr>
+<!-- search_eof //-->

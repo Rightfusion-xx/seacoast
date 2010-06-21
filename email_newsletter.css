@@ -1,0 +1,164 @@
+/*A NOTE TO DEVELOPERS:_______________________________
+please keep attributes in alphabetical order, to make de-duping easier
+please notate use of hacks, if needed, with a comment and how it works alongside
+please make use of pre-existing styles
+please test css cross-browser
+please indent definitions to match the cascade, where appropriate
+*/
+
+/* _________________________________________________________________ */
+body {
+	background: #FFFFFF;
+	color: #000000;
+	font: 76% Verdana, Geneva, Arial, Helvetica, sans-serif;
+	/* a la Owen Briggs (http://www.thenoodleincident.com/tutorials/box_lesson/font/index.html) */
+	margin: 0.5em;
+	padding: 0.5em;
+}
+/* _______________INHERITED FROM SITE_______________________________ */
+a {color: #CC6633;}
+a:link {color: #CC6633;}
+a:visited {color: #692707;}
+a:active {color: #692707;}
+a:hover {color: #339900;}
+.center {margin: 0 auto 0 auto; text-align: center;}
+/* _______________SITE MIMIC_________________________________________ */
+div#header {
+	border-left: 1px solid #000000;
+	border-right: 1px solid #000000;
+	border-top: 1px solid #000000;
+	width: 650px; height: 93px;
+}
+	span.issue {
+		clear: right;
+		color: #FFFFFF;
+		float: right;
+		font-weight: bold;
+		margin: 1.5em 1.0em 1.0em 0;
+	}
+div#wrapper {
+	background-color: #CCCCCC;
+	border-bottom: 1px solid #000000;
+	border-left: 1px solid #000000;
+	border-right: 1px solid #000000;
+	float: left;
+	margin: -4px 0 0 0;
+	padding: 0;
+	width: 650px;
+}
+	* html div#wrapper {margin: -3px 0 0 0;}
+	
+	.left-img {float: left; margin: 0 1.0em 1.0em 0; padding: 0;}
+		.left-img img {border: 2px solid #000000;}
+		.left-img img.mag {border: 2px solid orange; margin-right: 1.0em;}
+		.left-img img.mag:hover {border: 2px solid green;}
+	.right-img {float: right; margin: 0 0 1.0em 1.0em; padding: 0;}
+		.right-img img {border: 0px;}
+		.right-img img.mag {border: 0px; margin-right: 1.0em;}
+		.right-img img.mag:hover {border: 0px;}
+		.right-img .caption {
+			display: block;
+			text-align: center;
+		}
+
+div#footer {
+	width: 650px;
+	margin: 1.0em;
+	padding 0;
+	text-align: center;
+}
+/* _______________2-Col Layout_________________________________________ */
+	div#one-col {
+		background-color: #FFFFFF;
+		float: left;
+		margin: 0;
+		padding: 1.0em;
+		text-align: justify;
+		width: 620px;
+	}
+	div#left-col {
+		background-color: #FFFFFF;
+		float: left;
+		margin: 0;
+		padding: 1.0em;
+		width: 430px;
+	}
+		ul li {
+			margin: 0 0 0.3em 2.0em;
+		}
+	span#right-col {
+		background-color: #CCCCCC;
+		float: right;
+		margin: 0 auto 0 auto;
+		text-align: center;
+		width: 190px;
+	}
+		span#right-col img {border: 2px solid orange; margin-top: 1.0em;}
+		span#right-col img:hover {
+			border: 2px solid green;
+		}
+/* _______________Single Col Layout_________________________________________ */
+div#wrapper {background-color: #FFFFFF;}
+	div#halfer {
+		background-color: #FFFFFF;
+		float: left;
+		margin: 0;
+		padding: 1.0em;
+		width: 625px;
+	}
+		div#halfer .left-img {float: left; margin: 0 1.0em 1.0em 0; padding: 0; border: 0px;}
+		div#halfer .left-img img {border: 0px;}
+		div#halfer .left-img img.mag {border: 0px; margin-right: 1.0em;}
+		div#halfer .left-img img.mag:hover {border: 0px;}
+		ul li {
+			margin: 0 0 0.3em 2.0em;
+		}
+		ul.arrows {
+			background: url(http://www.trails.com/images/arrow_gray.gif) top left no-repeat;
+			margin: 0;
+			padding: 0;
+		}
+		ul.arrows li {
+			list-style: outside none none;
+			margin: 0 0 0 25px;
+			padding: 0 0 0.3em 0;
+		}
+			ul.arrows li ul li {list-style: disc outside none;}
+/* _______________Headlines_________________________________________ */
+h1 {
+	font: normal bold 14pt Arial, Verdana, Geneva, Helvetica, sans-serif;
+	color: #000000;
+	margin: 3em 0 0 3.2em;
+	padding: 0;
+}
+	h1 .small {
+		font-size: 5pt;
+		margin: 9px 0 0 -1px;
+		padding: 0;
+	}
+h2 {
+	font: normal bolder 20pt Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #2f4f4f;
+	float: right;
+	margin: -1.3em 0.2em -1.0em 0;
+	padding: 0;
+}
+h3 {
+	font: normal bolder 15pt Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #000000;
+	margin: 0;
+	padding: 0;
+}
+h4 {
+	font: normal bolder 10pt Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #000000;
+	margin: 0;
+	padding: 0;
+}
+h5 {
+	font: normal 20px Verdana, Geneva, Arial, Helvetica, sans-serif;
+	clear: both; 
+	color: #000000;
+	margin: 1.0em 0 1.0em 0;
+	padding: 0;
+}
