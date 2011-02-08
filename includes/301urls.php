@@ -1,12 +1,12 @@
 <?php
     define('NO_HTTPS',',yf_city.php,yf_studio.php,similar_picks.php,404.php,fake.php,product_info.php,index-hidden.php,index.php,product_reviews.php,topic.php,health_library.php,ailments.php,natural_uses.php,departments.php,404-1.php,cheapest,zyflamend,symptoms,ailments-diseases,health-guides');
-            if($_REQUEST['action']!='buy_now' && strlen($_GET['fgwpm'])<1 && strlen($_GET['fgnpm'])<1){
+            if($_REQUEST['action']!='buy_now' && !$do_admin){
             //Get URL and parse for bad SEO formats
             
             $url='';
             
             $script=substr($_SERVER['SCRIPT_NAME'],strrpos($_SERVER['SCRIPT_NAME'],'/')+1);
-            
+                                           
             
             /*
             if(strpos($_SERVER['REQUEST_URI'].'?','?'))>0{
@@ -41,9 +41,10 @@
             
             
             //check for www.
-            if(substr($_SERVER['HTTP_HOST'],0,3)!='www')
+            
+            if($_SERVER['HTTP_HOST']!=HTTP_COOKIE_DOMAIN)
             {
-                $url=$url.'www.'.$_SERVER['HTTP_HOST'];
+                $url=$url.HTTP_COOKIE_DOMAIN;
                 $redirbadurl=true;
             }
             else
@@ -53,14 +54,21 @@
             
             $url=$url . $_SERVER['REQUEST_URI'] ;
             
+            
 
             //check querystring params
-			if(strpos ($url, '?products_id=Array')>0)
-			{
-				$url=str_replace('?products_id=Array','',$url);
-				$redirbadurl=true;
-					
-			}
+            if(strpos ($url, '/Store/')>0)
+            {
+                $url=str_replace('/Store/','/',$url);
+                $redirbadurl=true;
+                    
+            }            
+            if(strpos ($url, '?products_id=Array')>0)
+            {
+                $url=str_replace('?products_id=Array','',$url);
+                $redirbadurl=true;
+                    
+            }
 			if(strpos ($url, '?health=Zyflamend')>0)
 			{
 				$url='/zyflamend/';
@@ -87,6 +95,17 @@
                 $url=str_replace('oscsid=' . $_GET['oscsid'] . '', '',$url);
                 $redirbadurl=true;
             }
+            if(strpos($url,'fgwpm')>0 || strpos($url,'fgnpm')>0)
+            {
+                $url=str_replace('&fgnpm=' . $_GET['fgnpm'], '',$url);
+                $url=str_replace('fgnpm=' . $_GET['fgnpm'] . '&', '',$url);
+                $url=str_replace('fgnpm=' . $_GET['fgnpm'] . '', '',$url);
+                $url=str_replace('&fgwpm=' . $_GET['fgwpm'], '',$url);
+                $url=str_replace('fgwpm=' . $_GET['fgwpm'] . '&', '',$url);
+                $url=str_replace('fgwpm=' . $_GET['fgwpm'] . '', '',$url);
+                $redirbadurl=true;
+            }                                                   
+            
             if(strpos($url,'reviews_id')>0)
             {
                 $url=str_replace('&reviews_id=', 'review',$url);
@@ -161,6 +180,11 @@
             if($redirbadurl){
                 redir301($url);
             }
+            }
+            
+            if($do_admin && $_REQUEST['HTTPS']=='off')
+            {
+                redir301(HTTPS_SERVER,$_SERVER['REQUEST_URI']);
             }
             //Release $URL
             $url='';

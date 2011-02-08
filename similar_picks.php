@@ -3,6 +3,11 @@
 
 require('includes/application_top.php');
 
+
+      $products_name=tep_db_fetch_array(tep_db_query("select concat(manufacturers_name,\" \",products_name) as products_name from products_description pd join products p on p.products_id=pd.products_id join manufacturers m on m.manufacturers_id=p.manufacturers_id where p.products_id=".(int)$_REQUEST['products_id']));                                                                        
+      $replacement="/supplement/".seo_url_title($products_name["products_name"]."-".(int)$_REQUEST['products_id'], $page);
+      redir301($replacement);
+
 $product_info_query = tep_db_query("select p.products_keywords, pd.products_head_title_tag, pd.products_head_keywords_tag,
 						pd.products_head_desc_tag, pd.products_type, psu.product_sku,
 						pd.products_departments,pd.products_ailments,pd.products_uses,

@@ -6,11 +6,85 @@
 
   require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_DEFAULT);
   
-  $org = 'seacoast';
-$contentUrl = 'http://www.healthnotes.info/http/healthnotes.cfm'; 
+$cache=new megacache(60*60*24*2); //2 day timeout
 
-$url = "{$contentUrl}?org={$org}";
-if(!isset($_GET['article'])){
+if(!$cache->doCache('hn'))
+{
+    
+
+// check for moded url
+redirect_moded_url();    
+
+$ContentID=$_REQUEST['article'];
+$subcat=$_REQUEST['subcat'];
+
+if($_REQUEST['subcat'])
+{
+    
+    $url_title=str_replace('-'.$_REQUEST['subcat'],'',$url_title);
+
+}
+
+
+if($ContentID)
+{
+
+    try
+    {
+        $current_article=healthnotes::find($ContentID);
+        
+            
+    }
+    catch(exception $e)
+    {
+        
+        redir301('/');
+    }
+}
+else
+{
+    try 
+    {
+        $current_article=healthnotes::find_by_resourcepath(urldecode($_SERVER['QUERY_STRING']));
+    }
+    catch(exception $e)
+    {
+        redir301('/');
+        
+    }
+}
+
+if(seo_url_title($current_article->title.'-'.$current_article->contentid)!=$url_title)
+{
+    redir301('/health-guide/'.seo_url_title($current_article->title.'-'.$current_article->contentid));    
+}
+
+if($_REQUEST['subcat'])
+{
+    $current_article->resourcepath=str_ireplace('~default',$_REQUEST['subcat'],$current_article->resourcepath);
+    $current_article->title.=' ' . ucwords(str_replace('-',' ',$_REQUEST['subcat']));
+    
+    
+}
+ 
+
+
+
+try
+{
+    $url = HEALTHNOTES_URI.$current_article->resourcepath."?apikey=".HEALTHNOTES_KEY."&format=html&links=resource-path-encoded&request_handler_uri=/health_library.php&styles=basic";
+    @$hn=file_get_contents($url);   
+}
+catch(exception $e)   
+{
+    redir301(HTTP_SERVER);
+}
+
+if(!$hn)
+{
+    redir301(HTTP_SERVER);
+}
+/*if(!isset($_GET['article'])){
     if(isset($_GET['page']))
     {
      $url=$url."&page={$_GET['page']}";
@@ -25,96 +99,128 @@ if(!isset($_GET['article'])){
     $metaDescription='Detailed & comprehensive resources for natural living and a healthy lifestyle.';
     $metaKeywords='health library, health encyclopedia, health resources, natural health, alternative health, nutrition';
 }
-else{
-    $url=$url."&ContentID={$_GET['article']}";
-    $hn=file_get_contents($url);
-    if(strpos($hn,'<div id="Copyright-Notice"')){
-     $hn=substr($hn,0,strpos($hn,'<div id="Copyright-Notice"',0));
-    }
+*/
+                 
     
     
-    $hn=str_replace('5-Hydroxytryptophan','5-Hydroxytryptophan (5-HTP)',$hn);
+    $hn=iconv('UTF-8','ASCII//TRANSLIT',$hn);
+    
+    $hn=substr($hn,0,strpos($hn,'hnie_CopyrightDisclaimerText')-12) ;
+    $hn=substr($hn,0,strpos($hn,'_hni_gapt_div')-9);
+    $hn=preg_replace('/\<h2 .*?\>(.+?)\<\/h2\>/i', '',$hn);
+    
+     //echo $hn; exit();    
+    
+    //$hn=preg_replace('/\<div class="hnie_CopyrightDisclaimerText"\>(.*)\<\/script\>/ims','',$hn); 
+    //$hn=substr($hn,0,strpos($hn,'<div class="hnie_CopyrightDisclaimerText">'));
+    //$hn.='</div></content></assetContentView>';
+    //$hn=preg_replace('/\<h2(.*?)\<\/h2\>/ims','',$hn);
+       
 
-    $metaCategory=substr($hn,strpos($hn,'<META NAME="category" CONTENT="')+31,100);
-    $metaCategory=substr($metaCategory,0,strpos($metaCategory,'">'));
 
-    $pageTitle=substr($hn,strpos($hn,'<title>')+7,500);
-    $pageTitle=substr($pageTitle,0,strpos($pageTitle,'</title>'));
+
+
+      
+      
+      
+      /*foreach($xml->stylesheets as $item)
+      {
+          $stylesheets.=$item->asXML();
+      }
+      
+      foreach($xml->clientScripts as $item)
+      {
+          $scripts.=$item->asXML();
+      }
+      
+      $xml=$xml->content;
+      
+      foreach($xml as $item)
+      {
+          foreach($item->attributes() as $a=>$b)
+          {
+              if(($a=='class' && $b=='hnie_CopyrightDisclaimerText') || $b=='hnise_Title' || $b=='hni_LogoPlaceholder' || (strpos($item->asXML(),'google-analytics.com')))
+              {
+                  $gonext=true;
+              }
+              else
+              {
+                  $gonext=false;
+              }
+          }
+          
+          
+          if($gonext)
+          {
+              continue;
+          }
+          else
+          {
+              $page_content.=$item->asXML();
+              
+          }
+      }   */
+      
+
+    $pageTitle=$current_article->title;
     $topic=$pageTitle;
     $searchterm=$topic;
 
 
-    switch(strtolower($metaCategory))
+    switch($current_article->assettype)
     {
-        case 'concern':
-            $pageTitle=$pageTitle . ' | Health Concerns & Risks';
+        case 'Advertorial':
+            $pageTitle=$pageTitle . ' | Natural Health Advice';
             break;
-        case 'supp':
-            $pageTitle=$pageTitle . ' | Natural Supplements';
+        case 'A-Z Index':
+            $pageTitle=$pageTitle . ' | Complete Natural Health A-Z Index';
             break;
-        case 'herb':
-            $pageTitle=$pageTitle . ' | Herbal Details, Reviews & Effectiveness';
+        case 'Button Callout':
+            $pageTitle=$pageTitle . ' | Natural Health Smarts';
             break;
-        case 'herb_drugix':
-            $pageTitle=$pageTitle . ' | Herb & Prescription Drug Interactions';
+        case 'Diet':
+            $pageTitle=$pageTitle . ' | Natural Dieting';
             break;
-        case 'drug':
-            $pageTitle=$pageTitle . ' | Prescription Drug Details, Risks & Natural Alternatives';
+        case 'Drug':
+            $pageTitle=$pageTitle . ' | Side Effects and Interactions';
             break;
-        case 'index':
-            $pageTitle=$pageTitle . ' | Natural Health Center';
+        case 'Feature':
+            $pageTitle=$pageTitle . ' | Featured';
             break;
-        case 'diet':
-            $pageTitle=$pageTitle . ' | Healthy & Natural Dieting';
+        case 'Food Guide':
+            $pageTitle=$pageTitle . ' | Eating Natural and Healthy';
             break;
-        case 'center':
-            $pageTitle=$pageTitle . ' | Natural Health Guide';
+        case 'General Callout':
+            $pageTitle=$pageTitle . ' | Take a Look';
             break;
-        case 'healthy_eating':
-            $pageTitle=$pageTitle . ' | Eating Healthy';
+        case 'Generic':
+            $pageTitle=$pageTitle . ' | Natural Health';
             break;
-        case 'food_guide':
-            $pageTitle=$pageTitle . ' | Natural Food Guide';
+        case 'Health Condition':
+            $pageTitle=$pageTitle . ' | Natural Remedies & Cures';
             break;
-        case 'lifestyle':
-            $pageTitle=$pageTitle . ' | Healthy Lifestyle, Naturally!';
+        case 'Homeopathic Remedy':
+            $pageTitle=$pageTitle . ' | Homeopathic Remedy';
             break;
-        case 'supp_drugix':
-            $pageTitle=$pageTitle . ' | Side Effects & Drug Interactions';
+        case 'Homeopathy':
+            $pageTitle=$pageTitle . ' | What is Homeopathy?';
+            break;
+        case 'Nutritional Supplement':
+            $pageTitle=$pageTitle . ' | Dietary Supplement';
             break;
         default:
             $pageTitle=$pageTitle . ' | Natural Health Research';
             break;
     }
-    $metaDescription=substr($hn,strpos($hn,'<META NAME="description" CONTENT="')+34,500);
-    $metaDescription=substr($metaDescription,0,strpos($metaDescription,'">'));
-
-    $metaKeywords=substr($hn,strpos($hn,'<META NAME="keywords" CONTENT="')+31,500);
-    $metaKeywords=substr($metaKeywords,0,strpos($metaKeywords,'">'));
-}
-if(strpos($hn,'"Article-Title">')>0)
-{
-    $hn=parse_section($hn.'<a name="Reference-List"', '"Article-Title">','<a name="Reference-List"');
-    $hn=parse_section($hn.'<div id="Resource-List"', '"Article-Title">','<div id="Resource-List"');
-    //$hn=parse_section('<a name="Reference-List"'.$hn.'<div id="Bibliography"', '"Article-Title">','<div id="Bibliography"');
-
-    $hn=substr($hn, strpos($hn,'</div>')+6);
- 
-}
-if(strpos($hn,'<div class="sidebar-content">')>0)
-{
-    $hn=str_replace(parse_section($hn.'</div>', '<div class="sidebar-content">','<div '),'',$hn);
- 
-}
-
-$hn=str_replace('healthnotes.php','health_library.php',$hn);
-$hn=str_replace('org=seacoast&ContentID','article',$hn);
-$hn=str_replace('org=seacoast&contentid','article',$hn);
-$hn=str_replace('org=seacoast&','',$hn);
-
 
     
+    $metaDescription=$current_article->title . ' ' . $current_article->assettype . ' information for a naturally healthy life. Learn more about ' . $current_article->title . '. Get reviews, opinions, side effects and more on ' .$current_article->title;
+    
+                     
+    
 //Do Google Searches
+if(GOOGLE_MINI_SERVING)
+{
 if($_REQUEST['page']==''){
 $gquery=GOOGLE_SEARCH_URL . "num=10&filter=0&as_q=Health+Encyclopedia&q=" . urlencode($searchterm). '+-health_library';
 $gcategories=file_get_contents($gquery);}
@@ -123,11 +229,7 @@ $gquery=GOOGLE_SEARCH_URL . "num=20&filter=0&q=inurl%3Aproduct_info+" . urlencod
 if($_REQUEST['page']!=''){$gquery.='&start='.(($_REQUEST['page']*20)+1); }
 $products=file_get_contents($gquery);
 
-
-		
-		
- 
-
+}
 
 ?>
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -138,7 +240,8 @@ $products=file_get_contents($gquery);
 <meta name="keywords" content="<?php echo $metaKeywords;?>">
 <title><?php echo $pageTitle; ?></title>
 
-<link rel="stylesheet" type="text/css" href="stylesheet.css">
+
+<link rel="stylesheet" type="text/css" href="/stylesheet.css">
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 <!-- header //-->
@@ -194,15 +297,10 @@ $products=file_get_contents($gquery);
         		    
 		            echo '</ul><br style="clear:both;"/></p>';
         		
-		        }		                      
-                      
-    echo $hn;
-    if(!isset($_GET['article']))
-    {
-    ?>
-          <?php require(DIR_WS_INCLUDES . 'hntop.php'); ?>
-    <?php
-    }
+		        }		  
+                
+                echo '<br/>'; 
+                echo $hn;
 
     
 		
@@ -311,24 +409,7 @@ $product_image_path=select_image($product_info['products_id'], $product_info['pr
 		}else{
 		    //Display ads
 		    ?><p><br/>
-		    <script src="http://img.shopping.com/sc/pac/shopwidget_v1.0_proxy.js"> </script>
-                <script>
-                <!--
-                   // Seacoast Product Page Comparison
-                   var sw = new ShopWidget();
-                   sw.mode            = "kw";
-                   sw.width           = 728;
-                   sw.height          = 90;
-                   sw.linkColor       = "#0033cc";
-                   sw.borderColor     = "#ffffff";
-                   sw.fontColor       = "#000000";
-                   sw.font            = "arial";
-                   sw.linkin          = "8024494";
-                   sw.categoryId      = "205";
-                   sw.keyword         = "<?php echo $searchterm;?>";
-                   sw.render();
-                //-->
-                </script>
+		    
             </p>
 		    <?php
 		    
@@ -355,7 +436,13 @@ $product_image_path=select_image($product_info['products_id'], $product_info['pr
 <!-- body_eof //-->
 
 <!-- footer //-->
-<?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
+
+<?php 
+$cache->addCache('hn');
+}   
+
+
+require(DIR_WS_INCLUDES . 'footer.php'); ?>
 <!-- footer_eof //-->
 <br>
 </body>

@@ -87,7 +87,6 @@
                       <tr>
                         <td></td>
                         <td></td><td></td><td><!-- START SCANALERT CODE --><br/>
-<img width="94" height="54" border="0" src="//images.scanalert.com/meter/www.seacoastvitamins.com/13.gif" alt="HACKER SAFE certified sites prevent over 99.9% of hacker crime." oncontextmenu="alert('Copying Prohibited by Law - HACKER SAFE is a Trademark of ScanAlert'); return false;">
 <!-- END SCANALERT CODE --> </td>
                       </tr>
                     </table></td>

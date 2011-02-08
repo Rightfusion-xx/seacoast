@@ -72,7 +72,15 @@
   }
 
   function tep_session_is_registered($variable) {
-    return isset($_SESSION[$variable]);
+      if(isset($_SESSION[$variable]))
+      {
+          $GLOBALS[$variable]=&$_SESSION[$variable];
+          return true;
+      }
+      else
+      {
+          return false;
+      }          
   }
 
   function tep_session_unregister($variable) {

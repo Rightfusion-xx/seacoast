@@ -33,26 +33,22 @@
   $products_id=(int)$_REQUEST['products_id'];
 
 
+  
   if($products_id)
   {
-        $product_info_query = tep_db_query("select p.products_keywords, pd.products_head_title_tag, pd.products_head_keywords_tag,
-						pd.products_head_desc_tag, pd.products_type, psu.product_sku,
-						pd.products_departments,pd.products_ailments,pd.products_uses,
-                                                date_format(p.products_date_added,'%m/%d/%Y') as
-						products_date_added, p.products_last_modified, psu.product_upc,
-						p.products_id, pd.products_name, pd.products_description, p.products_model,
-						p.products_quantity, p.products_image, pd.products_url, p.products_msrp,
-						p.products_price, p.products_tax_class_id, p.products_date_available,
-						p.manufacturers_id, m.manufacturers_name
-						from " . TABLE_PRODUCTS . " p join  " . TABLE_PRODUCTS_DESCRIPTION . " pd on
-						p.products_id=pd.products_id join ". TABLE_MANUFACTURERS ." m on m.manufacturers_id=p.manufacturers_id
-						left outer JOIN products_sku_upc psu ON psu.product_ids = p.products_id where p.products_status = '1' and p.products_id = '" . (int)$products_id .
-	"' and pd.language_id =' " . (int)$languages_id . "'");
+      
+      //redirect to appropriate product.
+      
+      // Deprecated - 301 products_id pages to product page.
+      $products_name=tep_db_fetch_array(tep_db_query("select concat(manufacturers_name,\" \",products_name) as products_name from products_description pd join products p on p.products_id=pd.products_id join manufacturers m on m.manufacturers_id=p.manufacturers_id where p.products_id=".(int)$products_id));                                                                        
+      $replacement="/supplement/".seo_url_title($products_name["products_name"]."-".$products_id, $page);
+      redir301($replacement);
 
 
+    /*
     if(!($product_info = tep_db_fetch_array($product_info_query))){
         //No product found, redirect.
-        redir301(HTTP_SERVER);
+        redir301(HTTP_SERVER);     */
     }
     else
     {
@@ -63,7 +59,7 @@
     }
 
 
-  }
+
 
 if ($manufacturers_id)
 {
@@ -323,6 +319,8 @@ if(!$products_id && !strlen($lastprod) && !cPath)
     </div>
     
     <br style="clear:both"/>
+    
+
 
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
 

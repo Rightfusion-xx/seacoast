@@ -22,9 +22,17 @@
   tep_session_unregister('customer_country_id');
   tep_session_unregister('customer_zone_id');
   tep_session_unregister('comments');
+  tep_session_unregister('do_admin'); 
+  
+  tep_session_recreate();
 
   $cart->reset();
   refresh_user_info();
+  if($_REQUEST['do_admin']=='true')
+  {
+      tep_session_register('do_admin');
+      $do_admin=true;
+  }
 ?>
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html <?php echo HTML_PARAMS; ?>>

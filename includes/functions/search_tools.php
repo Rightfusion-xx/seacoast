@@ -1,5 +1,7 @@
 <?php
 
+define ('OSS_SERVING',false);
+
     $ctx=stream_context_create(array(
                                      'http' => array(
                                      'timeout' => 6
@@ -45,13 +47,22 @@ function cached_results(&$results)
   {
     //found cache. Check date
 
-     if(($db_cache['uts']>(time()-60*60*24) || !GOOGLE_MINI_SERVING) && ($db_cache['results']=$searchcache->doCache($results['searchterm'], false)))
+     if(($db_cache['uts']>(time()-60*60*24) || !OSS_SERVING) && ($db_cache['results']=$searchcache->doCache($results['searchterm'], false)))
     {
      
       //cache is good or mini is not running. Load it.
       
       $results=unserialize(gzuncompress($db_cache['results']));
-      return(true);
+      if( $db_cache['total_prods']==0)
+      {
+          //no results found. Re-run query
+          unset($results);
+          return(false);
+      }
+      else
+      {
+        return(true);
+      }
     }
     else
     {
@@ -72,60 +83,69 @@ function cached_results(&$results)
 
 function healthnotes_search(&$results)
 {
-  if(GOOGLE_MINI_SERVING)
+  if(OSS_SERVING)
   {
    global $ctx;
-   $gquery=GOOGLE_SEARCH_URL . "num=5&filter=0&q=inurl%3Ahealth_library+" . urlencode($results['searchterm']);
+   $gquery=OSS_SEARCH_URL . "rows=10&fq=urlExact:/health-guide/&q=" . urlencode($results['searchterm']);
    @$healthnotes=file_get_contents($gquery, 0, $ctx);
-   $results['healthnotes']=process_google_results($healthnotes,$results);
+   $results['healthnotes']=process_oss_results($healthnotes,$results);
   }
 
 }
 
 function category_search(&$results)
 {
-  if(GOOGLE_MINI_SERVING)
+  if(OSS_SERVING)
   {
     global $ctx;
   
-    $gquery=GOOGLE_SEARCH_URL . "num=10&filter=0&as_q=Health+Encyclopedia&q=" . urlencode($results['searchterm']). '+-health_library';
+    $gquery=OSS_SEARCH_URL . 'rows=10&fq=urlExact:'.urlencode('("http://www.seacoast.com/guide/*" or "http://www.seacoast.com/ailment/*" or "http://www.seacoast.com/remedies/*" or "http://www.seacoast.com/use/*")').'&q=' . urlencode($results['searchterm']). '';
+
     @$categories=file_get_contents($gquery, 0, $ctx);
   
-    if(strpos($categories,'<Suggestion q=')>0)
+    if(preg_match('/\<spellcheck\>(.*?)\<\/spellcheck\>/ms',$categories,$matches))
     {
         //Offer spelling recommendation.
-        $results['suggestion']=trim(str_replace('-health_library','',substr($categories, strpos($categories,'<Suggestion q="',0)+15,
-                    strpos($categories, '"', strpos($categories, '<Suggestion q="',0)+15)
-                    -(strpos($categories,'<Suggestion q="',0)+15)-20)));
+        if(preg_match('/\<suggest\>(.*?)\<\/suggest\>/ms',$matches[1],$match))   //just get the first rec.
+        {
+            $results['suggestion']=$match[1];
+            
+        }
+        
     }
   
-    $results['categories'] = process_google_results($categories,$results);
+    $results['categories'] = process_oss_results($categories,$results);
   }
   
 }
+   
 
-function process_google_results(&$result_file, &$results)
+function process_oss_results(&$result_file, &$results)
 {
   $index=1;
-		    
-  $sdelim='<R N="' . $index . '">';
-  $curres=parse_section($result_file, $sdelim, '</R>');
   
   $result_list=Array();
+   
+  if(preg_match_all('/\<doc\s.*?\<\/doc\>/ms',$result_file, $matches))
+  {
+          
+      
+      foreach($matches[0] as $item)
+      {
+        $result_arr=Array();
+        preg_match('/\<snippet name\=\"title\".*?\>(.*?)\<\/snippet\>/ms',$item,$m2);
+        $result_arr['title']=html_entity_decode($m2[1]);
+        
+        preg_match('/\<field name\=\"url\"\>(.*?)\<\/field\>/ms',$item,$m2);
+        $result_arr['url']=str_replace('http://www.seacoast.com/','/',urldecode($m2[1]));
 
-  do{
-    $result_arr=Array();
-    $result_arr['title']=html_entity_decode(parse_section($curres, '<T>', '</T>'));
-    $result_arr['url']=str_replace('http://www.seacoastvitamins.com/','',urldecode(parse_section($curres, '<UE>', '</UE>')));
-    if(!$results['total_prods'])$result_arr['snippet']=html_entity_decode(parse_section($curres, '<S>', '</S>'));
+        preg_match('/\<snippet name\=\"content\".*?\>(.*?)\<\/snippet\>/ms',$item,$m2); 
+        $result_arr['snippet']=html_entity_decode($m2[1]);
 
-    $index++;
-  
-    $sdelim='<R N="' . $index . '">';
-    $curres=parse_section($result_file, $sdelim, '</R>');
-    array_push($result_list,$result_arr);
+        array_push($result_list,$result_arr);
+          
+      }
   }
-  while(strlen($curres)>1);
   
   return($result_list);
 
@@ -143,15 +163,19 @@ function product_search(&$results, $keyword='')
   $results['found_products']=false;
 
   //if more than one day, begin search
-  if(GOOGLE_MINI_SERVING)
+  if(OSS_SERVING)
   {
     
     //attempt google search on titles
-    $gquery=GOOGLE_SEARCH_URL . "num=40&filter=0&q=inurl%3A/supplement/&as_q=intitle%3A" . str_replace('+','+intitle%3A',urlencode($keyword));
+    $gquery=OSS_SEARCH_URL . 'rows=64&fq=urlExact:'.urlencode('"http://www.seacoast.com/supplement/*"').'&q=' . urlencode($keyword);
+    
     //if($_REQUEST['page']!=''){$gquery.='&start='.(($_REQUEST['page']*20)+1); }
+    
     @$products=file_get_contents($gquery,0,$ctx);
 
-    $results['total_prods']=(int)parse_section($products, '<M>','</M>');
+    
+    $results['total_prods']=$results['total_prods']<1 ? $results['total_prods']=(int)parse_section($products, 'numFound="','"') : $results['total_prods'];
+    
     if(!is_array($results['products_id']))
     {
         $results['products_id']=Array();         
@@ -165,10 +189,13 @@ function product_search(&$results, $keyword='')
     {
         //Change titles to "Compare" & add manufacturer name if nescessary.
         $results['found_products']=true;
-        process_google_product_results($results['products_id'], $products);
+        process_oss_product_results($results['products_id'], $products);
         $results['total_prods']=count($results['products_id']);
+        $results['products_id_similar']=array_slice($results['products_id'],0,7);  
+   
     }
     
+    /*
     //run search for similar products module, or if no products are found
     $gquery=GOOGLE_SEARCH_URL . "num=40&filter=0&q=inurl%3A/supplement/+" . urlencode($keyword);
 
@@ -183,10 +210,11 @@ function product_search(&$results, $keyword='')
     }
     $results['products_id_similar']=array_slice($results['products_id_similar'],0,7);
 
+    */
   }
   
 
-  if($products==false || !GOOGLE_MINI_SERVING) //if no connection could be made, search using DB instead
+  if($products==false || !OSS_SERVING) //if no connection could be made, search using DB instead
   {
 
        
@@ -223,24 +251,28 @@ function product_search(&$results, $keyword='')
 
 }
 
-function process_google_product_results(&$results_arr, $products)
+function process_oss_product_results(&$results_arr, $products)
 {
 
-      $index=1;
-      $sdelim='<R N="' . $index . '"><U>';
-      $curres=parse_section($products, $sdelim, '</U>');
-      do{
-        $pid=substr($curres, strrpos($curres,'-')+1);
-        if(!in_array($pid,$results_arr))
+    if(preg_match_all('/\<doc\s.*?\<\/doc\>/ms',$products, $matches))
+    {
+            
+      
+        foreach($matches[0] as $item)
         {
-            array_push($results_arr,$pid); 
-        }
-
-        $index++;
-        $sdelim='<R N="' . $index . '"><U>';
-        $curres=parse_section($products, $sdelim, '</U>');
-    		    
-      }while(strlen($curres)>1);
+            if(preg_match('/\<field name\=\"url\"\>.*?-(\d+)\w*\<\/field\>/', $item, $prod))
+            {
+                $pid=$prod[1];           
+                
+                
+                if(!in_array($pid,$results_arr))
+                {
+                    array_push($results_arr,$pid); 
+                }
+            }
+    		        
+          }
+    }
       
       //return($results_arr);
 

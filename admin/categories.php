@@ -15,6 +15,7 @@ if($_REQUEST['inv']=='update')
     tep_db_query('update products set products_available='.tep_db_input($_REQUEST['products_available']).' where products_id='. (int)$_REQUEST['pID']);
     
 
+    
 }
 
 if(isset($_REQUEST['products_location']) && isset($_REQUEST['pID']) )
@@ -321,16 +322,7 @@ $messageStack->add(ERROR_CATALOG_IMAGE_DIRECTORY_DOES_NOT_EXIST, 'error');
 <title><?php echo TITLE; ?></title>
 <link rel="stylesheet" type="text/css" href="includes/stylesheet.css">
 <script language="javascript" src="includes/general.js"></script>
-<script language="javascript" type="text/javascript" src="tiny_mce/tiny_mce.js"></script>
-<script language="javascript" type="text/javascript">
-tinyMCE.init({
-    theme : "advanced",
-	mode : "exact",  
-    plugins : "media",
-	elements : "products_description",
-	theme_advanced_toolbar_location : "top"
-});
-</script>
+<script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#FFFFFF" onload="SetFocus();">
 <div id="spiffycalendar" class="text"></div>
@@ -850,6 +842,9 @@ for ($i=0, $n=sizeof($languages); $i<$n; $i++) {
 <td class="main" align="right"><?php echo tep_draw_hidden_field('products_date_added', (tep_not_null($pInfo->products_date_added) ? $pInfo->products_date_added : date('Y-m-d'))) . tep_image_submit('button_preview.gif', IMAGE_PREVIEW) . '&nbsp;&nbsp;<a href="' . tep_href_link(FILENAME_CATEGORIES, 'cPath=' . $cPath . (isset($HTTP_GET_VARS['pID']) ? '&pID=' . $HTTP_GET_VARS['pID'] : '')) . '">' . tep_image_button('button_cancel.gif', IMAGE_CANCEL) . '</a>'; ?></td>
 </tr>
 </table></form>
+<script type="text/javascript">
+    CKEDITOR.replace( 'products_description[1]' );
+</script>
 <?php
 } elseif ($action == 'new_product_preview') {
 if (tep_not_null($HTTP_POST_VARS)) {

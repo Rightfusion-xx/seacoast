@@ -327,7 +327,7 @@ function printInvoice(auto)
 
 
 </head>
-<body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#FFFFFF" <?php if($order->info['paid']=='1' && isset($_REQUEST['transid'])){?> onload="printInvoice(true);" <?php }?> >
+<body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#FFFFFF" <?php if($order->info['paid']=='1' && isset($_REQUEST['transid'])){?> onload="" <?php }?> >
 <div id="all_info">
 <!-- header //-->
 <?php
@@ -355,9 +355,14 @@ function printInvoice(auto)
       <tr>
         <td width="100%" colspan="2"><table border="0" width="100%" cellspacing="0" cellpadding="0">
           <tr>
-            <td class="pageHeading"><?php echo 'Order Number: ' . $oID; ?><?php if($order->info['paid']=='1'){?><br/><span style="font-size:18pt;color:#ff0000;">PAID</span>&nbsp;[<a href="#" onclick="printInvoice(false);">print</a>]<?php }?></td>
+            <td class="pageHeading"><?php echo 'Order Number: ' . $oID; ?><?php if($order->info['paid']=='1'){?><br/><span style="font-size:18pt;color:#ff0000;">PAID</span>&nbsp;[<a href="#" onclick="printInvoice(false);">print</a>]<?php }?>
+            <br/>
+            <a href="/orders.php?oID=<?php echo $oID-1;?>&action=edit">Previous</a> | <a href="/orders.php?oID=<?php echo $oID+1;?>&action=edit">Next</a> | <a href="/orders.php">All Orders</a>
+            </td>
             <td class="pageHeading" align="right"><?php echo tep_draw_separator('pixel_trans.gif', 1, HEADING_IMAGE_HEIGHT); ?></td>
-            <td class="pageHeading" align="right"><?php echo ' <a href="' . tep_href_link(FILENAME_ORDERS_EDIT, 'oID=' . $_GET['oID']) . '">' . tep_image_button('button_edit.gif', IMAGE_EDIT) . '</a> <a href="' . tep_href_link(FILENAME_ORDERS_INVOICE, 'oID=' . $_GET['oID']) . '" TARGET="_blank">' . tep_image_button('button_invoice.gif', IMAGE_ORDERS_INVOICE) . '</a> <a href="' . tep_href_link(FILENAME_ORDERS, tep_get_all_get_params(array('action'))) . '">' . tep_image_button('button_back.gif', IMAGE_BACK) . '</a> '; ?></td>
+            <td class="pageHeading" align="right"><?php echo ' <a href="' . tep_href_link(FILENAME_ORDERS_EDIT, 'oID=' . $_GET['oID']) . '">' . tep_image_button('button_edit.gif', IMAGE_EDIT) . '</a> <a href="' . tep_href_link(FILENAME_ORDERS_INVOICE, 'oID=' . $_GET['oID']) . '" TARGET="_blank">' . tep_image_button('button_invoice.gif', IMAGE_ORDERS_INVOICE) . '</a> <a href="' . tep_href_link(FILENAME_ORDERS, tep_get_all_get_params(array('action'))) . '">' . tep_image_button('button_back.gif', IMAGE_BACK) . '</a> '; ?>
+            
+            </td>
           </tr>
         </table>
         
@@ -522,7 +527,15 @@ case 10: $max_comment = '(I can smell the fraud from here)'; break;
           <tr>
             <td valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="2">
               <tr>
-                <td class="main" valign="top"><b><?php echo ENTRY_CUSTOMER; ?></b><br/><a href="customers.php?cID=<?php echo $order->customer['id']  ?>&action=edit">[view profile]</td>
+                <td class="main" valign="top"><b><?php echo ENTRY_CUSTOMER; ?></b><br/><a href="customers.php?cID=<?php echo $order->customer['id']  ?>&action=edit">[view profile]
+                <br/>
+                <?php 
+                
+                $prevorders=tep_db_fetch_array(tep_db_query('select count(*) as cnt from orders where orders_status<>6 and orders_id<>'.(int)$oID.' and customers_id='.(int)$order->customer['id']));
+                echo '<a href="/orders.php?cID=',$order->customer['id'],'">',$prevorders['cnt'], ' Previous Orders</a>'
+                
+                ?> 
+                </td>
                 <td class="main"><?php echo tep_address_format($order->customer['format_id'], $order->customer, 1, '', '<br>'); ?></td>
               </tr>
               <tr>

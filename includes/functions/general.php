@@ -2823,7 +2823,7 @@ function select_image($products_id, $products_image='', $manufacturers_id='')
 function populate_backlinks($delimiter=',')
 {                       
   global $page_links;
-  $page_links='';
+  $page_links=$delimiter;
 
   if(!is_array($page_links))
   {
@@ -2931,6 +2931,163 @@ function link_exists($pattern, $strlinks, $delimiter=',')
 }
 
 
+function match_hub_links($page_links, $display_links=false)
+{
+    $hubs=Array();
+   
+
+    if(preg_match_all('/,\/hub\.php\?tag=([a-z0-9-]+)/',$page_links,$matches))
+    {
+        foreach($matches[1] as $item)
+        {
+            
+                $keywords=Array();
+                
+                $hub_query=tep_db_query('select t.name from wp_posts p join wp_postmeta pm on pm.post_id=id 
+                                        join wp_term_relationships tr on tr.object_id=p.ID
+                                        join wp_term_taxonomy tt on tt.term_taxonomy_id=tr.term_taxonomy_id
+                                        join wp_terms t on t.term_id=tt.term_id
+                                        where tt.taxonomy="post_tag" and pm.meta_key="hub" and meta_value="'.tep_db_input($item).'"');
+                while($hub=tep_db_fetch_array($hub_query))
+                {
+                    array_push($keywords, $hub['name']);
+                }
+                array_push($hubs,Array($item=>$keywords)); 
+            }
+            
+            
+    }
+    
+        
+    if($display_links)
+    {
+
+        display_match_hub_links($hubs);
+        
+    }
+    
+    return $hubs ;
+    
+}
+
+
+function display_match_hub_links($hubs)
+{
+    foreach($hubs as $item)
+    {
+        $tag=key($item);
+        $hub =tep_db_fetch_array(tep_db_query('select post_title, post_excerpt from wp_posts p join wp_postmeta pm on pm.post_id=id where pm.meta_key="hub" and meta_value="'.tep_db_input($tag).'"'));
+        echo '<p><h2><a href="/hub.php?tag='.$tag.'">'.$hub['post_title'].'</a></h2>'.$hub['post_excerpt'].' <a href="/hub.php?tag='.$tag.'">[read more]</a>';
+    }
+    
+}
+
+function linkKeywordsToHubs(&$keywords, $content)
+{
+    //Pad content
+    $content=" ".$content." ";
+    $start=0;
+    $length=0;
+    $newcontent="";
+    
+    if(!$length=strpos($content,'<a '))
+    {
+        $length=strlen($content);
+    }
+    
+    do
+    {
+        foreach($keywords as $num=>$item)
+        {
+            if(preg_match('/\b'.$item["Keyword"].'\b/i',substr($content,$start,$length)))
+            {
+                $newcontent.=preg_replace('/\b'.$item["Keyword"].'\b/i','<a href="/'.$item["Hub"].'">'.$item["Keyword"].'</a>',substr($content,$start,$length)).substr($content,$start+$length);  
+                unset($keywords[$num]);
+                
+                $newcontent=linkKeywordsToHubs($keywords,$newcontent);  
+                return($newcontent); //should never process any further after matching once and being sent back in to the loop
+                break;       
+                
+            }
+           
+        }
+        
+        $newcontent.=substr($content,$start,$length);  
+        
+        if(($length+$start)>=strlen($content))
+        {
+            return($newcontent);
+        }
+        else
+        {
+            $start=$start+$length;
+            if(!$length=(strpos($content,'</a>',$start)))
+            {
+                $newcontent.=substr($content,$start);
+                return($newcontent);
+            }
+            else
+            {
+                $length=$length+4-$start;
+                $newcontent.=substr($content,$start,$length); // save all the content in between links. 
+                $start=$start+$length;
+                
+            }
+            
+            if(!$length=strpos($content,'<a ',$start))
+            {
+                $length=strlen($content)-$start;
+            }
+            else
+            {
+                $length=$length-$start;
+            }
+            
+            
+            
+        }
+        
+    }while ($start<strlen($content));
+    
+    return(trim($newcontent));
+    
+    
+}
+
+function getHubKeywordsAndRewriteContent($content)
+{
+    $keycache=new megacache(60*60, "hubKeywordCache"); //1 hour
+    $keywords=Array();
+    
+    if($cache=$keycache->doCache("hubCache",false))
+    {
+        $keywords=unserialize($cache);
+    }
+    else
+    {
+        //no cache found, so create the keywords and add to cache
+        $keyquery=tep_db_query("SELECT t.name AS Keyword, pm.meta_value AS Hub
+                                FROM wp_terms t
+                                JOIN wp_term_taxonomy tt ON t.term_id=tt.term_id
+                                JOIN wp_term_relationships tr ON tr.term_taxonomy_id=tt.term_taxonomy_id
+                                JOIN wp_posts p ON p.ID=tr.object_id
+                                JOIN wp_postmeta pm ON pm.post_id=p.ID 
+                                WHERE tt.taxonomy='post_tag'
+                                AND meta_key='hub' order by length(t.name) desc") ;
+                                
+        while($key=tep_db_fetch_array($keyquery))
+        {
+            array_push($keywords,Array("Keyword"=>$key["Keyword"],"Hub"=>$key["Hub"]));
+        }
+        
+        $keycache->addCache("hubCache",serialize($keywords));
+                
+    }
+    
+    return(linkKeywordsToHubs($keywords,$content));
+    
+    
+}
 
 
 ?>

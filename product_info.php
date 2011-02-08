@@ -1,11 +1,14 @@
-
 <?php
-
 
 require('includes/application_top.php');
 
 // check for moded url
-redirect_moded_url();    
+redirect_moded_url();
+
+if(strpos($_SERVER['HTTP_USER_AGENT'],"seacoast-crawler")>0)
+{
+     $seacoast_crawler=true;
+}    
 
 require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_PRODUCT_INFO);
 
@@ -13,20 +16,20 @@ if((int)$HTTP_GET_VARS['products_id']==CM_FTPID || (int)$HTTP_GET_VARS['products
 	redir301('/community/');
 }
 
-$product_info_query = tep_db_query("select p.products_keywords, p.products_die,                                         
+$product_info_query = tep_db_query("select p.products_keywords, p.products_die, p.products_sku, p.products_upc,                                         
 						p.products_dieqty, pd.products_head_title_tag, pd.products_head_keywords_tag, 
-						pd.products_head_desc_tag, pd.products_type, psu.product_sku,
+						pd.products_head_desc_tag, pd.products_type,
 						pd.products_departments,pd.products_ailments,pd.products_uses, 
 						p.products_weight, p.products_ordered, pd.products_head_keywords_tag, 
 						pd.products_viewed, date_format(p.products_date_added,'%m/%d/%Y') as 
-						products_date_added, p.products_last_modified, psu.product_upc, 
+						products_date_added, p.products_last_modified, 
 						p.products_id, pd.products_name, pd.products_description, p.products_model, 
 						p.products_quantity, p.products_image, pd.products_url, p.products_msrp,
 						p.products_price, p.products_tax_class_id, p.products_date_available,
 						p.manufacturers_id, m.manufacturers_name
 						from " . TABLE_PRODUCTS . " p join  " . TABLE_PRODUCTS_DESCRIPTION . " pd on
 						p.products_id=pd.products_id join ". TABLE_MANUFACTURERS ." m on m.manufacturers_id=p.manufacturers_id
-						left outer JOIN products_sku_upc psu ON psu.product_ids = p.products_id where p.products_status = '1' and p.products_id = '" . (int)$_REQUEST['products_id'] . 
+						where p.products_status = '1' and p.products_id = '" . (int)$_REQUEST['products_id'] . 
 	"' and pd.language_id =' " . (int)$languages_id . "'");
 
 
@@ -103,18 +106,42 @@ else
 
   // get all url links
   populate_backlinks();
+  
+  
 
-$cache=new megacache(1728000/6);
+$cache=new megacache(24*60*60);
 if(!$cache->doCache('products_main'.$pmod, true, $lastmod))
 {
 
+    /*
+if(strpos($product_info['products_name'],'(')>0)
+{
+    $title=trim(substr($product_info['products_name'],0,strpos($product_info['products_name'],'(')-1));   
+    $shortname=$title;
+}
+else
+{
+    $title=$product_info['products_name'];
+    $shortname=$title;
+}
+*/
+
+$tname=preg_replace('/[^A-Za-z0-9-()|,\s]/i','',$product_info['products_name']);
+$tname=preg_split('/([^a-z0-9-\s].+)/i',$tname,2,PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY );
+$tmisc=$tname[1];
+$tname=$tname[0];
+$shortname=$tname;
+
+
+$title=$tname . ' | '.$product_info['manufacturers_name'].' | '. $tmisc;
+$description=$shortname.' vitamin supplement from '.$product_info['manufacturers_name'] .' includes uses, indications and dosing information with '.$product_info['products_name'].'. '. $product_info['products_head_title_tag']; ?>
 ?>
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html <?php echo HTML_PARAMS; ?>>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
-<title><?php echo $product_info['products_head_title_tag'] ?></title>
-<meta name="description" content="<?php echo $product_info['products_head_desc_tag']; ?>" />
+<title><?php echo $title; ?></title>
+<meta name="description" content="<?php echo $description; ?>" />
 <meta name="keywords" content="<?php echo $product_info['products_head_keywords_tag']; ?>" />
 <meta name="type" value="supplement"  /> 
 
@@ -135,13 +162,12 @@ if(!$cache->doCache('products_main'.$pmod, true, $lastmod))
 
 <div id="content" >
 
-
-
-                 
+             
 
         <h1 class="h1_prod_head" >
-           <?php echo $products_name; ?> -  <?php echo $product_info['manufacturers_name']?>
-        </h1>
+           <?php echo $tname; ?> 
+        </h1>                    
+        <p style="display:inline;"><b><?php echo $tmisc; ?></b></p> - <p style="display:inline;"><b><?php echo $product_info['manufacturers_name'];?></b></p>
                
             <?php 
                  if(is_numeric($reviews_rating) && $reviews_rating>0){echo draw_stars($reviews_rating);
@@ -205,9 +231,19 @@ if(!$cache->doCache('products_main'.$pmod, true, $lastmod))
                           }
 
                           }
+                          
+                          
+                if($product_info['products_id']%2==0)
+                {
+                    
+                    $tmp_desc=str_replace('. ','.<br />',$tmp_desc); 
+                    $tmp_desc=str_replace(', ',',<br />',$tmp_desc); 
+                }
                 
                 echo $tmp_desc; ?>
             </p>
+            
+            
             
                              
 
@@ -243,6 +279,17 @@ if(!$cache->doCache('products_main'.$pmod, true, $lastmod))
 
 
                     </div>
+                    
+                    <?php
+            if($product_info['products_id']%2==0)
+                {
+                    ?>
+                    <script language="javascript">
+                        document.getElementById('prod_desc').innerHTML=document.getElementById('prod_desc').innerHTML.replace(/(\<br \/\>)|(\<br\>)/gi,' ');
+                    </script>
+                    <?php
+                }
+                ?>
  <?php  if(strlen($product_info['products_uses'])>0 || strlen($product_info['products_uses'])>0){ ?>
                      <div id="prod_right_col"><br/><br/><b class="spiffy">
   <b class="spiffy1"><b></b></b>
@@ -272,6 +319,8 @@ if(!$cache->doCache('products_main'.$pmod, true, $lastmod))
                      ?>
                 </ul>
             </p><?php } ?>
+            
+            
             
 
                      <?php if(strlen($product_info['products_uses'])>0){
@@ -308,6 +357,21 @@ if(!$cache->doCache('products_main'.$pmod, true, $lastmod))
   <b class="spiffy2"><b></b></b>
   <b class="spiffy1"><b></b></b></b>
 </div>   <?php } ?>   
+
+
+<div id="adsense_ad" style="clear:right;margin-top:2em;float:right;">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6691107876972130";
+/* Product Page Right Side */
+google_ad_slot = "3365106085";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
                  
                          
         <hr class="sectiondivider"/><a name="reviews"></a>
@@ -316,15 +380,22 @@ if(!$cache->doCache('products_main'.$pmod, true, $lastmod))
         <hr class="sectiondivider"/>
         <h2>Details</h2>
         <?php
-            if (strlen($product_info['product_sku'])>0){
-            echo 'SKU: '.$product_info['product_sku'] . '<br />'; }
-        ?>
-            <?php
-            if (strlen($product_info['product_upc'])>0 ){
-            echo 'UPC: '.$product_info['product_upc'] . '<br />'; 
+            if (strlen($product_info['products_sku'])>0){
+            echo 'SKU: '.$product_info['products_sku'] . '<br />'; }
+
+            if (strlen($product_info['products_upc'])>0 ){
+            echo 'UPC: '.$product_info['products_upc'] . '<br />'; 
             }
 
-            echo 'Manufacturer Fresh from ',$product_info['manufacturers_name'] , '<br />';
+            echo 'Manufacturer Fresh from ',$product_info['manufacturers_name'] , '. View more ';
+              $mflink=link_exists('/index.php?manufacturers_id='.(int)$product_info['manufacturers_id'],$page_links);
+              if(!strlen($mflink))
+              {
+               
+                $mflink='/index.php?manufacturers_id='.(int)$product_info['manufacturers_id'];
+              }
+              echo '<a href="',$mflink,'">',$product_info['manufacturers_name'],'</a> products.'; 
+            echo '<br />';
             ?>
         <p>
             <b>Buy <?php echo $product_info['products_name'];?> from Seacoast Vitamins with confidence.</b> We provide the natural health community
@@ -348,9 +419,213 @@ if(!$cache->doCache('products_main'.$pmod, true, $lastmod))
 
 
 		<div class="directory" id="similar_picks">
-		<h2>Related Topics</h2>
-                           <a href="/similar_picks.php?products_id=<?php echo $product_info['products_id'];?>">What topics can you find this product in?</a>
+        <h2>Related Health Links for <?php echo $product_info['products_name'];?></h2>
+        
+        <?php
+            
+        foreach($results['healthnotes'] as $item)
+        {
+            ?>
+            <p><a href="<?php echo $item['url']?>"><?php echo $item['title'];?></a><br><?php echo $item['snippet'];?></p>
+            
+            <?php
+        
+        }
+?>
+        
+		
+        
+        
+        <?php
+        // pull up product categories from DB
+    $cat_query=tep_db_query('SELECT cd.categories_id, cd.categories_name, cd.categories_htc_desc_tag from categories_description cd
+                                    join products_to_categories p2c on p2c.categories_id=cd.categories_id
+                                    where p2c.products_id='.(int)$_REQUEST['products_id'].' order by categories_name asc');
+    
+        ?>
+        <h2><?php echo $product_info['manufacturers_name'], ' ',$product_info['products_name'], ' Health Guides';?></h2>
+     
+        <p style="width:600px;"> Health Guides are simply categories in which <b><?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></b>
+        can be located, along with additional resources and related products.
+       </p>
+
+     
+
+        <?php
+        //Spool categories and intertwine with departments
+        $categories=array();
+        while($cat=tep_db_fetch_array($cat_query))
+        {
+            array_push($categories,$cat);
+        }   
+        foreach(explode(',',$product_info['products_departments']) as $item)
+        {
+            array_push($categories, array('categories_id'=>0, 'categories_name'=>ucwords(trim($item)), 'categories_htc_desc_tag'=>''));
+        }
+        
+        $found=false;
+        foreach($categories as $cat)
+        {
+            if($cat['categories_id']==0)
+            {
+                //Display a link to a department
+                $mflink=link_exists('/departments.php?benefits='.urlencode(strtolower($cat['categories_name'])),$page_links) ? 
+                                                                                     link_exists('/departments.php?benefits='.urlencode(strtolower($cat['categories_name'])),$page_links) :
+                                                                                     '/departments.php?benefits='.urlencode(strtolower($cat['categories_name']));
+            }
+            else
+            {
+                //Display a link to a category page
+                $mflink=link_exists('/index.php?cPath='.$cat['categories_id'],$page_links) ? 
+                                                                                     link_exists('/index.php?cPath='.$cat['categories_id'],$page_links) :
+                                                                                     '/index.php?cPath='.$cat['categories_id'];
+            }
+          
+          if(!$found)
+          {
+            echo '<div><ul>';
+          }
+          $found=true; if(strlen($cat['categories_name'])>0){
+          ?>
+          <li><p><?php echo '<a href="',$mflink,'">',$cat['categories_name'],'</a>';
+          if(strlen($cat['categories_htc_desc_tag'])>0){ echo ' - ',$cat['categories_htc_desc_tag']; }
+          ?>
+          </p> </li>
+
+          <?php   }
+          
+          if(!$found)
+          {    ?>
+            <p>Sorry. No categories were found for this product.</p>
+                      <?php
+          }
+
+        }
+        
+        if($found)
+        {
+          echo '</ul></div>';
+        }
+        
+        ?>
+        
+        
+        <?php // ailments, uses, etc  ?>
+
+            <h2>Ailments & Uses for <?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></h2>
+            
+            <p style="width:600px;">
+                Certain uses and indications are associated with
+                <b><?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></b>.
+                This may be a partial list of potential uses. This list is not verified, and is not reviewed by the FDA.
+            </p>
+            <?php
+
+                 if(strlen($product_info['products_ailments']))
+                 {
+                   $ailarr=explode(',',$product_info['products_ailments']);
+                   asort($ailarr);
+                   foreach($ailarr as $item)
+                   {
+                    $item=trim($item);
+                    $mflink=link_exists('/ailments.php?remedy='.urlencode(strtolower($item)),$page_links) ;
+                    $mflink=strlen($mflink) ? $mflink : '/ailments.php?remedy='.urlencode(strtolower($item));
+
+                    ?>
+                    <p><a href="<?php echo $mflink;?>"><?php echo $item?></a></p>
+                    
+                    <?php
+
+
+
+                    }?>
+                     <?php
+                 }
+                 else
+                 {
+                  ?>
+                   <p style="width:600px;">
+                      No ailments or uses are currently associated with 
+                      <a href="/product_info.php?products_id=<?php echo $product_info['products_id'];?>"><?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></a>.
+                      To view a list of all cataloged ailments and uses, <a href="/ailments.php">click here</a>.
+
+                   </p>
+                  <?php
+
+                 }
+                 
+                 
+        // Uses
+
+            ?>       
+
+            <h2>Why Use <?php echo $product_info['products_name'],' from ',$product_info['manufacturers_name'] ;?>?</h2>
+            
+            <p style="width:600px;">
+                This is a list of intended uses for
+                <b><?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></b>
+                and is created by our editors and customers.
+                This list may be partial and incomplete, and is not reviewed by the FDA, nor is the accuracy of the information guaranteed.
+            </p>
+            <?php
+
+                 if(strlen($product_info['products_uses']))
+                 {
+                   $ailarr=explode(',',$product_info['products_uses']);
+                   asort($ailarr);
+                   foreach($ailarr as $item)
+                   {
+                    $item=trim($item);
+                    $mflink=link_exists('/remedies/'.seo_url_title($item),$page_links) ;
+                    $mflink=strlen($mflink) ? $mflink : '/remedies/'.seo_url_title($item);
+
+                    ?>
+                    <p><a href="<?php echo $mflink;?>"><?php echo $item?></a></p>
+
+                                      <?php
+
+
+
+                    }
+                    
+                    ?>
+
+                    <?php
+
+                 }
+                 else
+                 {
+                  ?>
+                   <p style="width:600px;">
+                      No ailments or uses are currently associated with 
+                      <b><?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></b>.
+                      To view a list of all cataloged ailments and uses, <a href="/ailments.php">click here</a>.
+
+                   </p>
+                  <?php
+
+                 }
+
+            ?>
+
+        <h2><?php echo 'Popular topics that reference ' , $product_info['products_name'] , ' from ' , $product_info['manufacturers_name']?> </h2>
+      
+      <p style="width:600px;"> These are the most popular keyword searches used to locate
+       <?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?>.
+       Click any link below for additional information and related health topics.
+     </p>
+
+      <?php include(DIR_WS_MODULES . 'similar_picks.php');?>
+      
+      <?php echo $searches_string;?>
+  
+            
+
+        
+        
         </div>
+        
+                        
         
         <?php
         $cache->addCache('products_main'.$pmod);
@@ -360,6 +635,8 @@ if(!$cache->doCache('products_main'.$pmod, true, $lastmod))
         <table cellpadding=0 cellspacing=0>
         <tr><td>
         <div id="price_box">
+        
+        
 
         <div style="text-align:left;margin-top:20px;margin-bottom:20px;background: top left repeat-x url(/images/dotted_back.gif) #ffffff;">
 
@@ -488,11 +765,31 @@ if(!$cache->doCache('products_main'.$pmod, true, $lastmod))
                  </td><td>
 
                      </td></tr></table>
+                     
+                 
   	</div>
+    
+    <?php $hubs=match_hub_links($page_links,  true);?>
+  
+    
+             <?php              
+             $mflink=link_exists('/catalog.php?page=',$page_links);
+              if(strlen($mflink))
+              {
+                $catalog=automated_catalog::find(substr($mflink,strpos($mflink,'=')+1));
+               
+                echo '<p><a href="'.$mflink.'">Catalog of Nutritional Supplements '.$catalog->linktext.'</a></p>';
+              }
+              ?>
     	</div>
 
 
-
+<?php 
+            if($seacoast_crawler)
+            {
+                echo '<div>',$product_info['products_id'],'</div><div>',HTTP_SERVER.$_SERVER['REQUEST_URI'],'</div>';
+            }
+        ?>
 
 
 

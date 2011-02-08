@@ -52,13 +52,13 @@ a.menuBoxHeadingLink:hover { font-size: 10px; color: #616060; font-weight: bold;
 
 
 
-a.menuBoxContentLink:link { font-family: Verdana, Arial, sans-serif; font-size: 10px; color: #616060; font-weight: normal; text-decoration: none; }
+a.menuBoxContentLink:link { font-family: Verdana, Arial, sans-serif; font-size: 10px; color: #616060; font-weight: normal; text-decoration: none; margin-bottom:5px; padding-bottom:10px;}
 
 a.menuBoxContentLink:visited { font-family: Verdana, Arial, sans-serif; font-size: 10px; color: #616060; font-weight: normal; text-decoration: none; }
 
 a.menuBoxContentLink:active { font-family: Verdana, Arial, sans-serif; font-size: 10px; color: #616060; font-weight: normal; text-decoration: none; }
 
-a.menuBoxContentLink:hover { font-family: Verdana, Arial, sans-serif; font-size: 10px; color: #616060; font-weight: normal; text-decoration: underline; }
+a.menuBoxContentLink:hover { font-family: Verdana, Arial, sans-serif; font-size: 10px; color: #616060; font-weight: bold; text-decoration: underline; }
 
 
 
@@ -82,7 +82,7 @@ a.splitPageLink:hover { font-family: Verdana, Arial, sans-serif; font-size: 10px
 
 /* page */
 
-body { background-color: #ffffff; color: #000000; margin: 0px; }
+body { background-color: #ffffff; color: #000000; margin: 0px; font-family:helvetica;}
 
 .headerBar { background-color: #B3BAC5; }
 
@@ -198,3 +198,7 @@ FORM { display: inline; }
 .hide-when-print{display:none;width:0px;}
 }
 
+h1
+{
+    font-size:16pt;
+}

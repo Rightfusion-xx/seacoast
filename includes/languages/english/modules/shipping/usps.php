@@ -15,5 +15,5 @@ define('MODULE_SHIPPING_USPS_TEXT_DESCRIPTION', 'United States Postal Service<br
 define('MODULE_SHIPPING_USPS_TEXT_OPT_PP', 'Parcel Post');
 define('MODULE_SHIPPING_USPS_TEXT_OPT_PM', 'Priority Mail');
 define('MODULE_SHIPPING_USPS_TEXT_OPT_EX', 'Express Mail');
-define('MODULE_SHIPPING_USPS_TEXT_ERROR', 'An error occured with the USPS shipping calculations.<br>If you prefer to use USPS as your shipping method, please contact the store owner.');
+define('MODULE_SHIPPING_USPS_TEXT_ERROR', 'Oh no! We\'re very sorry, but USPS couldn\'t find shipping rates for that address.<br>If you prefer to use USPS as your shipping method, just call 800-555-6792 to complete your order.');
 ?>

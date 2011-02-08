@@ -1,5 +1,10 @@
 <?php
 
+if(!$app_top_included)
+{
+    
+    
+
 ob_start();
 //check referrer
 
@@ -32,6 +37,8 @@ $HTTP_POST_VARS=& $_POST;
 $HTTP_COOKIE_VARS=& $_COOKIE;
 $HTTP_SERVER_VARS=& $_SERVER;
 $HTTP_SESSION_VARS=& $_SESSION;
+
+
 
 //$language='english';
 //$languages_id=1;
@@ -92,6 +99,19 @@ $hide_cart=false;
 
 // include the database functions
   require(DIR_WS_FUNCTIONS . 'database.php');
+  
+require_once 'php-activerecord/ActiveRecord.php';
+
+ActiveRecord\Config::initialize(function($cfg)
+{
+    $cfg->set_model_directory(DIR_WS_INCLUDES . '/db_models');
+    $cfg->set_connections(array(
+        DB_DATABASE => 'mysql://'.DB_SERVER_USERNAME.':'.DB_SERVER_PASSWORD.'@'.DB_SERVER.'/'.DB_DATABASE));
+    
+    $cfg->set_default_connection(DB_DATABASE);
+
+});  
+  
 // define general functions used application-wide
   require(DIR_WS_FUNCTIONS . 'general.php');
   require(DIR_WS_FUNCTIONS . 'html_output.php');
@@ -307,6 +327,8 @@ if(isset($_SERVER['HTTP_REFERER']))
     $currency=&$_SESSION['currency'];
 
   }
+  
+
 
 
 
@@ -480,6 +502,59 @@ $HTTP_GET_VARS['products_id']));
 //added for article_manager_1.2
 // include the articles functions
 
+if($_REQUEST['do_admin']=='true')
+{
+    //Make sure user is logged in
+    tep_session_register('do_admin');
+    $do_admin=true;
+
+}
+
+tep_session_is_registered('do_admin');
+  
+  if($do_admin)
+  {
+      
+    if(!tep_session_is_registered('authenticated'))
+    {
+        
+        tep_session_register($authenticated);
+        $authenticated=false;   
+    }
+
+    if(!tep_session_is_registered('tries'))
+    {
+        $tries=1; 
+        tep_session_register($tries); 
+    }  
+
+    if( isset($_SERVER['PHP_AUTH_USER']) && !$authenticated)
+    {
+        // Authenticate user  
+        
+        $get_user=tep_db_fetch_array(tep_db_query('select * from customers c join user_rights ur on ur.customers_id=c.customers_id where customers_email_address="'.$_SERVER['PHP_AUTH_USER'].'" and user_rights like "%admin%"'));
+        
+
+        if(tep_validate_password($_SERVER['PHP_AUTH_PW'], $get_user['customers_password']))
+        {
+            $authenticated=true;
+        }
+                      
+    }
+
+    if (!$authenticated && !$system_login) {
+        if($tries>=3)
+        {
+            $tries=1;
+            tep_redirect(HTTP_SERVER);
+        }
+        header('WWW-Authenticate: Basic realm="Seacoast"');
+        header('HTTP/1.0 401 Unauthorized');  
+        $tries+=1;  
+        exit();
+    }
+  }
+
   require(DIR_WS_FUNCTIONS . 'articles.php');
   require(DIR_WS_FUNCTIONS . 'article_header_tags.php');
 
@@ -573,6 +648,8 @@ if(strlen($handler['redirect'])>0)
   tep_expire_specials();
   
   
+
+  
     ////////////////////////////////////////////////////////////////////
 //Price modifier
 
@@ -582,6 +659,8 @@ $pmod=1.0;
 
 ////////////////////////////////////////////////////////////////////
 
+$app_top_included=true;
+}
 
-
+ob_clean();
 ?>

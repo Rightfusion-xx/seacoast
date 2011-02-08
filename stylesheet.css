@@ -137,7 +137,7 @@ color:#FF9900;
 
 #prod_desc
 {
-	width:625px;float:left;margin-top:30em;
+	width:625px;float:left;margin-top:30em;font-family:georgia;
 }
 
 #prod_right_col
@@ -210,7 +210,7 @@ color:#FF9900;
 COLORS QUICKLIST:
 dark blue - #333367, mid blue - #c6e3f5, light yellow - #fcfcda, link - #135383, orange - #FF9900 FF9900
 */
-body, table, td {margin:0px; color: #222;font-family:Helvetica, Verdana, Arial;font-size:12pt;background-color: #FFFFFF;}
+body, table, td {margin:0px; color: #222;font-family:Arial, Helvetica, Verdana;font-size:14px;background-color: #FFFFFF;}
 /*Header*/
 div#header {background-color: #FFFFFF;}
 div#header_navbox {font-size:10pt; border: 0px !important; background-color: #333367 !important; color: #FFF !important; padding: 0.5em;} 
@@ -258,7 +258,7 @@ a img:active {background-color: #ffffff; color: #FFF; text-decoration: none;}
 }
 
 #content
-{
+{                          
     margin-left:3%;
     margin-top:10px;
     white-space:normal;
@@ -465,3 +465,7 @@ padding: 1px 2px;
 background:url(/images/formbg.gif) repeat-x left top;
 }
 
+.product_listing
+{
+    position:absolute;top:13em;left:1em;width:20em;z-index:5000;overflow:hidden;height:7em;border:dashed 1px #cccccc;
+}

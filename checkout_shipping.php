@@ -41,6 +41,8 @@ if (!tep_session_is_registered('billto')) {
     }
 }
 
+tep_session_unregister('payment');
+
 
 //the next 4 lines are for ccgv
  require(DIR_WS_CLASSES . 'order_total.php');
@@ -489,7 +491,7 @@ function rowOutEffect(object) {
     </table></form></div>
 
 <!-- footer //-->
-<?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
+<?php require(DIR_WS_INCLUDES . 'footer.php');?>
 <!-- footer_eof //-->
 <br>
 <!-- Google Code for Registered Conversion Page -->

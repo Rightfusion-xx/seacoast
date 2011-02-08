@@ -2,6 +2,13 @@
 
 
   require('includes/application_top.php');
+  
+  //$stop_tidy=true;
+  
+  if(preg_match('/[A-Z]/',$_SERVER['REQUEST_URI']))
+  {
+      redir301(strtolower($_SERVER['REQUEST_URI']));
+  }
 
   //Only search if valid. clean search request
   $_REQUEST['health']=str_replace("\'","'",$_REQUEST['health']);
@@ -27,6 +34,21 @@
  if($searchterm==''){ redir301('/'); }
 
 $results['searchterm']=$searchterm;
+
+//Find hub articles
+
+if($hub =tep_db_fetch_array(tep_db_query('select meta_value from wp_postmeta pm where pm.meta_key="hub" and meta_value="'.tep_db_input($searchterm).'"')))
+{
+    
+    redir301('/'.strtolower($hub['meta_value']));
+    exit();
+}      //else, check for tags
+elseif($hub =tep_db_fetch_array(tep_db_query('select meta_value from wp_terms t join wp_term_taxonomy tt on t.term_id=tt.term_id and tt.taxonomy="post_tag" join wp_term_relationships tr on tt.term_taxonomy_id=tr.term_taxonomy_id join wp_postmeta pm on pm.post_id=tr.object_id where t.name="'.tep_db_input($searchterm).'" and meta_key="hub"')))
+{
+    redir301('/'.strtolower($hub['meta_value'])); 
+    exit();
+}
+  
 
 
 //Find KeyMatches
@@ -155,9 +177,9 @@ $no_results=false;
 
 if($results['found_products'])
 {
-  $title=ucwords($searchterm).' | On Sale, Discount ' .ucwords($searchterm) . ' Products';
-  $description='Exclusive ' .$searchterm . ' price at wholesale cost or below for ' .$ailments[2] . ', ' . $ailments[0] . ', ' . $ailments[1] .' ...';
-  $paragraph='Below are sale priced <b> ' .$searchterm.'</b> product discounts. Also explore information on  <?php echo $searchterm; ?> treatment, health benefits & side effects with '.$searchterm.' products. Many of the sources come from our Encyclopedia of Natural Health
+  $title=ucwords($searchterm).' | Vitamin Supplement for ' .ucwords($searchterm) . ' ';
+  $description='Learn about ' .$searchterm . ' and find vitamins and supplements priced at wholesale cost or below for ' .$ailments[2] . ', ' . $ailments[0] . ', ' . $ailments[1] .' ...';
+  $paragraph='Below are <b> ' .$searchterm.'</b> related alternative medicine supplements and vitamins. Also explore information on  <?php echo $searchterm; ?> treatment, health benefits & side effects with '.$searchterm.' products. Many of the sources come from our Encyclopedia of Natural Health
 		        and include relevant health topics. Uses vary, but may include ' .$uses[0] . ', ' . $uses[1] . ', and ' . $uses[2] .' and are non-FDA reviewed or approved, natural alternatives, to use
                         for ' .$ailments[0] . ', ' . $ailments[1] . ', and ' . $ailments[2] .'. '. $searchterm.' products are reviewed below.';
   
@@ -192,6 +214,11 @@ else // Third tier, no results found
 <meta name="keywords" content="<?php echo $searchterm; ?>"/>
 <meta name="description" content="<?php echo $description; ?>"/>
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
+
+<script type="text/javascript" src="/jquery/js/jquery-1.3.2.min.js"></script>  
+
+
+
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 
@@ -233,7 +260,7 @@ ch_query = ch_queries[ch_selected];
   <TR> 
     <TD WIDTH="300px" VALIGN="top" rowspan="2" nowrap>
     		<?php
-			if(!$results['found_products'] && !$no_results){?>
+			if($cart->count_contents() < 1 && !$no_results){?>
 				<div id="nav_manufacturers" class="nav_box">
 
   <div class="nav_header" style="margin-top:20px;" ><?php if(strlen($searchterm)<=30) echo $searchterm; ?> Resources</div>
@@ -252,8 +279,20 @@ ch_query = ch_queries[ch_selected];
 						</div>
 						</div>
 								
-			<?php } ?>  	  
+			<?php }elseif($cart->count_contents() < 1 && $no_results){ ?>  	
+            
+            <script type="text/javascript" charset="utf-8">
+                HL_WIDGET_OPTIONS = {
+                "linksResultsPageUrl" : "",
+                "widgetID" : 613,
+                "customerID" : 17672
+                }
+            </script>
+            <script src="http://js.hotkeys.com/js/widget/hotlinks.js" type="text/javascript" charset="utf-8" id="hotlinksScript"></script>
+                  
 <?php
+            }
+            
 		if(!empty($results['healthnotes'][0]['title']))
 		{
 
@@ -320,7 +359,16 @@ ch_query = ch_queries[ch_selected];
 		}		
 
 
-	 require(DIR_WS_BOXES . 'related_searches.php'); ?>
+	 require(DIR_WS_BOXES . 'related_searches.php'); 
+     
+     if($mflink=link_exists('/natural_uses.php?use='.urlencode(strtolower($usename)),$page_links))
+                          {
+                            $benefits='<a href="'.$mflink.'">'.ucwords($usename).' '.$product_info['products_type'].'</a> &nbsp;'.$benefits;
+                          }
+     
+     ?>
+     
+     
 
 
 <?php require(DIR_WS_INCLUDES . 'column_left.php'); ?>
@@ -328,7 +376,27 @@ ch_query = ch_queries[ch_selected];
 <td valign="top" colspan="2" valign="top"><?php require(DIR_WS_INCLUDES . 'titlebar.php'); ?></td></tr><tr><!-- body_text //-->
     <td width="100%" valign="top">
 		<div id="content">
-		<h1><?php echo $title; ?></h1>
+		<?php
+        
+        $mt=preg_split('/[|]{1}/',$title) ;
+        $first=true;
+        foreach($mt as $item)
+        {
+            if($first)
+            {
+                echo '<h1>',$item,'</h1>';
+                $first=false;
+            
+            }
+            else
+            {
+                echo '<p>',$item,'</p>';                 
+            }
+            
+            
+        }
+    
+        ?>
 		
 		<?php 		if($pagenum==1){ ?>
 	
@@ -339,10 +407,10 @@ ch_query = ch_queries[ch_selected];
 		        </p>
 		
 		        
-		<?php } ?>
+		<?php } ?>  
 		
 		<?php
-		if(!$results['found_products'] && !$no_results){?>
+		if($cart->count_contents() < 1 && !$no_results){?>
 		
 					<div style="margin-top:3em;margin-bottom:3em;">
 						<script type="text/javascript"><!--
@@ -358,10 +426,23 @@ ch_query = ch_queries[ch_selected];
 						</script>
 					</div>
 		
-		<?php } ?>
+		<?php }if($cart->count_contents() < 1 && $no_results){ ?>
+        <div style="margin-top:3em;margin-bottom:3em;">
+        <script type="text/javascript" charset="utf-8">
+            HL_WIDGET_OPTIONS = {
+            "linksResultsPageUrl" : "",
+            "widgetID" : 612,
+            "customerID" : 17672
+            }
+        </script>
+        <script src="http://js.hotkeys.com/js/widget/hotlinks.js" type="text/javascript" charset="utf-8" id="hotlinksScript"></script>
+        </div>
 		
 		
-		<?php //search manufacturers and categories
+		<?php 
+        }
+        
+         //search manufacturers and categories
 		    
 
 
@@ -391,11 +472,69 @@ ch_query = ch_queries[ch_selected];
 		?>
 		    <h2>
 		    <?php echo $searchterm; ?> Benefits,  Reviews & Discounts</h2>
-		    <p>
+		    <p> <div id="listings">
       
                     <?php
 		    
 		   echo $listing_text;
+           
+           ?>
+           </div>
+           
+           
+           
+           <script language="javascript">
+                $('#listings').css({display:'none'});
+           </script>
+           
+           
+                <div id="displaylistings"><!--on--></div>
+    
+           
+           <script language="javascript">
+            var $original='';
+            window.listoriginal=$('#listings').html();
+            var $bestresults='';
+            var $moreresults='';
+            if($('#displaylistings').html().indexOf('on'))
+            {
+                
+                $prods=$('#listings').children('div');
+                
+                if($prods)
+                {
+                        
+                    
+                    do
+                    {
+                        if($prods.html().indexOf('Enzymatic Therapy')>0 || $prods.html().indexOf('Nature\'s Way')>0)
+                        {
+                            
+                            $bestresults+='<div id="prod" class="product_regular">'+$prods.html()+'</div>';
+                        }          
+                        else
+                        {
+                            $moreresults+='<div id="prod" class="product_regular">'+$prods.html()+'</div>';
+                        } 
+                        
+                        $prods=$prods.next();
+                        
+                        
+                    }
+                    while($prods.html()!=null);
+                    
+                    
+                    $('#listings').html($bestresults + $moreresults);
+                    $('#listings').css({display: 'block'});
+                
+                }
+                
+            }
+           
+           </script>
+           
+           <?php
+    
 
 
 		    
@@ -506,6 +645,8 @@ ch_query = ch_queries[ch_selected];
 		        
 		        echo '</div></p>';}
 		    }
+            populate_backlinks();
+            $hubs=match_hub_links($page_links,  true);   
 		    
 		    
 		unset($product_info); 
@@ -539,19 +680,25 @@ ch_query = ch_queries[ch_selected];
 		</td>
 
 <!-- body_text_eof //-->
-   <TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" rowspan="2">
-     <TABLE BORDER="0" WIDTH="<?php echo BOX_WIDTH; ?>" CELLSPACING="2" CELLPADDING="0">
-<!-- right_navigation //-->
-<?php //require(DIR_WS_INCLUDES . 'column_right.php'); ?>
-<!-- right_navigation_eof //-->
-     </TABLE></TD></TR></TABLE>
+</TR></TABLE>
 <!-- body_eof //-->
 
-<!-- footer //-->
+<!-- footer //-->                                         
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
 <!-- footer_eof //-->
 <br>
 
+<!-- Google Website Optimizer Tracking Script -->
+<script type="text/javascript">
+if(typeof(_gat)!='object')document.write('<sc'+'ript src="http'+
+(document.location.protocol=='https:'?'s://ssl':'://www')+
+'.google-analytics.com/ga.js"></sc'+'ript>')</script>
+<script type="text/javascript">
+try {
+var gwoTracker=_gat._getTracker("UA-207538-3");
+gwoTracker._trackPageview("/0386199624/test");
+}catch(err){}</script>
+<!-- End of Google Website Optimizer Tracking Script -->   
 
 </body>
 </html>

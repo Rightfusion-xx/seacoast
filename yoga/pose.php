@@ -6,7 +6,7 @@
 
   require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_DEFAULT);
   
-  $yoga_query=tep_db_query('SELECT * FROM yoga.poses where poseid="'.tep_db_prepare_input($_REQUEST['posture']).'" order by posename asc;');
+  $yoga_query=tep_db_query('SELECT * FROM yoga.poses where poseid="'.tep_db_input($_REQUEST['posture']).'" order by posename asc;');
   
   if(!$yoga_info=tep_db_fetch_array($yoga_query))
   {
@@ -136,7 +136,7 @@ google_ad_channel = "5112816388";
         
         
         <?php require($_SERVER['DOCUMENT_ROOT'].'/yoga/includes/render_pills.php');?>
-        <?php render_pills(tep_db_query('SELECT products_name, left(products_head_desc_tag,300) as products_description, p.products_id FROM products p join products_description pd on pd.products_id=p.products_id where products_head_keywords_tag like \'%'.str_replace(',','%\' or products_head_keywords_tag like \'%',str_replace('  ',' ',$yoga_info['use'])).'%\' limit 0,25'));?>
+        <?php render_pills(tep_db_query('SELECT products_name, left(products_head_desc_tag,300) as products_description, p.products_id FROM products p join products_description pd on pd.products_id=p.products_id where products_head_keywords_tag like \'%'.str_replace(',','%\' or products_head_keywords_tag like \'%',str_replace('  ',' ',tep_db_input($yoga_info['use']))).'%\' limit 0,25'));?>
 
 </div>
 

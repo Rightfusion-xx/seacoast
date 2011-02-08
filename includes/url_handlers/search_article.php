@@ -168,7 +168,8 @@ $products_name=$searchterm;
 		
 				   
 		  
-		       
+          populate_backlinks();
+		$hubs=match_hub_links($page_links,  true);          
 		            
 		            
 		        

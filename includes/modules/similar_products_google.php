@@ -16,6 +16,7 @@
 
         global $products_name;
         global $alt_keywords;
+        global $results;
         $index=0;
         
         $googlelist='';

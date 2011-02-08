@@ -1,6 +1,6 @@
 <?php
 $layerrows=5000;
-$rendered_upsell=false;
+$rendered_upsell=true;
 
 function renderRegularProd($product_info,$rows='')
 {
@@ -42,11 +42,15 @@ function renderRegularProd($product_info,$rows='')
       $listing_text.='">';
 
             $listing_text.= '&nbsp;<h2 style="display:inline;"><a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '" style="font-size:12pt;">'.$product_info['manufacturers_name'].' <br>' . $product_info['products_name'] . '</a></h2>';
-            $listing_text.='<div class="listing-image">';
+            
             if(strlen($product_image_path)>0){
+             $listing_text.='<div class="listing-image">'; 
              $listing_text.='<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '"><img border="0" src="'. $product_image_path . '" style="margin:5px;width:5em;overflow:hidden;" ALIGN="left" alt="'.$product_info['products_name'].' '.$product_info['manufacturers_name'].'" /></a>';
+             $listing_text.='</div>';
             }
-            $listing_text.='</div><br/>';
+            
+            $listing_text.='<br/>';
+            
 
 
             if($product_info['products_isspecial']=='1')
@@ -94,16 +98,15 @@ function renderRegularProd($product_info,$rows='')
            $listing_text.= $product_info['manufacturers_name'].'</b>' ;
 
 
-   
-           $listing_text.='<br/><br/>'.tep_draw_form('buy_now', tep_href_link('/product_info.php', tep_get_all_get_params(array('action')) . 'action=buy_now&amp;buyqty=1&amp;products_id='. $product_info['products_id']), 'POST', 'onsubmit="return vd_price_box();"') . ''  . tep_image_submit('button_in_cart.gif', IMAGE_BUTTON_IN_CART, 'style="position:absolute;left:8em;top:13em;"') . '<input type="hidden" name="cm_freetrial" value="true"/></form>';
-            if(strlen($product_info['product_desc'])>0){$listing_text.='<div style="position:absolute;top:15em;left:1em;width:20em;z-index:5000;overflow:hidden;height:5em;border:dashed 1px #cccccc;" onmouseover="this.style.height=\'auto\';this.style.overflow=\'visible\';this.style.backgroundColor=\'#ffffcc\';" onmouseout="this.style.overflow=\'hidden\';this.style.backgroundColor=\'#ffffff\';this.style.height=\'5em\';"><a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '" style="color:#000000;text-decoration:none;background-color:transparent;">' . $product_info['product_desc'] . '</a></div>';}
+                                        
+           if(strlen($product_info['product_desc'])>0){$listing_text.='<div class="product_listing" onmouseover="this.style.height=\'auto\';this.style.overflow=\'visible\';this.style.backgroundColor=\'#ffffcc\';" onmouseout="this.style.overflow=\'hidden\';this.style.backgroundColor=\'#ffffff\';this.style.height=\'7em\';">' . $product_info['product_desc'] . '</div>';}
 
 
 
   
       $listing_text.='</div>';
       $layerrows=$layerrows-1;
-      return($listing_text);
+      return(getHubKeywordsAndRewriteContent($listing_text));
 
 
 

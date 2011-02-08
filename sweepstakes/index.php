@@ -166,7 +166,7 @@ https=<?php echo $_SERVER['HTTPS']?>
           <tr>
 
             <td><h1><?php echo $category['categories_htc_title_tag']; ?></h1></td>
-           <td class="pageHeading" align="right"><?php echo // tep_image(DIR_WS_IMAGES . $category['categories_image'], $category['categories_name'], HEADING_IMAGE_WIDTH, HEADING_IMAGE_HEIGHT); ?></td>
+           <td class="pageHeading" align="right"><?php // echo  tep_image(DIR_WS_IMAGES . $category['categories_image'], $category['categories_name'], HEADING_IMAGE_WIDTH, HEADING_IMAGE_HEIGHT); ?></td>
           </tr>
            <?php if (tep_not_null($category['categories_htc_description'])) { ?> 
           <tr>

@@ -42,26 +42,4 @@
 
         }   
     
-
-if(strlen($searches_string)>0 || strpos($_SERVER['REQUEST_URI'],'zyflamend')>0){
-?>
-<!-- similar_products //-->
-<h2>Similar Picks By Most Popular</h2>
-<p>
-  <?php
-
-    echo $searches_string;
-  
-    if(strpos(' '.$_SERVER['REQUEST_URI'],'/zyflamend/')>0){
-      echo '<p><a href="/topic.php?health=zyflamend"><b>Discount Zyflamend</b></a></p>';
-     }
-    elseif(strpos($_SERVER['REQUEST_URI'],'zyflamend')>0){
-      echo '<p><a href="/zyflamend/"><b>Zyflamend Benefits</b></a></p>';
-     }
-	  
-?>
-</p>
-<!-- similar_products_eof //-->
-<?php
-  }
-?>
+ 

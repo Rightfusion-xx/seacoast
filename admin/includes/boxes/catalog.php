@@ -29,7 +29,6 @@
                                    '<a href="' . tep_href_link(FILENAME_REVIEWS, '', 'NONSSL') . '" class="menuBoxContentLink">' . BOX_CATALOG_REVIEWS . '</a><br>' .
                                    '<a href="' . tep_href_link(FILENAME_SPECIALS, '', 'NONSSL') . '" class="menuBoxContentLink">' . BOX_CATALOG_SPECIALS . '</a><br>' .
                                    '<a href="' . tep_href_link(FILENAME_PRODUCTS_EXPECTED, '', 'NONSSL') . '" class="menuBoxContentLink">' . BOX_CATALOG_PRODUCTS_EXPECTED . '</a><br>' .
-								   '<a href="' . tep_href_link(FILENAME_QUICK_PRICEUPDATES, '', 'NONSSL') . '" class="menuBoxContentLink">' . BOX_QUICK_PRICEUPDATES. '</a><br>'.
                                    '<a href="' . tep_href_link('easypopulate.php', '', 'NONSSL') . '" class="menuBoxContentLink">Easy Populate</a><br>'.
 								   '<a href="' . tep_href_link(FILENAME_PRODUCTS_MULTI, '', 'NONSSL') . '" class="menuBoxContentLink">multi prods move/copy</a>' );
 							

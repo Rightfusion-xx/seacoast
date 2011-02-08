@@ -127,87 +127,16 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
 </td>
 <td valign="top">
 
-<div style="float:right;width:300;margin-left:20px;" id="hn_topics">
+<div style="float:right;width:300px;margin-left:20px;" id="hn_topics">
 
-  	<link href="http://www.healthnotes.info/http/Styles/welcome.css" rel="stylesheet" /> 
-
-    <script type="text/javascript" src="http://www.healthnotes.info/http/scripts/JumpNav.js"></script>
-    <div id="welcomeBody">
+   <b><a href="/health-guide/">A to Z List of Supplements</a></b>
 
 
-      <table cellpadding="0" cellspacing="0" border="0" class="columns">
 
 
-      <tr valign="top">
-        <td> 
-
-          <div id="group1">
-            <div class="section">
-      <h1 class="box"><a href="health_library.php?article=2402003">HEALTH GUIDE</a></h1>
-      <form id="JumpConcerns" action="javascript:jump('JumpConcerns')" method="post">
-        <div>Learn more about:</div>
-        <select name="target" size="1" onChange="javascript:jump('JumpConcerns')">
-
-          <option value="health_library.php?article=1171004">Bronchitis</option>
-          <option value="health_library.php?article=1177000">Cancer Prevention and Diet</option>
-          <option value="health_library.php?article=1200006">Depression</option>
-          <option value="health_library.php?article=1028005">High Cholesterol</option>
-          <option value="health_library.php?article=1033009">Hypertension</option>
-          <option value="health_library.php?article=1222004">Insomnia</option>
-
-          <option value="health_library.php?article=1041009">Menopause</option>
-          <option value="health_library.php?article=3990003">Men&#8217;s Health Center</option>
-          <option value="health_library.php?article=1043007">Migraine Headaches</option>
-          <option value="health_library.php?article=1049006">Osteoarthritis</option>
-          <option value="health_library.php?article=1050006">Osteoporosis</option>
-          <option value="health_library.php?article=1249004">Premenstrual Syndrome</option>
-
-          <option value="health_library.php?article=3991004">Women&#8217;s Health Center</option>
-          <option value="health_library.php?article=2402003">See all concerns...</option>
-        </select>
-        <input type=submit value=GO class="button" onClick="javascript:jump('JumpConcerns')">
-      </form>
-      <p class="more"><a href="health_library.php?article=2402003">All health conditions</a></p>
-    </div>
-
-    <div class="focus">
-      <h2><a href="health_library.php?article=2461007"><img src="http://www.healthnotes.info/http/images/vitamin_pic.gif" alt="" width="51" height="55" border="0" class="left">Vitamin Guide</a></h2>
-      <p>Information about nutritional supplements</p>
-    </div>
-    <div class="focus">
-      <h2><a href="health_library.php?article=2420007"><img src="http://www.healthnotes.info/http/images/herb_pic.gif" alt="" width="51" height="55" border="0" class="left">Herbal Remedies</a></h2>
-      <p>The medicinal use of herbs&#8212;old and new</p>
-    </div>
-
-    <div class="focus">
-      <h2><a href="health_library.php?article=2425002"><img src="http://www.healthnotes.info/http/images/homeo_pic.gif" alt="" width="51" height="55" border="0" class="left">Homeopathy</a></h2>
-      <p>Nature&#8217;s subtle influences</p>
-    </div>
-    <div class="focus">
-      <h2><a href="health_library.php?article=3994007"><img src="http://www.healthnotes.info/http/images/hl_weight_pic.gif" alt="" width="51" height="55" border="0" class="left">Weight Control</a></h2>
-
-      <p>Look good and feel great</p>
-    </div>
-
-    <div class="focus">
-      <h2><a href="health_library.php?article=3993001"><img src="http://www.healthnotes.info/http/images/hl_sports_pic.gif" alt="" width="51" height="55" border="0" class="left">Sports &amp; Fitness</a></h2>
-      <p>Maximize performance, achieve fitness, go for it</p>
-    </div>
-    <div class="focus">
-      <h2><a href="health_library.php?article=3991004"><img src="http://www.healthnotes.info/http/images/womens_pic.gif" alt="" width="51" height="55" border="0" class="left">Women&#8217;s Health</a></h2>
-
-      <p>Common health conditions of interest to women</p>
-
-    </div>
-    <div class="focus">
-      <h2><a href="health_library.php?article=3990003"><img src="http://www.healthnotes.info/http/images/mens_pic.gif" alt="" width="51" height="55" border="0" class="left">Men&#8217;s Health</a></h2>
-      <p>Common health conditions of interest to men</p>
-    </div>
-
-
-      </div>
+</div>
    </td></tr></table>
-    <div id="nav_manufacturers" class="nav_box" style="margin-top:20px;">
+    <div id="nav_manufacturers" class="nav_box" style="margin-top:20px;width:300px;float:right;">
   <div class="nav_header">
     Direct to Members
   </div>
@@ -216,12 +145,11 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
    <p>
    		Join Seacoast Vitamins-Direct FREE for 14-Days. <a href="/community/" style="font-weight:bold">Start now</a>.
    </p>
-      </div></div>
-    
-    </div>
-  
-  
+      </div>
 </div>
+    
+   
+
 
 </td>
 </tr>
@@ -280,8 +208,10 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
   </i>
 </p>
 
+
+
 <?php
-//Display Ailments
+//Display Departments
 if(is_array($departmentCategories)&&$departmentCategories[1]!=''){
 ?>
 <h2>Popular Departments</h2>

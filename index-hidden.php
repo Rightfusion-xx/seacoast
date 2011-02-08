@@ -1,6 +1,7 @@
 <?php
 
 
+$linkcachetime=60*10;
 
   require('includes/application_top.php');
   
@@ -49,12 +50,44 @@
                   <?php require(DIR_WS_INCLUDES . 'front_ads.php'); ?>
 
 
-                  <?php include(DIR_WS_MODULES . FILENAME_NEW_PRODUCTS); ?>
-
+                 
               
+   <h2>Popular Health Hubs</h2>
+   
+   <?php
+    $hub_query =tep_db_query('select * from wp_posts p join wp_postmeta pm on pm.post_id=id where pm.meta_key="hub"');
+    
+    while($hub=tep_db_fetch_array($hub_query))
+    {
+        echo '<p><h2><a href="/hub.php?tag='.$hub['meta_value'].'">'.$hub['post_title'].'</a></h2>'.$hub['post_excerpt'].' <a href="/hub.php?tag='.$hub['meta_value'].'">[read more]</a>';     
+    }
+    
+    
+    
+    
+    
+?>
 
-               </div>
+               
+               
+   <h2>Catalog of Nutritional Supplements</h2>
+    <p>
+    <?php
+    
+    foreach(automated_catalog::all() as $catalog)
+    {
+        
+        echo '<a href="/catalog.php?page='.$catalog->pagenum.'">'.$catalog->linktext.'</a> &nbsp; ';
+    }    
 
+?>
+    
+    
+    </p>
+    
+    <h2>Recent Changes and Additions</h2>  
+    <p><a href="/recent_changes.php">Recently updated and new products</a></p>
+</div>  
 
 <?php 
   $cache->addCache('homepage');

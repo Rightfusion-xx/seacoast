@@ -1,5 +1,8 @@
 <?php
 
+ob_start();
+
+
 //PHP 5.0 Upgrade workaround
 $HTTP_GET_VARS=& $_GET;
 $HTTP_POST_VARS=& $_POST;
@@ -74,6 +77,18 @@ $HTTP_SESSION_VARS=& $_SESSION;
     if(!defined($configuration['cfgKey']))
       define($configuration['cfgKey'], $configuration['cfgValue']);
   }
+  
+  require_once 'php-activerecord/ActiveRecord.php';
+
+ActiveRecord\Config::initialize(function($cfg)
+{
+    $cfg->set_model_directory(DIR_WS_INCLUDES . '/db_models');
+    $cfg->set_connections(array(
+        DB_DATABASE => 'mysql://'.DB_SERVER_USERNAME.':'.DB_SERVER_PASSWORD.'@'.DB_SERVER.'/'.DB_DATABASE));
+    
+    $cfg->set_default_connection(DB_DATABASE);
+
+});  
 
 // define our general functions used application-wide
   require(DIR_WS_FUNCTIONS . 'general.php');

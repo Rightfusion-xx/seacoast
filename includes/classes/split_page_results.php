@@ -91,7 +91,8 @@
 
 // display split-page-number-links
     function display_links($max_page_links, $parameters = '') {
-      global $PHP_SELF, $request_type;
+      global $request_type;
+      $PHP_SELF=$_SERVER['PHP_SELF'];
       
       $parameters=str_replace('%20','+',$parameters);
 

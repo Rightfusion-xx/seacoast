@@ -6,7 +6,7 @@
 
   require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_DEFAULT);
   
-  $yoga_query=tep_db_query('SELECT * FROM yoga.poses where sequence="'.tep_db_prepare_input($_REQUEST['sequence']).'" order by posename asc;');
+  $yoga_query=tep_db_query('SELECT * FROM yoga.poses where sequence="'.tep_db_input($_REQUEST['sequence']).'" order by posename asc;');
   
   if(!$yoga_info=tep_db_fetch_array($yoga_query))
   {

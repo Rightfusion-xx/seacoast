@@ -29,7 +29,7 @@ if(!isset($_REQUEST['year']) || !is_numeric($_REQUEST['year']))
           and os.orders_status_id=3 order by o.orders_id asc';
 
   $query_link=tep_db_query($query);
-  
+
   $results=tep_db_fetch_array($query_link);
 
 
@@ -122,7 +122,18 @@ if(!isset($_REQUEST['year']) || !is_numeric($_REQUEST['year']))
                            <p>
                               <b>Quantity Sold:</b> <?php echo $qty;?></b><br/>
                               <b>Total:</b> $<?php echo number_format($amount,2);?></b><br/>
-                              <b>Total Commission:</b> $<?php echo number_format($qty*10,2);?></b><br/>
+                              <?php
+                              if($_REQUEST['month']>=8 && $_REQUEST['year']>=2010 || $_REQUEST['year']>2010)
+                              {
+                                $total_commission=number_format($qty*12.5,2);
+                              }
+                              else
+                              {
+                                $total_commission=number_format($qty*10,2);
+                              }
+                              ?>
+
+                              <b>Total Commission:</b> $<?php echo $total_commission;?></b><br/>
                            </p>
                            
 

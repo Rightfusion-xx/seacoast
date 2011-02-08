@@ -19,20 +19,9 @@
 
   if((int)$_REQUEST['products_id'])
   {
-        $product_info_query = tep_db_query("select p.products_keywords, pd.products_head_title_tag, pd.products_head_keywords_tag,
-						pd.products_head_desc_tag, pd.products_type, psu.product_sku,
-						pd.products_departments,pd.products_ailments,pd.products_uses,
-                                                date_format(p.products_date_added,'%m/%d/%Y') as
-						products_date_added, p.products_last_modified, psu.product_upc,
-						p.products_id, pd.products_name, pd.products_description, p.products_model,
-						p.products_quantity, p.products_image, pd.products_url, p.products_msrp,
-						p.products_price, p.products_tax_class_id, p.products_date_available,
-						p.manufacturers_id, m.manufacturers_name
-						from " . TABLE_PRODUCTS . " p join  " . TABLE_PRODUCTS_DESCRIPTION . " pd on
-						p.products_id=pd.products_id join ". TABLE_MANUFACTURERS ." m on m.manufacturers_id=p.manufacturers_id
-						left outer JOIN products_sku_upc psu ON psu.product_ids = p.products_id where p.products_status = '1' and p.products_id = '" . (int)$_REQUEST['products_id'] .
-	"' and pd.language_id =' " . (int)$languages_id . "'");
-
+      $products_name=tep_db_fetch_array(tep_db_query("select concat(manufacturers_name,\" \",products_name) as products_name from products_description pd join products p on p.products_id=pd.products_id join manufacturers m on m.manufacturers_id=p.manufacturers_id where p.products_id=".(int)$_REQUEST['products_id']));                                                                        
+      $replacement="/supplement/".seo_url_title($products_name["products_name"]."-".$products_id, $page);
+      redir301($replacement);
 
 
 
@@ -154,64 +143,6 @@ if(strlen($lastprod))
 	</div>
      
      <?php }
-     else
-     {
-       // No need to pull ailments. Already have them.
-       ?>
-       <div id="content">
-            <h1>Ailments & Uses for <?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></h1>
-            
-            <p style="width:600px;">
-                Certain uses and indications are associated with
-                <a href="/product_info.php?products_id=<?php echo $product_info['products_id'];?>"><?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></a>.
-                This may be a partial list of potential uses. This list is not verified, and is not reviewed by the FDA.
-            </p>
-            <?php
-
-                 if(strlen($product_info['products_ailments']))
-                 {
-                   $ailarr=explode(',',$product_info['products_ailments']);
-                   asort($ailarr);
-                   foreach($ailarr as $item)
-                   {
-                    $item=trim($item);
-                    $mflink=link_exists('/ailments.php?remedy='.urlencode(strtolower($item)),$page_links) ;
-                    $mflink=strlen($mflink) ? $mflink : '/ailments.php?remedy='.urlencode(strtolower($item));
-
-                    ?>
-                    <p><a href="<?php echo $mflink;?>"><?php echo $item?></a></p>
-                    
-                    <?php
-
-
-
-                    }?>
-                     <p style="width:600px;">
-            To view a list of all ailments and diseases, <a href="/symptoms/">click here</a>.
-
-            </p>      <?php
-                 }
-                 else
-                 {
-                  ?>
-                   <p style="width:600px;">
-                      No ailments or uses are currently associated with 
-                      <a href="/product_info.php?products_id=<?php echo $product_info['products_id'];?>"><?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></a>.
-                      To view a list of all cataloged ailments and uses, <a href="/ailments.php">click here</a>.
-
-                   </p>
-                  <?php
-
-                 }
-
-            ?>       
-       </div>  
-       <?php
-
-     }
-     
-  
-
       ?>  
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
 <br>

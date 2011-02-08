@@ -1,6 +1,13 @@
-<?php
+<?php                        
+
 require($_SERVER['DOCUMENT_ROOT'].'/includes/application_top.php');
 require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_PRODUCT_INFO);
+
+tep_session_register('do_admin');
+$do_admin=true;
+tep_session_register('ordered_by');
+$ordered_by='phone';
+
 
 $error = false;
 
@@ -29,6 +36,8 @@ tep_session_register('customer_zone_id');
 tep_db_query("update " . TABLE_CUSTOMERS_INFO . " set customers_info_date_of_last_logon = now(), customers_info_number_of_logons = customers_info_number_of_logons+1 where customers_info_id = '" . (int)$customer_id . "'");
 // restore cart contents
 $cart->restore_contents();
+
+refresh_user_info();   
 
 tep_redirect('/account.php');
 }tep_redirect('customers.php');

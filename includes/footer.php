@@ -1,10 +1,20 @@
 <?php // inject header to appropriate place
   $start=ob_get_length();
+  
+  $header_height=11;
+  if($_SESSION['cm_is_member'])
+  {
+      $header_height+=2;
+  }
+  if($do_admin && $authenticated)
+  {
+      $header_height+=3;
+  }
 
 ?>
 
 
-  <div id="main_content" style="margin-top:<?php if($_SESSION['cm_is_member']){ ?>13em;<?php }else{?>11em;<?php }?>">
+  <div id="main_content" style="margin-top:<?php echo $header_height;?>em;">
   
   
   
@@ -159,15 +169,11 @@ ch_query = ch_queries[ch_selected];
       <td nowrap width="210">
         <div id="header_logo" style="margin-left:5px;margin-bottom:1em;">
           <?php 
-          if((int)$_REQUEST['products_id'])
-          {
-            echo '<img src="/images/seacoast_logo.png" border="0" alt="Vitamins from Seacoast Vitamins for Nutritional Supplements Online. Source of vitamins, minerals, herbs, and all your nutritional supplement needs." title=" Vitamins from Seacoast Vitamins for Nutritional Supplements Online. Source of vitamins, minerals, herbs, and all your nutritional supplement needs. " width="179" height="60">';
+                 
             
-          }
-          else
-          {
-            echo '<a href="/"><img src="/images/seacoast_logo.png" border="0" alt="Vitamins from Seacoast Vitamins for Nutritional Supplements Online. Source of vitamins, minerals, herbs, and all your nutritional supplement needs." title=" Vitamins from Seacoast Vitamins for Nutritional Supplements Online. Source of vitamins, minerals, herbs, and all your nutritional supplement needs. " width="179" height="60"></a>';
-          }
+
+            echo '<a href="'.HTTP_SERVER.'/"><img src="/images/seacoast_logo.png" border="0" alt="Vitamins from Seacoast Vitamins for Nutritional Supplements Online. Source of vitamins, minerals, herbs, and all your nutritional supplement needs." title=" Vitamins from Seacoast Vitamins for Nutritional Supplements Online. Source of vitamins, minerals, herbs, and all your nutritional supplement needs. " width="179" height="60"></a>';
+        
           ?>
         </div>
       </td>
@@ -235,7 +241,7 @@ ch_query = ch_queries[ch_selected];
             <input type="text" name="health" size="10" maxlength="250" style="width: 200px" value="<?php echo $_REQUEST['health']?>"/>&nbsp;<input class="formbutton" type="submit" value="Search" alt="Search Seacoast" title=" Search Seacoast "/>
             &nbsp;&nbsp;
             <?php 
-            if((int)$_REQUEST['products_id'])
+           if((int)$_REQUEST['products_id'] && 1==2) // Used to check for product id, and redo nav links.
           {?>
             <a href="/index.php?products_id=<?php echo (int)$_REQUEST['products_id']?>">Health Guides</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             <a href="/ailments.php?products_id=<?php echo (int)$_REQUEST['products_id']?>">Ailments &amp; Diseases</a>&nbsp;&nbsp;|&nbsp;&nbsp;
@@ -273,6 +279,17 @@ ch_query = ch_queries[ch_selected];
     
   </table>
   
+  <?php 
+  if($do_admin && $authenticated)
+  {
+      ?>
+      <div id="admin" class="green box">
+      User: <?php echo substr($_SERVER['PHP_AUTH_USER'],0,strpos($_SERVER['PHP_AUTH_USER'],'@'));?>
+      </div>
+      
+      <?php
+  }
+        ?>
  <!--
   <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix" style="margin-top:2em; margin-left:10%;margin-right:10%;margin-bottom:2em;0px;display:none;" id="freeTrialInfo">
   Not a member? <span style="text-decoration:line-through">Only $50 per year.</span> FREE for 14-days!
@@ -320,17 +337,46 @@ else{
 echo '1. Seacoast Health Encyclopedia statements or claims have not been evaluated by the FDA.';}
 
 ?>
+View all <a href="/search_topics.php">health topics</a>.
+</p>
+
+<div style="margin:2em;">
+<h3>Seacoast Website Guides and Sitemaps</h3>
+
+<p>
+<a href="/features.php">Featured & Important Products</a><br/>
+<a href="/catalog.php">Complete Vitamin Supplement Catalog</a><br/>
+<a href="/recent_changes.php">Recently Updated and New Products</a><br/>
+
+
 </p>
 </div>
+</div>
 
+
+<?php 
+if($authenticated && $do_admin)
+{
+     ?>
+     
+    <link type="text/css" href="/jquery/css/ui-lightness/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />    
+<script type="text/javascript" src="/jquery/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/jquery/js/jquery-ui-1.7.1.custom.min.js"></script>
+
+
+    
+      <?php
+    
+
+}
+
+?>
 
 
 
 <?php if(1==2){?>
 
-<link type="text/css" href="/jquery/css/ui-lightness/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />	
-<script type="text/javascript" src="/jquery/js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="/jquery/js/jquery-ui-1.7.1.custom.min.js"></script>
+
 
 <?php
 if(!$cart->in_cart(CM_FTPID) && !$cart->in_cart(CM_PID) && !$_SESSION['cm_is_member']){  ?>
@@ -464,18 +510,18 @@ pageTracker._initData();
 pageTracker._trackPageview();
 </script>
 
-
-<?php if($_SERVER['HTTPS'] == 'off'){ ?>
-<!-- Start Quantcast tag -->
-<script type="text/javascript" src="http://edge.quantserve.com/quant.js"></script>
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
 <script type="text/javascript">
-  _qacct="p-8bGAfSCJCy0J2";quantserve();
+if(document.location.protocol!='https:')
+  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRb6.js'%20type='text/javascript'%3E%3C/script%3E"));
 </script>
-<noscript>
-  <img src="http://pixel.quantserve.com/pixel/p-8bGAfSCJCy0J2.gif" style="display: none" height="1" width="1" alt="Quantcast"/>
-</noscript>
-<?php } ?>
-<!-- End Quantcast tag -->
+<script type="text/javascript">
+if(typeof ClickTale=='function') ClickTale(1368,0.0075,"www07");
+</script>
+<!-- ClickTale end of Bottom part -->
+
+
 
 
 <?php

@@ -53,7 +53,7 @@ $product_image_path=select_image($new_products['products_id'], $new_products['pr
 	if(!$reviews_rating==null){
 	$reviews_rating = '<img src="images/stars_'. $new_products['reviews_rating'].'.gif" alt="'.$new_products['reviews_rating'] . TABLE_HEADING_TEXT_OF_5_STARS . ' ('.$new_products['products_name'].')" border="0" align="absmiddle">';
 	}else {
-	$reviews_rating = '<img src="images/stars_0.gif" alt="Not Rated" border="0" align="absmiddle"><br><span class="smallText"><a href="product_reviews_write.php?products_id='.$new_products['products_id'].'">' . TABLE_HEADING_FIRST_TO_RATE . '</a></span>';
+	$reviews_rating = '<img src="images/stars_0.gif" alt="Not Rated" border="0" align="absmiddle">';
 	}
 
 $info_box_contents[$row][$col] = array('align' => 'left', 
@@ -82,10 +82,7 @@ $info_box_contents[$row][$col] = array('align' => 'left',
 					</table>
 				  </td>
 				</tr>
-				<tr>
-				  <td>' . tep_draw_separator('pixel_trans.gif', '100%', '10') . '</td>
-				   <td height="30"><a rel="nofollow" href="' . tep_href_link(basename($_SERVER['PHP_SELF']), tep_get_all_get_params(array('action')) . 'action=buy_now&products_id=' . $new_products['products_id']) . '">' . tep_image_button('button_in_cart.gif', IMAGE_BUTTON_BUY_NOW) . '</a>
-				</tr>
+				
 			  </table>
 			</td>
 		  </tr>

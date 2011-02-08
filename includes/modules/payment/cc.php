@@ -124,7 +124,7 @@
                          'fields' => array(array('title' => MODULE_PAYMENT_CC_TEXT_CREDIT_CARD_OWNER,
                                                  'field' => tep_draw_input_field('cc_owner', $order->billing['firstname'] . ' ' . $order->billing['lastname'])),
                                            array('title' => MODULE_PAYMENT_CC_TEXT_CREDIT_CARD_NUMBER,
-                                                 'field' => tep_draw_input_field('cc_number')),
+                                                 'field' => tep_draw_input_field('cc_number',"","autocomplete=off")),
 
                                            array('title' => MODULE_PAYMENT_CC_TEXT_CREDIT_CARD_EXPIRES,
 

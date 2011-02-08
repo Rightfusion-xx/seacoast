@@ -11,9 +11,9 @@
 // Define the webserver and path parameters
 // * DIR_FS_* = Filesystem directories (local/physical)
 // * DIR_WS_* = Webserver directories (virtual/URL)
-  define('HTTP_SERVER', 'http://www.dev.nealbozeman.com/admin'); // eg, http://localhost - should not be empty for productive servers
-  define('HTTP_CATALOG_SERVER', 'http://www.dev.nealbozeman.com/admin');
-  define('HTTPS_CATALOG_SERVER', 'http://www.dev.nealbozeman.com/admin');
+  define('HTTP_SERVER', 'http://admin.nealbozeman.com'); // eg, http://localhost - should not be empty for productive servers
+  define('HTTP_CATALOG_SERVER', 'http://www.dev.nealbozeman.com');
+  define('HTTPS_CATALOG_SERVER', 'http://admin.nealbozeman.com');
   define('ENABLE_SSL_CATALOG', 'false'); // secure webserver for catalog module
   define('DIR_FS_DOCUMENT_ROOT', '/seacoast/www/'); // where the pages are located on the server
   define('DIR_WS_ADMIN', '/'); // absolute path required
@@ -56,5 +56,8 @@
   define('CM_PID','2532'); //full membership
 
 define('X_TEST_REQUEST','TRUE');
+
+define('PREFERRED_ENCRYPTION', 'twofish');
+define('ENCRYPTION_KEY','XF;F,7b !<K:-8)492M=f');
 
 ?>

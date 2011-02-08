@@ -1,5 +1,14 @@
 <?php
 
+
+  require('includes/application_top.php');
+
+tep_session_register('searchtype');
+$searchtype=$_REQUEST['searchtype'];
+
+
+flush();
+
 $params=Array();
 
 if($_REQUEST['msearch']=='')

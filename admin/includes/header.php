@@ -1,3 +1,11 @@
+
+
+                                                                                                      
+<!-- <link type="text/css" href="/jquery/css/ui-lightness/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />  -->  
+ 
+<!--<script type="text/javascript" src="/jquery/js/jquery-ui-1.7.1.custom.min.js"></script>-->
+
+    
 <div clss="hide-when-print">
 <?php
 
@@ -5,6 +13,8 @@
   if ($messageStack->size > 0) {
     echo $messageStack->output();
   }
+  
+  tep_session_is_registered('searchtype');
 ?>
 <script language="javascript">
         function focus_search()
@@ -22,20 +32,21 @@
     <br>
     
     <input type="radio" name="searchtype" value="customer" onclick="focus_search();"
-    <?php if($_REQUEST['searchtype']=='customer'){echo 'checked';}elseif($_REQUEST['searchtype']=='')echo 'checked';?>/>Customer&nbsp;
+    <?php if($searchtype=='customer'){echo 'checked';}elseif($searchtype=='')echo 'checked';?>/>Customer&nbsp;
     <input type="radio" name="searchtype" value="order" onclick="focus_search();"
-    <?php if($_REQUEST['searchtype']=='order'){echo 'checked';}?>/>Order#&nbsp;
+    <?php if($searchtype=='order'){echo 'checked';}?>/>Order#&nbsp;
     <input type="radio" name="searchtype" value="product" onclick="focus_search();"
-    <?php if($_REQUEST['searchtype']=='product'){echo 'checked';}?>/>Product
+    <?php if($searchtype=='product'){echo 'checked';}?>/>Product
     </form>
     
     </td>
   </tr>
   <tr class="headerBar">
     <td class="headerBarContent">&nbsp;&nbsp;<?php echo '<a href="' . tep_href_link(FILENAME_DEFAULT, '', 'NONSSL') . '" class="headerLink">' . HEADER_TITLE_TOP . '</a>'; ?>&nbsp;&nbsp;|&nbsp;&nbsp;
-      <b><a href="http://www.seacoastvitamins.com/logoff.php" target="_blank" class="headerlink">New Customer Order</a></b>
+      <b><a href="http://www.seacoastvitamins.com/logoff.php?do_admin=true" target="_blank" class="headerlink">New Customer Order</a></b>
   </td>
-    <td class="headerBarContent" align="right"><?php echo '<a href="http://www.oscommerce.com" class="headerLink">' . HEADER_TITLE_SUPPORT_SITE . '</a> &nbsp;|&nbsp; <a href="' . tep_catalog_href_link() . '" class="headerLink">' . HEADER_TITLE_ONLINE_CATALOG . '</a> &nbsp;|&nbsp; <a href="' . tep_href_link(FILENAME_DEFAULT, '', 'NONSSL') . '" class="headerLink">' . HEADER_TITLE_ADMINISTRATION . '</a>'; ?>&nbsp;&nbsp;</td>
+  <td align="left" class="headerBarContent">Logging user: <?php echo $_SERVER['PHP_AUTH_USER'];?></td>
+    <td class="headerBarContent" align="right"><?php echo '<a href="' . tep_catalog_href_link() . '?do_admin=true" class="headerLink">' . HEADER_TITLE_ONLINE_CATALOG . '</a>'; ?>&nbsp;&nbsp;</td>
   </tr>
 </table>
 

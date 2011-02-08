@@ -1,5 +1,3 @@
 User-agent: *
-Disallow: /community/
-Disallow: /account.php
 Allow: /
 

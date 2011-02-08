@@ -1,6 +1,11 @@
 <?php
 
-  $listing_split = new splitPageResults($listing_sql, MAX_DISPLAY_SEARCH_RESULTS, 'p.products_id');
+if(!isset($num_listings))
+{
+    $num_listings=MAX_DISPLAY_SEARCH_RESULTS  ;
+}
+
+  $listing_split = new splitPageResults($listing_sql, $num_listings, 'p.products_id');
   $list_text='';
   
   $useCategories[]='';

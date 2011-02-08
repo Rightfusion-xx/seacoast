@@ -73,6 +73,16 @@ if (tep_session_is_registered('noaccount')) {
 }
    require(DIR_WS_CLASSES . 'order.php');
   $o_info = new order($orders['orders_id']);
+  
+  tep_session_unregister('cc_number');
+  
+  tep_session_unregister('cc_owner');
+  
+  tep_session_unregister('cvvnumber');
+  
+  tep_session_unregister('cc_expires_month');
+  
+  tep_session_unregister('cc_expires_year');
 
 ?>
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -125,7 +135,7 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
       <tr>
         <td><table border="0" width="100%" cellspacing="4" cellpadding="2">
           <tr>
-            <td valign="top"><?php echo tep_image(DIR_WS_IMAGES . 'table_background_man_on_board.gif', HEADING_TITLE); ?></td>
+            
             <td valign="top" class="main"><?php //echo tep_draw_separator('pixel_trans.gif', '1', '10'); ?><div align="center" class="pageHeading"><?php echo HEADING_TITLE; ?></div><br>
             Thank you for shopping! Seacoast Vitamins ships orders FAST!
             <br><br>
@@ -291,7 +301,7 @@ var product_name = '<?php echo $hpoutput;?>'
 </script>
 <script language="javascript" src="https://www.shopzilla.com/css/roi_tracker.js"></script>
 
-<?php
+<?php  /*
 
   //--------------------------------------------------------------------------
    // PostAffiliate Pro integration code
@@ -328,9 +338,9 @@ papSale();
    //--------------------------------------------------------------------------
    // END of integration code
    //--------------------------------------------------------------------------
- 
+            */
 ?>
-
+            
 <!--Merchant Advantage-->
 <script language="JavaScript" src="https://secure.merchantadvantage.com/inChannel/ma2q.js"></script>
 <!--End Merchant Advantage-->

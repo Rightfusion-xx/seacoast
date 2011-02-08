@@ -2,7 +2,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:sc="urn:types.partner.api.shopping.com" version="1.0">
 
 <xsl:output method="html"/>
-
+  
 <xsl:template match="/">
 	
 	<xsl:for-each select="sc:GeneralSearchResponse/sc:categories/sc:category/sc:items/sc:product/sc:offers/sc:offer">
@@ -22,7 +22,7 @@
 
 <xsl:template match="placeholder">
 	
-</xsl:template>
+</xsl:template>    
 
 <xsl:template match="@*|node()">
 	

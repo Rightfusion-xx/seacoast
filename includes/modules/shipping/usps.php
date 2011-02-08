@@ -55,8 +55,12 @@
 
       $this->intl_types = array(//'GXG Document' => 'Global Express Guaranteed Document Service',
                                 //'GXG Non-Document' => 'Global Express Guaranteed Non-Document Service',
-                                'Express Mail International' => 'Express Mail International (EMS)',
-                                'Priority Mail International' => 'Priority Mail International');
+                                
+                                //'Express Mail International' => 'Express Mail International (EMS)',
+                                //'Priority Mail International' => 'Priority Mail International');
+                                '1' => 'Express Mail International (EMS)',
+                                '2' => 'Priority Mail International');
+                                
                                 //'Priority Lg' => 'Global Priority Mail - Flat-rate Envelope (large)',
                                 //'Priority Sm' => 'Global Priority Mail - Flat-rate Envelope (small)',
                                 //'Priority Var' => 'Global Priority Mail - Variable Weight Envelope (single)',
@@ -70,6 +74,8 @@
 
 // class methods
     function quote($method = '') {
+        
+        //error_log("test",0);exit();
       global $order, $shipping_weight, $shipping_num_boxes;
 
       if ( tep_not_null($method) && (isset($this->types[$method]) || in_array($method, $this->intl_types)) ) {
@@ -104,11 +110,11 @@
 		  //change to wrap code in the quote() method to only add method if supported
 		  for ($i=0; $i<sizeof($uspsQuote); $i++) {
 		  list($type, $cost) = each($uspsQuote[$i]);
-		  
-		  if( isset($this->types[$type]) || in_array($type, $this->intl_types) )
+		  $type=(string)$type;
+		  if( isset($this->types[$type]) || isset($this->intl_types[$type]) )
 		  {
 		  $methods[] = array('id' => $type,
-		  'title' => ((isset($this->types[$type])) ? $this->types[$type] : $type),
+		  'title' => ((isset($this->types[$type])) ? $this->types[$type] : $this->intl_types[$type]),
 		  'cost' => (MODULE_SHIPPING_USPS_HANDLING + $cost) * $shipping_num_boxes);
 		  }
           //for ($i=0; $i<$size; $i++) {
@@ -128,6 +134,8 @@
       } else {
         $this->quotes = array('module' => $this->title,
                               'error' => MODULE_SHIPPING_USPS_TEXT_ERROR);
+                              //syslog(LOG_ERR,"Unable to retrieve USPS shipping rates. Customer ".)
+                              
       }
 
       if (tep_not_null($this->icon)) $this->quotes['icon'] = tep_image($this->icon, $this->title);
@@ -242,6 +250,7 @@
       $body = '';
 
       $http = new httpClient();
+      echo $usps_server,'/' . $api_dll . '?' . $request; exit();
       if ($http->Connect($usps_server, 80)) {
         $http->addHeader('Host', $usps_server);
         $http->addHeader('User-Agent', 'osCommerce');
@@ -265,6 +274,7 @@
           break;
         }
       }
+      
      
 
       $rates = array();
@@ -295,15 +305,16 @@
 
 
         $n = sizeof($response);
+        
         for ($i=0; $i<$n; $i++) {
           if (strpos($response[$i], '<Rate>')) {
             $service = $ServiceMap[parse_section($response[$i],'<Postage CLASSID="','"')];
             $postage = preg_match('/\<Rate\>(.*)\<\/Rate\>/', $response[$i], $regs);
             $postage = $regs[1];
             
-
-            $rates[] = array(ucwords(strtolower($service)) => $postage);
+            $rates[] = array(ucwords(strtolower($service)) => $postage);        
           }
+            
         }
       } else {
         if (preg_match('/\<Error\>/', $response[0])) {
@@ -327,16 +338,19 @@
             }
           }
 
+          
+          // International Orders
+          
           $size = sizeof($services);
           for ($i=0, $n=$size; $i<$n; $i++) {
-
+        
             if (strpos($services[$i], '<Postage>')) {
-              $service = preg_match('/\<SvcDescription\>(.*)\<\/SvcDescription\>/', $services[$i], $regs);
-              $service = $regs[1];
+              $service = preg_match('/ID="(.*?)"\>/', $services[$i], $regs);
+              $service = (string)$regs[1];
               $postage = preg_match('/\<Postage\>(.*)\<\/Postage\>/', $services[$i], $regs);
               $postage = $regs[1];
               
-              
+              //echo $this->service;exit();
               if (isset($this->service) && ($service != $this->service) ) {
                 continue;
               }

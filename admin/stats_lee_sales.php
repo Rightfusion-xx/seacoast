@@ -5,6 +5,7 @@
   Released under the GNU General Public License
 */
 
+  set_time_limit(60);
   require('includes/application_top.php');
 
   require(DIR_WS_CLASSES . 'currencies.php');

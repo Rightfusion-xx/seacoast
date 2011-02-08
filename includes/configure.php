@@ -13,7 +13,7 @@
 // * DIR_WS_* = Webserver directories (virtual/URL)
   define('HTTP_SERVER', 'http://www.dev.nealbozeman.com'); // eg, http://localhost - should not be empty for productive servers
   define('HTTPS_SERVER', 'https://www.dev.nealbozeman.com'); // eg, https://localhost - should not be empty for productive servers
-  define('ENABLE_SSL', 'true'); // secure webserver for checkout procedure?
+  define('ENABLE_SSL', 'false'); // secure webserver for checkout procedure?
   define('HTTP_COOKIE_DOMAIN', 'www.dev.nealbozeman.com');
   define('HTTPS_COOKIE_DOMAIN', 'www.dev.nealbozeman.com');
   define('HTTP_COOKIE_PATH', '/');
@@ -43,12 +43,18 @@
   define('STORE_SESSIONS', 'mysql'); // leave empty '' for default handler or set to 'mysql'
   
   define('GOOGLE_SEARCH_URL', 'http://216.176.184.164/search?output=xml_no_dtd&client=seacoast&');
+  define('OSS_SEARCH_URL', 'http://127.0.0.1:8080/select?use=seacoast&');
   
 //define membership product ids
   define('CM_FTPID','2531'); //free trial
   define('CM_PID','2532'); //full membership
-
-  define('FILE_CACHE_LOCATION','c:\\tmp\\');
   
-  define('ENABLE_MEGACACHE',true);
-?>
+//setup caching
+  define('FILE_CACHE_LOCATION','c:\\tmp\\');
+  define('ENABLE_MEGACACHE',false);
+  
+// setup Aile7 Healthnotes
+  define('HEALTHNOTES_URI', 'http://web.aisle7.net/api/1.0/');
+  define('HEALTHNOTES_KEY','dc4c446201924920babfe63f3224f139');
+  
+  define('CREDIT_CARD_ENCRYPTION_KEY','Ksa\L\L@>sLH%G5FM&qPk');
