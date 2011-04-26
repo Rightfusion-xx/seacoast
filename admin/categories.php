@@ -213,6 +213,8 @@ $sql_data_array = array('products_quantity' => tep_db_prepare_input($HTTP_POST_V
 'products_die' => ($HTTP_POST_VARS['products_die'] == 'on') ? 1 : 0,
 'products_dieqty' => tep_db_prepare_input($HTTP_POST_VARS['products_dieqty']),
 'products_tax_class_id' => tep_db_prepare_input($HTTP_POST_VARS['products_tax_class_id']),
+'products_target_keyword' => tep_db_prepare_input($HTTP_POST_VARS['products_target_keyword']),
+'products_takeaway' => tep_db_prepare_input($HTTP_POST_VARS['products_takeaway']),
 'manufacturers_id' => tep_db_prepare_input($HTTP_POST_VARS['manufacturers_id']));
 if (isset($HTTP_POST_VARS['products_image']) && tep_not_null($HTTP_POST_VARS['products_image']) && ($HTTP_POST_VARS['products_image'] != 'none')) {
 $sql_data_array['products_image'] = tep_db_prepare_input($HTTP_POST_VARS['products_image']);
@@ -239,8 +241,10 @@ $language_id = $languages[$i]['id'];
 $sql_data_array = array('products_name' => tep_db_prepare_input($HTTP_POST_VARS['products_name'][$language_id]),
 'products_description' => tep_db_prepare_input($HTTP_POST_VARS['products_description'][$language_id]),
 'products_ailments' => tep_db_prepare_input($HTTP_POST_VARS['products_ailments']),
-'products_uses' => tep_db_prepare_input($HTTP_POST_VARS['products_uses']),
+'products_uses' => tep_db_prepare_input($HTTP_POST_VARS['products_uses']),              
 'products_departments' => tep_db_prepare_input($HTTP_POST_VARS['products_departments']),
+'products_takeaway' => tep_db_prepare_input($HTTP_POST_VARS['products_takeaway']),
+'products_target_keyword' => tep_db_prepare_input($HTTP_POST_VARS['products_target_keyword']),
 'products_url' => tep_db_prepare_input($HTTP_POST_VARS['products_url'][$language_id]),
                                     'products_head_title_tag' => ((tep_not_null($HTTP_POST_VARS['products_head_title_tag'][$language_id])) ? tep_db_prepare_input($HTTP_POST_VARS['products_head_title_tag'][$language_id]) : tep_db_prepare_input($HTTP_POST_VARS['products_name'][$language_id])),
                                     'products_head_desc_tag' => ((tep_not_null($HTTP_POST_VARS['products_head_desc_tag'][$language_id])) ? tep_db_prepare_input($HTTP_POST_VARS['products_head_desc_tag'][$language_id]) : tep_db_prepare_input($HTTP_POST_VARS['products_name'][$language_id])),
@@ -363,10 +367,12 @@ $parameters = array('products_name' => '',
 'products_keywords' => '',
 'products_dieqty' => '',
 'products_tax_class_id' => '',
-'manufacturers_id' => '');
+'manufacturers_id' => '',
+'products_takeaway' =>'',
+'products_target_keyword'=>'');
 $pInfo = new objectInfo($parameters);
 if (isset($HTTP_GET_VARS['pID']) && empty($HTTP_POST_VARS)) {
-$product_query = tep_db_query("select p.products_keywords, pd.products_ailments, pd.products_uses, pd.products_departments, p.products_upc, p.products_sku, p.products_die, p.products_dieqty, pd.products_name, pd.products_description, pd.products_head_title_tag, pd.products_head_desc_tag, pd.products_head_keywords_tag, pd.products_url, p.products_id, p.products_quantity, p.products_available, p.products_model, p.products_msrp, p.products_image, p.products_price, p.products_weight, p.products_date_added, p.products_last_modified, date_format(p.products_date_available, '%Y-%m-%d') as products_date_available, p.products_status, p.products_carrot, p.products_tax_class_id, p.manufacturers_id from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id = '" . (int)$HTTP_GET_VARS['pID'] . "' and p.products_id = pd.products_id and pd.language_id = '" . (int)$languages_id . "'");
+$product_query = tep_db_query("select p.products_keywords, pd.products_takeaway, pd.products_target_keyword,pd.products_ailments, pd.products_uses, pd.products_departments, p.products_upc, p.products_sku, p.products_die, p.products_dieqty, pd.products_name, pd.products_description, pd.products_head_title_tag, pd.products_head_desc_tag, pd.products_head_keywords_tag, pd.products_url, p.products_id, p.products_quantity, p.products_available, p.products_model, p.products_msrp, p.products_image, p.products_price, p.products_weight, p.products_date_added, p.products_last_modified, date_format(p.products_date_available, '%Y-%m-%d') as products_date_available, p.products_status, p.products_carrot, p.products_tax_class_id, p.manufacturers_id from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id = '" . (int)$HTTP_GET_VARS['pID'] . "' and p.products_id = pd.products_id and pd.language_id = '" . (int)$languages_id . "'");
 $product = tep_db_fetch_array($product_query);
 $pInfo->objectInfo($product);
 } elseif (tep_not_null($HTTP_POST_VARS)) {
@@ -559,6 +565,26 @@ for ($i=0, $n=sizeof($languages); $i<$n; $i++) {
 <?php echo tep_image(DIR_WS_CATALOG_LANGUAGES . $languages[$i]['directory'] . '/images/' . $languages[$i]['image'], $languages[$i]['name']) . '&nbsp;' . tep_draw_input_field('products_name[' . $languages[$i]['id'] . ']', (isset($products_name[$languages[$i]['id']]) ? $products_name[$languages[$i]['id']] : tep_get_products_name($pInfo->products_id, $languages[$i]['id']))); ?>
 </td>
 </tr>
+
+<tr>
+<td class="main">
+Target Keyword (Simple Product Name)
+</td>
+<td class="main">
+<?php echo tep_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . tep_draw_input_field('products_target_keyword', $pInfo->products_target_keyword); ?>
+</td>
+</tr>
+
+            <tr>
+            <td class="main" valign="top"><?php  echo 'Product "Takeaway"'; ?>
+            
+            </td>
+            <td><table border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td class="main" valign="top">&nbsp;</td>
+                <td class="main"><?php echo tep_draw_textarea_field('products_takeaway', 'soft', '70', '5', $pInfo->products_takeaway); ?></td>
+              </tr></table>
+              </td></tr>
 
 <tr>
 <td class="main">

@@ -9,20 +9,19 @@
 	
 ?>
 <!-- also_purchased_products //-->
-<div id="customer_reviews">
 
-      <h2>Customer Reviews for <?php echo $product_info['products_name']?></h2>
+      <span class="buzz">Customer Reviews for <?php echo $product_info['products_name']?></span>
 <?php
       
       while ($reviews = tep_db_fetch_array($reviews_query)) {
       ?>
-      <div style="width:400px;float:left;margin-right:20px;">
+      
         <p>
         <b>Review by <?php echo $reviews['customers_name'];?></b><?php echo draw_stars($reviews['reviews_rating']);?>
           <?php if(strlen($reviews['use'])>0){echo '<br/><em><b>How it\'s used: ' . $reviews['use'] .'</b></em>';}?>
         <?php echo '<br />'.$reviews['reviews_text'];?>
       </b></p>
-      </div>
+
      <?php
         
       }

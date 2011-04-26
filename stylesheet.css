@@ -16,7 +16,6 @@ font-weight: bold;
 color: black;
 }
 
-
 TR.accountHistory-odd, TR.addressBook-odd, TR.alsoPurchased-odd, TR.payment-odd, TR.productListing-odd, TR.productReviews-odd, TR.upcomingProducts-odd, TR.shippingOptions-odd {
 background: #ffffff;
 }
@@ -91,11 +90,21 @@ padding-bottom: 0;
 color:#FF9900;
 }
 h2 {
-font-size: 14px;
+    
+    font-size: 14px;
+font-weight: bold;
+
+
+}
+
+.buzz {
+    
+    font-size: 14px;
 font-weight: normal;
 margin-bottom: 0;
 padding-bottom: 0;
 color:#FF9900;
+    
 }
 h3
 {
@@ -124,37 +133,10 @@ color:#FF9900;
     padding:0px;
     white-space:nowrap;
     width:100%;
-    position:absolute;
-    top:0px;
-    left:0px;
-    height:10em;
+
 }
 
-#prod_details
-{
-	position:relative;
-}
 
-#prod_desc
-{
-	width:625px;float:left;margin-top:30em;font-family:georgia;
-}
-
-#prod_right_col
-{
-	float:right;margin-left:2em;width:250px;
-	}
-	
-
-#price_box
-{
-	
-	position:absolute;
-	top:1em;
-	left:0px;
-	min-width:625px;
-	white-space:nowrap;
-}
 
 #leftnav
 {
@@ -210,7 +192,7 @@ color:#FF9900;
 COLORS QUICKLIST:
 dark blue - #333367, mid blue - #c6e3f5, light yellow - #fcfcda, link - #135383, orange - #FF9900 FF9900
 */
-body, table, td {margin:0px; color: #222;font-family:Arial, Helvetica, Verdana;font-size:14px;background-color: #FFFFFF;}
+body, table, td {margin:0px; color: #222;font-family:arial, Helvetica, Verdana;font-size:13px;background-color: #FFFFFF;}
 /*Header*/
 div#header {background-color: #FFFFFF;}
 div#header_navbox {font-size:10pt; border: 0px !important; background-color: #333367 !important; color: #FFF !important; padding: 0.5em;} 
@@ -435,9 +417,10 @@ a img:active {background-color: #ffffff; color: #FFF; text-decoration: none;}
 .box.red { background: top left repeat-x url(/images/bar_red.gif) #ecdada; border-bottom: 1px solid #c76867; }
 .box.grey { background: top left repeat-x url(/images/bar_grey.gif) #e5e5e5; border-bottom: 1px solid #999; }
 
-.box H3 {
+.box .buzzbox {
 	margin-top: 0px;
 	padding-top: 0px;
+    margin-bottom: 1em;
 	font-size: 13px;
 	color: #fff;
 	display: block;

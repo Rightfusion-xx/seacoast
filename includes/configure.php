@@ -12,7 +12,7 @@
 // * DIR_FS_* = Filesystem directories (local/physical)
 // * DIR_WS_* = Webserver directories (virtual/URL)
   define('HTTP_SERVER', 'http://www.dev.nealbozeman.com'); // eg, http://localhost - should not be empty for productive servers
-  define('HTTPS_SERVER', 'https://www.dev.nealbozeman.com'); // eg, https://localhost - should not be empty for productive servers
+  define('HTTPS_SERVER', 'http://www.dev.nealbozeman.com'); // eg, https://localhost - should not be empty for productive servers
   define('ENABLE_SSL', 'false'); // secure webserver for checkout procedure?
   define('HTTP_COOKIE_DOMAIN', 'www.dev.nealbozeman.com');
   define('HTTPS_COOKIE_DOMAIN', 'www.dev.nealbozeman.com');
@@ -58,3 +58,11 @@
   define('HEALTHNOTES_KEY','dc4c446201924920babfe63f3224f139');
   
   define('CREDIT_CARD_ENCRYPTION_KEY','Ksa\L\L@>sLH%G5FM&qPk');
+  
+// CouchDB locations
+  define('COUCH_DB_ADDRESS','http://127.0.0.1:5984/');
+  
+  define('OPTIMIZE_IMAGES',true);
+  define('OPTIMIZE_IMAGES_DIRECTORY','/images/optimized/');
+   
+  

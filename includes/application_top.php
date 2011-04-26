@@ -3,7 +3,7 @@
 if(!$app_top_included)
 {
     
-    
+  
 
 ob_start();
 //check referrer
@@ -101,6 +101,8 @@ $hide_cart=false;
   require(DIR_WS_FUNCTIONS . 'database.php');
   
 require_once 'php-activerecord/ActiveRecord.php';
+
+require_once (DIR_WS_CLASSES.'couchdb.php'); // Load Couch DB connector
 
 ActiveRecord\Config::initialize(function($cfg)
 {
@@ -238,7 +240,22 @@ if(isset($_SERVER['HTTP_REFERER']))
 
   $session_started = tep_session_start();
   tep_session_is_registered('osCsid') ;
-
+  
+  // Log http_referer chain
+  /*
+  if(!tep_session_is_registered('referer'))
+  {
+      tep_session_register('referer');
+      $referer=Array();
+  }
+  if(!strpos($_SERVER['HTTP_REFERER'],' '.HTTP_SERVER))
+    {
+       echo strpos($_SERVER['HTTP_REFERER'],' '.HTTP_SERVER); exit(); 
+        array_push($referer,$_SERVER['HTTP_REFERER']);
+        
+    }  
+                                          
+                                          echo serialize($referer);exit();      */
 
 // set SID once, even if empty
   $SID = (defined('SID') ? SID : '');

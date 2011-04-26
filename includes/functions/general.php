@@ -2977,7 +2977,7 @@ function display_match_hub_links($hubs)
     {
         $tag=key($item);
         $hub =tep_db_fetch_array(tep_db_query('select post_title, post_excerpt from wp_posts p join wp_postmeta pm on pm.post_id=id where pm.meta_key="hub" and meta_value="'.tep_db_input($tag).'"'));
-        echo '<p><h2><a href="/hub.php?tag='.$tag.'">'.$hub['post_title'].'</a></h2>'.$hub['post_excerpt'].' <a href="/hub.php?tag='.$tag.'">[read more]</a>';
+        echo '<p><h2><a href="/hub.php?tag='.$tag.'">'.$hub['post_title'].'</a></h2>'.$hub['post_excerpt'].'';
     }
     
 }

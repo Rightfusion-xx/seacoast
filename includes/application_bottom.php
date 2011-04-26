@@ -28,6 +28,51 @@
   
 $buffer = ob_get_clean();  
 
+
+
+if(OPTIMIZE_IMAGES)
+{
+    //Replace all <img> tags with new optimized URL.
+    //$clean=preg_replace('/(src="'. str_replace('/','\/',DIR_WS_IMAGES) .')(.+?)(\.gif"|\.jpg"|\.jpeg"\.png")/im','$1optimized/$2-0x0$3',$clean);
+    // Select all images on the page
+    preg_match_all('/<img\s.+?>/im',$buffer,$matches);
+    
+    foreach($matches[0] as $img)
+    {
+        // Check to see if the images are in the WS_DIR_IMAGES root directory
+        if( preg_match('/("'. str_replace('/','\/',DIR_WS_IMAGES) .')(.+?)(\.gif"|\.jpg"|\.jpeg"|\.png")/im',$img,$elements))
+        {
+            // Get width and heigth dimensions.
+            if(preg_match('/width="([0-9]+?)"|width:([0-9]+?)px/im',$img,$width))
+            {
+                $width=(int)$width[1]==0 ? $width[2] : $width[1];
+                
+            }
+            else
+            {
+                $width=0;
+            }
+            if(preg_match('/height="([0-9]+?)"/im',$img,$height))
+            {
+                $height=$height[1];
+                
+            }
+            else
+            {
+                $height=0;
+            }
+            
+            // Replace all old images with new optimized location
+            $new_img=str_replace($elements[0],$elements[1].'optimized/'.$elements[2].'-'.$width.'x'.$height.$elements[3],$img);
+            $buffer=str_replace($img,$new_img,$buffer);
+            
+        }
+        
+       
+    }
+
+}
+
 if(!$stop_tidy)
 {
 //Tidy HTML output
@@ -66,24 +111,29 @@ $catalog_html=$clean; //Copy the output to give to the link cataloger.
 $clean=modURLs($clean);
 $clean = str_replace('-or-a-a-','-',$clean);
 $clean = str_replace('iso-8859-1','UTF-8', $clean); 
-echo utf8_encode($clean);
+$clean = str_replace('stylesheet.css','stylesheet-a.css', $clean);  // Replace cached stylesheet
+
+$clean=utf8_encode($clean);
+
+//Strip bad characters
+
+
+
+echo $clean;
 
 tep_session_close();
 
 
 ob_flush();
 
-register_shutdown_function(store_page_links());
+register_shutdown_function(store_page_links);
 
 function store_page_links()
 {
     
+    
 
     // Do post wrapup
-    while(1==1)
-    {
-        //infinate loop. Check output.
-    }
 
 
     if($modURL) //Convert the URI back to the original URI.

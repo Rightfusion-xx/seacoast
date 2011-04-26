@@ -78,7 +78,7 @@
         //error_log("test",0);exit();
       global $order, $shipping_weight, $shipping_num_boxes;
 
-      if ( tep_not_null($method) && (isset($this->types[$method]) || in_array($method, $this->intl_types)) ) {
+      if ( tep_not_null($method) && (isset($this->types[$method]) || isset($this->intl_types[$method])) ) {
         $this->_setService($method);
       }
 
@@ -250,7 +250,7 @@
       $body = '';
 
       $http = new httpClient();
-      echo $usps_server,'/' . $api_dll . '?' . $request; exit();
+      //echo $usps_server,'/' . $api_dll . '?' . $request; exit();
       if ($http->Connect($usps_server, 80)) {
         $http->addHeader('Host', $usps_server);
         $http->addHeader('User-Agent', 'osCommerce');
@@ -353,7 +353,7 @@
               //echo $this->service;exit();
               if (isset($this->service) && ($service != $this->service) ) {
                 continue;
-              }
+              }  
 
               $rates[] = array($service => $postage);
             }

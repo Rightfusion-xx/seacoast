@@ -32,7 +32,7 @@ function renderRegularProd($product_info,$rows='')
   	
 	
 
-      $listing_text.='<div style="z-index:' .$layerrows .';" id="prod'.$rows.'" class="';
+      $listing_text.='<div id="prod'.$rows.'" class="';
       if($product_info['products_isspecial']=='1')
       {
         $listing_text.='product_isspecial';
@@ -45,7 +45,7 @@ function renderRegularProd($product_info,$rows='')
             
             if(strlen($product_image_path)>0){
              $listing_text.='<div class="listing-image">'; 
-             $listing_text.='<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '"><img border="0" src="'. $product_image_path . '" style="margin:5px;width:5em;overflow:hidden;" ALIGN="left" alt="'.$product_info['products_name'].' '.$product_info['manufacturers_name'].'" /></a>';
+             $listing_text.='<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '"><img border="0" src="'. $product_image_path . '" style="margin:5px;width:70px;overflow:hidden;" ALIGN="left" alt="'.$product_info['products_name'].' '.$product_info['manufacturers_name'].'" /></a>';
              $listing_text.='</div>';
             }
             

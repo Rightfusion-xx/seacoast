@@ -17,6 +17,7 @@
         global $products_name;
         global $alt_keywords;
         global $results;
+        global $show_expanded_similar_products;
         $index=0;
         
         $googlelist='';
@@ -60,7 +61,7 @@
 
 
 		?>
- <h2>Similar Products</h2> <?php
+ <span class="buzz">Similar Products</span><br/> <?php
 		    foreach($results['products_id_similar'] as $pid){
 		    
                     if(strpos($pid,'a')==true)
@@ -99,24 +100,26 @@
   
 
 
-      $listing_text.='<div id="prod'.$rows.'" class="';
+      $listing_text.=!$show_expanded_similar_products ? '<div id="prod'.$rows.'" class="' : '';
       if($product_info['products_isspecial']=='1')
       {
-        $listing_text.='mini-product_isspecial';
+        $listing_text.=!$show_expanded_similar_products ? 'mini-product_isspecial' : '';
       }else{
-        $listing_text.='mini-product_regular';
+        $listing_text.=!$show_expanded_similar_products ? 'mini-product_regular' : '';
       }
-      $listing_text.='">';
+      $listing_text.=!$show_expanded_similar_products ? '">' : '<p>';
       
 
             
-            $listing_text.='<div style="float:left;" class="mini-listing-image">';
+            $listing_text.=  '<div style="float:left;" class="mini-listing-image">';
             if(strlen($product_image_path)>0){
-             $listing_text.='<a '. $class . ' href= "' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '"><img alt="'.$product_info['products_name'].' '.$product_info['manufacturers_name'].'" src="'. $product_image_path . '" width="50" style="margin:5px;" ALIGN="left" border="0" /></a>';
+             $listing_text.='<a '. $class . ' href= "' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '"><img alt="'.$product_info['products_name'].'" title="'.$product_info['products_name'].' '.$product_info['manufacturers_name'].'" src="'. $product_image_path . '" width="50" style="margin:5px;" ALIGN="left" border="0" /></a>';
             }
             $listing_text.='</div>';
 
-            $listing_text.= '&nbsp;<a '. $class . ' href= "' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '"><b>' . $product_info['manufacturers_name'].' <br>' . $product_info['products_name'] . '</b></a>';
+            $listing_text.= '<h2 style="display:inline"><a '. $class . ' href= "' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '">' . $product_info['products_name'] . '</a></h2>';
+            
+            $listing_text.=$show_expanded_similar_products ? '<br/>'.$product_info['product_desc'] : '';
             
             $listing_text.='<br/><span style="color:#66CC00;font-weight:bold;">';
             if (tep_not_null($product_info['specials_new_products_price'])) {
@@ -142,7 +145,7 @@
 
 
 
-      $listing_text.='</div>';
+      $listing_text.=!$show_expanded_similar_products ? '</div>' : '</p>';
       
       $googlelist.='<p style="width:600px;"><a href="/product_info.php?products_id='.$product_info['products_id'].'">'.$product_info['products_name'].'</a> &nbsp; 
               ' . $product_info['product_desc'] . '</p>';
@@ -170,7 +173,7 @@
                                 $link=link_exists('/topic.php?health='.strtolower(urlencode(trim($temp_kw))).',',$page_links);
                                 if(strlen($link)>0)
                                 {
-				 echo 'Go to <b><a href="'.$link.'" >'.ucwords(trim($temp_kw)).'</a></b>.&nbsp;&nbsp;';
+				 echo '<h2>><a href="'.$link.'" ><h2>'.ucwords(trim($temp_kw)).'</a></h2>.&nbsp;&nbsp;';
                                 }
 
   	}

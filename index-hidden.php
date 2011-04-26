@@ -55,11 +55,11 @@ $linkcachetime=60*10;
    <h2>Popular Health Hubs</h2>
    
    <?php
-    $hub_query =tep_db_query('select * from wp_posts p join wp_postmeta pm on pm.post_id=id where pm.meta_key="hub"');
+    $hub_query =tep_db_query('select * from wp_posts p join wp_postmeta pm on pm.post_id=id where pm.meta_key="hub" order by post_modified_gmt desc');
     
     while($hub=tep_db_fetch_array($hub_query))
     {
-        echo '<p><h2><a href="/hub.php?tag='.$hub['meta_value'].'">'.$hub['post_title'].'</a></h2>'.$hub['post_excerpt'].' <a href="/hub.php?tag='.$hub['meta_value'].'">[read more]</a>';     
+        echo '<p><a href="/hub.php?tag='.$hub['meta_value'].'">'.$hub['post_title'].'</a> '.$hub['post_excerpt'].'';     
     }
     
     

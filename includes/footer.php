@@ -1,100 +1,8 @@
 <?php // inject header to appropriate place
   $start=ob_get_length();
-  
-  $header_height=11;
-  if($_SESSION['cm_is_member'])
-  {
-      $header_height+=2;
-  }
-  if($do_admin && $authenticated)
-  {
-      $header_height+=3;
-  }
 
 ?>
 
-
-  <div id="main_content" style="margin-top:<?php echo $header_height;?>em;">
-  
-  
-  
-      <?php  
-    if ($cart->count_contents() > 0 && $_SERVER['HTTPS']=='off' && !$hide_cart) {
-    ?>
-    <p style="text-align:center;">
-    	<div>
-    	<table cellpadding="0" cellspacing="0" style="border:solid 1px #578dc7;margin-left:35px;">
-    		<tr>
-    			<td style="background: top left repeat-x url(/images/bar_blue.gif) #eee;padding:5px;" nowrap>
-    				<h3 style="display:inline;font-size: 13px;color: #fff;">Shopping Cart</h3>
-    			</td>
-    			<td style="padding:5px;" nowrap>
-    				<b><a href="/shopping_cart.php" style="color:#ff9900;">View All Items</a></b>
-  	            &nbsp;&nbsp;
-  	             <?php echo $cart->count_contents()?> item<?php if($cart->count_contents()>1) echo 's';?>: $<?php echo number_format($cart->show_total(),2);?>
-  	            <b>(<span style="background:yellow;">Savings of $<?php echo number_format($cart->show_savings(),2); ?></span>)</b>
-  	           
-  	       		&nbsp;&nbsp;&nbsp;
-  	            <b><a href="/checkout_shipping.php" style="color:#ff9900">>> Checkout >> Now >></a></b>
-    			</td>
-    		</tr>
-    	</table>
-      
-
-        
-      </div>
-  
-  </p>    
-    <?php 
-      }
-  ?>
-  
-  
-  
-  
-  
-  <?php
-
-  // check if the 'install' directory exists, and warn of its existence
-  if (WARN_INSTALL_EXISTENCE == 'true') {
-  if (file_exists(dirname($HTTP_SERVER_VARS['SCRIPT_FILENAME']) . '/install')) {
-  $messageStack->add('header', WARNING_INSTALL_DIRECTORY_EXISTS, 'warning');
-  }
-  }
-  // check if the configure.php file is writeable
-  if (WARN_CONFIG_WRITEABLE == 'true') {
-  if ( (file_exists(dirname($HTTP_SERVER_VARS['SCRIPT_FILENAME']) . '/includes/configure.php')) && (is_writeable(dirname($HTTP_SERVER_VARS['SCRIPT_FILENAME']) . '/includes/configure.php')) ) {
-  $messageStack->add('header', WARNING_CONFIG_FILE_WRITEABLE, 'warning');
-  }
-  }
-  // check if the session folder is writeable
-  if (WARN_SESSION_DIRECTORY_NOT_WRITEABLE == 'true') {
-  if (STORE_SESSIONS == '') {
-  if (!is_dir(tep_session_save_path())) {
-  $messageStack->add('header', WARNING_SESSION_DIRECTORY_NON_EXISTENT, 'warning');
-  } elseif (!is_writeable(tep_session_save_path())) {
-  $messageStack->add('header', WARNING_SESSION_DIRECTORY_NOT_WRITEABLE, 'warning');
-  }
-  }
-  }
-  // check session.auto_start is disabled
-  if ( (function_exists('ini_get')) && (WARN_SESSION_AUTO_START == 'true') ) {
-  if (ini_get('session.auto_start') == '1') {
-  $messageStack->add('header', WARNING_SESSION_AUTO_START, 'warning');
-  }
-  }
-  if ( (WARN_DOWNLOAD_DIRECTORY_NOT_READABLE == 'true') && (DOWNLOAD_ENABLED == 'true') ) {
-  if (!is_dir(DIR_FS_DOWNLOAD)) {
-  $messageStack->add('header', WARNING_DOWNLOAD_DIRECTORY_NON_EXISTENT, 'warning');
-  }
-  }
-  if ($messageStack->size('header') > 0) {
-  echo $messageStack->output('header');
-  }
-  ?>
-  
-  
-  
   
   <?php
   if (isset($HTTP_GET_VARS['error_message']) && tep_not_null($HTTP_GET_VARS['error_message'])) {
@@ -123,56 +31,16 @@
 
   ?>
 
-
-<?php
-   $header_inject=substr(ob_get_contents(),$start);
-   $buffer=substr(ob_get_clean(),0,$start-1);
-   ob_start();
-   echo str_replace('$HEADER$',$header_inject, $buffer);
-
-
-  ?>
-
-<?php if($cart->count_contents() < 1 && $_SERVER['HTTPS']=='off'){?>
-<div id="chitika" style="padding:30px 0 30px 0;text-align:center;display:block;">
- <!-- Chitika -->
-<script type="text/javascript"><!--
-ch_client = "NealBozeman";
-ch_type = "mpu";
-ch_width = 550;
-ch_height = 250;
-ch_non_contextual = 4;
-ch_vertical ="premium";
-ch_sid = "Topic Pages";
-var ch_queries = new Array( );
-var ch_selected=Math.floor((Math.random()*ch_queries.length));
-if ( ch_selected < ch_queries.length ) {
-ch_query = ch_queries[ch_selected];
-}
-//--></script>
-<script  src="http://scripts.chitika.net/eminimalls/amm.js" type="text/javascript">
-</script>   
-
-</div>
-
-<?php }
-
-
-
- ?>
-
-</div>
-
 <div id="header" >
   <table cellpadding="0" cellspacing="0" style="white-space:nowrap;width:100%" width="100%">
     <tr>
       <td nowrap width="210">
-        <div id="header_logo" style="margin-left:5px;margin-bottom:1em;">
+        <div id="header_logo" style="margin-left:5px;margin-bottom:.5em;">
           <?php 
                  
             
 
-            echo '<a href="'.HTTP_SERVER.'/"><img src="/images/seacoast_logo.png" border="0" alt="Vitamins from Seacoast Vitamins for Nutritional Supplements Online. Source of vitamins, minerals, herbs, and all your nutritional supplement needs." title=" Vitamins from Seacoast Vitamins for Nutritional Supplements Online. Source of vitamins, minerals, herbs, and all your nutritional supplement needs. " width="179" height="60"></a>';
+            echo '<a href="'.HTTP_SERVER.'/"><img src="/images/seacoast_logo.png" border="0" alt="Vitamins from Seacoast Vitamins for Nutritional Supplements Online. Source of vitamins, minerals, herbs, and all your nutritional supplement needs." title="Vitamins, Exclusive Discounts, Direct to You. " width="179" height="60"></a>';
         
           ?>
         </div>
@@ -184,10 +52,10 @@ ch_query = ch_queries[ch_selected];
         <?php //if(strlen($_COOKIE['affiliate'])>0) echo '<b>In affiliation with <a href="'.$_COOKIE['affiliate'].'">'.$_COOKIE['affiliate'].'</a>.</b>';?>
         <?php if( (time()<strtotime('2008/10/10')||1==1) ){
           $latesttweet=tep_db_fetch_array(tep_db_query('select tweet_message from tweets order by tweet_datetime desc limit 0,1'));?>
-          <div style="float:left;margin-left:20px;" onclick="window.location.href='http://twitter.com/SeacoastVits';" onmouseover="this.style.cursor='hand';">
-            <img src="/images/green_light.gif" style="float:left;margin-top:10px;margin-right:10px;" border=0 />
+          <div style="float:left;margin-left:20px;">
+            <img src="/images/green_light.gif" style="float:left;margin-top:10px;margin-right:10px;" border=0 alt="Seacoast Vitamins on Twitter" title="More Vitamin Supplements at Twitter"/>
             <br/>
-            <span style="text-weight:bold;text-decoration:underline;color:blue;font-size:12pt;"><b>@SeacoastVits on Twitter</b></span><br/>
+            <span style="text-weight:bold;text-decoration:underline;color:blue;font-size:12pt;"><a href="http://twitter.com/SeacoastVits"><b>@SeacoastVits on Twitter</b></a></span><br/>
             <i><?php echo '"', @substr($latesttweet['tweet_message'],0,@strpos($latesttweet['tweet_message'],' ',60)),'<br/>',@substr($latesttweet['tweet_message'],@strpos($latesttweet['tweet_message'],' ',60-1)),'"';?></i>
 
           </div>
@@ -237,8 +105,9 @@ ch_query = ch_queries[ch_selected];
     <tr>
       <td nowrap colspan="3">
         <div style="color:#333367;font-weight:bolder;clear:both;margin:0px;padding:7px;white-space:nowrap;background-repeat:repeat;background-image:url('/images/head-bg-fade.gif');border-bottom:1px solid #333367">
-          <form name="quick_find" action="/topic.php" method="get">
+          <form name="quick_find" action="/topic.php" method="get" style="display:inline;">
             <input type="text" name="health" size="10" maxlength="250" style="width: 200px" value="<?php echo $_REQUEST['health']?>"/>&nbsp;<input class="formbutton" type="submit" value="Search" alt="Search Seacoast" title=" Search Seacoast "/>
+            </form>
             &nbsp;&nbsp;
             <?php 
            if((int)$_REQUEST['products_id'] && 1==2) // Used to check for product id, and redo nav links.
@@ -265,7 +134,6 @@ ch_query = ch_queries[ch_selected];
           <?php }?>
 
             <?php if(!$_SESSION['cm_is_member']) {?>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/community/">Join Vitamins-Direct</a>   <?php } ?>
-          </form>
           <?php if($_SESSION['cm_is_member']){ ?><span style="color:#CC6600">
           	<hr class="sectiondivider" style="margin-top:10px;margin-bottom:10px;"/>
           	Member since <?php echo $_SESSION['cm_member_since']; ?>.
@@ -290,22 +158,77 @@ ch_query = ch_queries[ch_selected];
       <?php
   }
         ?>
- <!--
-  <div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix" style="margin-top:2em; margin-left:10%;margin-right:10%;margin-bottom:2em;0px;display:none;" id="freeTrialInfo">
-  Not a member? <span style="text-decoration:line-through">Only $50 per year.</span> FREE for 14-days!
-  <br/>
-  <ul>
-  	<li>Exclusive pricing</li>
-  	<li>Extra 15%-25% off every order</li>
-  	<li>Share your membership with 8 friends</li>
-  	
-  </ul>
-  
-  </div>    -->
-  
   
 
 </div>
+
+      <?php  
+    if ($cart->count_contents() > 0 && $_SERVER['HTTPS']=='off' && !$hide_cart) {
+    ?>
+    <p style="text-align:center;">
+        <div>
+        <table cellpadding="0" cellspacing="0" style="border:solid 1px #578dc7;margin-left:35px;">
+            <tr>
+                <td style="background: top left repeat-x url(/images/bar_blue.gif) #eee;padding:5px;" nowrap>
+                    <h3 style="display:inline;font-size: 13px;color: #fff;">Shopping Cart</h3>
+                </td>
+                <td style="padding:5px;" nowrap>
+                    <b><a href="/shopping_cart.php" style="color:#ff9900;">View All Items</a></b>
+                  &nbsp;&nbsp;
+                   <?php echo $cart->count_contents()?> item<?php if($cart->count_contents()>1) echo 's';?>: $<?php echo number_format($cart->show_total(),2);?>
+                  <b>(<span style="background:yellow;">Savings of $<?php echo number_format($cart->show_savings(),2); ?></span>)</b>
+                 
+                     &nbsp;&nbsp;&nbsp;
+                  <b><a href="/checkout_shipping.php" style="color:#ff9900">>> Checkout >> Now >></a></b>
+                </td>
+            </tr>
+        </table>
+      
+
+        
+      </div>
+  
+  </p>    
+    <?php 
+      }
+  ?>
+
+<?php
+   $header_inject=substr(ob_get_contents(),$start);
+   $buffer=substr(ob_get_clean(),0,$start-1);
+   ob_start();
+   echo str_replace('$HEADER$',$header_inject, $buffer);
+
+
+  ?>
+  
+
+  <?php if($cart->count_contents() < 1 && $_SERVER['HTTPS']=='off'){?>
+<div id="chitika" style="padding:30px 0 30px 0;text-align:center;display:block;">
+ <!-- Chitika -->
+<script type="text/javascript"><!--
+ch_client = "NealBozeman";
+ch_type = "mpu";
+ch_width = 550;
+ch_height = 250;
+ch_non_contextual = 4;
+ch_vertical ="premium";
+ch_sid = "Topic Pages";
+var ch_queries = new Array( );
+var ch_selected=Math.floor((Math.random()*ch_queries.length));
+if ( ch_selected < ch_queries.length ) {
+ch_query = ch_queries[ch_selected];
+}
+//--></script>
+<script  src="http://scripts.chitika.net/eminimalls/amm.js" type="text/javascript">
+</script>   
+
+</div>
+
+<?php }
+ ?>
+  
+  
 <div id="footer">
 
   <?php if($_SERVER['HTTPS'] == 'off'){ ?>
@@ -340,13 +263,12 @@ echo '1. Seacoast Health Encyclopedia statements or claims have not been evaluat
 View all <a href="/search_topics.php">health topics</a>.
 </p>
 
-<div style="margin:2em;">
-<h3>Seacoast Website Guides and Sitemaps</h3>
+<div style="margin:1em;text-align:center;">
 
 <p>
-<a href="/features.php">Featured & Important Products</a><br/>
-<a href="/catalog.php">Complete Vitamin Supplement Catalog</a><br/>
-<a href="/recent_changes.php">Recently Updated and New Products</a><br/>
+<a href="/features.php">Featured & Important Products</a> | 
+<a href="/full_catalog.php">Complete Vitamin Supplement Catalog</a> | 
+<a href="/recent_changes.php">Recently Updated and New Products</a>
 
 
 </p>
@@ -500,26 +422,20 @@ if(isset($_SERVER['HTTP_REFERER']) && !strpos(HTTP_SERVER, $_SERVER['HTTP_REFERE
 } */
 ?>
 
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-207538-1");
-pageTracker._initData();
-pageTracker._trackPageview();
-</script>
 
-<!-- ClickTale Bottom part -->
-<div id="ClickTaleDiv" style="display: none;"></div>
 <script type="text/javascript">
-if(document.location.protocol!='https:')
-  document.write(unescape("%3Cscript%20src='http://s.clicktale.net/WRb6.js'%20type='text/javascript'%3E%3C/script%3E"));
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-207538-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
 </script>
-<script type="text/javascript">
-if(typeof ClickTale=='function') ClickTale(1368,0.0075,"www07");
-</script>
-<!-- ClickTale end of Bottom part -->
 
 
 
@@ -544,5 +460,45 @@ if(typeof ClickTale=='function') ClickTale(1368,0.0075,"www07");
 ?>
 
  </div>
+ 
+ <?php
+
+  // check if the 'install' directory exists, and warn of its existence
+  if (WARN_INSTALL_EXISTENCE == 'true') {
+  if (file_exists(dirname($HTTP_SERVER_VARS['SCRIPT_FILENAME']) . '/install')) {
+  $messageStack->add('header', WARNING_INSTALL_DIRECTORY_EXISTS, 'warning');
+  }
+  }
+  // check if the configure.php file is writeable
+  if (WARN_CONFIG_WRITEABLE == 'true') {
+  if ( (file_exists(dirname($HTTP_SERVER_VARS['SCRIPT_FILENAME']) . '/includes/configure.php')) && (is_writeable(dirname($HTTP_SERVER_VARS['SCRIPT_FILENAME']) . '/includes/configure.php')) ) {
+  $messageStack->add('header', WARNING_CONFIG_FILE_WRITEABLE, 'warning');
+  }
+  }
+  // check if the session folder is writeable
+  if (WARN_SESSION_DIRECTORY_NOT_WRITEABLE == 'true') {
+  if (STORE_SESSIONS == '') {
+  if (!is_dir(tep_session_save_path())) {
+  $messageStack->add('header', WARNING_SESSION_DIRECTORY_NON_EXISTENT, 'warning');
+  } elseif (!is_writeable(tep_session_save_path())) {
+  $messageStack->add('header', WARNING_SESSION_DIRECTORY_NOT_WRITEABLE, 'warning');
+  }
+  }
+  }
+  // check session.auto_start is disabled
+  if ( (function_exists('ini_get')) && (WARN_SESSION_AUTO_START == 'true') ) {
+  if (ini_get('session.auto_start') == '1') {
+  $messageStack->add('header', WARNING_SESSION_AUTO_START, 'warning');
+  }
+  }
+  if ( (WARN_DOWNLOAD_DIRECTORY_NOT_READABLE == 'true') && (DOWNLOAD_ENABLED == 'true') ) {
+  if (!is_dir(DIR_FS_DOWNLOAD)) {
+  $messageStack->add('header', WARNING_DOWNLOAD_DIRECTORY_NON_EXISTENT, 'warning');
+  }
+  }
+  if ($messageStack->size('header') > 0) {
+  echo $messageStack->output('header');
+  }
+  ?>
 
 

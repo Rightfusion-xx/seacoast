@@ -483,12 +483,10 @@ ch_query = ch_queries[ch_selected];
            
            
            
-           <script language="javascript">
-                $('#listings').css({display:'none'});
-           </script>
+
            
            
-                <div id="displaylistings"><!--on--></div>
+                <div id="displaylistings"><!-- off --></div>
     
            
            <script language="javascript">
@@ -496,8 +494,9 @@ ch_query = ch_queries[ch_selected];
             window.listoriginal=$('#listings').html();
             var $bestresults='';
             var $moreresults='';
-            if($('#displaylistings').html().indexOf('on'))
+            if($('#displaylistings').html().indexOf('on')>0)
             {
+                $('#listings').css({display:'none'});
                 
                 $prods=$('#listings').children('div');
                 

@@ -86,7 +86,8 @@
                           'date_purchased' => 'now()', 
                           'orders_status' => $order->info['order_status'], 
                           'currency' => $order->info['currency'], 
-                          'currency_value' => $order->info['currency_value']);
+                          'currency_value' => $order->info['currency_value'],
+                          'referer_chain'=>serialize($referer));
   tep_db_perform(TABLE_ORDERS, $sql_data_array);
   $insert_id = tep_db_insert_id();
   for ($i=0, $n=sizeof($order_totals); $i<$n; $i++) {
