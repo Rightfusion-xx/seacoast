@@ -19,11 +19,20 @@
   new contentBoxHeading($info_box_contents);
 
  if ( (!isset($new_products_category_id)) || ($new_products_category_id == '0') ) {
-     $sql = "select distinct p.products_id, mnf.manufacturers_id, p.products_image, p.products_model, p.products_tax_class_id, if(s.status, s.specials_new_products_price, p.products_price) as products_price, mnf.manufacturers_name, case when p.products_last_modified is not null then p.products_last_modified else p.products_date_added end as modified_date from " . TABLE_PRODUCTS . " p left join ".TABLE_SPECIALS." s on p.products_id = s.products_id left join ".TABLE_MANUFACTURERS." mnf on p.manufacturers_id = mnf.manufacturers_id left join ".TABLE_REVIEWS." rvw on p.products_id = rvw.products_id where (p.products_last_modified=NULL OR p.products_last_modified>=DATE_ADD(CURDATE(), INTERVAL -7 DAY)) AND p.products_status = '1' order by rvw.date_added desc, modified_date desc limit ".MAX_DISPLAY_NEW_PRODUCTS;
+     $sql = "select distinct p.products_id, mnf.manufacturers_id, p.products_image, p.products_model, p.products_tax_class_id, if(s.status, s.specials_new_products_price, p.products_price) as products_price, mnf.manufacturers_name, 
+     CASE WHEN p.products_last_modified > p.products_date_added AND p.products_last_modified>rvw.date_added 
+THEN p.products_last_modified
+WHEN p.products_date_added > p.products_last_modified AND p.products_date_added>rvw.date_added THEN p.products_date_added
+ELSE rvw.date_added END AS modified_date from " . TABLE_PRODUCTS . " p left join ".TABLE_SPECIALS." s on p.products_id = s.products_id left join ".TABLE_MANUFACTURERS." mnf on p.manufacturers_id = mnf.manufacturers_id left join ".TABLE_REVIEWS." rvw on p.products_id = rvw.products_id where (p.products_last_modified=NULL OR p.products_last_modified>=DATE_ADD(CURDATE(), INTERVAL -7 DAY)) AND p.products_status = '1' order by modified_date desc limit ".MAX_DISPLAY_NEW_PRODUCTS;
     $new_products_query = tep_db_query($sql);
   
   } else {
-    $sql = "select distinct p.products_id, mnf.manufacturers_id, p.products_image, p.products_model, p.products_tax_class_id, if(s.status, s.specials_new_products_price, p.products_price) as products_price, mnf.manufacturers_name, case when p.products_last_modified is not null then p.products_last_modified else p.products_date_added end as modified_date from " . TABLE_PRODUCTS . " p left join " . TABLE_SPECIALS . " s on p.products_id = s.products_id join " . TABLE_PRODUCTS_TO_CATEGORIES . " p2c on p2c.products_id=p.products_id join " . TABLE_CATEGORIES . " c on c.categories_id=p2c.categories_id left join ".TABLE_MANUFACTURERS." mnf on p.manufacturers_id = mnf.manufacturers_id left join ".TABLE_REVIEWS." rvw on p.products_id = rvw.products_id where and c.parent_id = '" . (int)$new_products_category_id . "' and p.products_status = '1' order by rvw.date_added desc, modified_date desc limit " . MAX_DISPLAY_NEW_PRODUCTS;
+    $sql = "select distinct p.products_id, mnf.manufacturers_id, p.products_image, p.products_model, p.products_tax_class_id, if(s.status, s.specials_new_products_price, p.products_price) as products_price, mnf.manufacturers_name, 
+    CASE WHEN p.products_last_modified > p.products_date_added AND p.products_last_modified>rvw.date_added 
+THEN p.products_last_modified
+WHEN p.products_date_added > p.products_last_modified AND p.products_date_added>rvw.date_added THEN p.products_date_added
+ELSE rvw.date_added END AS modified_date 
+     from " . TABLE_PRODUCTS . " p left join " . TABLE_SPECIALS . " s on p.products_id = s.products_id join " . TABLE_PRODUCTS_TO_CATEGORIES . " p2c on p2c.products_id=p.products_id join " . TABLE_CATEGORIES . " c on c.categories_id=p2c.categories_id left join ".TABLE_MANUFACTURERS." mnf on p.manufacturers_id = mnf.manufacturers_id left join ".TABLE_REVIEWS." rvw on p.products_id = rvw.products_id where and c.parent_id = '" . (int)$new_products_category_id . "' and p.products_status = '1' order by modified_date desc limit " . MAX_DISPLAY_NEW_PRODUCTS;
     $new_products_query = tep_db_query($sql);
 	}
   

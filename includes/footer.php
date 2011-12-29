@@ -56,7 +56,7 @@
             <img src="/images/green_light.gif" style="float:left;margin-top:10px;margin-right:10px;" border=0 alt="Seacoast Vitamins on Twitter" title="More Vitamin Supplements at Twitter"/>
             <br/>
             <span style="text-weight:bold;text-decoration:underline;color:blue;font-size:12pt;"><a href="http://twitter.com/SeacoastVits"><b>@SeacoastVits on Twitter</b></a></span><br/>
-            <i><?php echo '"', @substr($latesttweet['tweet_message'],0,@strpos($latesttweet['tweet_message'],' ',60)),'<br/>',@substr($latesttweet['tweet_message'],@strpos($latesttweet['tweet_message'],' ',60-1)),'"';?></i>
+            <i><?php echo '"', @substr($latesttweet['tweet_message'],0,@strpos($latesttweet['tweet_message'],' ',60)),'<br/>',@preg_replace('/(http:\/\/.*?)(\s|$)/i','<a href="\\1">\\1\\2</a>',substr($latesttweet['tweet_message'],@strpos($latesttweet['tweet_message'],' ',60-1))),'"';?></i>
 
           </div>
         
@@ -428,12 +428,15 @@ if(isset($_SERVER['HTTP_REFERER']) && !strpos(HTTP_SERVER, $_SERVER['HTTP_REFERE
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-207538-1']);
   _gaq.push(['_trackPageview']);
+  _gaq.push(['_trackPageLoadTime']);
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
+  
+  
 
 </script>
 

@@ -7,6 +7,7 @@ function renderRegularProd($product_info,$rows='')
     global $currencies, $layerrows, $rendered_upsell, $cart;
     
     $listing_text='';
+    $product_parts=parse_nameparts($product_info['products_name']);
     
     if(!$cart->in_cart(CM_FTPID) && !$cart->in_cart(CM_PID) && !$_SESSION['cm_is_member']){
     if(!$rendered_upsell)
@@ -41,8 +42,8 @@ function renderRegularProd($product_info,$rows='')
       }
       $listing_text.='">';
 
-            $listing_text.= '&nbsp;<h2 style="display:inline;"><a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '" style="font-size:12pt;">'.$product_info['manufacturers_name'].' <br>' . $product_info['products_name'] . '</a></h2>';
-            
+            $listing_text.= '&nbsp;<h2 style="display:inline;"><a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '" style="font-size:12pt;">'. $product_parts['name'] . '</a></h2>';
+            $listing_text.= '<br/>' . $product_parts['attributes'] . ', ' . $product_info['manufacturers_name'];
             if(strlen($product_image_path)>0){
              $listing_text.='<div class="listing-image">'; 
              $listing_text.='<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '"><img border="0" src="'. $product_image_path . '" style="margin:5px;width:70px;overflow:hidden;" ALIGN="left" alt="'.$product_info['products_name'].' '.$product_info['manufacturers_name'].'" /></a>';
@@ -248,4 +249,5 @@ function toggleprices()
 </script>  ';
 return ($listing_text);
 }
+
 ?>

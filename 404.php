@@ -74,8 +74,11 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
 
     }
 
-    
-    
+    // Test for and get product_id
+    if(preg_match('/\/p([0-9]+)/',$_SERVER['REQUEST_URI'],$products_id))
+    {
+        $products_id=$products_id[1];
+    }
 
 
     switch($processor)
@@ -235,6 +238,21 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
         
         
         default:
+
+            if($products_id)
+            {
+                
+                header("HTTP/1.0 200 OK");
+                $_SERVER['PHP_SELF']='/product_info2.php';
+                $_REQUEST['products_id']=(int)$products_id;
+                $_GET['products_id']=(int)$products_id;
+                $modURL=true;
+                set_old_uri();
+                include('/product_info2.php');
+                exit();
+                break;
+
+            }
         
         
     }

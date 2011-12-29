@@ -52,9 +52,21 @@ $url_patterns=array(
     
     'preg_match(\'/\?products_id=.+?(&|")/i\',$match,$replacement); 
     $replacement=substr($replacement[0],13,strlen($replacement[0])-14);
-    $products_name=tep_db_fetch_array(tep_db_query("select concat(manufacturers_name,\" \",products_name) as products_name from products_description pd join products p on p.products_id=pd.products_id join manufacturers m on m.manufacturers_id=p.manufacturers_id where p.products_id=".(int)$replacement));                                                                        
-    $replacement="\"/supplement/".seo_url_title($products_name["products_name"]."-".$replacement, $page)."\"";',
-    
+    $products_name=tep_db_fetch_array(tep_db_query("select manufacturers_name, products_name from products_description pd join products p on p.products_id=pd.products_id join manufacturers m on m.manufacturers_id=p.manufacturers_id where p.products_id=".(int)$replacement));
+    $name_parts=parse_nameparts($products_name["products_name"]);
+    $replacement="\"/".seo_url_title($name_parts["name"])."/".seo_url_title($products_name["manufacturers_name"])."/".seo_url_title($name_parts["attributes"])."/p".$replacement."\"";
+    $replacement=str_replace("//","/",$replacement);',
+
+    '/"\S*?product_info2\.php\?products_id=\S+"/i'=>
+
+        'preg_match(\'/\?products_id=.+?(&|")/i\',$match,$replacement);
+        $replacement=substr($replacement[0],13,strlen($replacement[0])-14);
+        $products_name=tep_db_fetch_array(tep_db_query("select manufacturers_name, products_name from products_description pd join products p on p.products_id=pd.products_id join manufacturers m on m.manufacturers_id=p.manufacturers_id where p.products_id=".(int)$replacement));
+        $name_parts=parse_nameparts($products_name["products_name"]);
+        $replacement="\"/".seo_url_title($name_parts["name"])."/".seo_url_title($products_name["manufacturers_name"])."/".seo_url_title($name_parts["attributes"])."/p".$replacement."\"";
+        $replacement=str_replace("//","/",$replacement);',
+
+
     '/"\S*?index\.php\?manufacturers_id=\S+"/i'=>
     
     'preg_match(\'/\?manufacturers_id=.+?(&|")/i\',$match,$replacement); 

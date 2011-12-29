@@ -61,7 +61,7 @@
 
 
 		?>
- <span class="buzz">Similar Products</span><br/> <?php
+ <span class="buzz">Compare</span><br/> <?php
 		    foreach($results['products_id_similar'] as $pid){
 		    
                     if(strpos($pid,'a')==true)
@@ -79,7 +79,8 @@
 		    if($product_info=tep_db_fetch_array(tep_db_query('SELECT products_image, p.products_id, p.products_msrp, pd.products_head_desc_tag as product_desc, p.products_price, products_name, manufacturers_name, m.manufacturers_id
 		                            from products p join products_description pd on p.products_id=pd.products_id join manufacturers m on m.manufacturers_id=p.manufacturers_id
 		                            where p.products_id=\''.$pid.'\' and products_status=1'))){;
-   $listing_text='';
+   $listing_text ='';
+   $product_parts=parse_nameparts($product_info['products_name']);
 
    
  //Calculate membership discounts
@@ -117,7 +118,7 @@
             }
             $listing_text.='</div>';
 
-            $listing_text.= '<h2 style="display:inline"><a '. $class . ' href= "' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '">' . $product_info['products_name'] . '</a></h2>';
+            $listing_text.= '<h2 style="display:inline"><a '. $class . ' href= "' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '">' . $product_parts['name'] . '</a></h2>';
             
             $listing_text.=$show_expanded_similar_products ? '<br/>'.$product_info['product_desc'] : '';
             
@@ -133,7 +134,7 @@
 
             }
 
-           $listing_text.='</span> from <b>';
+           $listing_text.='</span> '.$product_parts['attributes'].' from <b>';
            $listing_text.= $product_info['manufacturers_name'].'</b>' ;
 
             if($discountpct>0){
@@ -173,7 +174,7 @@
                                 $link=link_exists('/topic.php?health='.strtolower(urlencode(trim($temp_kw))).',',$page_links);
                                 if(strlen($link)>0)
                                 {
-				 echo '<h2>><a href="'.$link.'" ><h2>'.ucwords(trim($temp_kw)).'</a></h2>.&nbsp;&nbsp;';
+				 echo '<h2 style="display:inline";><a href="'.$link.'" >'.ucwords(trim($temp_kw)).'</a>.</h2>&nbsp;&nbsp;';
                                 }
 
   	}

@@ -31,6 +31,7 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
    while($product_info=tep_db_fetch_array($listing_sql))
    {
          $listing_text='';
+         $product_parts=parse_nameparts($product_info['products_name']);
          //Get all related ailments, uses, and departments.
       $tempuses=preg_split('/,/',str_replace(', ',',',$product_info['products_uses']));
       foreach($tempuses as $tempitem)
@@ -82,7 +83,7 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
             }
             $listing_text.='</div>';
 
-            $listing_text.= '&nbsp;<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '"><b>' . $product_info['products_name'] . '</b></a>';
+            $listing_text.= '&nbsp;<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $product_info['products_id']) . '"><b>' . $product_parts['name'] . '</b></a>. '.$product_parts['attributes'];
             
             $listing_text.='<br/><span style="color:#66CC00;font-weight:bold;">';
             if (tep_not_null($product_info['specials_new_products_price'])) {
@@ -173,6 +174,7 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
     while($products_die=tep_db_fetch_array($products_die_q))
     {
           $product_image_path='';
+          $product_parts=parse_nameparts($products_die['products_name']);
       
         if (file_exists (DIR_WS_IMAGES.'products/'.$products_die['products_id'].'.gif')){
       $product_image_path = DIR_WS_IMAGES.'products/'.$products_die['products_id'].'.gif';}
@@ -191,8 +193,8 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
         <div class="mini-listing-image">
           <?php if($product_image_path!=''){?><a href="/product_info.php?products_id=<?php echo $products_die['products_id']?>"><img src="<?php echo $product_image_path;?>" border="0" width="50" style="margin:5px;" ALIGN="left" /></a><?php } ?>
         </div>&nbsp;<a href="/product_info.php?products_id=<?php echo $products_die['products_id']?>">
-          <b><?php echo $products_die['products_name'];?></b>
-        </a><br/><span style="color:#66CC00;font-weight:bold;">&nbsp;$<?php echo number_format($products_die['specials_new_products_price'],2)?>&nbsp;</span> from <b><?php echo $products_die['manufacturers_name']?></b><br/><span style="color:#ff0000;font-weight:bold;"><?php echo $products_die['discountpct']?>% discount</span>
+          <b><?php echo $product_parts['name'];?></b>
+        </a> <?php echo $product_parts['attributes'];?><br/><br/><span style="color:#66CC00;font-weight:bold;">&nbsp;$<?php echo number_format($products_die['specials_new_products_price'],2)?>&nbsp;</span> from <b><?php echo $products_die['manufacturers_name']?></b><br/><span style="color:#ff0000;font-weight:bold;"><?php echo $products_die['discountpct']?>% discount</span>
       </i>
           <br>
             <br style="clear:both;"/>

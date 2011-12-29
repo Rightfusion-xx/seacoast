@@ -24,9 +24,10 @@
             //begin contructing url. Check for https
             //echo($_REQUEST['products_id']);
             //exit();
-            
+
             if($_SERVER['HTTPS']!='off' && strpos(NO_HTTPS,$script)>0)
             {
+                
                 $url='http://';
                 $redirbadurl=true;
             }
@@ -39,9 +40,8 @@
                 $url='http://';
             }
             
-            
+
             //check for www.
-            
             if($_SERVER['HTTP_HOST']!=HTTP_COOKIE_DOMAIN)
             {
                 $url=$url.HTTP_COOKIE_DOMAIN;
@@ -53,8 +53,6 @@
             }
             
             $url=$url . $_SERVER['REQUEST_URI'] ;
-            
-            
 
             //check querystring params
             if(strpos ($url, '/Store/')>0)
@@ -176,7 +174,7 @@
             //echo($url . ' - ' . $redirbadurl);
             
             //exit();
-            
+        
             if($redirbadurl){
                 redir301($url);
             }

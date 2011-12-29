@@ -113,9 +113,13 @@ $clean = str_replace('-or-a-a-','-',$clean);
 $clean = str_replace('iso-8859-1','UTF-8', $clean); 
 $clean = str_replace('stylesheet.css','stylesheet-a.css', $clean);  // Replace cached stylesheet
 
-$clean=utf8_encode($clean);
+$clean=utf8_encode($clean); //Strip bad characters
 
-//Strip bad characters
+// circumvent tidyhtml
+$plusonecode='<g:plusone size="tall"></g:plusone>';
+
+$clean=str_replace('$GOOGLE_PLUS_ONE$', $plusonecode, $clean);
+
 
 
 
@@ -132,7 +136,9 @@ function store_page_links()
 {
     
     
-
+    global $catalog_html;
+    global $linkcachetime;
+    global $modURL;
     // Do post wrapup
 
 
@@ -160,7 +166,7 @@ function store_page_links()
           }
           
 
-    $linkable=',/hub.php,/,/index-hidden.php,/remedies/,/catalog/,/catalog.php,/topic.php,/product_info.php,/healthnotes.php,/index.php,/ailments.php,/natural_uses.php,/departments.php,health_library.php,';
+    $linkable=',/hub.php,/,/index-hidden.php,/remedies/,/catalog/,/catalog.php,/product_info.php,/healthnotes.php,/index.php,/ailments.php,/natural_uses.php,/departments.php,health_library.php,';
     if((strpos($linkable, $_SERVER['SCRIPT_NAME']) || strpos($linkable, $_SERVER['PHP_SELF']) || @strpos($linkable,$processor)) && !strpos($_SERVER['REQUEST_URI'],'buy_now') &&  !strpos($_SERVER['REQUEST_URI'],'qty=') && !strpos($_SERVER['REQUEST_URI'],'?qty'))
       {
           if(!$linkcachetime)

@@ -3,6 +3,9 @@ $system_login=true;
   set_time_limit(1200);
   $_SERVER['DOCUMENT_ROOT']='..';
   require('includes/application_top.php');
+  
+  //delete zero transaction records.
+  tep_db_query('delete from stamps_postback where length(transaction_id)<1 or tracking_number is null');
 
   $new_shipments_q=tep_db_query('select sp.*, o.date_purchased, o.customers_name, o.customers_email_address from stamps_postback sp 
                                         join orders o on o.orders_id=sp.orders_id order by date_created asc');

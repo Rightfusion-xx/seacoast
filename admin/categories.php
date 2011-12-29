@@ -11,9 +11,26 @@ require(DIR_WS_CLASSES . 'currencies.php');
 $currencies = new currencies();
 
 if($_REQUEST['inv']=='update')
-{
-    tep_db_query('update products set products_available='.tep_db_input($_REQUEST['products_available']).' where products_id='. (int)$_REQUEST['pID']);
+{               
+    if(strlen($_REQUEST['products_nearest_expiration_date'])>0)
+    {
+        $date=DateTime::createFromFormat('m/d/Y',$_REQUEST['products_nearest_expiration_date']);
+        if(is_object($date))
+        {
+            $datestr='"'.$date->format('Y-m-d').'"';            
+        }
+        else
+        {
+            $datestr='products_nearest_expiration_date';     
+        }
+    }
+    else
+    {
+        $datestr='products_nearest_expiration_date';        
+    }
     
+
+    tep_db_query('update products set products_nearest_expiration_date='.$datestr.',  products_available='.tep_db_input($_REQUEST['products_available']).' where products_id='. (int)$_REQUEST['pID']);
 
     
 }
@@ -197,6 +214,7 @@ $products_date_available = tep_db_prepare_input($HTTP_POST_VARS['products_date_a
 $products_date_available = (date('Y-m-d') < $products_date_available) ? $products_date_available : 'null';
 $sql_data_array = array('products_quantity' => tep_db_prepare_input($HTTP_POST_VARS['products_quantity']),
 'products_available' => tep_db_prepare_input($HTTP_POST_VARS['products_available']),
+'products_nearest_expiration_date'=> tep_db_prepare_input($HTTP_POST_VARS['products_nearest_expiration_date']),
 'products_ailments' => tep_db_prepare_input($HTTP_POST_VARS['products_ailments']),
 'products_uses' => tep_db_prepare_input($HTTP_POST_VARS['products_uses']),
 'products_departments' => tep_db_prepare_input($HTTP_POST_VARS['products_departments']),
@@ -213,8 +231,6 @@ $sql_data_array = array('products_quantity' => tep_db_prepare_input($HTTP_POST_V
 'products_die' => ($HTTP_POST_VARS['products_die'] == 'on') ? 1 : 0,
 'products_dieqty' => tep_db_prepare_input($HTTP_POST_VARS['products_dieqty']),
 'products_tax_class_id' => tep_db_prepare_input($HTTP_POST_VARS['products_tax_class_id']),
-'products_target_keyword' => tep_db_prepare_input($HTTP_POST_VARS['products_target_keyword']),
-'products_takeaway' => tep_db_prepare_input($HTTP_POST_VARS['products_takeaway']),
 'manufacturers_id' => tep_db_prepare_input($HTTP_POST_VARS['manufacturers_id']));
 if (isset($HTTP_POST_VARS['products_image']) && tep_not_null($HTTP_POST_VARS['products_image']) && ($HTTP_POST_VARS['products_image'] != 'none')) {
 $sql_data_array['products_image'] = tep_db_prepare_input($HTTP_POST_VARS['products_image']);
@@ -282,7 +298,7 @@ $messageStack->add_session(ERROR_CANNOT_LINK_TO_SAME_CATEGORY, 'error');
 }
 } elseif ($HTTP_POST_VARS['copy_as'] == 'duplicate') {
 
-$product_query = tep_db_query("select products_available, products_keywords, products_ailments, products_uses, products_departments,products_quantity, products_model, products_image, products_msrp, products_price, products_date_available, products_weight, products_carrot, products_tax_class_id, manufacturers_id from " . TABLE_PRODUCTS . " where products_id = '" . (int)$products_id . "'");
+$product_query = tep_db_query("select products_available, products_nearest_expiration_date, products_keywords, products_ailments, products_uses, products_departments,products_quantity, products_model, products_image, products_msrp, products_price, products_date_available, products_weight, products_carrot, products_tax_class_id, manufacturers_id from " . TABLE_PRODUCTS . " where products_id = '" . (int)$products_id . "'");
 $product = tep_db_fetch_array($product_query);
 tep_db_query("insert into " . TABLE_PRODUCTS . " (products_quantity, products_available, products_model, products_image, products_msrp, products_price, products_date_added, products_date_available, products_weight, products_status, products_carrot, products_tax_class_id, manufacturers_id) values ('" . tep_db_input($product['products_quantity']) . "', '" . tep_db_input($product['products_available']) . "', '" . tep_db_input($product['products_model']) . "', '" . tep_db_input($product['products_image']) . "', '" . tep_db_input($product['products_msrp']) . "', '" . tep_db_input($product['products_price']) . "', now(), '" . tep_db_input($product['products_date_available']) . "', '" . tep_db_input($product['products_weight']) . "', '0', '" . (int)$product['products_tax_class_id'] . "', '" . (int)$product['manufacturers_id'] . "')");
 $dup_products_id = tep_db_insert_id();
@@ -369,10 +385,11 @@ $parameters = array('products_name' => '',
 'products_tax_class_id' => '',
 'manufacturers_id' => '',
 'products_takeaway' =>'',
-'products_target_keyword'=>'');
+'products_target_keyword'=>'',
+'products_nearest_expiration_date'=>'');
 $pInfo = new objectInfo($parameters);
 if (isset($HTTP_GET_VARS['pID']) && empty($HTTP_POST_VARS)) {
-$product_query = tep_db_query("select p.products_keywords, pd.products_takeaway, pd.products_target_keyword,pd.products_ailments, pd.products_uses, pd.products_departments, p.products_upc, p.products_sku, p.products_die, p.products_dieqty, pd.products_name, pd.products_description, pd.products_head_title_tag, pd.products_head_desc_tag, pd.products_head_keywords_tag, pd.products_url, p.products_id, p.products_quantity, p.products_available, p.products_model, p.products_msrp, p.products_image, p.products_price, p.products_weight, p.products_date_added, p.products_last_modified, date_format(p.products_date_available, '%Y-%m-%d') as products_date_available, p.products_status, p.products_carrot, p.products_tax_class_id, p.manufacturers_id from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id = '" . (int)$HTTP_GET_VARS['pID'] . "' and p.products_id = pd.products_id and pd.language_id = '" . (int)$languages_id . "'");
+$product_query = tep_db_query("select p.products_nearest_expiration_date, p.products_keywords, pd.products_takeaway, pd.products_target_keyword,pd.products_ailments, pd.products_uses, pd.products_departments, p.products_upc, p.products_sku, p.products_die, p.products_dieqty, pd.products_name, pd.products_description, pd.products_head_title_tag, pd.products_head_desc_tag, pd.products_head_keywords_tag, pd.products_url, p.products_id, p.products_quantity, p.products_available, p.products_model, p.products_msrp, p.products_image, p.products_price, p.products_weight, p.products_date_added, p.products_last_modified, date_format(p.products_date_available, '%Y-%m-%d') as products_date_available, p.products_status, p.products_carrot, p.products_tax_class_id, p.manufacturers_id from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id = '" . (int)$HTTP_GET_VARS['pID'] . "' and p.products_id = pd.products_id and pd.language_id = '" . (int)$languages_id . "'");
 $product = tep_db_fetch_array($product_query);
 $pInfo->objectInfo($product);
 } elseif (tep_not_null($HTTP_POST_VARS)) {
@@ -502,31 +519,6 @@ document.forms["new_product"].products_price.value = doRound(netValue, 4);
 <?php echo tep_draw_separator('pixel_trans.gif', '1', '10'); ?>
 </td>
 </tr>
-<tr>
-<td colspan="2">
-<script src="http://img.shopping.com/sc/pac/shopwidget_v1.0_proxy.js"> </script>
-
-                <script>
-                <!--
-                   // Seacoast Product Page Comparison
-                   var sw = new ShopWidget();
-                   sw.mode            = "kw";
-                   sw.width           = 728;
-                   sw.height          = 90;
-                   sw.linkColor       = "#0033cc";
-                   sw.borderColor     = "#ffffff";
-                   sw.fontColor       = "#000000";
-                   sw.font            = "arial";
-                   sw.linkin          = "8024494";
-                   sw.categoryId      = "205";
-                   sw.keyword         = "<?php echo $pInfo->products_name; ?>";
-                   sw.render();
-                //-->
-                </script>
-
-</td>
-</tr>
-<tr>
 <td class="main">
 <?php echo TEXT_PRODUCTS_DATE_AVAILABLE; ?>
 <br>
@@ -882,7 +874,7 @@ $products_head_desc_tag = $HTTP_POST_VARS['products_head_desc_tag'];
 $products_head_keywords_tag = $HTTP_POST_VARS['products_head_keywords_tag'];
 $products_url = $HTTP_POST_VARS['products_url'];
 } else {
-$product_query = tep_db_query("select p.products_id, pd.language_id, pd.products_name, pd.products_description, pd.products_head_title_tag, pd.products_head_desc_tag, pd.products_head_keywords_tag, pd.products_url, p.products_quantity, p.products_available, p.products_model, p.products_image, p.products_msrp, p.products_price, p.products_weight, p.products_date_added, p.products_last_modified, p.products_date_available, p.products_status, p.manufacturers_id from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id = pd.products_id and p.products_id = '" . (int)$HTTP_GET_VARS['pID'] . "'");
+$product_query = tep_db_query("select p.products_nearest_expiration_date, p.products_id, pd.language_id, pd.products_name, pd.products_description, pd.products_head_title_tag, pd.products_head_desc_tag, pd.products_head_keywords_tag, pd.products_url, p.products_quantity, p.products_available, p.products_model, p.products_image, p.products_msrp, p.products_price, p.products_weight, p.products_date_added, p.products_last_modified, p.products_date_available, p.products_status, p.manufacturers_id from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id = pd.products_id and p.products_id = '" . (int)$HTTP_GET_VARS['pID'] . "'");
 $product = tep_db_fetch_array($product_query);
 $pInfo = new objectInfo($product);
 $products_image_name = $pInfo->products_image;
@@ -991,25 +983,7 @@ if ($pInfo->products_date_available > date('Y-m-d')) {
 <?php echo '<a href="' . tep_href_link(FILENAME_CATEGORIES, 'cPath=' . $cPath . '&pID=' . $pInfo->products_id . '&action=new_product') . '">' . tep_image_button('button_edit.gif', IMAGE_EDIT) . '</a>'
 ?></a>
 <br>
-<script src="http://img.shopping.com/sc/pac/shopwidget_v1.0_proxy.js"> </script>
 
-                <script>
-                <!--
-                   // Seacoast Product Page Comparison
-                   var sw = new ShopWidget();
-                   sw.mode            = "kw";
-                   sw.width           = 728;
-                   sw.height          = 90;
-                   sw.linkColor       = "#0033cc";
-                   sw.borderColor     = "#ffffff";
-                   sw.fontColor       = "#000000";
-                   sw.font            = "arial";
-                   sw.linkin          = "8024494";
-                   sw.categoryId      = "205";
-                   sw.keyword         = "<?php echo $pInfo->products_name; ?>";
-                   sw.render();
-                //-->
-                </script>
                 
                 </td>
 </tr>
@@ -1148,9 +1122,9 @@ echo ' <tr class="dataTableRow" onmouseover="rowOverEffect(this)" onmouseout="ro
 }
 $products_count = 0;
 if ($HTTP_GET_VARS['search']!='') {
-$products_query = tep_db_query("select (select specials_id from specials s where products_id=p.products_id limit 0,1) as sID, m.manufacturers_name, p.products_sku, p.products_available, p.products_id, concat(m.manufacturers_name, ' ', pd.products_name) as products_name, p.products_quantity, p.products_image, p.products_price, p.products_date_added, p.products_last_modified, p.products_date_available, p.products_status, p2c.categories_id from " . TABLE_PRODUCTS . " p left outer join manufacturers m on m.manufacturers_id=p.manufacturers_id, " . TABLE_PRODUCTS_DESCRIPTION . " pd, " . TABLE_PRODUCTS_TO_CATEGORIES . " p2c where p.products_id = pd.products_id and pd.language_id = '" . (int)$languages_id . "' and p.products_id = p2c.products_id and pd.products_name like '%" . tep_db_input($search) . "%' group by p.products_id order by m.manufacturers_name, pd.products_name");
+$products_query = tep_db_query("select products_nearest_expiration_date, (select specials_id from specials s where products_id=p.products_id limit 0,1) as sID, m.manufacturers_name, p.products_sku, p.products_available, p.products_id, concat(m.manufacturers_name, ' ', pd.products_name) as products_name, p.products_quantity, p.products_image, p.products_price, p.products_date_added, p.products_last_modified, p.products_date_available, p.products_status, p2c.categories_id from " . TABLE_PRODUCTS . " p left outer join manufacturers m on m.manufacturers_id=p.manufacturers_id, " . TABLE_PRODUCTS_DESCRIPTION . " pd, " . TABLE_PRODUCTS_TO_CATEGORIES . " p2c where p.products_id = pd.products_id and pd.language_id = '" . (int)$languages_id . "' and p.products_id = p2c.products_id and pd.products_name like '%" . tep_db_input($search) . "%' group by p.products_id order by m.manufacturers_name, pd.products_name");
 } else {
-$products_query = tep_db_query("select (select specials_id from specials s where products_id=p.products_id limit 0,1) as sID, m.manufacturers_name, p.products_sku, p.products_available,    p.products_id, concat(m.manufacturers_name, ' ', pd.products_name) as products_name, p.products_quantity, p.products_image, p.products_price, p.products_date_added, p.products_last_modified, p.products_date_available, p.products_status from " . TABLE_PRODUCTS . "  p left outer join manufacturers m on m.manufacturers_id=p.manufacturers_id, " . TABLE_PRODUCTS_DESCRIPTION . " pd, " . TABLE_PRODUCTS_TO_CATEGORIES . " p2c where p.products_id = pd.products_id and pd.language_id = '" . (int)$languages_id . "' and p.products_id = p2c.products_id and p2c.categories_id = '" . (int)$current_category_id . "' order by pd.products_name");
+$products_query = tep_db_query("select products_nearest_expiration_date, (select specials_id from specials s where products_id=p.products_id limit 0,1) as sID, m.manufacturers_name, p.products_sku, p.products_available,    p.products_id, concat(m.manufacturers_name, ' ', pd.products_name) as products_name, p.products_quantity, p.products_image, p.products_price, p.products_date_added, p.products_last_modified, p.products_date_available, p.products_status from " . TABLE_PRODUCTS . "  p left outer join manufacturers m on m.manufacturers_id=p.manufacturers_id, " . TABLE_PRODUCTS_DESCRIPTION . " pd, " . TABLE_PRODUCTS_TO_CATEGORIES . " p2c where p.products_id = pd.products_id and pd.language_id = '" . (int)$languages_id . "' and p.products_id = p2c.products_id and p2c.categories_id = '" . (int)$current_category_id . "' order by pd.products_name");
 }
 while ($products = tep_db_fetch_array($products_query)) {
 $products_count++;
@@ -1338,9 +1312,18 @@ if (date('Y-m-d') < $pInfo->products_date_available) $contents[] = array('text' 
 $contents[] = array('text' => '<br>' . tep_info_image($pInfo->products_image, $pInfo->products_name, SMALL_IMAGE_WIDTH, SMALL_IMAGE_HEIGHT) . '<br>' . $pInfo->products_image);
 $contents[] = array('text' => '<br>' . TEXT_PRODUCTS_PRICE_INFO . ' ' . $currencies->format($pInfo->products_price) . '<br>' . TEXT_PRODUCTS_QUANTITY_INFO . ' ' . $pInfo->products_quantity);
 $contents[] = array('text' => '<br>' . TEXT_PRODUCTS_AVERAGE_RATING . ' ' . number_format($pInfo->average_rating, 2) . '%');
-$contents[] = array('text' => '<br>' . '<form action="categories.php?">Qty Available' . ' ' . '<input type="hidden" name="cPath" value="'.$_REQUEST['cPath'].'"><input type="hidden" name="pID" value="'.$pInfo->products_id.'"><input type="hidden" name="search" value="'.$_REQUEST['search'].'"><input size="3" type="text" name="products_available" value="'.$pInfo->products_available.'">');
+$contents[] = array('text' => '<br>' . '<form action="categories.php?">Qty Available' . ' ' . '<input type="hidden" name="cPath" value="'.$_REQUEST['cPath'].'"><input type="hidden" name="pID" value="'.$pInfo->products_id.'"><input type="hidden" name="search" value="'.$_REQUEST['search'].'"><input size="3" type="text" name="products_available" value="'.$pInfo->products_available.'"> 
+<p>Nearest Expiration Date 
+<input id="datepicker" size="10" type="text" name="products_nearest_expiration_date" value="'.$pInfo->products_nearest_expiration_date.'">
+<script>
+    
+    $(function() {
+        $( "#datepicker" ).datepicker();
+    });
+    </script>
+    ');
 
-
+                                                                                                       
   $location_query=tep_db_query('select * from products_location where products_id='. (int)$_REQUEST['pID'] . ' order by time_created desc limit 0,10');
   $location_log=tep_db_fetch_array($location_query);
 

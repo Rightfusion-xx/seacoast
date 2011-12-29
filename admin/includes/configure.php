@@ -60,4 +60,7 @@ define('X_TEST_REQUEST','TRUE');
 define('PREFERRED_ENCRYPTION', 'twofish');
 define('ENCRYPTION_KEY','XF;F,7b !<K:-8)492M=f');
 
+// CouchDB locations
+  define('COUCH_DB_ADDRESS','http://127.0.0.1:5984/');
+
 ?>

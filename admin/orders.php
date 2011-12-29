@@ -170,11 +170,12 @@
         if ( ($check_status['orders_status'] != $status) || tep_not_null($comments)) {
           tep_db_query("update " . TABLE_ORDERS . " set orders_status = '" . tep_db_input($status) . "', last_modified = now() where orders_id = '" . (int)$oID . "'");
             
-            if(($check_status['orders_status']=='3' || $check_status['orders_status']=='7' || $check_status['orders_status']=='4' || $check_status['orders_status']=='11') && ($status!='3' && $status!='7' && $status!='4' && $status!='11'))
+            $preg_hold_inv='/^(1|3|4|7|10|11)$/';
+            if(preg_match($preg_hold_inv,$check_status['orders_status']) && !preg_match($preg_hold_inv,$status))
             {
                 $order->restockInventory();
             }
-            elseif(($check_status['orders_status']!='3' && $check_status['orders_status']!='7' && $check_status['orders_status']!='4' && $check_status['orders_status']!='11') && ($status=='3' || $status=='7' || $status=='4'|| $status=='11'))
+            elseif(!preg_match($preg_hold_inv,$check_status['orders_status']) && preg_match($preg_hold_inv, $status))
             {
                 $order->deductInventory();
             }

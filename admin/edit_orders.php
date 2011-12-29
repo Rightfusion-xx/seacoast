@@ -111,15 +111,16 @@
   		$status= $_POST['status'];
             
                       
-       if(($check_status['orders_status']=='3' || $check_status['orders_status']=='7' || $check_status['orders_status']=='4') && ($status!='3' && $status!='7' && $status!='4'))
+       $preg_hold_inv='/^(1|3|4|7|10|11)$/';
+            if(preg_match($preg_hold_inv,$check_status['orders_status']) && !preg_match($preg_hold_inv,$status))
             {
                 $order->restockInventory();
             }
-            elseif(($check_status['orders_status']!='3' && $check_status['orders_status']!='7' && $check_status['orders_status']!='4') && ($status=='3' || $status=='7' || $status=='4'))
+            elseif(!preg_match($preg_hold_inv,$check_status['orders_status']) && preg_match($preg_hold_inv, $status))
             {
                 $order->deductInventory();
             }
-            
+             
         tep_db_query("UPDATE " . TABLE_ORDERS . " SET 
 					  orders_status = '" . tep_db_input($_POST['status']) . "', 
                       last_modified = now() 

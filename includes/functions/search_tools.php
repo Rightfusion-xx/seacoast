@@ -160,7 +160,10 @@ function product_search(&$results, $keyword='')
       $keyword=trim($results['searchterm']);       
   }
   
-  $results['found_products']=false;
+  if(!$results['found_products'])
+  {
+      $results['found_products']=false;     
+  }
 
   //if more than one day, begin search
   if(OSS_SERVING)

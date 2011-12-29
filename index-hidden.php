@@ -1,6 +1,5 @@
 <?php
 
-
 $linkcachetime=60*10;
 
   require('includes/application_top.php');
@@ -29,6 +28,7 @@ $linkcachetime=60*10;
  <meta name="Keywords" content="vitamins, herbs, herbal extracts, alternative medicines, homeopathic, health, natural, nutritional supplements, healthy living, ADHD, cancer, prostate, diabetes, arthritis" /> 
  <meta name="robots" content="noodp" /> 
  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+ <meta property="fb:admins" content="652610239" />
 
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
 

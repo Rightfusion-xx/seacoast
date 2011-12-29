@@ -2824,22 +2824,25 @@ function populate_backlinks($delimiter=',')
 {                       
   global $page_links;
   $page_links=$delimiter;
-
+  
+  $context=stream_context_create(Array('http'=>Array('method'=>'GET','header'=>'Content-Type: application/json')));
+  
   if(!is_array($page_links))
   {
     if((int)$_REQUEST['products_id'])
-    {
-      $page_link_query=tep_db_query('select source_uri from seacoast_links.source_link where source_link="/product_info.php?products_id='.(int)$_REQUEST['products_id'].'"');
+    { 
+      $pl=json_decode(@file_get_contents(COUCH_DB_ADDRESS.'seacoast-page-links/_design/page_links/_view/incoming_links?key="'.urlencode('/product_info.php?products_id='.(int)$_REQUEST['products_id']).'"',false,$context),true);
+      //$page_link_query=tep_db_query('select source_uri from seacoast_links.source_link where source_link=");
 
     }
     else
     {
-      $page_link_query=tep_db_query('select source_uri from seacoast_links.source_link where source_link="'.$_SERVER['REQUEST_URI'].'"');
+      $pl=json_decode(@file_get_contents(COUCH_DB_ADDRESS.'seacoast-page-links/_design/page_links/_view/incoming_links?key="'.urlencode($_SERVER['REQUEST_URI']).'"',false,$context),true);
     }
 
-    while($pl=tep_db_fetch_array($page_link_query))
+    foreach($pl['rows'] as $link)
     {
-      $page_links.=$pl['source_uri'].$delimiter;
+      $page_links.=$link['value'].$delimiter;
     }
 
   }
@@ -2857,10 +2860,13 @@ function catalog_links($tidydoc, $linkable, $cache_time=86400, $uri='')
     
   }                                                          
 
-  $last_modifieddb=tep_db_fetch_array(tep_db_query('select time_updated from seacoast_links.source where source_uri="'.$uri.'"'));
+  $context=stream_context_create(Array('http'=>Array('method'=>'GET','header'=>'Content-Type: application/json')));
+  
+  $last_modifieddb=json_decode(@file_get_contents(COUCH_DB_ADDRESS.'seacoast-page-links/'.urlencode($uri),false,$context),true);
+  
   if(strlen($last_modifieddb['time_updated'])>0)
   {
-    $last_modified=strtotime($last_modifieddb['time_updated']);
+    $last_modified=(int)$last_modifieddb['time_updated'];
   }
   else
   {
@@ -2868,6 +2874,7 @@ function catalog_links($tidydoc, $linkable, $cache_time=86400, $uri='')
   }
   
   $t=(int)time();
+ 
   
  // echo (((int)$last_modifed-(int)$t)+(int)$cache_time),'<br>',$cache_time,'<br>',$t,'<br>',$last_modified;exit();
   if($t-$last_modified-$cache_time>0)
@@ -2898,16 +2905,18 @@ function catalog_links($tidydoc, $linkable, $cache_time=86400, $uri='')
                           {array_push($links_arr, $cur);}
       }
     }
-
-    tep_db_query('delete from seacoast_links.source_link where source_uri="'.$uri.'"');
-
+                                   
+    $cdb_docs=array("links"=>Array());
+    $cdb_docs['time_updated']=time();
+    $cdb_docs['_id']=tep_db_input($uri);
     foreach($links_arr as $item)
     {
-      tep_db_query("insert into seacoast_links.source_link (source_uri,source_link) values('".tep_db_input($uri)."','".tep_db_input($item)."')");
+      array_push($cdb_docs['links'],tep_db_input($item));
     }
     
-    tep_db_query('insert into seacoast_links.source (source_uri,time_updated) values("'.tep_db_input($uri).'",now())
-                         on duplicate key update time_updated=now()');
+    // insert in to couch 
+    $context=stream_context_create(Array('http'=>Array('method'=>'POST','header'=>'Content-Type: application/json','content'=> json_encode($cdb_docs))));
+    @file_get_contents(COUCH_DB_ADDRESS.'seacoast-page-links/',false,$context);                                                                        
 
   }
 
@@ -3089,6 +3098,17 @@ function getHubKeywordsAndRewriteContent($content)
     
 }
 
+function parse_nameparts($name)
+{
+    // Get the short name and the attributes from a product title
+    
+    $tname=preg_replace('/[^A-Za-z0-9-()!|,\s\.]/i','',$name);
+    $tname=preg_split('/([^a-z0-9-\s!].+)/i',$tname,2,PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY );
+    $tmisc=$tname[1];
+    $parts['attributes']=str_replace("| ","",$tmisc);
+    $parts['name']=trim($tname[0]);
+    return($parts);
+}
 
 ?>
 

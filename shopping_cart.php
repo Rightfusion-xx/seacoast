@@ -33,7 +33,11 @@ $hide_cart=true;
 </head>
 
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
-
+<!-- ClickTale Top part -->
+<script type="text/javascript">
+var WRInitTime=(new Date()).getTime();
+</script>
+<!-- ClickTale end of Top part -->
 
 <!-- header //-->
 
@@ -526,6 +530,21 @@ var gwoTracker=_gat._getTracker("UA-207538-3");
 gwoTracker._trackPageview("/0386199624/goal");
 }catch(err){}</script>
 <!-- End of Google Website Optimizer Conversion Script -->
+
+<!-- ClickTale Bottom part -->
+<div id="ClickTaleDiv" style="display: none;"></div>
+<script type='text/javascript'>
+document.write(unescape("%3Cscript%20src='"+
+ (document.location.protocol=='https:'?
+  'https://clicktale.pantherssl.com/':
+  'http://s.clicktale.net/')+
+ "WRc3.js'%20type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var ClickTaleSSL=1;
+if(typeof ClickTale=='function') ClickTale(1368,1,"www07");
+</script>
+<!-- ClickTale end of Bottom part -->
 
 </body>
 

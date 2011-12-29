@@ -39,14 +39,15 @@
                 <td class="dataTableHeadingContent" align="center"><?php echo 'SKU'; ?></td>
                 <td class="dataTableHeadingContent" align="center"><?php echo 'UPC'; ?></td>
                 <td class="dataTableHeadingContent" align="center"><?php echo 'QTY'; ?></td>
+                <td class="dataTableHeadingContent" align="center"><?php echo 'NEAR EXPIRY'; ?></td>
                 <td class="dataTableHeadingContent" align="center"><?php echo 'MSRP'; ?></td>
                 <td class="dataTableHeadingContent" align="center"><?php echo 'Price'; ?></td>
               </tr>
 <?php
   if (isset($HTTP_GET_VARS['page']) && ($HTTP_GET_VARS['page'] > 1)) $rows = $HTTP_GET_VARS['page'] * MAX_DISPLAY_SEARCH_RESULTS - MAX_DISPLAY_SEARCH_RESULTS;
   $rows = 0;
-  $products_query_raw = "select p.products_id, pd.products_name, p.products_sku, m.manufacturers_name, p.products_upc, p.products_msrp, p.products_price, products_available from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd, manufacturers m where m.manufacturers_id=p.manufacturers_id and p.products_id = pd.products_id order by manufacturers_name asc, products_name asc ";
-  $products_split = new splitPageResults($HTTP_GET_VARS['page'], 5000, $products_query_raw, $products_query_numrows);
+  $products_query_raw = "select p.products_nearest_expiration_date, p.products_id, pd.products_name, p.products_sku, m.manufacturers_name, p.products_upc, p.products_msrp, p.products_price, products_available from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd, manufacturers m where m.manufacturers_id=p.manufacturers_id and p.products_id = pd.products_id order by manufacturers_name asc, products_name asc ";
+  $products_split = new splitPageResults($HTTP_GET_VARS['page'], 50000, $products_query_raw, $products_query_numrows);
   $products_query = tep_db_query($products_query_raw);
   while ($products = tep_db_fetch_array($products_query)) {
     $rows++;
@@ -61,6 +62,7 @@
                 <td class="dataTableContent" align="left"><?php echo $products['products_sku']; ?></td>
                 <td class="dataTableContent" align="left"><?php echo $products['products_upc']; ?></td>
                 <td class="dataTableContent" align="left"><?php echo $products['products_available']; ?></td>
+                <td class="dataTableContent" align="left"><?php echo $products['products_nearest_expiration_date']; ?></td>
                 <td class="dataTableContent" align="left"><?php echo $products['products_msrp']; ?></td>
                 <td class="dataTableContent" align="left"><?php echo $products['products_price']; ?></td>
               </tr>
@@ -69,13 +71,18 @@
 ?>
             </table></td>
           </tr>
-          <tr>
+          <!--<tr>
             <td colspan="3"><table border="0" width="100%" cellspacing="0" cellpadding="2">
               <tr>
                 <td class="smallText" valign="top"><?php echo $products_split->display_count($products_query_numrows, MAX_DISPLAY_SEARCH_RESULTS, $HTTP_GET_VARS['page'], TEXT_DISPLAY_NUMBER_OF_PRODUCTS); ?></td>
                 <td class="smallText" align="right"><?php echo $products_split->display_links($products_query_numrows, MAX_DISPLAY_SEARCH_RESULTS, MAX_DISPLAY_PAGE_LINKS, $HTTP_GET_VARS['page']); ?></td>
               </tr>
             </table></td>
+          </tr>  -->
+          <tr>
+            <td>
+                <b><?php echo $rows?> rows.</b>
+            </td>
           </tr>
         </table></td>
       </tr>

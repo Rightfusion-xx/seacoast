@@ -14,6 +14,12 @@
 $clean=ob_get_clean();
 $buffer=str_replace('iso-8859-1','UTF-8', $clean);
 
+$buffer=str_replace('</head>','
+                <link type="text/css" href="/jquery/css/ui-lightness/jquery-ui-1.8.13.custom.css" rel="Stylesheet" />
+                <script type="text/javascript" src="/jquery/js/jquery-1.5.1.min.js"></script>
+                <script type="text/javascript" src="/jquery/js/jquery-ui-1.8.13.custom.min.js"></script>'
+                ,$buffer);
+
 
 
   echo utf8_encode($buffer);

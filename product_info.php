@@ -126,10 +126,9 @@ else
 }
 */
 
-$tname=preg_replace('/[^A-Za-z0-9-()|,\s\.]/i','',$product_info['products_name']);
-$tname=preg_split('/([^a-z0-9-\s].+)/i',$tname,2,PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY );
-$tmisc=$tname[1];
-$tname=$tname[0];
+$product_parts=parse_nameparts($product_info['products_name']);
+$tname=$product_parts['name'];
+$tmisc=$product_parts['attributes'];
 $shortname=$tname;
 
 
@@ -187,20 +186,34 @@ $tmp_desc=stripslashes($product_info['products_description']);
               
               //echo $tmp_desc;exit();
               
+               // remove comments
+              $tmp_desc=preg_replace('/\<!--.*?--\>/im','',$tmp_desc);  
+              
               
               
               //Count number of words in title / manufacturer
-              $title_count=str_word_count($product_info['manufacturers_name']. ' '.$product_info['products_name'])+1;
+              $title_count=strlen($product_info['manufacturers_name']. ' '.$product_info['products_name'])+1;
               
-              if(preg_match('/([0-9a-z-.,]*\s){'.$title_count.'}/im',$tmp_desc,$matches))
-              {
-                  // We have a valid description, and found the start, so go there.
-                  $tmp_desc=substr($tmp_desc,strpos($tmp_desc,$matches[0]));
+                  if(preg_match('/(^(\<.*?\>))([^\<\>]{'.$title_count.'})/im',$tmp_desc,$matches,null,$pos))
+                  {
+                      //print_r($matches);exit();
+                      // We have a valid description, and found the start, so go there.
+                      $tmp_desc=substr($tmp_desc,strpos($tmp_desc,$matches[3]));
+                      
+                      //Check to see if there is a ">" tag before a "<" tag. If yes, start again from there,
+                      //else use the found location
+                   
+            
+                      //echo $matches[0];echo $tmp_desc;exit();
+                      
+                 
                   
-        
-                  //echo $matches[0];echo $tmp_desc;exit();
-                  
-              }     
+              }
+              
+              
+             
+              
+              
               
               if(strlen($product_info['products_target_keyword'])>0){$product_info['products_name']=$product_info['products_target_keyword'];}
               else{$product_info['products_target_keyword']=$tname;
@@ -239,24 +252,16 @@ $tmp_desc=stripslashes($product_info['products_description']);
             if(is_numeric($reviews_rating) && $reviews_rating>0){echo draw_stars($reviews_rating);
         }?>
         <h1 style="margin-top:0em;">
-           <?php echo $tname; ?> 
-        </h1>
+           <?php echo $tname; ?> <?php echo $tmisc; ?></b> from <b><?php echo $product_info['manufacturers_name'];?>.</h1>
+        <?php
         
-        <?php 
-        if(strlen($product_info['products_takeaway'])>0)
-        {
-            echo '<p>',$product_info['products_takeaway'],'</p>'; 
-        }   
+        $cache->addCache('products_main'.$pmod);
+}
+
         ?>
         
-        <b><?php echo $tmisc; ?></b> from <b><?php echo $product_info['manufacturers_name'];?>.</b>
-        
-        
-        
-        <?php echo $tmp_desc; ?>
-        
         <div class="green box" style="margin:2em;">
-             <span class="buzzbox">Seacoast Only Prices</span>
+             <span class="buzzbox"><b>Best price for <?php echo $product_info['products_name']; ?>?</b></span>
                 <div id="supplement_image" style="float:left;margin-bottom:.5em;">
                     <?php
                     if(isset ($product_image_path) && file_exists($_SERVER['DOCUMENT_ROOT'].$product_image_path)) {?>
@@ -328,10 +333,16 @@ $tmp_desc=stripslashes($product_info['products_description']);
                     </div>
                  <?php } ?>  <br style="clear:both"/></span></form> 
                 
-             </div>      
+             </div>  
         
-        <?php include(DIR_WS_MODULES . 'customer_reviews.php');?>
         
+        <?php
+if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
+{
+?>    
+
+
+
            
            <?php if(strtotime($product_info['products_last_modified'])<strtotime('2007-03-01')||strlen($tmp_desc)<150)
                           { $show_expanded_similar_products=true;}?>
@@ -381,96 +392,11 @@ $tmp_desc=stripslashes($product_info['products_description']);
               }
               ?>
                           
-                          
-        <br><span class="buzz">Related Health Links for <?php echo $product_info['products_name'];?></span><br/>
-        
-        <?php
-            
-        foreach($results['healthnotes'] as $item)
-        {
-            ?>
-            <p><a href="<?php echo $item['url']?>"><?php echo $item['title'];?></a><br><?php echo $item['snippet'];?></p>
-            
-            <?php
-        
-        }
-?>
-        
-        
-        
-        
-        <?php
-        // pull up product categories from DB
-    $cat_query=tep_db_query('SELECT cd.categories_id, cd.categories_name, cd.categories_htc_desc_tag from categories_description cd
-                                    join products_to_categories p2c on p2c.categories_id=cd.categories_id
-                                    where p2c.products_id='.(int)$_REQUEST['products_id'].' order by categories_name asc');
-    
-        ?>
-        <br/><span class="buzz"><?php echo $product_info['manufacturers_name'], ' ',$product_info['products_name'], ' Health Guides';?></span>
-        <br/>
-        <p> Health Guides are simply categories in which <b><?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></b>
-        can be located, along with additional resources and related products.
-       </p>
+                         
 
-     
-     
-        <?php
-        //Spool categories and intertwine with departments
-        $categories=array();
-        while($cat=tep_db_fetch_array($cat_query))
-        {
-            array_push($categories,$cat);
-        }   
-        foreach(explode(',',$product_info['products_departments']) as $item)
-        {
-            array_push($categories, array('categories_id'=>0, 'categories_name'=>ucwords(trim($item)), 'categories_htc_desc_tag'=>''));
-        }
         
-        $found=false;
-        foreach($categories as $cat)
-        {
-            if($cat['categories_id']==0)
-            {
-                //Display a link to a department
-                $mflink=link_exists('/departments.php?benefits='.urlencode(strtolower($cat['categories_name'])),$page_links) ? 
-                                                                                     link_exists('/departments.php?benefits='.urlencode(strtolower($cat['categories_name'])),$page_links) :
-                                                                                     '/departments.php?benefits='.urlencode(strtolower($cat['categories_name']));
-            }
-            else
-            {
-                //Display a link to a category page
-                $mflink=link_exists('/index.php?cPath='.$cat['categories_id'],$page_links) ? 
-                                                                                     link_exists('/index.php?cPath='.$cat['categories_id'],$page_links) :
-                                                                                     '/index.php?cPath='.$cat['categories_id'];
-            }
-          
-          if(!$found)
-          {
-            echo '<ul>';
-          }
-          $found=true; if(strlen($cat['categories_name'])>0){
-          ?>
-          <li><p><?php echo '<a href="',$mflink,'">',$cat['categories_name'],'</a>';
-          if(strlen($cat['categories_htc_desc_tag'])>0){ echo ' - ',$cat['categories_htc_desc_tag']; }
-          ?>
-          </p> </li>
+        
 
-          <?php   }
-          
-          if(!$found)
-          {    ?>
-            <p>Sorry. No categories were found for this product.</p>
-                      <?php
-          }
-
-        }
-        
-        if($found)
-        {
-          echo '</ul>';
-        }
-        
-        ?>   
     </div>
     
     
@@ -489,62 +415,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
     </div>
         
               
-             <?php  if(strlen($product_info['products_uses'])>0 || strlen($product_info['products_uses'])>0){ ?>
-                 <div style="padding:20px;border:1px solid #000000;background-color:#FFFFCC;">
-
-
-                     <b><?php echo $product_info['products_head_title_tag']?>.</b><br/>
-                     <span class="buzz"><?php echo $product_info['products_target_keyword'] ? $product_info['products_target_keyword'].' ' : '';?>Uses & Indications.</span>
-
-                     <ul>
-                         <?php 
-                             $uses=preg_split('/,/',str_replace(', ',',',str_replace('  ',' ',$product_info['products_uses'])));
-                             $benefit_links='';
-                             foreach($uses as $usename)
-                             { ?>
-                             <li><?php echo ucwords($usename)?></li>
-                             <?php
-                                 if($mflink=link_exists('/natural_uses.php?use='.urlencode(strtolower($usename)),$page_links))
-                                 {
-                                     $benefits='<a href="'.$mflink.'">'.ucwords($usename).' '.$product_info['products_type'].'</a> &nbsp;'.$benefits;
-                                 }  
-
-                             } 
-                         ?>
-                     </ul>
-
-            
-                      
-            
-
-                     <?php if(strlen($product_info['products_uses'])>0){
-                     
-                     ?>
-               
-               <span class="buzz" style="margin-top:1em;"><?php echo $product_info['products_target_keyword'] ? $product_info['products_target_keyword'].' ' : '';?>Ailments & Concerns.</span>
-            
-                <ul>
-                    <?php
-                        $uses=preg_split('/,/',str_replace(', ',',',str_replace('  ',' ',$product_info['products_ailments'])));
-                        $benefit_links='';
-                        foreach($uses as $usename)
-                        { ?>
-                            <li><?php echo ucwords($usename)?></li>
-                          <?php
-                          if($mflink=link_exists('/ailments.php?remedy='.urlencode(strtolower($usename)),$page_links))
-                          {                           
-                            $ailments='<a href="'.$mflink.'">'.ucwords($usename).' '.$product_info['products_type'].'</a> &nbsp;'.$ailments;
-                          }
-                                                    
-                        }
-                    ?>
-                </ul>
-            
-            
-
-                <?php } ?>   
-                      </div>
-                 <?php } ?> 
+           
                  
             <p>
                  <?php
@@ -590,115 +461,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
 
     
     
- <?php // ailments, uses, etc  ?>
 
-            <span class="buzz">Ailments & Uses for <?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></span>
-            
-            <p>
-                Certain uses and indications are associated with
-                <b><?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></b>.
-                This may be a partial list of potential uses. This list is not verified, and is not reviewed by the FDA.
-            </p>
-            <?php
-
-                 if(strlen($product_info['products_ailments']))
-                 {
-                   $ailarr=explode(',',$product_info['products_ailments']);
-                   asort($ailarr);
-                   foreach($ailarr as $item)
-                   {
-                    $item=trim($item);
-                    $mflink=link_exists('/ailments.php?remedy='.urlencode(strtolower($item)),$page_links) ;
-                    $mflink=strlen($mflink) ? $mflink : '/ailments.php?remedy='.urlencode(strtolower($item));
-
-                    ?>
-                    <p><a href="<?php echo $mflink;?>"><?php echo $item?></a></p>
-                    
-                    <?php
-
-
-
-                    }?>
-                     <?php
-                 }
-                 else
-                 {
-                  ?>
-                   <p>
-                      No ailments or uses are currently associated with 
-                      <a href="/product_info.php?products_id=<?php echo $product_info['products_id'];?>"><?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></a>.
-                      To view a list of all cataloged ailments and uses, <a href="/ailments.php">click here</a>.
-
-                   </p>
-                  <?php
-
-                 }
-                 
-                 
-        // Uses
-
-            ?>       
-
-            <span class="buzz">Why Use <?php echo $product_info['products_name'],' from ',$product_info['manufacturers_name'] ;?>?</span>
-            
-            <p>
-                This is a list of intended uses for
-                <b><?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></b>
-                and is created by our editors and customers.
-                This list may be partial and incomplete, and is not reviewed by the FDA, nor is the accuracy of the information guaranteed.
-            </p>
-            <?php
-
-                 if(strlen($product_info['products_uses']))
-                 {
-                   $ailarr=explode(',',$product_info['products_uses']);
-                   asort($ailarr);
-                   foreach($ailarr as $item)
-                   {
-                    $item=trim($item);
-                    $mflink=link_exists('/remedies/'.seo_url_title($item),$page_links) ;
-                    $mflink=strlen($mflink) ? $mflink : '/remedies/'.seo_url_title($item);
-
-                    ?>
-                    <p><a href="<?php echo $mflink;?>"><?php echo $item?></a></p>
-
-                                      <?php
-
-
-
-                    }
-                    
-                    ?>
-
-                    <?php
-
-                 }
-                 else
-                 {
-                  ?>
-                   <p>
-                      No uses are currently associated with 
-                      <b><?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></b>.
-                      To view a list of all cataloged uses, <a href="/symptoms/">click here</a>.
-
-                   </p>
-                  <?php
-
-                 }
-
-            ?>
-
-        <span class="buzz"><?php echo 'Popular topics that reference ' , $product_info['products_name'] , ' from ' , $product_info['manufacturers_name']?> </span>
-      
-      <p> These are the most popular keyword searches used to locate
-       <?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?>.
-       Click any link below for additional information and related health topics.
-     </p>
-
-      <?php include(DIR_WS_MODULES . 'similar_picks.php');?>
-      
-      <?php echo $searches_string;?>       
-    
      
     </div>
 </div>
@@ -718,7 +481,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
                         
         
         <?php
-        $cache->addCache('products_main'.$pmod);
+        $cache->addCache('products_main2'.$pmod);
         } //end cache 
             ?>   
 
@@ -741,7 +504,6 @@ $tmp_desc=stripslashes($product_info['products_description']);
 
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
 <br>
-
 </body>
 </html>
 <?php require(DIR_WS_INCLUDES . 'application_bottom.php'); ?>

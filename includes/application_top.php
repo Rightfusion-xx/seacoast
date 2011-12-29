@@ -36,9 +36,17 @@ $HTTP_GET_VARS=& $_GET;
 $HTTP_POST_VARS=& $_POST;
 $HTTP_COOKIE_VARS=& $_COOKIE;
 $HTTP_SERVER_VARS=& $_SERVER;
+
+
 $HTTP_SESSION_VARS=& $_SESSION;
 
+// IIS Fix
+    if(is_null($_SERVER['HTTPS']))
+    {
+        $_SERVER['HTTPS']='off';
+    }
 
+                      
 
 //$language='english';
 //$languages_id=1;
@@ -56,7 +64,7 @@ function redir301($url301='/')
 }
 
 
- 
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +94,7 @@ $hide_cart=false;
 
 // check urls
  require_once(DIR_WS_INCLUDES . '301urls.php');
- 
+
 
 // include the list of project filenames
   require(DIR_WS_INCLUDES . 'filenames.php');
@@ -99,7 +107,7 @@ $hide_cart=false;
 
 // include the database functions
   require(DIR_WS_FUNCTIONS . 'database.php');
-  
+
 require_once 'php-activerecord/ActiveRecord.php';
 
 require_once (DIR_WS_CLASSES.'couchdb.php'); // Load Couch DB connector
@@ -112,7 +120,7 @@ ActiveRecord\Config::initialize(function($cfg)
     
     $cfg->set_default_connection(DB_DATABASE);
 
-});  
+});
   
 // define general functions used application-wide
   require(DIR_WS_FUNCTIONS . 'general.php');
