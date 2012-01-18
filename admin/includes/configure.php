@@ -38,7 +38,7 @@
 // define our database connection
   define('DB_SERVER', '127.0.0.1'); // eg, localhost - should not be empty for productive servers
   define('DB_SERVER_USERNAME', 'root');
-  define('DB_SERVER_PASSWORD', 'seamarquette11');
+  define('DB_SERVER_PASSWORD', '');
   define('DB_DATABASE', 'seacoast');
   define('USE_PCONNECT', 'true'); // use persisstent connections?
   define('STORE_SESSIONS', 'mysql'); // leave empty '' for default handler or set to 'mysql'

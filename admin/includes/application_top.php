@@ -14,7 +14,7 @@ $HTTP_SESSION_VARS=& $_SESSION;
 ////
 // This funstion validates a plain text password with an
 // encrpyted password
-  function tep_validate_password($plain, $encrypted) {
+  function tep_validate_password_local($plain, $encrypted) {
     if (tep_not_null($plain) && tep_not_null($encrypted)) {
 // split apart the hash / salt
       $stack = explode(':', $encrypted);
@@ -132,7 +132,7 @@ if( isset($_SERVER['PHP_AUTH_USER']) && !$authenticated)
     
     $get_user=tep_db_fetch_array(tep_db_query('select * from customers c join user_rights ur on ur.customers_id=c.customers_id where customers_email_address="'.$_SERVER['PHP_AUTH_USER'].'" and user_rights like "%admin%"'));
     
-    if(tep_validate_password($_SERVER['PHP_AUTH_PW'], $get_user['customers_password']))
+    if(tep_validate_password_local($_SERVER['PHP_AUTH_PW'], $get_user['customers_password']))
     {
         $authenticated=true;
     }
