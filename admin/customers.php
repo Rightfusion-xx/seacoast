@@ -855,7 +855,7 @@ function check_form() {
                         
           if(isset($_REQUEST['cID']) && isset($_REQUEST['newpassword']))
           {
-                require('../includes/functions/password_funcs.php');
+                //require('../includes/functions/password_funcs.php');
                 tep_db_query("update " . TABLE_CUSTOMERS . " set customers_password = '" . tep_encrypt_password($_REQUEST['newpassword']) . "' where customers_id = '" . (int)$_REQUEST['cID'] . "'");
 
                 tep_db_query("update " . TABLE_CUSTOMERS_INFO . " set customers_info_date_account_last_modified = now() where customers_info_id = '" . (int)$_REQUEST['cID'] . "'");
@@ -907,7 +907,7 @@ function check_form() {
                         
           if(isset($_REQUEST['cID']) && isset($_REQUEST['newpassword']))
           {
-                require('../includes/functions/password_funcs.php');
+                //require('../includes/functions/password_funcs.php');
                 tep_db_query("update " . TABLE_CUSTOMERS . " set customers_password = '" . tep_encrypt_password($_REQUEST['newpassword']) . "' where customers_id = '" . (int)$_REQUEST['cID'] . "'");
 
                 tep_db_query("update " . TABLE_CUSTOMERS_INFO . " set customers_info_date_account_last_modified = now() where customers_info_id = '" . (int)$_REQUEST['cID'] . "'");
