@@ -1,3 +1,11 @@
+
+td.review_node { color:black; border-bottom: 1px solid lightgray; }	
+.review_node a { color: #135383; text-decoration:none;}
+.review_node a:hover { color: #ffffff; text-decoration:none;}
+.review_node a:link{ text-decoration:none;}
+
+td.review_date { border-bottom: 1px solid lightgray; }
+
 .errorBox {background: #ffb3b5; font-weight: bold; }
 .productsNotifications {background: #f2fff7; }
 .orderEdit {color: #70d250; text-decoration: underline; }
@@ -204,8 +212,8 @@ div#footer-signoff {background-color:#333367;margin-top:1em; padding:10px;color:
 
 /*----------------------------=links---------------------------------*/
 a, a:link {background-color: inherit; color: #135383; text-decoration: underline;}
-a:visited {background-color: inherit; color: #444; text-decoration: underline;}
-a:hover {background-color: #135383; color: #FFF; text-decoration: none;}
+a:visited {background-color: inherit; color: #135383; text-decoration: underline;}
+a:hover {background-color: #135383; color: #ffffff; text-decoration: none;}
 a:active {background-color: #fcfcda; color: #000; text-decoration: none;}
 
 a img:hover {background-color: #ffffff; color: #FFF; text-decoration: none;}

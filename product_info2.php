@@ -1,6 +1,7 @@
 <?php
 
 require('includes/application_top.php');
+require('includes/classes/review_handler.php');
 
 // Seed random generator so that items are mixed up, but consistent across page refreshes.
 srand($product_info['products_id']);
@@ -252,6 +253,11 @@ $tmp_desc=stripslashes($product_info['products_description']);
 <link rel="stylesheet" type="text/css" href="/stylesheet.css">
 <link rel="stylesheet" type="text/css" href="/960_16_gs.css">
 
+<style>
+		
+		
+</style>
+
 <!--[if IE]><style>
 #prod_details {
 	height: 0;
@@ -280,6 +286,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
             if(is_numeric($reviews_rating) && $reviews_rating>0){echo draw_stars($reviews_rating);
         }?>
         <h1 style="margin-top:0em;">
+        	
            <?php echo $title; ?>.
         </h1>
         
@@ -293,20 +300,16 @@ $tmp_desc=stripslashes($product_info['products_description']);
             echo '<p>',$product_info['products_takeaway'],'</p>'; 
         }
 
-    if(strlen($first_review)>0)
+    	if(strlen($first_review)>0)
         {
-            echo '<p>',$first_review,'</p>';
+            //echo '<p>',$first_review,'</p>';
         }
         ?>
-        
-
-        
-        
+  
         <?php
         
         $cache->addCache('products_main'.$pmod);
 }
-
         ?>
         
         <div class="cool_box">
@@ -327,12 +330,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
                 <table cellpadding=0 cellspacing=0 border=0>
                     <tr>
                         <td>
-
-
-
                 <b><?php echo $tmisc." ".$shortname; ?></b> from <b><?php echo $product_info['manufacturers_name'];?>.</b>
-
-
                 
                 <?php if($product_info['products_die'] && $product_info['products_dieqty']<1){?>
                     <p><?php echo $product_info['products_name'];?> is not available from Seacoast Vitamins at this time. Look to the right for recommended alternatives.</p>
@@ -414,10 +412,58 @@ $tmp_desc=stripslashes($product_info['products_description']);
         <?php
 if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
 {
+	
+	$query =  "select r.*, rd.* from ".TABLE_REVIEWS. " r, ".TABLE_REVIEWS_DESCRIPTION." rd "; 
+	$query .= "where r.products_id=".(int)$product_info['products_id']." ";
+	$query .= "and r.reviews_id = rd.reviews_id and "; 
+	$query .= "rd.languages_id = '1';";
+		
+ 	$parentResultset = tep_db_query($query);
+	$reviewHandler = new review_Handler($parentResultset);
 ?>    
 
+		<!-- bottom reviews -->
+		
+	<table border="0" style="margin-bottom: 50px;" width="100%" cellspacing="0" cellpadding="2">
+		<tr>
+	  <td colspan="2" style="width: 100%; height: 40px; padding: 10px 0 5px 2px; border-bottom:1px solid lightgray;margin-bottom: 20px">
+	   <h1 style="vertical-align: middle;color:#135383"> Reviews</h1>
+	  </td>
+	  </tr>
+	  <?php
+	  	
+	  	if ($reviewHandler->getReviewCount() > 0){
+	  		while ($reviews = tep_db_fetch_array($parentResultset)) 
+			{
+				if ($reviews['review_parent_id'] == NULL)
+			  	{
+			  		$reviewHandler->writeToPage($reviews); // print parent
+			  		$reviewHandler->printChildren($parentResultset,$reviews['reviews_id']); // print children
+			  	}
+			}
+	  	}
+		else {
+		?>
+			<tr><td style="padding-top: 20px; font-weight: bold;">
+			<?php
+				echo 'No reviews yet. To review please click Write a review link.'; 
+			?>
+			</td></tr>
+		<?php
+		} 	  	
+	  ?>
+	  <tr>
+	  	<td align="right" colspan="2" style="text-align: right; padding: 25px 5px 0 0;">
+	  		<?php 
+		  		echo '<a href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, tep_get_all_get_params()) . 
+		  			'">' . tep_image_button('button_write_review.gif', IMAGE_BUTTON_WRITE_REVIEW) . '
+		  			<br />Write a review!</a>'; 
+	  		?>
+	  	</td>
+	  </tr>
+	</table>
 
-        <?php echo $review;?>
+<?php //echo $review;?>
 
 
     <a name="product_description_loc"> </a><p><span class="buzz">Ingredients & Description</span></p>
@@ -427,11 +473,6 @@ if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
            <?php if(strtotime($product_info['products_last_modified'])<strtotime('2007-03-01')||strlen($tmp_desc)<150)
                           { $show_expanded_similar_products=true;
                           include(DIR_WS_MODULES . 'similar_products_google.php');}?>
-                          
-           
-
-        
-
                                   <?php if(strtotime($product_info['products_last_modified'])<strtotime('2007-03-01'))
                           { ?>
                           

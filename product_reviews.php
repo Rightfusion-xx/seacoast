@@ -11,6 +11,7 @@
 */
 
   require('includes/application_top.php');
+  require('includes/classes/review_handler.php');
 
   $product_info_query = tep_db_query("select psu.product_upc, psu.product_sku, pd.products_head_desc_tag, pd.products_head_keywords_tag, m.manufacturers_name, m.manufacturers_id, p.products_id, p.products_model, p.products_image, p.products_price, p.products_tax_class_id, pd.products_name from " . TABLE_PRODUCTS . " p join " . TABLE_PRODUCTS_DESCRIPTION . " pd on p.products_id=pd.products_id left outer JOIN products_sku_upc psu ON psu.product_ids = p.products_id JOIN manufacturers m ON m.manufacturers_id = p.manufacturers_id where p.products_id = '" . (int)$HTTP_GET_VARS['products_id'] . "' and p.products_status = '1' and  pd.language_id = '" . (int)$languages_id . "'");
   if (!tep_db_num_rows($product_info_query)) {
@@ -44,6 +45,7 @@
 <meta name="Keywords" content="<?php echo $product_info['products_head_keywords_tag'] ?>"/>
 <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
+
 <script language="javascript"><!--
 function popupWindow(url) {
   window.open(url,'popupWindow','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,width=100,height=100,screenX=150,screenY=150,top=150,left=150')
@@ -125,9 +127,15 @@ document.write('<?php echo '<a href="javascript:popupWindow(\\\'' . tep_href_lin
               <tr> 
                 <td valign="top">
                   <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                    <?php
-  $reviews_query_raw = "select r.reviews_id, left(rd.reviews_text, 100) as reviews_text, r.reviews_rating, r.date_added, r.customers_name from " . TABLE_REVIEWS . " r, " . TABLE_REVIEWS_DESCRIPTION . " rd where r.products_id = '" . (int)$product_info['products_id'] . "' and r.reviews_id = rd.reviews_id and rd.languages_id = '" . (int)$languages_id . "' order by r.reviews_id desc";
-  $reviews_split = new splitPageResults($reviews_query_raw, MAX_DISPLAY_NEW_REVIEWS);
+    <?php
+	
+	$query =  "select r.*, rd.* from ".TABLE_REVIEWS. " r, ".TABLE_REVIEWS_DESCRIPTION." rd "; 
+	$query .= "where r.products_id=".(int)$product_info['products_id']." ";
+	$query .= "and r.reviews_id = rd.reviews_id and "; 
+	$query .= "rd.languages_id = '1' order by r.reviews_id asc";
+	 
+    $reviews_query_raw = $query;//"select r.reviews_id, left(rd.reviews_text, 100) as reviews_text, r.reviews_rating, r.date_added, r.customers_name from " . TABLE_REVIEWS . " r, " . TABLE_REVIEWS_DESCRIPTION . " rd where review_parent_id is null and r.products_id = '" . (int)$product_info['products_id'] . "' and r.reviews_id = rd.reviews_id and rd.languages_id = '" . (int)$languages_id . "' order by r.reviews_id desc";
+    $reviews_split = new splitPageResults($reviews_query_raw, MAX_DISPLAY_NEW_REVIEWS);
 
   if ($reviews_split->number_of_rows > 0) {
     if ((PREV_NEXT_BAR_LOCATION == '1') || (PREV_NEXT_BAR_LOCATION == '3')) {
@@ -154,52 +162,35 @@ document.write('<?php echo '<a href="javascript:popupWindow(\\\'' . tep_href_lin
                     <?php
     }
 
-    $reviews_query = tep_db_query($reviews_split->sql_query);
-    while ($reviews = tep_db_fetch_array($reviews_query)) {
-?>
-                    <tr> 
-                      <td>
-                        <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                          <tr> 
-                            <td class="main">
-                              <?php echo '<a href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS_INFO, 'review=' . $reviews['reviews_id']) . '"><u><b>' . sprintf(TEXT_REVIEW_BY, tep_output_string_protected($reviews['customers_name'])) . '</b></u></a>'; ?>
-                            </td>
-                            <td class="smallText" align="right">
-                              <?php echo sprintf(TEXT_REVIEW_DATE_ADDED, tep_date_long($reviews['date_added'])); ?>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
-                    <tr> 
-                      <td> 
-                        <table border="0" width="100%" cellspacing="1" cellpadding="2" class="infoBox">
-                          <tr class="infoBoxContents"> 
-                            <td> 
-                              <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                                <tr> 
-                                  <td width="10"> 
-                                    <?php echo tep_draw_separator('pixel_trans.gif', '10', '1'); ?>
-                                  </td>
-                                  <td valign="top" class="main"> 
-                                    <?php echo tep_break_string(tep_output_string_protected($reviews['reviews_text']), 60, '-<br>') . ((strlen($reviews['reviews_text']) >= 100) ? '..' : '') . '<br><br><i>' . sprintf(TEXT_REVIEW_RATING, tep_image(DIR_WS_IMAGES . 'stars_' . $reviews['reviews_rating'] . '.gif', sprintf(TEXT_OF_5_STARS, $reviews['reviews_rating'])), sprintf(TEXT_OF_5_STARS, $reviews['reviews_rating'])) . '</i>'; ?>
-                                  </td>
-                                  <td width="10" align="right"> 
-                                    <?php echo tep_draw_separator('pixel_trans.gif', '10', '1'); ?>
-                                  </td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
-                        </table>
-                      </td>
-                    </tr>
+	$reviews_query = tep_db_query($reviews_split->sql_query);
+ 	
+	$parentResultset = tep_db_query($query);
+	$childResultset = tep_db_query($query);
+	
+	$reviewHandler = new review_Handler($parentResultset);
+	  
+	  while ($reviews = tep_db_fetch_array($parentResultset)) {
+		if ($reviews['review_parent_id'] == NULL) // is parent
+	  	{ 	
+  		?>
+            <tr> 
+              <td>
+                <table border="0" width="100%" cellspacing="0" cellpadding="2">
+                  <?php
+                    $reviewHandler->writeToPage($reviews); // print parent
+                    $reviewHandler->printChildren($childResultset,$reviews['reviews_id']); // print children                	
+                  ?>
+                </table>
+              </td>
+            </tr>
                     <tr> 
                       <td>
                         <?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?>
                       </td>
                     </tr>
                     <?php
+        }
+		$childReviewPadding = 0;
     }
 ?>
                     <?php
