@@ -46,31 +46,7 @@
         </div>
       </td>
       <td >
-        <?php if($_SERVER['HTTPS']=='off' && !$hide_cart)
-                  {?>
-        <div style="padding-left:15px;float:left;background-color:#ffffff;">
-        <?php //if(strlen($_COOKIE['affiliate'])>0) echo '<b>In affiliation with <a href="'.$_COOKIE['affiliate'].'">'.$_COOKIE['affiliate'].'</a>.</b>';?>
-        <?php if( (time()<strtotime('2008/10/10')||1==1) ){
-          $latesttweet=tep_db_fetch_array(tep_db_query('select tweet_message from tweets order by tweet_datetime desc limit 0,1'));?>
-          <div style="float:left;margin-left:20px;">
-            <img src="/images/green_light.gif" style="float:left;margin-top:10px;margin-right:10px;" border=0 alt="Seacoast Vitamins on Twitter" title="More Vitamin Supplements at Twitter"/>
-            <br/>
-            <span style="text-weight:bold;text-decoration:underline;color:blue;font-size:12pt;"><a href="http://twitter.com/SeacoastVits"><b>@SeacoastVits on Twitter</b></a></span><br/>
-            <i><?php echo '"', @substr($latesttweet['tweet_message'],0,@strpos($latesttweet['tweet_message'],' ',60)),'<br/>',@preg_replace('/(http:\/\/.*?)(\s|$)/i','<a href="\\1">\\1\\2</a>',substr($latesttweet['tweet_message'],@strpos($latesttweet['tweet_message'],' ',60-1))),'"';?></i>
 
-          </div>
-        
-        <?php
-        
-        }else{/*?>
-
-        <div style="text-align:center;padding:10px;float:left;">
-          <!--<A href="http://www.aquasanaaffiliates.com/b.asp?id=3711" rel="nofollow" target="_blank">
-            <img src="http://www.aquasanaaffiliates.com/showban.asp?id=3711&img=banner1.jpg" border="0">
-              </a>-->
-            </div>
-        <?php */}} ?>
-        
       </td>
       <td nowrap width="300">
         <div id="header_utilities">
@@ -83,7 +59,9 @@
                 </a> &nbsp;|&nbsp; 
                 <?php } ?>
                 <a href="<?php echo tep_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="headerNavigation">
-                <?php echo tep_session_is_registered('customer_id') ? 'My Account' : 'Log In To Your Account'; ?>
+                <?php 
+                	echo tep_session_is_registered('customer_id') ? 'My Account' : 'Log In To Your Account'; 
+            	?>
                 
                 </a><?php if($cart->count_contents()>0){?> &nbsp;|&nbsp; 
                 <a href="<?php echo tep_href_link(FILENAME_SHOPPING_CART); ?>" class="headerNavigation">
@@ -112,9 +90,6 @@
             <?php 
            if((int)$_REQUEST['products_id'] && 1==2) // Used to check for product id, and redo nav links.
           {?>
-            <a href="/index.php?products_id=<?php echo (int)$_REQUEST['products_id']?>">Health Guides</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="/ailments.php?products_id=<?php echo (int)$_REQUEST['products_id']?>">Ailments &amp; Diseases</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="/natural_uses.php?products_id=<?php echo (int)$_REQUEST['products_id']?>">Symptoms</a>&nbsp;&nbsp;|&nbsp;&nbsp;
             
             <?php
               $mflink=link_exists('/index.php?manufacturers_id='.(int)$product_info['manufacturers_id'],$page_links);
@@ -127,9 +102,7 @@
             ?>
             <a href="<?php echo $mflink;?>">Brands</a>
           <?php }else{?>
-            <a href="/health-guides/">Health Guides</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="/ailments-diseases/">Ailments &amp; Diseases</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-            <a href="/symptoms/">Symptoms</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+          
             <a href="/brand.php">Brands</a>
           <?php }?>
 

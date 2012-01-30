@@ -1,11 +1,9 @@
+<head>
+	<link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+</head>
 <?php
 
-
-
-
 /*
-
-
 // close session (store variables)
   tep_session_close();
 
@@ -27,8 +25,6 @@
   }      */
   
 $buffer = ob_get_clean();  
-
-
 
 if(OPTIMIZE_IMAGES)
 {
