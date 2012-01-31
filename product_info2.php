@@ -63,8 +63,6 @@ else
     exit();
   }
 
-
-
     $lastmod=strtotime($product_info['products_last_modified']);
     $is_cm_eligible=strpos($product_info['products_name'],'*') ? 0 : 1;
     $tags_array['keywords']=$product_info['products_head_keywords_tag'];
@@ -114,31 +112,14 @@ else
     }
 
 }
-
-
   // get all url links
   populate_backlinks();
-  
-  
 
 $cache=new megacache(24*60*60);
 if(!$cache->doCache('products_main'.$pmod, true, $lastmod))
 {
 
   include(DIR_WS_MODULES . 'customer_reviews.php');
-
-    /*
-if(strpos($product_info['products_name'],'(')>0)
-{
-    $title=trim(substr($product_info['products_name'],0,strpos($product_info['products_name'],'(')-1));   
-    $shortname=$title;
-}
-else
-{
-    $title=$product_info['products_name'];
-    $shortname=$title;
-}
-*/
 
 $product_parts=parse_nameparts($product_info['products_name']);
 $tname=$product_parts['name'];
@@ -212,23 +193,8 @@ $tmp_desc=stripslashes($product_info['products_description']);
                   {
                       //print_r($matches);exit();
                       // We have a valid description, and found the start, so go there.
-                      $tmp_desc=substr($tmp_desc,strpos($tmp_desc,$matches[3]));
-                      
-                      //Check to see if there is a ">" tag before a "<" tag. If yes, start again from there,
-                      //else use the found location
-                   
-            
-                      //echo $matches[0];echo $tmp_desc;exit();
-                      
-                 
-                  
+                      $tmp_desc=substr($tmp_desc,strpos($tmp_desc,$matches[3])); 
               }
-              
-              
-             
-              
-              
-              
               if(strlen($product_info['products_target_keyword'])>0){$product_info['products_name']=$product_info['products_target_keyword'];}
               else{$product_info['products_target_keyword']=$tname;
                    $product_info['products_name']=$tname; }
@@ -268,7 +234,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
 
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
-
+<form id="main_form" name="mainform">
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -291,7 +257,9 @@ $tmp_desc=stripslashes($product_info['products_description']);
         </h1>
         
         
-        <div style="margin:1em;" class="fb-like" data-href="<?php echo HTTP_SERVER.$test_url;?>" data-send="false" data-width="450" data-show-faces="true" data-action="recommend" data-font="tahoma"></div>
+        <div style="margin:1em;" class="fb-like" data-href="
+        	<?php echo HTTP_SERVER.$test_url;?>" data-send="false" data-width="450" data-show-faces="true" data-action="recommend" data-font="tahoma">
+    	</div>
 
         
         <?php 
@@ -354,10 +322,16 @@ $tmp_desc=stripslashes($product_info['products_description']);
                     <br/>
                     <div style="float:left;">
                         <div style="text-align:left">
-                            <input type="submit" class="formbutton" id="button_price" value="<?php echo $currencies->display_price($cm_price, tep_get_tax_rate($product_info['products_tax_class_id'])); ?> - Direct Price*" style="display:inline;width:200px;height:30px;color:#66CC00;font-weight:bold;font-size:12pt;">
-                        <!-- Place this tag where you want the +1 button to render -->
-                                $GOOGLE_PLUS_ONE$
+                        	
+                            <a class="formbutton" id="button_price" 
+                               href="<?php echo '/shopping_cart.php?products_id='.$product_info['products_id']; ?>">
+                       		   <?php  
+                       			echo 'Buy Now!  ('.$currencies->display_price($cm_price, tep_get_tax_rate($product_info['products_tax_class_id'])).')';
+                   			   ?>
+                       		</a>
 
+                        	<!-- Place this tag where you want the +1 button to render -->
+                                $GOOGLE_PLUS_ONE$
 
                         </div>
                         <?php if($is_cm_eligible){ ?>
@@ -446,7 +420,8 @@ if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
 		?>
 			<tr><td style="padding-top: 20px; font-weight: bold;">
 			<?php
-				echo 'No reviews yet. To review please click Write a review link.'; 
+				echo 'No reviews yet. <a href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, tep_get_all_get_params()) . 
+		  			'">'.'Review Now!</a>'; 
 			?>
 			</td></tr>
 		<?php
@@ -770,6 +745,7 @@ if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
 <br>
 </body>
+</form>
 </html>
 <?php require(DIR_WS_INCLUDES . 'application_bottom.php'); ?>
 
