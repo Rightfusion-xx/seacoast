@@ -3,8 +3,8 @@
 require($_SERVER['DOCUMENT_ROOT'].'/includes/application_top.php');
 require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_PRODUCT_INFO);
 
-tep_session_register('do_admin');
-$do_admin=true;
+//tep_session_register('do_admin');
+//$do_admin=true;
 tep_session_register('ordered_by');
 $ordered_by='phone';
 

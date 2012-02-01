@@ -53,3 +53,4 @@ images/
 *.cache
 *.settings
 
+includes/configure.php
