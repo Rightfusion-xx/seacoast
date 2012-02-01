@@ -526,7 +526,7 @@ $HTTP_GET_VARS['products_id']));
 
 //added for article_manager_1.2
 // include the articles functions
-
+/*
 if($_REQUEST['do_admin']=='true')
 {
     //Make sure user is logged in
@@ -579,6 +579,8 @@ tep_session_is_registered('do_admin');
         exit();
     }
   }
+  
+  */
 
   require(DIR_WS_FUNCTIONS . 'articles.php');
   require(DIR_WS_FUNCTIONS . 'article_header_tags.php');
