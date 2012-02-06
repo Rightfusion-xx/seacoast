@@ -1,11 +1,13 @@
 
-
+<!--
 <h1>Vitamins - Direct To Members from Seacoast Vitamins</h1>
+-->
+
+<!--
 <table cellpadding="0" cellspacing="0" width="100%">
 <tr><td valign="top">
 <br/>
 <h2  style="clear:both;">Movers & Shakers - Best Selling & Featured Supplements</h2>
-
 <?php
   $useCategories[]='';
   $ailmentCategories[]='';
@@ -130,8 +132,7 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
 
 
    </td></tr></table>
-   
-    
+-->
    
 
 
@@ -143,9 +144,11 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
 
 <br style="clear:both;"/>
 
-
+<!--
 <h2>Hottest Offers (hurry, quantity limited!)</h2>
+-->
 
+<div id="productslisting">
   <?php
     $products_die_q=tep_db_query('select m.manufacturers_id, products_dieqty, products_name, p.products_image, p.products_id, specials_new_products_price, products_msrp, manufacturers_name, cast(((products_msrp-specials_new_products_price)/products_msrp*100.00) as signed) as discountpct from
         products p join products_description pd on p.products_id=pd.products_id
@@ -172,7 +175,7 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
    	  elseif ($products_die['manufacturers_id']=='69'){
              $product_image_path = DIR_WS_IMAGES.'seacoast_logo.png';}
       ?>
-      <div id="prod2" class="mini-product_regular">
+      <div id="prod2" class="mini-product_regular_clone">
         <div class="mini-listing-image">
           <?php if($product_image_path!=''){?><a href="/product_info.php?products_id=<?php echo $products_die['products_id']?>"><img src="<?php echo $product_image_path;?>" border="0" width="50" style="margin:5px;" ALIGN="left" /></a><?php } ?>
         </div>&nbsp;<a href="/product_info.php?products_id=<?php echo $products_die['products_id']?>">
@@ -182,12 +185,11 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
           <br>
             <br style="clear:both;"/>
       </div>
-      <?php 
-    
+      <?php
     
     }
-  
   ?>
+</div>
 <p style="clear:left;">
   <i>Special offers limited by quantity. <b>Order Now.</b><br/>
   </i>

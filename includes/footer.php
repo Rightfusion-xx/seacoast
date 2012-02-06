@@ -1,10 +1,10 @@
 <?php // inject header to appropriate place
-  $start=ob_get_length();
+ 
+$start=ob_get_length();
 
 ?>
-
-  
   <?php
+
   if (isset($HTTP_GET_VARS['error_message']) && tep_not_null($HTTP_GET_VARS['error_message'])) {
   ?>
   <table border="0" width="100%" cellspacing="0" cellpadding="2">
@@ -32,93 +32,62 @@
   ?>
 
 <div id="header" >
-  <table cellpadding="0" cellspacing="0" style="white-space:nowrap;width:100%" width="100%">
-    <tr>
-      <td nowrap width="210">
-        <div id="header_logo" style="margin-left:5px;margin-bottom:.5em;">
-          <?php 
-                 
-            
-
-            echo '<a href="'.HTTP_SERVER.'/"><img src="/images/seacoast_logo.png" border="0" alt="Vitamins from Seacoast Vitamins for Nutritional Supplements Online. Source of vitamins, minerals, herbs, and all your nutritional supplement needs." title="Vitamins, Exclusive Discounts, Direct to You. " width="179" height="60"></a>';
-        
+  
+    <div class="container">
+    <div style="margin-top:20px;" class="row show-grid">
+        <div class="span11">
+            <?php
+            echo '<a href="'.HTTP_SERVER.'/"><img src="/images/seacoast_logo.png" border="0" 
+                    alt="" title="Vitamins, Exclusive Discounts, Direct to You. " width="179" height="60">
+                  </a>';
           ?>
         </div>
-      </td>
-      <td >
+        <div class="span5">
+            <span style="text-align:right">
+                    <?php if (tep_session_is_registered('customer_id')) { ?>
+                    <a href="<?php echo tep_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>" class="headerNavigation"> 
+                    <?php echo HEADER_TITLE_LOGOFF; ?>
+                    </a> &nbsp;|&nbsp; 
+                    <?php } ?>
+                    <a href="<?php echo tep_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="headerNavigation">
+                    <?php echo tep_session_is_registered('customer_id') ? 'My Account' : 'Log In To Your Account'; ?>
 
-      </td>
-      <td nowrap width="300">
-        <div id="header_utilities">
-                   <span id="account_utils" style="display:inline;text-align:right;float:right; margin-right:10px; margin-top:10px;white-space:nowrap;">
-              <span style="text-align:right">
-
-                <?php if (tep_session_is_registered('customer_id')) { ?>
-                <a href="<?php echo tep_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>" class="headerNavigation"> 
-                <?php echo HEADER_TITLE_LOGOFF; ?>
-                </a> &nbsp;|&nbsp; 
-                <?php } ?>
-                <a href="<?php echo tep_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="headerNavigation">
-                <?php 
-                	echo tep_session_is_registered('customer_id') ? 'My Account' : 'Log In To Your Account'; 
-            	?>
-                
-                </a><?php if($cart->count_contents()>0){?> &nbsp;|&nbsp; 
-                <a href="<?php echo tep_href_link(FILENAME_SHOPPING_CART); ?>" class="headerNavigation">
-                Shopping Cart
-                </a> &nbsp;|&nbsp; <a href="<?php echo tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'); ?>" class="headerNavigation"> 
-                <?php echo HEADER_TITLE_CHECKOUT; ?>
-                </a> &nbsp;&nbsp; <?php } ?></span>
-
+                    </a>
+                    <?php if($cart->count_contents()>0){?> &nbsp;|&nbsp; 
+                        <a href="<?php echo tep_href_link(FILENAME_SHOPPING_CART); ?>" class="headerNavigation" rel="nofollow">
+                            Shopping Cart
+                        </a>
+                    <?php } ?>
             </span>
-            <br/> <br/>
-          
-          
-
-         <p style="font-size:10pt;font-weight:bold;color:#CC6600;text-align:right;margin-right:20px;">U.S. 800.555.6792<br/>
-          Int'l (1+) 702.508.9054</p>
         </div>
-      </td>
-    </tr>
-    <tr>
-      <td nowrap colspan="3">
-        <div style="color:#333367;font-weight:bolder;clear:both;margin:0px;padding:7px;white-space:nowrap;background-repeat:repeat;background-image:url('/images/head-bg-fade.gif');border-bottom:1px solid #333367">
-          <form name="quick_find" action="/topic.php" method="get" style="display:inline;">
-            <input type="text" name="health" size="10" maxlength="250" style="width: 200px" value="<?php echo $_REQUEST['health']?>"/>&nbsp;<input class="formbutton" type="submit" value="Search" alt="Search Seacoast" title=" Search Seacoast "/>
-            </form>
-            &nbsp;&nbsp;
-            <?php 
-           if((int)$_REQUEST['products_id'] && 1==2) // Used to check for product id, and redo nav links.
-          {?>
-            
-            <?php
-              $mflink=link_exists('/index.php?manufacturers_id='.(int)$product_info['manufacturers_id'],$page_links);
-              if(!strlen($mflink))
-              {
-               
-                $mflink='/index.php?manufacturers_id='.(int)$product_info['manufacturers_id'];
-              }
-
-            ?>
-            <a href="<?php echo $mflink;?>">Brands</a>
-          <?php }else{?>
-          
-            <a href="/brand.php">Brands</a>
-          <?php }?>
-
-            <?php if(!$_SESSION['cm_is_member']) {?>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/community/">Join Vitamins-Direct</a>   <?php } ?>
+    </div>
+    <div class="row show-grid">
+    <div style="text-align:right;" class="span10">
+        <form name="quick_find" action="/topic.php" method="get" style="display:inline;">
+            <input type="text" name="health" size="10" maxlength="250" style="width: 200px" value="<?php echo $_REQUEST['health']?>"/>&nbsp;
+            <input class="primary" type="submit" value="Search" alt="Search Seacoast" title=" Search Seacoast "/>
+        </form>
+    </div>
+    <div style="padding-left:0px;text-align:right;" class="span6">
+        <p style="font-size:10pt;color:#CC6600;font-weight:bold;text-align:right;margin:-5px 50px 20px 0;">U.S. 800.555.6792<br/>
+            Int'l (1+) 702.508.9054</p>
+    </div>
+    </div>
+    <div class="row show-grid">
+    <div style="text-align:center;" class="span16">
+        <?php if(!$_SESSION['cm_is_member']) {?>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/community/">Join Vitamins-Direct</a>   <?php } ?>
           <?php if($_SESSION['cm_is_member']){ ?><span style="color:#CC6600">
           	<hr class="sectiondivider" style="margin-top:10px;margin-bottom:10px;"/>
           	Member since <?php echo $_SESSION['cm_member_since']; ?>.
           	Total Savings of $<?php echo number_format($_SESSION['cm_savings'],2); ?></span>
           
-          <?php } ?>
-
-        </div>        
-      </td>
-    </tr>
-    
-  </table>
+        <?php } ?>
+        
+    </div>
+    </div>
+    </div>
+ 
+    <hr style="margin-left:-130px; width: 1400px;background-color:blue;" />
   
   <?php 
   if($do_admin && $authenticated)
@@ -138,30 +107,34 @@
       <?php  
     if ($cart->count_contents() > 0 && $_SERVER['HTTPS']=='off' && !$hide_cart) {
     ?>
-    <p style="text-align:center;">
-        <div>
-        <table cellpadding="0" cellspacing="0" style="border:solid 1px #578dc7;margin-left:35px;">
-            <tr>
-                <td style="background: top left repeat-x url(/images/bar_blue.gif) #eee;padding:5px;" nowrap>
-                    <h3 style="display:inline;font-size: 13px;color: #fff;">Shopping Cart</h3>
-                </td>
-                <td style="padding:5px;" nowrap>
-                    <b><a href="/shopping_cart.php" style="color:#ff9900;">View All Items</a></b>
-                  &nbsp;&nbsp;
-                   <?php echo $cart->count_contents()?> item<?php if($cart->count_contents()>1) echo 's';?>: $<?php echo number_format($cart->show_total(),2);?>
-                  <b>(<span style="background:yellow;">Savings of $<?php echo number_format($cart->show_savings(),2); ?></span>)</b>
-                 
-                     &nbsp;&nbsp;&nbsp;
-                  <b><a href="/checkout_shipping.php" style="color:#ff9900">>> Checkout >> Now >></a></b>
-                </td>
-            </tr>
-        </table>
-      
+    <div style="margin-bottom:40px;" class="container alert-message">
 
-        
-      </div>
-  
-  </p>    
+    <div class="row show-grid">
+    <div class="span3">
+        <h5 style="display:inline;padding-left:5px;">Shopping Cart</h5>
+    </div>
+    <div class="span3">
+        <!--
+        <b><a class="btn" href="/shopping_cart.php">View All Items</a></b>
+        -->
+        <input class="btn" type="button" value="View All Items" onClick="document.location='/shopping_cart.php';">
+    </div>
+    <div class="span5">
+        <h5 style="display:inline;padding-left:5px;">
+            <?php echo $cart->count_contents()?> item<?php if($cart->count_contents()>1) echo 's';?>: $<?php echo number_format($cart->show_total(),2);?>
+            &nbsp;&nbsp;
+            (<span>Savings of $<?php echo number_format($cart->show_savings(),2); ?></span>)
+        </h5>
+    </div>
+    <div class="span3">&nbsp;
+        <!--
+        <b><a class="btn" href="/checkout_shipping.php">Checkout Now </a></b>
+        -->
+        <input class="btn" type="button" value="Checkout Now" onClick="document.location='/checkout_shipping.php';">
+    </div>
+      
+</div>
+</div>      
     <?php 
       }
   ?>
@@ -340,62 +313,6 @@ if(!$cart->in_cart(CM_FTPID) && !$cart->in_cart(CM_PID) && !$_SESSION['cm_is_mem
 	
 <?php } }?>
 
-<?php
-/*
-if(!isset($_COOKIE["divpop"]) &&  !tep_session_is_registered('customer_id') && (strpos($_SERVER['REQUEST_URI'],'index.php')>0 || strpos($_SERVER['REQUEST_URI'],'health_library.php')>0))
-{
-  //setcookie("divpop", "1", time()+604800);
-  //require($_SERVER['DOCUMENT_ROOT'].'/includes/vert/div_pop_prevention.htm');
-}
-*/
-/*
-if((strpos($_SERVER['REQUEST_URI'],'product_info.php')>0)) {
-  require($_SERVER['DOCUMENT_ROOT'].'/includes/vert/div_pop_onsale.htm');
-}
-*/
-
-//Check for referrer. If there, log referrer
-/*
-if(isset($_SERVER['HTTP_REFERER']) && !strpos(HTTP_SERVER, $_SERVER['HTTP_REFERER']))
-{
-  $refDomain=parse_section($_SERVER['HTTP_REFERER'],'.','/');
-  
-  
-  if($aff=tep_db_fetch_array(tep_db_query('select * from postaff.wd_g_users where weburl like "%'.$refDomain.'%" order by dateinserted limit 0,1')))
-  {
-  ?>
-
-<script type="text/javascript" src="/includes/javascript/ajaxlib.js"></script>
-<script type="text/javascript">
-<!--
-    function postaffhandler()
-    {
-      if(this.readyState==4)
-        {
-          MessageBox(this.status);
-        }
-        
-    
-    }
-
-    var client=createRequestObj();
-    client.onreadystatechange=postaffhandler;
-    client.open("GET","/affiliates/scripts/t.php?a_aid=<?php echo $aff['userid'] ?>&a_bid=d5b174f9");
-    
-    
-    if(document.referrer != '')
-        document.write('<script src="http://www.seacoastvitamins.com/affiliates/scripts/sr.php?ref='+escape(document.referrer)+'"></script>');
-//-->
-</script>
-  
-  <?php
-  setcookie('affiliate',$refDomain,time()+94608000);
-  }
-  
-} */
-?>
-
-
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -412,9 +329,6 @@ if(isset($_SERVER['HTTP_REFERER']) && !strpos(HTTP_SERVER, $_SERVER['HTTP_REFERE
   
 
 </script>
-
-
-
 
 <?php
   if((strpos($_SERVER['PHP_SELF'],'healthnotes.php')>0 || strpos($_SERVER['PHP_SELF'],'article_info.php')>0) && 1==2)
