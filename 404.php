@@ -198,7 +198,7 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
             $cPath=substr($matches[0],1);
             $_REQUEST['products_id']=(int)$cPath; 
             $_GET['products_id']=(int)$cPath; 
-            $_SERVER['PHP_SELF']='/product_info.php';  
+            $_SERVER['PHP_SELF']='/product_info2.php';  
             $modURL=true;
             set_old_uri();
             include('/product_info.php');

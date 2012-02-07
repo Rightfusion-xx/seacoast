@@ -246,8 +246,9 @@ $tmp_desc=stripslashes($product_info['products_description']);
 
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
 
-<div class="container_16 clearfix" style="margin-top:2em;">
-    <div class="grid_10">
+<div class="container" style="margin-top:2em;">
+<div class="row"
+    <div class="span8">
         <?php 
             if(is_numeric($reviews_rating) && $reviews_rating>0){echo draw_stars($reviews_rating);
         }?>
@@ -584,7 +585,7 @@ if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
     </div>
     
     
-    <div class="grid_6">
+    <div class="span4">
 
       <?php  if(strlen($product_info['products_uses'])>0 || strlen($product_info['products_uses'])>0){
 
@@ -703,6 +704,7 @@ if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
 </script>
     
 
+    </div>
     </div>
 </div>
                      
