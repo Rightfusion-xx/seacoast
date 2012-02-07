@@ -136,8 +136,8 @@ color:#FF9900;
 {
     width:100%;
     clear:both;
-    background-color:#FFFF66;
-    margin:0px;
+    background-color:#FFFFFF;
+    margin-top:2em;
     padding:0px;
     white-space:nowrap;
     width:100%;
@@ -205,8 +205,8 @@ body, table, td {margin:0px; color: #222;font-family:arial, Helvetica, Verdana;f
 div#header 
 {
     background-color: #FFFFFF;
-    width: 80%;
-    margin: auto;
+    width: 100%;
+   
 }
 div#header_navbox {font-size:10pt; border: 0px !important; background-color: #333367 !important; color: #FFF !important; padding: 0.5em;} 
 a.headerNavigation:hover, a.headerNavigation:active {background-color: #333367 !important; color: #FFFF66; text-decoration:underline !important;}

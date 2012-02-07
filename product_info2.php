@@ -217,7 +217,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
 <meta name="type" value="pp"  />
 
 <link rel="stylesheet" type="text/css" href="/stylesheet.css">
-<link rel="stylesheet" type="text/css" href="/960_16_gs.css">
+
 
 <style>
 		

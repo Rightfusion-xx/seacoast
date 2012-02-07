@@ -231,7 +231,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
 <meta name="type" value="supplement"  /> 
 
 <link rel="stylesheet" type="text/css" href="/stylesheet.css">
-<link rel="stylesheet" type="text/css" href="/960_16_gs.css">
+
 
 <!--[if IE]><style>
 #prod_details {
