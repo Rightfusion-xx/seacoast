@@ -613,7 +613,9 @@
 
 		
 
-		<?php echo tep_draw_form('create_account', tep_href_link(FILENAME_CREATE_ACCOUNT, '', 'SSL'), 'post', 'onSubmit="return check_form(create_account);"') . tep_draw_hidden_field('action', 'process'); ?><table border="0" width="100%" cellspacing="0" cellpadding="0">
+		<?php echo tep_draw_form('create_account', tep_href_link(FILENAME_CREATE_ACCOUNT, '', 'SSL'), 'post', 'onSubmit="return check_form(create_account);"') . 
+                        tep_draw_hidden_field('action', 'process'); ?>
+                        <table border="0" width="100%" cellspacing="0" cellpadding="0">
 
       <tr>
 
@@ -1142,7 +1144,8 @@
 
                 <td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1'); ?></td>
 
-                <td><?php echo tep_image_submit('button_continue.gif', IMAGE_BUTTON_CONTINUE); ?><BR><FONT SIZE="-2">(Information is encrypted for your privacy and security).</FONT></td>
+                <td><?php echo tep_image_submit('button_continue.gif', IMAGE_BUTTON_CONTINUE); ?>
+                	<BR><FONT SIZE="-2">(Information is encrypted for your privacy and security).</FONT></td>
 
                 <td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1'); ?></td>
 

@@ -42,7 +42,8 @@ else
     //check URL
     if(seo_url_title($product_info['manufacturers_name'].' '.$product_info['products_name']." ".$product_info['products_id'])<>$url_title)
     {
-        redir301($processor.seo_url_title($product_info['manufacturers_name'].' '.$product_info['products_name']." ".$product_info['products_id'],$pagenum));
+    	redir301($processor.seo_url_title($product_info['manufacturers_name'].' '.$product_info['products_name'].
+        	" ".$product_info['products_id'],$pagenum));
     }
   
   if(strpos(' '.$_SERVER['HTTP_USER_AGENT'],'gsa-crawler')>0 )
@@ -231,7 +232,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
 <meta name="type" value="supplement"  /> 
 
 <link rel="stylesheet" type="text/css" href="/stylesheet.css">
-
+<link rel="stylesheet" type="text/css" href="/960_16_gs.css">
 
 <!--[if IE]><style>
 #prod_details {

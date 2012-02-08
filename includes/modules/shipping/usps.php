@@ -236,6 +236,9 @@
                     '</IntlRateRequest>';
         $request = 'API=IntlRate&XML=' . urlencode($request);
       }
+      
+      //echo $this->countries[$order->delivery['country']['iso_code_2']];
+      //exit();
 
       switch (MODULE_SHIPPING_USPS_SERVER) {
         case 'production': $usps_server = 'production.shippingapis.com';
@@ -275,7 +278,7 @@
         }
       }
       
-     
+      //echo SHIPPING_ORIGIN_COUNTRY; exit();
 
       $rates = array();
       if ($order->delivery['country']['id'] == SHIPPING_ORIGIN_COUNTRY) {
@@ -572,6 +575,7 @@
                     'UG' => 'Uganda',
                     'UA' => 'Ukraine',
                     'AE' => 'United Arab Emirates',
+                    'US' => 'United States',
                     'UY' => 'Uruguay',
                     'UZ' => 'Uzbekistan',
                     'VU' => 'Vanuatu',

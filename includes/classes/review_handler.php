@@ -45,14 +45,14 @@
 		$review_id = $HTTP_GET_VARS['review'];
 		
 		$nodeLevel = $this->determineLevel($this->dataset, $row['reviews_id']);
-		$childReviewPadding = $nodeLevel * 20;
+		$childReviewPadding = $nodeLevel * 8;
 		
 		$contents = 
 		'<tr>';
 		
 		if ($review_id != $row['reviews_id'])
 		{
-			$contents .= '<td style="padding:15px 0 5px '.(int)$childReviewPadding.'px;" class="review_node">';
+			$contents .= '<td style="padding:15px 50px 5px '.(int)$childReviewPadding.'px;" class="review_node">';
 			$hyperlink = '<a href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS_INFO, 'review=' . $row['reviews_id']) . '"><u><b>';
             		  
 		  if ($row['use'] == NULL) { $hyperlink .= 'Review From '.$row['customers_name']; }

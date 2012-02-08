@@ -65,8 +65,8 @@ $total_count = $cart->count_contents();
 
 
 require(DIR_WS_CLASSES . 'shipping.php');
-$shipping_modules = new shipping;
 
+$shipping_modules = new shipping();
 
 // if there is nothing in the customers cart, redirect them to the shopping cart page
 if ($cart->count_contents() < 1) {
@@ -129,59 +129,65 @@ if ( defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL
     }
 }
 // process the selected shipping method
-if ( isset($_REQUEST['action']) && ($_REQUEST['action'] == 'process') ) {
+if ( isset($_REQUEST['action']) && ($_REQUEST['action'] == 'process') ) 
+{    
     if (!tep_session_is_registered('comments')) 
     {
       tep_session_register('comments');
     }
-    if (tep_not_null($HTTP_POST_VARS['comments'])) {
-     $comments = tep_db_prepare_input($HTTP_POST_VARS['comments']);
+    if (tep_not_null($HTTP_POST_VARS['comments'])) 
+    {
+        $comments = tep_db_prepare_input($HTTP_POST_VARS['comments']);
     }
 
     if (!tep_session_is_registered('shipping')) tep_session_register('shipping');
 
-    if ( (tep_count_shipping_modules() > 0) || ($free_shipping == true) ) {
-    if ( ((isset($HTTP_POST_VARS['shipping'])) && (strpos($HTTP_POST_VARS['shipping'], '_')) || tep_session_is_registered('shipping')) ) {
-      if(((isset($HTTP_POST_VARS['shipping'])) && (strpos($HTTP_POST_VARS['shipping'], '_'))))
-      {
-          $shipping = $HTTP_POST_VARS['shipping']; 
-          tep_session_register('shipping');
-          
-        list($module, $method) = explode('_', $shipping);
-        if ( is_object($$module) || ($shipping == 'free_free') ) 
-        {
-            if ($shipping == 'free_free') {
-                $quote[0]['methods'][0]['title'] = FREE_SHIPPING_TITLE;
-                $quote[0]['methods'][0]['cost'] = '0';
-            } else {
-                $quote = $shipping_modules->quote($method, $module);
-            }
-    
-            if (isset($quote['error'])) 
+    if ( (tep_count_shipping_modules() > 0) || ($free_shipping == true) ) 
+    {
+        if ( ((isset($HTTP_POST_VARS['shipping'])) && (strpos($HTTP_POST_VARS['shipping'], '_')) || tep_session_is_registered('shipping')) ) 
             {
-                tep_session_unregister('shipping');
-            }
-            else 
-            {
-                if ( (isset($quote[0]['methods'][0]['title'])) && (isset($quote[0]['methods'][0]['cost'])) ) 
+                if(((isset($HTTP_POST_VARS['shipping'])) && (strpos($HTTP_POST_VARS['shipping'], '_'))))
                 {
-                    $shipping = array('id' => $shipping,
-                    'title' => (($free_shipping == true) ? $quote[0]['methods'][0]['title'] : $quote[0]['module'] . ' (' . $quote[0]['methods'][0]['title'] . ')'),
-                    'cost' => $quote[0]['methods'][0]['cost']);
-                }
-            }
-        }
-    }
-   
-   require('includes/checkout_guts.php');  
-   tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION,'paynow='.$paynow, 'SSL'));   
+                    $shipping = $HTTP_POST_VARS['shipping']; 
+                    tep_session_register('shipping');
 
-} 
+                    list($module, $method) = explode('_', $shipping);
+                    if ( is_object($$module) || ($shipping == 'free_free') ) 
+                    {
+                        if ($shipping == 'free_free') {
+                            $quote[0]['methods'][0]['title'] = FREE_SHIPPING_TITLE;
+                            $quote[0]['methods'][0]['cost'] = '0';
+                        } else {
+                            $quote = $shipping_modules->quote($method, $module);
+                        }
+
+                        if (isset($quote['error'])) 
+                        {
+                            tep_session_unregister('shipping');
+                        }
+                        else 
+                        {
+                            if ( (isset($quote[0]['methods'][0]['title'])) && (isset($quote[0]['methods'][0]['cost'])) ) 
+                            {
+                                $shipping = array('id' => $shipping,
+                                'title' => (($free_shipping == true) ? $quote[0]['methods'][0]['title'] : $quote[0]['module'] . ' (' . $quote[0]['methods'][0]['title'] . ')'),
+                                'cost' => $quote[0]['methods'][0]['cost']);
+                            }
+                        }
+                    }
+                }
+
+        require('includes/checkout_guts.php');  
+        tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION,'paynow='.$paynow, 'SSL'));   
+
+        } 
+        else 
+        {
+            tep_session_unregister('shipping');
+        }
+    } 
 else 
 {
-    tep_session_unregister('shipping');
-}
-    } else {
     $shipping = false;
     
     
@@ -427,7 +433,11 @@ var WRInitTime=(new Date()).getTime();
 <?php	require('includes/fec/ajax_shipping.php');?>
 <?php
  $show_total = tep_db_prepare_input($HTTP_GET_VARS['show_total']);	
-  if ($show_total ==1)          require('includes/fec/total_box.php');?>
+  if ($show_total ==1)          
+      {
+        require('includes/fec/total_box.php'); 
+        }
+        ?>
 <?php
  // echo $order_total_modules->credit_selection();//rmh M-S_ccgv
 ?>
@@ -447,9 +457,13 @@ var WRInitTime=(new Date()).getTime();
               <tr>
                 <td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1'); ?></td>
                 <td class="main"><b><?php echo TITLE_CONTINUE_CHECKOUT_PROCEDURE . '</b><br>' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?></td>
-                <td class="main" align="right"><?php echo tep_image_submit('button_continue.gif', IMAGE_BUTTON_CONTINUE,'name="preview" value="preview data"');  ?>
-                	<?php if($cart->in_cart(CM_FTPID) || $cart->in_cart(CM_PID)){ ?>
-                		<br/>By clicking continue, you accept & understand <br/>the Seacoast Vitamins-Direct FREE Trial  <br/><a href="/community/terms.php" target="_blank">Terms & Conditions</a>
+                <td class="main" align="right">
+                    <?php echo tep_image_submit('button_continue.gif', IMAGE_BUTTON_CONTINUE,'name="preview" value="preview data"');  ?>
+                	<?php 
+                            if($cart->in_cart(CM_FTPID) || $cart->in_cart(CM_PID))
+                        { ?>
+                        <br/>By clicking continue, you accept & understand <br/>the Seacoast Vitamins-Direct FREE Trial  <br/>
+                        <a href="/community/terms.php" target="_blank">Terms & Conditions</a>
                 	<?php } ?>
                 </td>
                 <td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1'); ?></td>

@@ -78,7 +78,7 @@ function rowOutEffect(object) {
 
         <td>
         <?php if($_SESSION['cm_is_member'] && !$_SESSION['cm_renew']) { ?><span style="background:yellow;">Your Seacoast Vitamins-Direct Membership will expire. <a href="account_cm.php">Please update your renewal options</a>.</span><?php } ?>
-		<?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
+		<?php echo tep_draw_separator('pixel_trans.gif', '100%', '10');?></td>
 
       </tr>     
 <?php

@@ -357,9 +357,7 @@ where countries_id = '" . (int)$countries_id . "' order by countries_name");
       }
 
     } else {
-
-      $countries = tep_db_query("select countries_id, countries_name from " . TABLE_COUNTRIES . " order by countries_name");
-
+      $countries = tep_db_query("select countries_id, countries_name, countries_iso_code_2 from " . TABLE_COUNTRIES . " order by countries_name");
       while ($countries_values = tep_db_fetch_array($countries)) {
 
         $countries_array[] = array('countries_id' => $countries_values['countries_id'],
@@ -367,13 +365,20 @@ where countries_id = '" . (int)$countries_id . "' order by countries_name");
                                    'countries_name' => $countries_values['countries_name']);
 
       }
-
     }
-
-
-
     return $countries_array;
+  }
 
+  function tep_get_countries_with_iso_code2()
+  {
+      $countries_array = array();
+      
+      $countries = tep_db_query("select countries_id, countries_name, countries_iso_code_2 from " . TABLE_COUNTRIES . " order by countries_name");
+      while ($countries_values = tep_db_fetch_array($countries)) {
+          $countries_array[] = array('countries_id' => $countries_values['countries_iso_code_2'],
+                                        'countries_name' => $countries_values['countries_name']);
+      }
+      return $countries_array;
   }
 
 
@@ -1986,6 +1991,9 @@ p2c where p.products_id = '" . (int)$products_id . "' and p.products_status = '1
 
     $message->build_message();
 
+    echo $text.'<br />';
+	
+    
     $message->send($to_name, $to_email_address, $from_email_name, $from_email_address, $email_subject);
 
   }
@@ -2033,8 +2041,6 @@ p2c where p.products_id = '" . (int)$products_id . "' and p.products_status = '1
     return sizeof($temp_array);
 
   }
-
-
 
   function tep_count_modules($modules = '') {
 
