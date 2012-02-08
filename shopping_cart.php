@@ -7,11 +7,12 @@ require(DIR_WS_CLASSES . 'geo_locator.php');
 require(DIR_WS_CLASSES . 'shipping.php');
 require(DIR_WS_CLASSES . 'order_total.php');
 require(DIR_WS_CLASSES . 'order.php');
+require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_SHOPPING_CART);
 
-require (DIR_WS_LANGUAGES . $language . '/' . FILENAME_SHOPPING_CART);
-
-$breadcrumb -> add(NAVBAR_TITLE, tep_href_link(FILENAME_SHOPPING_CART));
+$breadcrumb->add(NAVBAR_TITLE, tep_href_link(FILENAME_SHOPPING_CART));
 $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_savings() / $cart -> show_total() * 100, 0) : 0;
+
+print_r($breadcrumb);
 
 // if no shipping destination address was selected, use the customers own address as default
 if (!tep_session_is_registered('sendto')) 
@@ -33,7 +34,6 @@ else
     }
 }
 tep_session_unregister('payment');
-
 $order = new order;
 
 if (!tep_session_is_registered('customer_id')) // NOT logged in
@@ -55,7 +55,6 @@ if (!tep_session_is_registered('customer_id')) // NOT logged in
 }
 else { // IF LOGGED IN, DELIVERY ADDRESS WILL BE POPULATED AUTOMATICALLY THROUGH ORDER CONSTRUCTOR
 }
-
 $total_weight = $cart->show_weight();
 
 if (isset($HTTP_POST_VARS[country]))

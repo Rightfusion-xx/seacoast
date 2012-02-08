@@ -575,7 +575,6 @@
                     'UG' => 'Uganda',
                     'UA' => 'Ukraine',
                     'AE' => 'United Arab Emirates',
-                    'US' => 'United States',
                     'UY' => 'Uruguay',
                     'UZ' => 'Uzbekistan',
                     'VU' => 'Vanuatu',

@@ -96,8 +96,7 @@ else
     else {
     	$cm_price=$price;
     }
-          
-
+    
     //Get review details
     $reviews_query = tep_db_query("select count(*) as count, avg(reviews_rating) as rating from " . TABLE_REVIEWS . " where products_id = '" . (int)$HTTP_GET_VARS['products_id'] . "'");
     $reviews = tep_db_fetch_array($reviews_query);
@@ -110,7 +109,6 @@ else
     	$alt_keywords=preg_split('/,/',$product_info['products_keywords']);  
     	 	                             
     }
-
 }
   // get all url links
   populate_backlinks();
@@ -140,9 +138,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
               $i2=strpos($tmp_desc, '<a', $i);
               $i3=strpos($tmp_desc, '<img', $i);
               if($i3<$i2 && $i3)$i2=$i3;
-
-
-
+              
                  $segment=substr($tmp_desc,$i,$i2);
 
                       if(is_array($alt_keywords))
@@ -163,43 +159,29 @@ $tmp_desc=stripslashes($product_info['products_description']);
                 if(!$i2)$i2=$tmp_len-$i;
                 $tmp.=substr($tmp_desc,$i,$i2);
                 $i=$i2;
-
               }
-              else
-              {
-                $i=$tmp_len;
+              else { $i=$tmp_len; }
               }
-
-              }
-
-              
               // remove errant widths
               $tmp_desc=preg_replace('/width="*.?"/im','',$tmp_desc);
               
               // remove empty tags , but not <td>
               $tmp_desc=preg_replace('/(^\<td)\<([a-z]+)[^\>]*?\>(\W|&nbsp;|\s)*\<\/\1\>/im','',$tmp_desc);  
               
-              //echo $tmp_desc;exit();
-              
                // remove comments
-              $tmp_desc=preg_replace('/\<!--.*?--\>/im','',$tmp_desc);  
-              
-              
-              
+              $tmp_desc=preg_replace('/\<!--.*?--\>/im','',$tmp_desc);
               //Count number of words in title / manufacturer
               $title_count=strlen($product_info['manufacturers_name']. ' '.$product_info['products_name'])+1;
               
                   if(preg_match('/(^(\<.*?\>))([^\<\>]{'.$title_count.'})/im',$tmp_desc,$matches,null,$pos))
                   {
-                      //print_r($matches);exit();
                       // We have a valid description, and found the start, so go there.
                       $tmp_desc=substr($tmp_desc,strpos($tmp_desc,$matches[3])); 
               }
               if(strlen($product_info['products_target_keyword'])>0){$product_info['products_name']=$product_info['products_target_keyword'];}
               else{$product_info['products_target_keyword']=$tname;
                    $product_info['products_name']=$tname; }
-              
-
+}
 ?>
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html <?php echo HTML_PARAMS; ?> itemscope itemtype="http://schema.org/Product">
@@ -218,11 +200,6 @@ $tmp_desc=stripslashes($product_info['products_description']);
 
 <link rel="stylesheet" type="text/css" href="/stylesheet.css">
 <link rel="stylesheet" type="text/css" href="/960_16_gs.css">
-
-<style>
-		
-		
-</style>
 
 <!--[if IE]><style>
 #prod_details {
@@ -266,6 +243,10 @@ $tmp_desc=stripslashes($product_info['products_description']);
             <a href="<?php echo '/shopping_cart.php?products_id='.$product_info['products_id']; ?>">
                 <h2>
                     Purchase and ship it to me.
+                    (<?php 
+                        echo $currencies->display_price($cm_price, tep_get_tax_rate($product_info['products_tax_class_id']));
+                    ?>)
+                    
                 <h2>
             </a>
         </div>
@@ -274,7 +255,6 @@ $tmp_desc=stripslashes($product_info['products_description']);
         if(strlen($product_info['products_takeaway'])>0)
         {
             echo '<p>',$product_info['products_takeaway'],'</p>'; 
-        }
 
     	if(strlen($first_review)>0)
         {
@@ -285,7 +265,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
         <?php
         
         $cache->addCache('products_main'.$pmod);
-}
+        }
         ?>
         
         <div class="cool_box">
@@ -369,8 +349,6 @@ $tmp_desc=stripslashes($product_info['products_description']);
                         <?php if(!$_SESSION['cm_is_member']){ ?><a href="/community/" target="_blank" rel="nofollow">Learn more.</a><?php } ?>
                          <br/><br/><a href="#product_description_loc">Ingredients & Description</a></div>
                         <?php } ?>
-
-
                     </div>
                  <?php } ?>
                 <br style="clear:both"/></span></form>
@@ -380,11 +358,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
                 </table>
              </div>
             <br style="clear:both;"/>
-
-
         </div>
-        
-        
         <?php
 if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
 {
@@ -459,12 +433,10 @@ if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
                              ?> and natural health. Seacoast Vitamins offers this product at a $<?php echo $product_info['products_msrp']-$product_info['products_price']?> discount
                              off of the suggested retail price $<?php echo $product_info['products_msrp']?>. Our price is $<?php echo $product_info['products_price']?>.</p>
                             
-                          <?php }  ?> 
-                          
+                          <?php }  ?>   
                           
                           <?php $hubs=match_hub_links($page_links,  true);?>
   
-    
              <?php              
              $mflink=link_exists('/catalog.php?page=',$page_links);
               if(strlen($mflink))
@@ -475,12 +447,8 @@ if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
               }
               ?>
     </div>
-    
     <div class="grid_6">
-
       <?php  if(strlen($product_info['products_uses'])>0 || strlen($product_info['products_uses'])>0){
-
-
         ?>
                  <div style="padding:20px;border:1px solid #000000;background-color:#FFFFCC;">
 
@@ -505,11 +473,6 @@ if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
                              }
                          ?>
                      </ul>
-
-
-
-
-
                      <?php if(strlen($product_info['products_uses'])>0){
 
                      ?>
@@ -562,25 +525,7 @@ if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
             </p>        
      <?php if(strtotime($product_info['products_last_modified'])>strtotime('2007-03-01')||strlen($tmp_desc)<150)
                           {
-                          include(DIR_WS_MODULES . 'similar_products_google.php');}?>                
-       <!--
-            <div id="adsense_ad" style="margin-top:1em;">
-    <script type="text/javascript"><!--
-    google_ad_client = "ca-pub-6691107876972130";
-    /* Product Page Right Side */
-    google_ad_slot = "3365106085";
-    google_ad_width = 336;
-    google_ad_height = 280;
-    
-       </script>
-    <script type="text/javascript"
-    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-    </script>
-    </div>
-    -->
-
-    <!-- Place this render call where appropriate -->
-    
+                          include(DIR_WS_MODULES . 'similar_products_google.php');}?>                   
 <script type="text/javascript">
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -588,38 +533,12 @@ if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
   })();
 </script>
-    
-
     </div>
 </div>
-                     
-   
-
-                        
-
-
-        
-        
-        
-  
-            
-
-      
-                        
-        
         <?php
         $cache->addCache('products_main2'.$pmod);
         } //end cache 
             ?>   
-
-       
-        
-        
-
- 
-    
-
-
 <?php 
             if($seacoast_crawler)
             {
@@ -627,12 +546,11 @@ if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
             }
         ?>
 
-
 <?php $product_info['products_name']='';?>
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
 <br>
 </body>
 </form>
 </html>
-<?php require(DIR_WS_INCLUDES . 'application_bottom.php'); ?>
 
+<?php require(DIR_WS_INCLUDES . 'application_bottom.php'); ?>
