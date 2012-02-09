@@ -317,8 +317,8 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
         if ((isset($HTTP_POST_VARS[country]) && ($HTTP_POST_VARS[country] == "US")) || 
                 ($order->delivery['country']['iso_code_2'] == "US"))
         {
-                echo 'Please enter ZIP code: <br />';
-                echo tep_draw_input_field('postcode', $order->delivery['postcode']);
+                echo 'Enter zip code: <br />';
+                echo tep_draw_input_field('postcode', $order->delivery['postcode'],'style="width:80px;"');
                 echo tep_draw_input_field('postcode_btn','Calculate Shipping',
                         "style='margin-left:10px;font-weight:bold;' onClick='return submitForm(this.form);'",'submit');
         }
