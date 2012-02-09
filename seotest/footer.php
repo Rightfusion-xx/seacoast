@@ -31,61 +31,55 @@
 
 <div id="header" >
 
-    <div class="container">
-    <div style="margin-top:20px;" class="row show-grid">
-        <div class="span11">
-            <?php
+    <div class="container">   
+  <div  class="row">
+      <div class="span4">
+          <?php
             echo '<a href="'.HTTP_SERVER.'/"><img src="/images/seacoast_logo.png" border="0" 
-                    alt="" title="Vitamins, Exclusive Discounts, Direct to You. " width="179" height="60">
-                  </a>';
+              alt="" title="Vitamins, Exclusive Discounts, Direct to You. " width="179" height="60">
+              </a>';
           ?>
-        </div>
-        <div class="span5">
-            <span style="text-align:right">
-                    <?php if (tep_session_is_registered('customer_id')) { ?>
-                    <a href="<?php echo tep_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>" class="headerNavigation"> 
-                    <?php echo HEADER_TITLE_LOGOFF; ?>
-                    </a> &nbsp;|&nbsp; 
-                    <?php } ?>
-                    <a href="<?php echo tep_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="headerNavigation">
-                    <?php echo tep_session_is_registered('customer_id') ? 'My Account' : 'Log In To Your Account'; ?>
-
-                    </a>
-                    <?php if($cart->count_contents()>0){?> &nbsp;|&nbsp; 
-                        <a href="<?php echo tep_href_link(FILENAME_SHOPPING_CART); ?>" class="headerNavigation" rel="nofollow">
-                            Shopping Cart
-                        </a>
-                    <?php } ?>
-            </span>
-        </div>
-    </div>
-    <div class="row show-grid">
-    <div style="text-align:right;" class="span10">
-        <form name="quick_find" action="/topic.php" method="get" style="display:inline;">
-            <input type="text" name="health" size="10" maxlength="250" style="width: 200px" value="<?php echo $_REQUEST['health']?>"/>&nbsp;
-            <input class="primary" type="submit" value="Search" alt="Search Seacoast" title=" Search Seacoast "/>
-        </form>
-    </div>
-    <div style="padding-left:0px;text-align:right;" class="span6">
-        <p style="font-size:10pt;color:#CC6600;font-weight:bold;text-align:right;margin:-5px 50px 20px 0;">U.S. 800.555.6792<br/>
-            Int'l (1+) 702.508.9054</p>
-    </div>
-    </div>
-    <div class="row show-grid">
-    <div style="text-align:center;" class="span16">
-        <?php if(!$_SESSION['cm_is_member']) {?>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/community/">Join Vitamins-Direct</a>   <?php } ?>
-          <?php if($_SESSION['cm_is_member']){ ?><span style="color:#CC6600">
-          	<hr class="sectiondivider" style="margin-top:10px;margin-bottom:10px;"/>
-          	Member since <?php echo $_SESSION['cm_member_since']; ?>.
-          	Total Savings of $<?php echo number_format($_SESSION['cm_savings'],2); ?></span>
+      </div>
+      <div class="span4">
+          <div style="text-align:center;">
+              <form name="quick_find" action="/topic.php" method="get" style="display:inline;">
+                  <input type="text" name="health" size="10" maxlength="250" style="width: 200px" value="<?php echo $_REQUEST['health']?>"/>&nbsp;
+                  <input class="primary" type="submit" value="Search" alt="Search Seacoast" title=" Search Seacoast "/>
+              </form>
+          </div>
+          <div style="text-align:center;"><a href="/brands">Our Brands</a>
+              <?php if(!$_SESSION['cm_is_member']) {?>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/community/">Join Vitamins-Direct</a>   <?php } ?>
+          </div>
+      </div>
+      <div class="span4" style="text-align:right">
           
-        <?php } ?>
-        
-    </div>
-    </div>
-    </div>
- 
-    <hr style="margin-left:-130px; width: 1400px;background-color:blue;" />
+              <?php if (tep_session_is_registered('customer_id')) { ?>
+                  <a href="<?php echo tep_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>" class="headerNavigation"> 
+                      <?php echo HEADER_TITLE_LOGOFF; ?>
+                  </a> &nbsp;|&nbsp; 
+                  <?php } ?>
+              <a href="<?php echo tep_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="headerNavigation">
+                  <?php echo tep_session_is_registered('customer_id') ? 'My Account' : 'Log In To Your Account'; ?>
+
+              </a>
+              <?php if($cart->count_contents()>0){?> &nbsp;|&nbsp; 
+                  <a href="<?php echo tep_href_link(FILENAME_SHOPPING_CART); ?>" class="headerNavigation" rel="nofollow">
+                      Shopping Cart
+                  </a>
+                  <?php } ?>
+          
+          
+              <p style="font-size:10pt;color:#CC6600;font-weight:bold;text-align:right;">U.S. 800.555.6792<br/>
+                  Int'l (1+) 702.508.9054</p>
+          
+      </div>                             
+
+
+
+
+ </div>
+ </div>
+    <hr style="width:100%; height:1px; background-color:#333367;" />
   <?php 
   if($do_admin && $authenticated)
   {
@@ -105,26 +99,26 @@
     if ($cart->count_contents() > 0 && $_SERVER['HTTPS']=='off' && !$hide_cart) {
     ?>
 
-<div style="margin-bottom:40px;" class="container alert-message">
+<div style="padding-top:17px; margin-bottom:40px;" class="container alert">
 
     <div class="row show-grid">
-    <div class="span3">
+    <div style="padding-top:4px;" class="span2">
         <h5 style="display:inline;padding-left:5px;">Shopping Cart</h5>
     </div>
-    <div class="span3">
+    <div class="span2">
         <!--
         <b><a class="btn" href="/shopping_cart.php">View All Items</a></b>
         -->
         <input class="btn" type="button" value="View All Items" onClick="document.location='/shopping_cart.php';">
     </div>
-    <div class="span5">
+    <div style="padding-top:4px;text-align:center;" class="span5">
         <h5 style="display:inline;padding-left:5px;">
             <?php echo $cart->count_contents()?> item<?php if($cart->count_contents()>1) echo 's';?>: $<?php echo number_format($cart->show_total(),2);?>
             &nbsp;&nbsp;
             (<span>Savings of $<?php echo number_format($cart->show_savings(),2); ?></span>)
         </h5>
     </div>
-    <div class="span3">&nbsp;
+    <div class="span2">&nbsp;
         <!--
         <b><a class="btn" href="/checkout_shipping.php">Checkout Now </a></b>
         -->

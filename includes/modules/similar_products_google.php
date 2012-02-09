@@ -1,5 +1,5 @@
 <?php
-   
+/*   
      include_once(DIR_WS_FUNCTIONS . '/search_tools.php');
 
 ?>
@@ -182,6 +182,6 @@
 
 }
 
+*/
 ?>
-
 <!-- similar_products_eof //-->

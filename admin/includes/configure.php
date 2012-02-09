@@ -11,9 +11,16 @@
 // Define the webserver and path parameters
 // * DIR_FS_* = Filesystem directories (local/physical)
 // * DIR_WS_* = Webserver directories (virtual/URL)
-  define('HTTP_SERVER', 'http://admin.nealbozeman.com'); // eg, http://localhost - should not be empty for productive servers
-  define('HTTP_CATALOG_SERVER', 'http://www.dev.nealbozeman.com');
+
+  define('HTTP_DEV_SERVER', 'www.dev.nealbozeman.com');
+
+  define('HTTP_SERVER', 'admin.nealbozeman.com'); // eg, http://localhost - should not be empty for productive servers
+//  define('HTTP_CATALOG_SERVER', 'http://www.dev.nealbozeman.com');
+  define('HTTP_CATALOG_SERVER', 'http://admin.nealbozeman.com');
   define('HTTPS_CATALOG_SERVER', 'http://admin.nealbozeman.com');
+  
+  define('PASSSWORD_FUNCTION_FILE', HTTP_SERVER.'/password_funcs.php' );
+  
   define('ENABLE_SSL_CATALOG', 'false'); // secure webserver for catalog module
   define('DIR_FS_DOCUMENT_ROOT', '/seacoast/www/'); // where the pages are located on the server
   define('DIR_WS_ADMIN', '/'); // absolute path required
@@ -24,6 +31,9 @@
   define('DIR_WS_ICONS', DIR_WS_IMAGES . 'icons/');
   define('DIR_WS_CATALOG_IMAGES', DIR_WS_CATALOG . 'images/');
   define('DIR_WS_INCLUDES', 'includes/');
+  
+  define('DIR_TEMP_FULL_PATH_INCLUDES','www.dev.nealbozeman.com/includes/functions'); //(AH added to make change password work)
+  
   define('DIR_WS_BOXES', DIR_WS_INCLUDES . 'boxes/');
   define('DIR_WS_FUNCTIONS', DIR_WS_INCLUDES . 'functions/');
   define('DIR_WS_CLASSES', DIR_WS_INCLUDES . 'classes/');

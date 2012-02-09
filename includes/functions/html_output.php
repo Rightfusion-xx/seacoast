@@ -20,15 +20,23 @@
       die('<p style=color:#ff0000;"><b>Error!</b></p>');
     }
 
-    if ($connection == 'NONSSL') {
+    if ($connection == 'NONSSL') 
+    {
       $link = HTTP_SERVER . DIR_WS_HTTP_CATALOG;
-    } elseif ($connection == 'SSL') {
-      if (ENABLE_SSL == true) {
+    } 
+    elseif ($connection == 'SSL') 
+    {
+      if (ENABLE_SSL == true) 
+      {
         $link = HTTPS_SERVER . DIR_WS_HTTPS_CATALOG;
-      } else {
+      } 
+      else 
+      {
         $link = HTTP_SERVER . DIR_WS_HTTP_CATALOG;
       }
-    } else {
+    } 
+    else 
+    {
       die('<p style=color:#ff0000;"><font color="#ff0000"><b>Error!</b></p><p><b>Unable to determine connection method on a link!<br><br>Known methods: NONSSL SSL</b></p>');
     }
 
@@ -85,14 +93,15 @@
 
 ////
 // The HTML image wrapper function
-  function tep_image($src, $alt = '', $width = '', $height = '', $parameters = '') {
+  function tep_image($src, $alt = '', $width = '', $height = '', $parameters = '', $class='') 
+  {
     if ( (empty($src) || ($src == DIR_WS_IMAGES)) && (IMAGE_REQUIRED == 'false') ) {
       return false;
     }
 
-// alt is added to the img tag even if it is null to prevent browsers from outputting
-// the image filename as default
-    $image = '<img src="' . tep_output_string($src) . '" border="0" alt="' . tep_output_string($alt) . '"';
+    // alt is added to the img tag even if it is null to prevent browsers from outputting
+    // the image filename as default
+    $image = '<img class="' . $class . '" src="' . tep_output_string($src) . '" border="0" alt="' . tep_output_string($alt) . '"';
 
     if (tep_not_null($alt)) {
       $image .= ' title=" ' . tep_output_string($alt) . ' "';
@@ -116,13 +125,12 @@
     }
 
     if (tep_not_null($width) && tep_not_null($height)) {
-      $image .= ' width="' . tep_output_string($width) . '" height="' . tep_output_string($height) . '"';
+      $image .= ' width="' . tep_output_string($width) . '" height="' . tep_output_string($height) . ' !important"';
     }
 
     if (tep_not_null($parameters)) $image .= ' ' . $parameters;
 
     $image .= '>';
-
     return $image;
   }
 
@@ -154,7 +162,7 @@
 ////
 // Output a separator either through whitespace, or with an image
   function tep_draw_separator($image = 'pixel_black.gif', $width = '100%', $height = '1') {
-    return tep_image(DIR_WS_IMAGES . $image, '', $width, $height);
+      return tep_image($image, '', $width, $height,'', 'separator_img');
   }
 
 ////
@@ -273,8 +281,13 @@
 
 ////
 // Output a form pull down menu
-  function tep_draw_pull_down_menu($name, $values, $default = '', $parameters = '', $required = false) {
-    $field = '<select name="' . tep_output_string($name) . '"';
+  function tep_draw_pull_down_menu($name, $values, $default = '', $parameters = '', $required = false, $enabled=TRUE) {
+      
+      $field = '<select ';
+      
+      if (!$enabled) { $field .= 'disabled="disabled" ';}
+      
+      $field .= 'name="' . tep_output_string($name) . '"';
 
     if (tep_not_null($parameters)) $field .= ' ' . $parameters;
 
@@ -308,5 +321,16 @@
     }
 
     return tep_draw_pull_down_menu($name, $countries_array, $selected, $parameters);
+  }
+  
+  function tep_get_country_list_with_iso_code($name, $selected = '', $parameters = '', $enabled=TRUE) {
+    $countries_array = array(array('id' => '', 'text' => PULL_DOWN_DEFAULT));
+    $countries = tep_get_countries_with_iso_code2();
+    
+    for ($i=0, $n=sizeof($countries); $i<$n; $i++) {
+      
+      $countries_array[] = array('id' => $countries[$i]['countries_id'], 'text' => $countries[$i]['countries_name']);
+    }
+    return tep_draw_pull_down_menu($name, $countries_array, $selected, $parameters, FALSE, $enabled);
   }
 ?>

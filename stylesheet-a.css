@@ -196,6 +196,13 @@ color:#FF9900;
     padding-left:0px;
 }
 
+.separator_img
+{
+    max-width: 100%;
+    border: 0;
+    height: 10px !important;
+}
+
 /*
 COLORS QUICKLIST:
 dark blue - #333367, mid blue - #c6e3f5, light yellow - #fcfcda, link - #135383, orange - #FF9900 FF9900
@@ -205,8 +212,9 @@ body, table, td {margin:0px; color: #222;font-family:arial, Helvetica, Verdana;f
 div#header 
 {
     background-color: #FFFFFF;
-    width: 100%;
-   
+    width: 80%;
+    margin: auto;
+    padding-top: 10px;
 }
 div#header_navbox {font-size:10pt; border: 0px !important; background-color: #333367 !important; color: #FFF !important; padding: 0.5em;} 
 a.headerNavigation:hover, a.headerNavigation:active {background-color: #333367 !important; color: #FFFF66; text-decoration:underline !important;}
