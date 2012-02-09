@@ -212,9 +212,6 @@ body, table, td {margin:0px; color: #222;font-family:arial, Helvetica, Verdana;f
 div#header 
 {
     background-color: #FFFFFF;
-    width: 80%;
-    margin: auto;
-    padding-top: 10px;
 }
 div#header_navbox {font-size:10pt; border: 0px !important; background-color: #333367 !important; color: #FFF !important; padding: 0.5em;} 
 a.headerNavigation:hover, a.headerNavigation:active {background-color: #333367 !important; color: #FFFF66; text-decoration:underline !important;}

@@ -19,7 +19,7 @@ if (!tep_session_is_registered('sendto')) {
     // verify the selected shipping address
     $check_address_query = tep_db_query("select count(*) as total from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . (int)$customer_id . "' and address_book_id = '" . (int)$sendto . "'");
     $check_address = tep_db_fetch_array($check_address_query);
-
+    
     if ($check_address['total'] != '1') {
         $sendto = $_SESSION['customer_default_address_id'];
         if (tep_session_is_registered('shipping')) tep_session_unregister('shipping');
@@ -97,7 +97,6 @@ while (list($key, $value) = each($_POST))
     tep_session_register($key);
 }
 
-
 if ( defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true') ) {
     $pass = false;
     $state = tep_get_zone_code($order->delivery['country_id'], $order->delivery['zone_id'], $state);
@@ -130,7 +129,7 @@ if ( defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL
 }
 // process the selected shipping method
 if ( isset($_REQUEST['action']) && ($_REQUEST['action'] == 'process') ) 
-{    
+{ 
     if (!tep_session_is_registered('comments')) 
     {
       tep_session_register('comments');
@@ -198,6 +197,7 @@ else
 
 // get all available shipping quotes
 $quotes = array_reverse($shipping_modules->quote());
+
 if($free_shipping==true){
 $fs=array();
 $fs[0]['id']='free';
@@ -210,7 +210,6 @@ $fs[0]['methods'][0]['cost']=0.00;
 // get all available shipping quotes
 $quotes = array_merge($fs,$quotes);
 }
-
 
 if($free_shipping==true && !$shipping==true){$shipping='free_free';}
 

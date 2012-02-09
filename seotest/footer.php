@@ -47,8 +47,9 @@
                   <input class="primary" type="submit" value="Search" alt="Search Seacoast" title=" Search Seacoast "/>
               </form>
           </div>
-          <div style="text-align:center;"><a href="/brands">Our Brands</a>
-              <?php if(!$_SESSION['cm_is_member']) {?>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/community/">Join Vitamins-Direct</a>   <?php } ?>
+          <div style="text-align:center;">
+            <a href="/brands">Our Brands</a>
+            <?php if(!$_SESSION['cm_is_member']) {?>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/community/">Join Vitamins-Direct</a>   <?php } ?>
           </div>
       </div>
       <div class="span4" style="text-align:right">

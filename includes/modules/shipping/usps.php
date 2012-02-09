@@ -19,9 +19,7 @@
 // class constructor
     function usps() {
       global $order;
-
-
-                        
+                  
       $this->code = 'usps';
       $this->title = MODULE_SHIPPING_USPS_TEXT_TITLE;
       $this->description = MODULE_SHIPPING_USPS_TEXT_DESCRIPTION;
@@ -234,11 +232,9 @@
                     '<Country>' . $this->countries[$order->delivery['country']['iso_code_2']] . '</Country>' .
                     '</Package>' .
                     '</IntlRateRequest>';
+        
         $request = 'API=IntlRate&XML=' . urlencode($request);
       }
-      
-      //echo $this->countries[$order->delivery['country']['iso_code_2']];
-      //exit();
 
       switch (MODULE_SHIPPING_USPS_SERVER) {
         case 'production': $usps_server = 'production.shippingapis.com';
