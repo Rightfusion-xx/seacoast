@@ -22,57 +22,13 @@ class geo_locator
     
     function isValid($c) { return isset($c); }
     
-    function getCountryIdFromDb($code)
+    function getCountryInfoFromDb($code)
     {
-        $query = "select countries_id from " . TABLE_COUNTRIES . " where countries_iso_code_2 = '" . $code . "'";
+        $query = "select countries_id,countries_name,countries_iso_code_2 from " . TABLE_COUNTRIES . " where countries_iso_code_2 = '" . $code . "'";
         $check_country_id = tep_db_query($query);
-        $country_id = tep_db_fetch_array($check_country_id);
+        $country_info = tep_db_fetch_array($check_country_id);
         
-        return $country_id[countries_id];
+        return $country_info;
     }
 }
-/*
-class geo_locator
-{
-    private $url = 'http://www.geobytes.com/IpLocator.htm?GetLocation&template=php3.txt&IpAddress=';
-    var $lastCheckedIp;
-    
-    function geo_locator()
-    {
-        //117.20.16.220
-    }
-    
-    function locate($ip)
-    {
-        $this->lastCheckedIp = $ip;
-        $tags = get_meta_tags($this->url.$ip);
-        
-        if ($this->isValidIp($tags))
-        {
-            return $this->constructLocationDetails($tags);
-        }
-    }
-    
-    function isValidIp($t)
-    {
-        return $t['known']==TRUE ? TRUE : FALSE;
-    }
-    
-    function getLastCheckedIp() { return $this->lastCheckedIp; }
-    
-    private function constructLocationDetails($t)
-    {
-        $locationDetails = 
-            array(
-                'iso_code_2' => $t[iso2],
-                'iso_code_3' => $t[iso2],
-                'country' => $t[country],
-                'state' => $t[region],
-                'statecode' => $t[regioncode],
-                'city' => $t[city]
-            );
-        return $locationDetails;
-    }
-}
-*/
 ?>

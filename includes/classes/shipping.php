@@ -43,7 +43,7 @@
 
     function quote($method = '', $module = '') {
       global $total_weight, $shipping_weight, $shipping_quoted, $shipping_num_boxes;
-
+    
       $quotes_array = array();
 
       if (is_array($this->modules)) {
@@ -82,9 +82,13 @@
         }
 
         $size = sizeof($include_quotes);
-        for ($i=0; $i<$size; $i++) {
+        for ($i=0; $i<$size; $i++) 
+        {
           $quotes = $GLOBALS[$include_quotes[$i]]->quote($method);
-          if (is_array($quotes)) $quotes_array[] = $quotes;
+          if (is_array($quotes)) 
+          {
+              $quotes_array[] = $quotes;
+          }
         }
       }
 
@@ -112,14 +116,15 @@
                 }
             }
         }
-
         $cheapest = false;
         for ($i=0, $n=sizeof($rates); $i<$n; $i++) {
-            if (is_array($cheapest)) {
-            if ($rates[$i]['cost'] < $cheapest['cost']) {
-                $cheapest = $rates[$i];
-            }
-            } else {
+            if (is_array($cheapest)) 
+            {
+                if ($rates[$i]['cost'] < $cheapest['cost']) {
+                    $cheapest = $rates[$i];
+                }
+            } 
+            else {
             $cheapest = $rates[$i];
             }
         }

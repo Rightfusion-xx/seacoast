@@ -258,7 +258,7 @@
         $http->addHeader('Host', 'www.ups.com');
         $http->addHeader('User-Agent', 'osCommerce');
         $http->addHeader('Connection', 'Close');
-
+        
         if ($http->Get('/using/services/rave/qcostcgi.cgi?' . $request)) $body = $http->getBody();
 
         $http->Disconnect();

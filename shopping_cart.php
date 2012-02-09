@@ -12,8 +12,6 @@ require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_SHOPPING_CART);
 $breadcrumb->add(NAVBAR_TITLE, tep_href_link(FILENAME_SHOPPING_CART));
 $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_savings() / $cart -> show_total() * 100, 0) : 0;
 
-print_r($breadcrumb);
-
 // if no shipping destination address was selected, use the customers own address as default
 if (!tep_session_is_registered('sendto')) 
 {
@@ -36,36 +34,48 @@ else
 tep_session_unregister('payment');
 $order = new order;
 
-if (!tep_session_is_registered('customer_id')) // NOT logged in
+global $total_weight;
+$locator = new geo_locator();
+
+function populateDeliveryFields($cCode)
 {
-    global $total_weight;
+    global $order,$locator;
     
+    $country_info = $locator->getCountryInfoFromDb($cCode);
+    
+    $order->delivery['country']['iso_code_2'] = $cCode;
+    $order->delivery['country']['id'] = $country_info['countries_id'];
+    $order->delivery['country_id'] = $country_info['countries_id'];
+    $order->delivery['country']['title'] = $country_info['countries_name'];
+}
+
+if (!tep_session_is_registered('customer_id')) // NOT logged in
+{    
     // USA   Sample Ip: 65.65.219.98
     // Spain Sample Ip: 79.159.137.155
-    $requestIp = '65.65.219.98';//$_SERVER [ 'REMOTE_ADDR' ];
-    $locator = new geo_locator();
+    $requestIp = $_SERVER [ 'REMOTE_ADDR' ];
     $cCode = $locator->locate($requestIp);
     
-    if ($locator->isValid(cCode))
+    if ($locator->isValid($cCode))
     {
-        $order->delivery['country']['iso_code_2'] = $cCode;
-        $order->delivery['postcode'] = "12345";
-        $order->delivery['country']['id'] = $locator->getCountryIdFromDb($cCode);
+        populateDeliveryFields($cCode);
     }
 }
-else { // IF LOGGED IN, DELIVERY ADDRESS WILL BE POPULATED AUTOMATICALLY THROUGH ORDER CONSTRUCTOR
-}
-$total_weight = $cart->show_weight();
 
-if (isset($HTTP_POST_VARS[country]))
+if (isset($HTTP_POST_VARS['country']))
 {
-    $order->delivery['country']['iso_code_2'] = $HTTP_POST_VARS[country];
-    
-    if ($HTTP_POST_VARS[country] == 'US' && isset($HTTP_POST_VARS[state]))
+    populateDeliveryFields($HTTP_POST_VARS['country']);
+            
+    if (($HTTP_POST_VARS[country] == 'US') && isset($HTTP_POST_VARS[postcode]))
     {
-        $order->delivery[state] = $HTTP_POST_VARS[state];
+        $order->delivery['postcode'] = $HTTP_POST_VARS[postcode];
     }
 }
+else 
+{ // IF LOGGED IN, DELIVERY ADDRESS WILL BE POPULATED AUTOMATICALLY THROUGH ORDER CONSTRUCTOR
+}
+
+$total_weight = $cart->show_weight();
 
 $shipping_module = new shipping();
 $cheapestShippingRate = $shipping_module->getCheapestRate();
@@ -214,7 +224,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
         }
         
         // shopping cart table starts here (AH 07 Feb 2012)
-        $pl =  '<table class="table table-striped">';
+        $pl =  '<table style="border-top:1px solid lightgray" class="table table-striped">';
         $pl .= '<thead>';
         $pl .= '<th>Remove</th>';
         $pl .= '<th>Product Name</th>';
@@ -279,7 +289,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                 <?php
                 if (!tep_session_is_registered('customer_id'))
                 {
-                echo 'Select Country:<br />';
+                echo 'Select country to calculate shipping:<br />';
                 echo tep_get_country_list_with_iso_code("country", $order->delivery[country][iso_code_2],
                                 "onChange='return submitForm(this.form);'", !tep_session_is_registered('customer_id'));
                 }
@@ -297,72 +307,54 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                         f.submit();
                         return true;
                     }
+                    
                 </script>
 <td style="padding-left:20px; width: auto;">
     <?php
     
-    // IF DEFAULT LOCATION WAS SET AS USA OR
-    // IF USER SELECTED USA FROM DROPDOWN
     if (!tep_session_is_registered('customer_id'))
     {
-        if ((isset($HTTP_POST_VARS[country]) && $HTTP_POST_VARS[country] == "US") || 
-            $order->delivery['country']['iso_code_2'] == "US")
+        if ((isset($HTTP_POST_VARS[country]) && ($HTTP_POST_VARS[country] == "US")) || 
+                ($order->delivery['country']['iso_code_2'] == "US"))
         {
-            $zones_array = array();
-            $zones_query = tep_db_query("select zone_name from " . TABLE_ZONES . " where zone_country_id = " . 223 . " order by zone_name");
-
-            while ($zones_values = tep_db_fetch_array($zones_query)) {
-                $zones_array[] = array('id' => $zones_values['zone_name'], 'text' => $zones_values['zone_name']);
-            }
-
-            if (count($zones_array) > 0) {
-                ?>
-                Select State: <br />
-                <?php echo tep_draw_pull_down_menu('state', $zones_array, $order->delivery[state], 
-                        "onChange='return submitForm(this.form);'", FALSE, !tep_session_is_registered('customer_id')); ?>
-
-                <?php
-            }
+                echo 'Enter zip code: <br />';
+                echo tep_draw_input_field('postcode', $order->delivery['postcode'],'style="width:80px;"');
+                echo tep_draw_input_field('postcode_btn','Calculate Shipping',
+                        "style='margin-left:10px;font-weight:bold;' onClick='return submitForm(this.form);'",'submit');
         }
     }
     ?>
 </td>
             <td style="text-align: right" colspan="3" align="right" class="main" > 
-                Shipping: 
-                    <?php
-                    
-                    function calculateLowestShippingCost()
+            <?php
+                function getLowestShippingCost()
+                {
+                    global $cheapestShippingRate;
+                    return number_format($cheapestShippingRate, 2);
+                }
+
+                if($cart->show_total()>=25 && 
+                    defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && 
+                    (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true'))
+                {
+                    echo 'Ships FREE<br/>(US Lower 48)';
+                }
+                elseif (MODULE_SHIPPING_FLAT_STATUS=='True')
+                {
+                    echo 'Shipping: $4.95 flat rate<br/>(US Lower 48)';
+                }
+                else
+                {
+                    if ($cart->count_contents() > 0 && getLowestShippingCost() > 0
+                       )
                     {
-                        global $cheapestShippingRate;
-                        return '$ ' . number_format($cheapestShippingRate, 2);
+                        $costStr =  'Shipping: <b style="background:yellow;">';
+                        $costStr .= '$ ' . getLowestShippingCost();
+                        $costStr .= '</b>';
+                        echo $costStr;
                     }
-                    
-                    if($cart->show_total()>=25 && 
-                        defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && 
-                        (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true'))
-                    {
-                        echo 'Ships FREE<br/>(US Lower 48)';
-                    }
-                    elseif (MODULE_SHIPPING_FLAT_STATUS=='True')
-                    {
-                        echo '$4.95 flat rate<br/>(US Lower 48)';
-                    }
-            else{
-            ?>
-                <b style="background:yellow;">
-                <?php 
-                
-                    if ($cart->count_contents() > 0)
-                    {
-                        echo calculateLowestShippingCost();
-                    }
-                    else
-                    {
-                        echo '$ 0.00';
-                    }
-                ?>
-                </b>
-            <?php }?>
+                }
+             ?>
             </td>
         </tr>
         <tr><td style="padding:0 0 30px 0;" colspan="4"> 

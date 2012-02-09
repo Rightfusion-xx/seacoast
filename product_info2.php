@@ -270,15 +270,15 @@ $tmp_desc=stripslashes($product_info['products_description']);
         
         <div class="cool_box">
          <div id="supplement_image" style="margin-bottom:.5em;float:left;">
-                    <?php
-                    if(isset ($product_image_path) && file_exists($_SERVER['DOCUMENT_ROOT'].$product_image_path)) {
-                        $dims=getimagesize($_SERVER['DOCUMENT_ROOT'].$product_image_path);
-                        $width=$dims[0]>340 ? 340 : $dims[0];   ?>
-                       <div id="actual_prod_image" style="background-color:#ffffff;">
-                           <img src="<?php echo $product_image_path;?>" id="prod_image" border="0" alt="<?php echo str_replace('"','\'',$product_info['products_head_desc_tag']);?>." title="<?php echo $product_info['products_name'];?>" width="<?php echo $width;?>"/>
-                       </div>
+            <?php
+            if(isset($product_image_path) && file_exists($_SERVER['DOCUMENT_ROOT'].$product_image_path)) {
+                $dims=getimagesize($_SERVER['DOCUMENT_ROOT'].$product_image_path);
+                $width=$dims[0]>340 ? 340 : $dims[0];   ?>
+                <div id="actual_prod_image" style="background-color:#ffffff;">
+                    <img src="<?php echo $product_image_path;?>" id="prod_image" border="0" alt="<?php echo str_replace('"','\'',$product_info['products_head_desc_tag']);?>." title="<?php echo $product_info['products_name'];?>" width="<?php echo $width;?>"/>
+                </div>
 
-                    <?php } ?>
+            <?php } ?>
          </div>
             
             <div id="item_details" style="text-align:left;margin:1em;">
