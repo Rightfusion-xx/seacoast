@@ -216,13 +216,13 @@ div#footer-signoff {background-color:#333367;margin-top:1em; padding:10px;color:
 #footer {margin-top:1em;padding-top:1em;border-top:solid #c6e3f5 1px;}
 
 /*----------------------------=links---------------------------------*/
-a, a:link {background-color: inherit; color: #135383; text-decoration: underline;}
+/*a, a:link {background-color: inherit; color: #135383; text-decoration: underline;}
 a:visited {background-color: inherit; color: #135383; text-decoration: underline;}
 a:hover {background-color: #135383; color: #ffffff; text-decoration: none;}
-a:active {background-color: #fcfcda; color: #000; text-decoration: none;}
+a:active {background-color: #fcfcda; color: #000; text-decoration: none;}              
 
 a img:hover {background-color: #ffffff; color: #FFF; text-decoration: none;}
-a img:active {background-color: #ffffff; color: #FFF; text-decoration: none;}
+a img:active {background-color: #ffffff; color: #FFF; text-decoration: none;}         */
 
 .scv_category
 {

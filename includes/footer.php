@@ -117,11 +117,9 @@ $start=ob_get_length();
                     (<span>Savings of $<?php echo number_format($cart->show_savings(),2); ?></span>)
                 </h4>
             </div>
-            <div class="span2">&nbsp;
-                <!--
-                <b><a class="btn" href="/checkout_shipping.php">Checkout Now </a></b>
-                -->
-                <input class="btn" type="button" value="Checkout Now" onClick="document.location='/checkout_shipping.php';">
+            <div class="span2">
+                
+                <a class="btn btn-success" href="/checkout_shipping.php" style="color:#ffffff;"><i class="icon-shopping-cart icon-white">&nbsp;</i>Checkout Now</a>
             </div>
 
         </div>

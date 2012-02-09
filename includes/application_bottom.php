@@ -1,5 +1,6 @@
 <head>
-	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
 </head>
 <?php
 
