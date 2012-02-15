@@ -1,10 +1,9 @@
 
 
 <h1>Vitamins - Direct To Members from Seacoast Vitamins</h1>
-<table cellpadding="0" cellspacing="0" width="100%">
-<tr><td valign="top">
+
 <br/>
-<h2  style="clear:both;">Movers & Shakers - Best Selling & Featured Supplements</h2>
+<h2>Movers & Shakers - Best Selling & Featured Supplements</h2>
 
 <?php
   $useCategories[]='';
@@ -125,43 +124,12 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
 
 
 ?>
-</td>
-<td valign="top">
-
-<div style="float:right;width:300px;margin-left:20px;" id="hn_topics">
-
-   <b><a href="/health-guide/">A to Z List of Supplements</a></b>
 
 
 
-
-</div>
-   </td></tr></table>
-    <div id="nav_manufacturers" class="nav_box" style="margin-top:20px;width:300px;float:right;">
-  <div class="nav_header">
-    Direct to Members
-  </div>
-  <div style="text-align:center;padding:10px;height:100%;">
-   <b>Seacoast Vitamins, Direct!</b>
-   <p>
-   		Join Seacoast Vitamins-Direct FREE for 14-Days. <a href="/community/" style="font-weight:bold">Start now</a>.
-   </p>
-      </div>
-</div>
-    
-   
-
-
-</td>
-</tr>
-</table>
-
-
-
-<br style="clear:both;"/>
-
-
-<h2>Hottest Offers (hurry, quantity limited!)</h2>
+<h2 style="clear:both;">Hottest Offers (hurry, quantity limited!)</h2> <br>
+<i>Special offers limited by quantity. <b>Order Now.</b><br/>
+  </i>
 
   <?php
     $products_die_q=tep_db_query('select m.manufacturers_id, products_dieqty, products_name, p.products_image, p.products_id, specials_new_products_price, products_msrp, manufacturers_name, cast(((products_msrp-specials_new_products_price)/products_msrp*100.00) as signed) as discountpct from
@@ -205,62 +173,8 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
     }
   
   ?>
-<p style="clear:left;">
-  <i>Special offers limited by quantity. <b>Order Now.</b><br/>
-  </i>
+
+  
 </p>
 
 
-
-<?php
-//Display Departments
-if(is_array($departmentCategories)&&$departmentCategories[1]!=''){
-?>
-<h2>Popular Departments</h2>
-<ul style="width:97%;">
-  <?php
-        sort($departmentCategories);      
-        array_shift($departmentCategories);
-        foreach($departmentCategories as $tempitem){
-          echo '<li style="width:190px;float:left;margin-left:10px;"><a href="/departments.php?benefits='.urlencode(strtolower($tempitem)).'">'.$tempitem.'</a></li>';
-          }
-   ?>
-</ul>
-<br style="clear:both;"/>
-<?php   }
-   
-//Display useCategories
-if(1==2){
-if(is_array($useCategories)&&$useCategories[1]!=''){?>
-<h2>Common Uses & Indications</h2>
-<ul style="width:97%;">
-  <?php
-        sort($useCategories);
-        array_shift($useCategories);
-        foreach($useCategories as $tempitem){
-          echo '<li style="width:190px;float:left;margin-left:10px;"><a href="/natural_uses.php?use='.urlencode(strtolower($tempitem)).'">'.$tempitem.'</a></li>';
-          }
-   ?>
-</ul>
-<br style="clear:both;"/>
-<?php   }
-   
-//Display Ailments
-if(is_array($ailmentCategories)&&$ailmentCategories[1]!=''){
-?>
-<h2>Common Ailments & Concerns</h2>
-<ul style="width:97%;">
-  <?php
-        sort($ailmentCategories);
-        array_shift($ailmentCategories);
-        foreach($ailmentCategories as $tempitem){
-          echo '<li style="width:190px;float:left;margin-left:10px;"><a href="ailments.php?remedy='.urlencode(strtolower($tempitem)).'">'.$tempitem.'</a></li>';
-          }
-   ?>
-</ul>
-<br style="clear:both;"/>
-<br/>
-<?php   }}
-   
-
-?>

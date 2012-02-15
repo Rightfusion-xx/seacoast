@@ -42,7 +42,9 @@ $linkcachetime=60*10;
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
 
 <!-- header_eof //-->
-<div id="content">
+<div class="container">
+<div class="row">
+<div class="span12">
 
                   <?php require(DIR_WS_INCLUDES . 'whyshop.php'); ?>
 
@@ -50,8 +52,7 @@ $linkcachetime=60*10;
                   <?php require(DIR_WS_INCLUDES . 'front_ads.php'); ?>
 
 
-                 
-              
+           
    <h2>Popular Health Hubs</h2>
    
    <?php
@@ -68,19 +69,6 @@ $linkcachetime=60*10;
     
 ?>
 
-               
-               
-   <h2>Catalog of Nutritional Supplements</h2>
-    <p>
-    <?php
-    
-    foreach(automated_catalog::all() as $catalog)
-    {
-        
-        echo '<a href="/catalog.php?page='.$catalog->pagenum.'">'.$catalog->linktext.'</a> &nbsp; ';
-    }    
-
-?>
     
     
     </p>
@@ -88,6 +76,9 @@ $linkcachetime=60*10;
     <h2>Recent Changes and Additions</h2>  
     <p><a href="/recent_changes.php">Recently updated and new products</a></p>
 </div>  
+
+</div>
+</div>
 
 <?php 
   $cache->addCache('homepage');

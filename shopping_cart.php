@@ -86,7 +86,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 	<head>
             <link rel="icon" type="image/png" href="/favicon.ico">
             <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET;?>">
-            <meta name="robots" content="noindex, nofollow">
+            <meta name="robots" content="index, follow">
             <title><?php echo TITLE;?></title>
             <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
             <link rel="stylesheet" type="text/css" href="stylesheet.css">
@@ -103,33 +103,86 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 			require (DIR_WS_INCLUDES . 'header.php');
 		?>
 		<!-- header_eof //-->
-		<div id="content">
+		<div class="container">
+        <div class="row">
+        <div class="span12">
+        
 			<?php
 			
 			if (isset($_GET['products_id']) && !$cart -> in_cart($_GET['products_id'])) {
 				$cart -> add_cart($_GET['products_id']);
 			}
 			
-			//echo tep_draw_form('cart_quantity', tep_href_link(FILENAME_SHOPPING_CART, 'action=update_product', 'SSL'), 'post');
-                        echo tep_draw_form('cart_quantity', tep_href_link(FILENAME_SHOPPING_CART, '', 'SSL'), 'post'); 
+                 
                         ?>
 			<table border="0" cellspacing="0" cellpadding="12" width="100%">
 				<tr>
 					<td valign="top" width="700"><?php
 	// the second condition "$cart->in_cart" is to cover a situation where user might enter
 	// a random number for products_id query string. (AH 30 January 2012)
-	if (isset($_GET['products_id']) && $cart->in_cart($_GET['products_id']))
-	{
-		?>
-                                            
-		<table border="0" width="100%" cellspacing="1" cellpadding="2" class="infoBox">
-			<tr>
-				<td style="padding-bottom:5px;"><?php
+	if (isset($_GET['products_id']) && $cart->in_cart($_GET['products_id']) && strlen($_POST['qty'])<1)
+	{   
 
-				$query = "select p.products_image,pd.products_name from products p, products_description pd ";
-				$query .= "where p.products_id=pd.products_id and p.products_id='" . $_GET['products_id'] . "'";
-				$product_info = tep_db_fetch_array(tep_db_query($query));
-				
+                $product_info_query = tep_db_query("select pd.products_target_keyword, p.products_keywords, p.products_die, p.products_sku, p.products_upc,                                         
+                p.products_dieqty, pd.products_head_title_tag, pd.products_head_keywords_tag, 
+                pd.products_head_desc_tag, pd.products_type,
+                pd.products_departments,pd.products_ailments,pd.products_uses, 
+                p.products_weight, p.products_ordered, pd.products_head_keywords_tag, 
+                pd.products_viewed, date_format(p.products_date_added,'%m/%d/%Y') as 
+                products_date_added, p.products_last_modified, 
+                p.products_id, pd.products_name, pd.products_description, p.products_model, 
+                p.products_quantity, p.products_image, pd.products_url, p.products_msrp,
+                p.products_price, p.products_tax_class_id, p.products_date_available,
+                p.manufacturers_id, m.manufacturers_name, pd.products_takeaway
+                from " . TABLE_PRODUCTS . " p join  " . TABLE_PRODUCTS_DESCRIPTION . " pd on
+                p.products_id=pd.products_id join ". TABLE_MANUFACTURERS ." m on m.manufacturers_id=p.manufacturers_id
+                where p.products_status = '1' and p.products_id = '" . (int)$_REQUEST['products_id'] . 
+            "' and pd.language_id =' " . (int)$languages_id . "'");
+            
+
+            if(!($product_info = tep_db_fetch_array($product_info_query))){
+            //No product found, redirect.
+            redir301(HTTP_SERVER);
+        }                
+        
+         $is_cm_eligible=strpos($product_info['products_name'],'*') ? 0 : 1;
+
+    //Get price
+    //check for product specials
+    $new_price = tep_get_products_special_price($product_info['products_id']);
+
+    //Get product name
+    $products_name = $product_info['products_name'];
+    
+    //Get price
+    if ($new_price != '')
+        { $price=($new_price);}
+          else
+          { $price=$product_info['products_price'];}
+          
+    //Calculate membership discounts
+    if($product_info['manufacturers_id']==69)
+    {
+        $cm_price=$price*.75; //25% Off
+    }
+    elseif(!strpos($product_info['products_name'],'*'))
+    {
+        $cm_price=$price*.85; //15% Off 
+    }
+    else {
+        $cm_price=$price;
+    }
+
+          
+
+        
+		?>  
+        <a href="/product_info.php?products_id=<?php echo $product_info['products_id'];?>"><?php echo '<h1>'.$product_info['products_name'] .'</h1>'; ?>   </a>
+                                            
+		<table border="0" width="100%" cellspacing="1" cellpadding="2">
+			<tr>
+				<td style="padding-bottom:5px;">
+				 <?php
 				$productDetailHtml = '<div style="padding:5px 0 5px 0">';
 				if (strlen($product_info['products_image']) > 0) {
 					$productDetailHtml .= '<img title="' . $product_info['products_name'] . '"';
@@ -139,14 +192,109 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 				$productDetailHtml .= '</div>';
 				echo $productDetailHtml;
 				?>
-				</td>
+				</td>      
+                <td>
+                <div id="item_details" style="text-align:left;margin:1em;">
+
+                   
+                          
+                
+                <?php if($product_info['products_die'] && $product_info['products_dieqty']<1){?>
+                    <p><?php echo $product_info['products_name'];?> is not available from Seacoast Vitamins at this time. We recommend the following alternatives, below.</p>
+                <?php }else{?> <span style="margin-left:1em";>  
+                    <form method="post" action="/shopping_cart.php" >
+                    <input type="hidden" name="action" value="add_product">
+                    <input type="hidden" name="products_id" value="<?php echo $_REQUEST['products_id']; ?>">
+                    <b>Quantity:</b>
+                    <select name="qty">
+                    <?php for($index=1;$index<=30;$index++){?>
+                        <option value="<?php echo $index; ?>"><?php echo $index; ?></option>
+                    <?php }?>
+                    </select>
+                    <br/>
+                    <?php if(!$product_info['products_die'] && $new_price){?>
+                        <span style="font-size:8pt;color:#FF0000;font-weight:bold;">Hurry! On sale while supplies last!</span>
+                    <?php }?>
+                    <?php if($product_info['products_die']){?>
+                        <span style="font-size:8pt;color:#FF0000;font-weight:bold;">Hurry! Only <?php echo $product_info['products_dieqty']?> left at this price.</span>
+                    <?php } ?>
+                    <input type="hidden" name="products_id" value="<?php echo $product_info['products_id'];?>">
+                    <br/>
+                    <div style="margin-left:1em;float:left;border:dashed 1px #dddddd;padding-left:1em;padding-right:1em;">
+                        <div><b>Choose Price</b><br/>
+                            <input type="submit" class="btn btn-primary" id="button_price" value="<?php echo $currencies->display_price($cm_price, tep_get_tax_rate($product_info['products_tax_class_id'])); ?>*" style="width:200px;height:30px;color:#fff;font-weight:bold;font-size:18pt;">
+                        </div>
+                        <?php if($is_cm_eligible){ ?>
+                        <?php if(!$_SESSION['cm_is_member']){ ?>
+                            <script type="text/javascript">
+                            function toggle_price(show_discount){
+                                if(show_discount){
+                                    document.getElementById('button_price').value='<?php echo $currencies->display_price($cm_price, tep_get_tax_rate($product_info['products_tax_class_id'])); ?>*';
+                                    document.getElementById('button_price').style.color='#fff';
+                                    document.getElementById('button_price').style.fontWeight='bold';
+                                    document.getElementById('cm_price_disclaimer').style.display='block';
+                                    document.getElementById('extra_savings').style.display='none';
+                                }else{
+                                    document.getElementById('button_price').value='<?php echo $currencies->display_price($price, tep_get_tax_rate($product_info['products_tax_class_id'])); ?>';
+                                    document.getElementById('button_price').style.color='#fff';
+                                    document.getElementById('button_price').style.fontWeight='normal';
+                                    document.getElementById('cm_price_disclaimer').style.display='none';
+                                    document.getElementById('extra_savings').style.display='inline';
+                                }
+                            }
+                            </script> 
+                            <input type="checkbox" name="cm_freetrial" value="true" checked onclick="toggle_price(this.checked);"/> Yes! I want Direct-to-Member prices.<br/>My membership is FREE for 14-days.
+                            <span id="extra_savings" style="display:none;"><br/><span style="color:#ff0000;font-weight:bold;">Save an extra <?php echo number_format(($price-$cm_price)/$price*100,0) ?>% plus
+                            </span></span>
+                            <br/>I'll get:
+                            <ul style="font-weight:bold;margin-left:3em;">
+                                <li>Member prices, cheap shipping</li>
+                                <li>Side Effects Protection; <br/><i style="font-weight:normal;">Return opened product</i></li>
+                            </ul>
+                        <?php } ?>
+                        
+                        <div id="cm_price_disclaimer"><i>* Seacoast Vitamins-Direct price shown.</i><br/>
+                        <?php if(!$_SESSION['cm_is_member']){ ?><a href="/community/" target="_blank" rel="nofollow">Learn more.</a><?php } ?>
+                        </div>
+                        <?php } ?> 
+                    </div>
+                 <?php } ?>  <br style="clear:both"/></span></form> 
+                
+             </div>  
+                    
+                    
+                </div>
+                </td>   
+                <td>
+                <div style="border:1px solid #665;padding:1em;margin:0px;text-align:center;">
+                        <p>
+                            <b style="color:#665">Risk Free</b>
+                            <br/>
+                            <div style="white-space:nowrap;"><img src="/images/quality.jpg" style="width:75px;"/><b style="color:#666666">
+                                <br/>
+                                120% Guarantee</b>  <br/><br/>
+                            </div>
+                        </p><img src="http://www.shopping.com/merchant_logo?ID=406477" width="130" border="0"alt="Great Store!" />
+                        <br/>
+                        <!-- BEGIN: BizRate Medal (125x73 pixels) -->
+                        <img  style="margin-top:3em;" src="http://medals.bizrate.com/medals/dynamic/162489_medal.gif" alt="BizRate Customer Certified (GOLD) Site" width="125" height="73" align="top" border="0" >
+                        <!-- END: BizRate Medal (125x73 pixels) -->
+                    </div>
+                </td>
 			</tr>
-			<tr><td style="padding-bottom:30px;">
-				<?php echo '<h1>'.$product_info['products_name'] .'</h1>'; ?>
-			</td></tr>
+
 		</table>
+        
+        
+
+        
+        
+                
                                             
-            <?php } ?>
+            <?php } 
+            
+            echo tep_draw_form('cart_quantity', tep_href_link(FILENAME_SHOPPING_CART, '', 'SSL'), 'post');
+            ?>
 
 <h1>Seacoast Vitamins-Direct Savings</h1>
         
@@ -247,6 +395,8 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
             }
             $pl .= '</tr>';
         }
+        $pl.='<tr><td colspan="2"><a class="btn btn-warning" href="javascript:return false;" onclick=updateProd("cart_quantity","update_product")><i class="icon-remove icon-white">&nbsp;</i>&nbsp;Remove Selected</a>
+                </td><td><a class="btn btn-warning" href="javascript:return false;" onclick=updateProd("cart_quantity","update_product")><i class="icon-ok icon-white">&nbsp;</i>&nbsp;Update Quantity</a></td><td></td><td></td></tr>';                                                            
         $pl .= '</tbody>';
         $pl .= '</table>';
         
@@ -357,16 +507,16 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
              ?>
             </td>
         </tr>
-        <tr><td style="padding:0 0 30px 0;" colspan="4"> 
+        <tr><td style="padding:0 0 30px 0;" colspan="3"> 
                 <br /> 
                 <b>Need international or expedited shipping? Continue to checkout for real-time rates. </b>
-        </td></tr>
-        <tr><td colspan="5">
-            <div id="ship_policy" style="display:block;border:solid 1px #ff0000;padding:5px;">
-                    Seacoast Vitamins finds you the lowest rates available.
-            </div> </noscript>    
-        </td></tr>
-                
+        </td>
+        <td colspan="2" align="right">
+            <?php echo '<a class="btn btn-primary" title="Checkout Now" href="' . tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '"><i class="icon-play icon-white">&nbsp;</i>&nbsp;Checkout Now</a><BR>';?>
+
+        </td>
+        </tr>
+       
         
         
         </tr>
@@ -374,10 +524,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 							<td width="10">&nbsp;</td>
 							<td class="main">&nbsp;</td>
 							<td class="main">
-                                                            <?php echo tep_image_submit('button_update_cart.gif', IMAGE_BUTTON_UPDATE_CART,
-                                                                        'onclick=updateProd("cart_quantity","update_product")');
-                                                            ?></td>
-                                                        <script type="text/javascript">
+                                                           <script type="text/javascript">
 
                                                         function updateProd(obj, actionValue) {
                                                             
@@ -391,34 +538,10 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                                             return true;
                                                         }
                                                         </script>
-							<td align="right" class="main" colspan="2"><b> <?php echo '<a title="Checkout Now" href="' . tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '">Checkout Now<br/>' . tep_image_button('button_checkout.gif', IMAGE_BUTTON_CHECKOUT) . '</a><BR>';?>
-
-                <tr>
-                        <td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1');?></td>
-                        <td class="main">&nbsp;</td>
-                        <td class="main">Removes or Updates Quantity</td>
-                        <td align="right" class="main">&nbsp; </td>
-                        <td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1');?></td>
-                </tr>
-                <tr>
-                        <td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1');?></td>
-                        <td class="main">&nbsp;</td>
-                        <?php
-
-$back = sizeof($navigation->path)-2;
-if (isset($navigation->path[$back])) {
-                        ?>
-                        <td class="main" valign="top">&nbsp;</td>
-                        <?php
-                        }
-                        ?>
-                        <td align="right" class="main" valign="top"></td>
-                        <td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1');?></td>
-
-</td>
-				</tr>
+							<td align="right" class="main" colspan="2"> 
+                
 			</table>
-			<hr class="sectiondivider"/>
+			
 			<?php
 			if ((USE_CACHE == 'true') && empty($SID)) {
 				echo tep_cache_also_purchased(3600);
@@ -445,22 +568,7 @@ on m.manufacturers_id = p.manufacturers_id where p.products_id = '" . (int)$HTTP
 					}
 					?>
 					</td>
-					<td rowspan="4" valign="top" align="center" width="150">
-					<div style="border:1px solid #666666;padding:1em;margin:0px;">
-						<p>
-							<b style="color:#666666">Risk Free</b>
-							<br/>
-							<div style="white-space:nowrap;"><img src="/images/quality.jpg" style="width:75px;"/><b style="color:#666666">
-								<br/>
-								120% Guarantee</b>
-							</div>
-						</p><img src="http://www.shopping.com/merchant_logo?ID=406477" width="130" border="0"alt="Great Store!" />
-						<br/>
-						<!-- BEGIN: BizRate Medal (125x73 pixels) -->
-						<img  style="margin-top:3em;" src="http://medals.bizrate.com/medals/dynamic/162489_medal.gif" alt="BizRate Customer Certified (GOLD) Site" width="125" height="73" align="top" border="0" >
-						<!-- END: BizRate Medal (125x73 pixels) -->
-					</div>
-                                        </td>
+					
 					</tr> <?php
 
 if ($cart->count_contents() > 0) {
@@ -499,14 +607,14 @@ if (STOCK_ALLOW_CHECKOUT == 'true') {
 					<tr>
 						<td align="center" class="main"><?php new infoBox( array( array('text' => TEXT_CART_EMPTY)));?></td>
 					</tr>
-					<tr>
-						<td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10');?></td>
-					</tr>
+					
 					<?php
 					}
 					?>
 					</table></form>
 		</div>
+        </div>
+        </div>
 		<?php
 			require (DIR_WS_INCLUDES . 'footer.php');
 		?>
@@ -562,19 +670,9 @@ if (STOCK_ALLOW_CHECKOUT == 'true') {
 			}
 		</script>
 		<!-- End of Google Website Optimizer Conversion Script -->
-		<!-- ClickTale Bottom part -->
-		<div id="ClickTaleDiv" style="display: none;"></div>
-		<script type='text/javascript'>
-			document.write(unescape("%3Cscript%20src='" + (document.location.protocol == 'https:' ? 'https://clicktale.pantherssl.com/' : 'http://s.clicktale.net/') + "WRc3.js'%20type='text/javascript'%3E%3C/script%3E"));
-
-		</script>
-		<script type="text/javascript">
-			var ClickTaleSSL = 1;
-			if( typeof ClickTale == 'function')
-				ClickTale(1368, 1, "www07");
-
-		</script>
-		<!-- ClickTale end of Bottom part -->
+		
+        
+        
 	</body>
 </html>
 <?php

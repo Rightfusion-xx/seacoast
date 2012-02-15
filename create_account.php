@@ -1167,15 +1167,6 @@
 
 <!-- body_text_eof //-->
 
-    <TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" rowspan="2"><table border="0" width="<?php echo BOX_WIDTH; ?>" cellspacing="0" cellpadding="2">
-
-<!-- right_navigation //-->
-
-<?php include(DIR_WS_INCLUDES . 'column_right.php'); ?>
-
-<!-- right_navigation_eof //-->
-
-    </table></td>
 
   </tr>
 

@@ -49,7 +49,7 @@ $start=ob_get_length();
                   <input class="primary" type="submit" value="Search" alt="Search Seacoast" title=" Search Seacoast "/>
               </form>
           </div>
-          <div style="text-align:center;"><a href="/brands">Our Brands</a>
+          <div style="text-align:center;"><a href="/brand.php">Our Brands</a>
               <?php if(!$_SESSION['cm_is_member']) {?>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/community/">Join Vitamins-Direct</a>   <?php } ?>
           </div>
       </div>
@@ -76,57 +76,55 @@ $start=ob_get_length();
           
       </div>                             
 
-
+  
 
 
  </div>
  </div>
  
-<hr style="width:100%; height:1px; background-color:#333367;" /> 
 
-        <?php if($_SESSION['cm_is_member']){ ?><span style="color:#CC6600">
-                 <div class="well"><hr class="sectiondivider" style="margin-top:10px;margin-bottom:10px;"/>
-                Member since <?php echo $_SESSION['cm_member_since']; ?>.
-                Total Savings of $<?php echo number_format($_SESSION['cm_savings'],2); ?></span>
-                </div>
-            <?php } ?> 
+
+
         
     
 </div>
 
-
-      <?php  
-    if ($cart->count_contents() > 0 && $_SERVER['HTTPS']=='off' && !$hide_cart) {
-    ?>
-    <div style="margin-bottom:2em;" class="container alert">
-
-        <div class="row">
-            <div class="span2">
-                <h4 style="display:inline;padding-left:5px;">Shopping Cart:</h4>
-            </div>
-            <div class="span2">
-                <!--
-                <b><a class="btn" href="/shopping_cart.php">View All Items</a></b>
-                -->
-                <input class="btn" type="button" value="View All Items" onClick="document.location='/shopping_cart.php';">
-            </div>
-            <div class="span6">
-                <h4>
-                    <?php echo $cart->count_contents()?> item<?php if($cart->count_contents()>1) echo 's';?>: $<?php echo number_format($cart->show_total(),2);?>
-                    &nbsp;&nbsp;
-                    (<span>Savings of $<?php echo number_format($cart->show_savings(),2); ?></span>)
-                </h4>
-            </div>
-            <div class="span2">
-                
-                <a class="btn btn-success" href="/checkout_shipping.php" style="color:#ffffff;"><i class="icon-shopping-cart icon-white">&nbsp;</i>Checkout Now</a>
-            </div>
-
-        </div>
-    </div>      
-    <?php 
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container">
+            <ul class="nav">
+            
+              <li class="active"><a href="/shipping.php">FAQ & Shipping</a></li>
+              <?php   if ($cart->count_contents() > 0 && $_SERVER['HTTPS']=='off' && !$hide_cart) {
+                  ?>
+                  <li >       <a href="/shopping_cart.php" style="color:#ffffff;"><i class="icon-shopping-cart icon-white">&nbsp;</i>&nbsp;&nbsp;View Shopping Cart.
+                          <?php echo $cart->count_contents()?> item<?php if($cart->count_contents()>1) echo 's';?>: $<?php echo number_format($cart->show_total(),2);?>
+                          &nbsp;&nbsp;
+                          (<span>Savings of $<?php echo number_format($cart->show_savings(),2); ?></span>)    </a>
+                  </li>   <?php 
+      }else{
+          ?>
+            <li>
+                  <a href="/pro-omega">What supplements are popular today? Nordic Naturals fish oil.</a> 
+             </li> 
+          <?php 
       }
-  ?>
+           
+            
+  ?>      
+            </ul>
+        </div>
+    </div>
+</div>
+        <?php if($_SESSION['cm_is_member']){ ?><span style="color:#CC6600">
+                 <div class="well" style="text-align:center;">
+                Member since <?php echo $_SESSION['cm_member_since']; ?>.
+                Total Savings of $<?php echo number_format($_SESSION['cm_savings'],2); ?></span>
+                </div>
+            <?php } ?> 
+     
+ 
+    
 
 <?php
    $header_inject=substr(ob_get_contents(),$start);

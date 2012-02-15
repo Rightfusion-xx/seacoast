@@ -500,3 +500,12 @@ background:url(/images/formbg.gif) repeat-x left top;
 
 .cool_box{margin-top: 2em; margin-bottom: 2em;  border: 2px #CCCCCC solid; border-radius: 10px; moz-border-radius: 10px;-webkit-border-radius: 10px; padding: 1em; box-shadow: 4px 4px 10px #CCC; -moz-box-shadow: 4px 4px 10px #CCC;-webkit-box-shadow: 4px 4px 10px #CCC; }
 .cool_box p{margin-top:5px;}
+
+.si
+{
+    width: 240px;
+    float: left;
+    margin: 15px;
+    border:solid 1px #cccccc;   
+    padding: 5px;
+}

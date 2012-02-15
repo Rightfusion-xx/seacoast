@@ -96,7 +96,7 @@ function popupWindow(url) {
         </table></td>
       </tr>
       <tr>
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?>
+        <td>
             <table border="0" cellspacing="0" cellpadding="2">
               <tr> 
                 <td align="center" class="smallText" width="113"> 
@@ -132,7 +132,7 @@ document.write('<?php echo '<a href="javascript:popupWindow(\\\'' . tep_href_lin
 	$query =  "select r.*, rd.* from ".TABLE_REVIEWS. " r, ".TABLE_REVIEWS_DESCRIPTION." rd "; 
 	$query .= "where r.products_id=".(int)$product_info['products_id']." ";
 	$query .= "and r.reviews_id = rd.reviews_id and "; 
-	$query .= "rd.languages_id = '1' order by r.reviews_id asc";
+	$query .= "rd.languages_id = '1' order by date_added desc";
 	 
     $reviews_query_raw = $query;//"select r.reviews_id, left(rd.reviews_text, 100) as reviews_text, r.reviews_rating, r.date_added, r.customers_name from " . TABLE_REVIEWS . " r, " . TABLE_REVIEWS_DESCRIPTION . " rd where review_parent_id is null and r.products_id = '" . (int)$product_info['products_id'] . "' and r.reviews_id = rd.reviews_id and rd.languages_id = '" . (int)$languages_id . "' order by r.reviews_id desc";
     $reviews_split = new splitPageResults($reviews_query_raw, MAX_DISPLAY_NEW_REVIEWS);
@@ -156,7 +156,7 @@ document.write('<?php echo '<a href="javascript:popupWindow(\\\'' . tep_href_lin
                     </tr>
                     <tr> 
                       <td>
-                        <?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?>
+                        
                       </td>
                     </tr>
                     <?php
@@ -185,7 +185,7 @@ document.write('<?php echo '<a href="javascript:popupWindow(\\\'' . tep_href_lin
             </tr>
                     <tr> 
                       <td>
-                        <?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?>
+                        
                       </td>
                     </tr>
                     <?php
@@ -203,7 +203,7 @@ document.write('<?php echo '<a href="javascript:popupWindow(\\\'' . tep_href_lin
                     </tr>
                     <tr> 
                       <td>
-                        <?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?>
+                        
                       </td>
                     </tr>
                     <?php
@@ -227,7 +227,7 @@ document.write('<?php echo '<a href="javascript:popupWindow(\\\'' . tep_href_lin
                     </tr>
                     <tr> 
                       <td>
-                        <?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?>
+                        
                       </td>
                     </tr>
                     <?php
@@ -241,7 +241,7 @@ document.write('<?php echo '<a href="javascript:popupWindow(\\\'' . tep_href_lin
                               <table border="0" width="100%" cellspacing="0" cellpadding="2">
                                 <tr> 
                                   <td width="10">
-                                    <?php echo tep_draw_separator('pixel_trans.gif', '10', '1'); ?>
+                                    
                                   </td>
                                   <td class="main">
                                     <?php echo '<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, tep_get_all_get_params()) . '">' . tep_image_button('button_back.gif', IMAGE_BUTTON_BACK) . '</a>'; ?>
@@ -250,7 +250,7 @@ document.write('<?php echo '<a href="javascript:popupWindow(\\\'' . tep_href_lin
                                     <?php echo '<a href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, tep_get_all_get_params()) . '">' . tep_image_button('button_write_review.gif', IMAGE_BUTTON_WRITE_REVIEW) . '</a>'; ?>
                                   </td>
                                   <td width="10">
-                                    <?php echo tep_draw_separator('pixel_trans.gif', '10', '1'); ?>
+                                   
                                   </td>
                                 </tr>
                               </table>
@@ -269,12 +269,7 @@ document.write('<?php echo '<a href="javascript:popupWindow(\\\'' . tep_href_lin
     </table></td>
 		
 <!-- body_text_eof //-->
-   <TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" rowspan="2">
-     <TABLE BORDER="0" WIDTH="<?php echo BOX_WIDTH; ?>" CELLSPACING="2" CELLPADDING="0">
-<!-- right_navigation //-->
-<?php require(DIR_WS_INCLUDES . 'column_right.php'); ?>
-<!-- right_navigation_eof //-->
-     </TABLE></TD></TR></TABLE>
+</TR></TABLE>
 <!-- body_eof //-->
 
 <!-- footer //-->

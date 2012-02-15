@@ -2,6 +2,108 @@
 $layerrows=5000;
 $rendered_upsell=true;
 
+function renderRegularProdEx($product_info,$rows='')
+{
+    global $currencies, $layerrows, $rendered_upsell, $cart;
+    
+    $listing_text='';
+    $product_parts=parse_nameparts($product_info['products_name']);
+    $link=(str_replace('//','/',"/".seo_url_title($product_parts['name'])."/".seo_url_title($product_info["manufacturers_name"])."/".seo_url_title($product_parts['attributes'])."/p".$product_info['products_id']));
+    
+ 
+
+      $product_image_path='';
+      
+      if($rows<=20){
+
+        $product_image_path=select_image($product_info['products_id'], $product_info['products_image'],  $product_info['manufacturers_id']);
+
+      }
+      
+    //Calculate membership discounts
+    $cm_price = tep_not_null($product_info['specials_new_products_price']) ? $product_info['specials_new_products_price'] : $product_info['products_price'];
+    $cm_price=calculate_member_price($cm_price,$product_info['manufacturers_id'],$product_info['products_name']);
+  	
+	
+
+      $listing_text.='<div id="sresults"><div id="prod'.$rows.'" class="';
+      
+      $listing_text.='">';
+
+            $listing_text.= '<h2 style="line-height:1em;"><a href="' . $link . '" style="font-size:12pt;">'. $product_parts['name'] . '</a></h2>';
+            $listing_text.= '' . $product_parts['attributes'] . ', ' . $product_info['manufacturers_name'];
+            if(strlen($product_image_path)>0){
+             $listing_text.='<div style="float:left;margin-right:1em;margin-top:1em;">'; 
+             $listing_text.='<a href="' . $link . '"><img border="0" src="'. $product_image_path . '" style="width:70px;" alt="'.$product_info['products_name'].' '.$product_info['manufacturers_name'].'" /></a>';
+             $listing_text.='</div>';
+            }
+            
+            $listing_text.='<br/>';
+            
+
+
+            if($product_info['products_isspecial']=='1')
+            {
+              $listing_text.='<span style="color:#FF0000;font-weight:bold;font-style:italic;">Top Pick</span>';
+            }
+
+            $listing_text.='<br/><span style="color:#66CC00;font-weight:bold;display:inline;" name="cm_price">';
+            if (tep_not_null($product_info['specials_new_products_price'])) {
+
+              $listing_text.= '&nbsp;<s>' .  $currencies->display_price($cm_price, tep_get_tax_rate($product_info['products_tax_class_id'])) . '</s>&nbsp;&nbsp;<span class="productSpecialPrice">' . $currencies->display_price($cm_price, tep_get_tax_rate($product_info['products_tax_class_id'])) . '</span>&nbsp;';
+              if($product_info['products_msrp']>0){$discountpct=(int)(($product_info['products_msrp']-$cm_price)/$product_info['products_msrp']*100);}
+            } else {
+
+              $listing_text.= 'From ' . $currencies->display_price($cm_price, tep_get_tax_rate($product_info['products_tax_class_id'])) . '&nbsp;';
+              if($product_info['products_msrp']>0){$discountpct=(int)(($product_info['products_msrp']-$cm_price)/$product_info['products_msrp']*100);}
+
+            }
+            $listing_text.='</span><span style="color:#ff0000;font-weight:bold;display:inline;" name="cm_discountpct">';
+            if($discountpct>0 && $discountpct<100){
+             $listing_text .= '<br/>'.$discountpct.'% Off';
+            }
+            $listing_text.='</span>';
+            
+                        
+			$listing_text.='<span style="color:#333333;font-weight:bold;display:none;" name="regular_price">';
+            if (tep_not_null($product_info['specials_new_products_price'])) {
+
+              $listing_text.= '&nbsp;<s>' .  $currencies->display_price($product_info['specials_new_products_price'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '</s>&nbsp;&nbsp;<span class="productSpecialPrice">' . $currencies->display_price($product_info['specials_new_products_price'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '</span>&nbsp;';
+              if($product_info['products_msrp']>0){$discountpct=(int)(($product_info['products_msrp']-$product_info['specials_new_products_price'])/$product_info['products_msrp']*100);}
+            } else {
+              $listing_text.= '&nbsp;' . $currencies->display_price($product_info['products_price'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '&nbsp;';
+              if($product_info['products_msrp']>0){$discountpct=(int)(($product_info['products_msrp']-$product_info['products_price'])/$product_info['products_msrp']*100);}
+
+            }
+
+           $listing_text.='</span><span style="color:#ff0000;font-weight:bold;display:none;" name="regular_discountpct">';
+                       
+           
+           if($discountpct>0){
+             $listing_text .= '<br/>'.$discountpct.'% Off';
+            }
+           
+           $listing_text.='</span>';
+
+
+                                        
+           if(strlen($product_info['products_head_desc_tag'])>0){$listing_text.='<br /><br />'.$product_info['products_head_desc_tag'];}
+
+
+
+  
+      $listing_text.='</div></div>';                     
+      $layerrows=$layerrows-1;
+      return($listing_text);
+
+
+
+}
+
+
+
+
+
 function renderRegularProd($product_info,$rows='')
 {
     global $currencies, $layerrows, $rendered_upsell, $cart;
@@ -11,10 +113,10 @@ function renderRegularProd($product_info,$rows='')
     
     if(!$cart->in_cart(CM_FTPID) && !$cart->in_cart(CM_PID) && !$_SESSION['cm_is_member']){
     if(!$rendered_upsell)
-    	{
-    		$listing_text.=RenderUpsell($listing_text);
-   		 	$rendered_upsell=true;
-   	 	}
+        {
+            $listing_text.=RenderUpsell($listing_text);
+                $rendered_upsell=true;
+            }
     }
     
       
@@ -30,10 +132,10 @@ function renderRegularProd($product_info,$rows='')
     //Calculate membership discounts
     $cm_price = tep_not_null($product_info['specials_new_products_price']) ? $product_info['specials_new_products_price'] : $product_info['products_price'];
     $cm_price=calculate_member_price($cm_price,$product_info['manufacturers_id'],$product_info['products_name']);
-  	
-	
+      
+    
 
-      $listing_text.='<div id="prod'.$rows.'" class="';
+      $listing_text.='<div id="sresults"><div id="prod'.$rows.'" class="';
       if($product_info['products_isspecial']=='1')
       {
         $listing_text.='product_isspecial';
@@ -66,18 +168,18 @@ function renderRegularProd($product_info,$rows='')
               if($product_info['products_msrp']>0){$discountpct=(int)(($product_info['products_msrp']-$cm_price)/$product_info['products_msrp']*100);}
             } else {
 
-              $listing_text.= '&nbsp;' . $currencies->display_price($cm_price, tep_get_tax_rate($product_info['products_tax_class_id'])) . '&nbsp;';
+              $listing_text.= 'From ' . $currencies->display_price($cm_price, tep_get_tax_rate($product_info['products_tax_class_id'])) . '&nbsp;';
               if($product_info['products_msrp']>0){$discountpct=(int)(($product_info['products_msrp']-$cm_price)/$product_info['products_msrp']*100);}
 
             }
-            $listing_text.='(<i>*Seacoast Vitamins-Direct Price</i>)</span><span style="color:#ff0000;font-weight:bold;display:inline;" name="cm_discountpct">';
+            $listing_text.='</span><span style="color:#ff0000;font-weight:bold;display:inline;" name="cm_discountpct">';
             if($discountpct>0 && $discountpct<100){
-             $listing_text .= '<br/>'.$discountpct.'% discount';
+             $listing_text .= '<br/>'.$discountpct.'% Off';
             }
             $listing_text.='</span>';
             
                         
-			$listing_text.='<span style="color:#333333;font-weight:bold;display:none;" name="regular_price">';
+            $listing_text.='<span style="color:#333333;font-weight:bold;display:none;" name="regular_price">';
             if (tep_not_null($product_info['specials_new_products_price'])) {
 
               $listing_text.= '&nbsp;<s>' .  $currencies->display_price($product_info['specials_new_products_price'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '</s>&nbsp;&nbsp;<span class="productSpecialPrice">' . $currencies->display_price($product_info['specials_new_products_price'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '</span>&nbsp;';
@@ -92,10 +194,10 @@ function renderRegularProd($product_info,$rows='')
                        
            
            if($discountpct>0){
-             $listing_text .= '<br/>'.$discountpct.'% discount';
+             $listing_text .= '<br/>'.$discountpct.'% Off';
             }
            
-           $listing_text.='</span><br/>From <b>';
+           $listing_text.='</span><br/><b>';
            $listing_text.= $product_info['manufacturers_name'].'</b>' ;
 
 
@@ -105,7 +207,7 @@ function renderRegularProd($product_info,$rows='')
 
 
   
-      $listing_text.='</div>';
+      $listing_text.='</div></div>';                     
       $layerrows=$layerrows-1;
       return(getHubKeywordsAndRewriteContent($listing_text));
 
@@ -148,11 +250,11 @@ function renderComparisonProd($product_info,$rows='')
 
 
             $listing_text.= '&nbsp;' . $currencies->display_price($product_info['products_offer_low'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '&nbsp;';
-            if($product_info['products_offer_high']>0){$listing_text.= '-&nbsp;' . $currencies->display_price($product_info['products_offer_high'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '&nbsp;';}
+            if($product_info['products_offer_high']>0){$listing_text.= '-&nbsp;' . $currencies->display_price($product_info['products_Offer_high'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '&nbsp;';}
             if($product_info['products_msrp']>0){$discountpct=(int)(($product_info['products_msrp']-$product_info['products_offer_low'])/$product_info['products_msrp']*100);}
 
 
-           $listing_text.='</span> from <b>';
+           $listing_text.='</span><b>';
            $listing_text.= ucwords(strtolower($product_info['products_manufacturer'])).'</b>' ;
 
             if($discountpct>0){

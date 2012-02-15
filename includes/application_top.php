@@ -370,13 +370,13 @@ if(isset($_SERVER['HTTP_REFERER']))
 
 //if($cart->in_cart(CM_FTPID)) {$_SESSION['cm_is_member']=true;}
 // Shopping cart actions
-  if (isset($HTTP_GET_VARS['action'])) {
+  if (isset($_REQUEST['action'])) {
 // redirect the customer to a friendly cookie-must-be-enabled page if cookies are disabled
     if ($session_started == false) {
       tep_redirect(tep_href_link(FILENAME_COOKIE_USAGE));
     }
     if (DISPLAY_CART == 'true') {
-      $goto =  FILENAME_SHOPPING_CART . "?products_id=" . $_REQUEST['products_id'];
+      $goto =  FILENAME_SHOPPING_CART ;
       $parameters = array('action', 'cPath', 'products_id', 'pid');
     } else {
       $goto = basename($PHP_SELF);
@@ -387,7 +387,7 @@ if(isset($_SERVER['HTTP_REFERER']))
       }
     }
 
-    switch ($HTTP_GET_VARS['action']) {
+    switch ($_REQUEST['action']) {
        // customer wants to update the product quantity in their shopping cart
        case 'update_product' : for ($i=0, $n=sizeof($HTTP_POST_VARS['products_id']); $i<$n; $i++) {
                                  if (in_array($HTTP_POST_VARS['products_id'][$i], (is_array($HTTP_POST_VARS['cart_delete']) ? $HTTP_POST_VARS['cart_delete'] : array()))) {
@@ -408,7 +408,7 @@ if(isset($_SERVER['HTTP_REFERER']))
       		if (isset($_REQUEST['products_id']) && is_numeric($_REQUEST['products_id'])) {
 
       		$tmp_qty=(int)$_REQUEST['qty'] == 0 ? 1 : (int)$_REQUEST['qty'];
-                   $cart->add_cart(  $_REQUEST['products_id'], $cart->get_quantity($_REQUEST['products_id'])+$tmp_qty);
+                   $cart->add_cart(  $_REQUEST['products_id'], $tmp_qty);
                               }
 
                           if($_REQUEST['cm_freetrial']=='true' && !$_SESSION['cm_is_member'])

@@ -1,16 +1,89 @@
 <?php
 
-define ('OSS_SERVING',false);
+define ('OSS_SERVING',false);     
 
     $ctx=stream_context_create(array(
                                      'http' => array(
                                      'timeout' => 6
                                      )
                                      )
-                                     );
+                                     );  
+
+function topic_search(&$results)
+{ 
+  global $searchcache;
+  
+  //$searchcache=new megacache(60*60*24*31, 'search_cache');
+  $results['searchterm']=strtolower(trim($results['searchterm']));    //clean query
+    
+  solr_topic_search($results);
+      
+   if(isset($results['suggestion']))
+   {
+       solr_topic_search($results,$results['suggestion']);      
+   }
+   
+   // backwords compatibility with old searches
+   $results['products_id']=Array();
+   foreach($results['results'] as $item)
+   {
+       if($item['type']=='product')
+       {
+           $results['total_prods']=array_push($results['products_id'],$item['products_id']);
+       }
+       
+   }                 
 
 
+}
 
+function solr_topic_search(&$results, $keyword='')
+{
+          $solr_query['qf']='products_name products_description manufacturers_name products_head_desc_tag products_uses products_ailments products_departments products_price  products_msrp post_content post_title post_excerpt hub_name reviews_text';
+          $solr_query['wt']='json';
+          $solr_query['rows']='64';
+          $solr_query['defType']='dismax';
+          $solr_query['mm']=1;
+          $solr_query['q']=$results['searchterm'];
+          $solr_query['spellcheck.q']=$results['searchterm'];
+          $solr_query['spellcheck']="true";
+      
+          global $ctx;
+          
+          if(!$keyword)
+          {
+              $keyword=trim($results['searchterm']);       
+          }
+          
+          if(!$results['found_products'])
+          {
+              $results['found_products']=false;     
+          }
+          
+          $con=SOLR_SEARCH_URL;
+          foreach(array_keys($solr_query) as $item)
+          {
+              $con.=$item.'='.urlencode($solr_query[$item]).'&';
+              
+          }
+          
+          @$sr=json_decode(file_get_contents($con, 0, $ctx),true);
+          
+          $results['numFound']=$sr['response']['numFound'];
+          if($results['numFound']>0)
+          {
+                //Change titles to "Compare" & add manufacturer name if nescessary.
+                $results['found_products']=true;
+                $results['results']=$sr['response']['docs'];
+                $results['total_prods']=2;
+                //$results['products_id_similar']=array_slice($results['products_id'],0,7);   
+          }
+        
+
+    
+}
+
+/*
 function topic_search(&$results)
 { 
   global $searchcache;
@@ -32,6 +105,7 @@ function topic_search(&$results)
 
 
 }
+*/
 
 function cache_results(&$results)
 {
@@ -165,62 +239,9 @@ function product_search(&$results, $keyword='')
       $results['found_products']=false;     
   }
 
-  //if more than one day, begin search
-  if(OSS_SERVING)
-  {
-    
-    //attempt google search on titles
-    $gquery=OSS_SEARCH_URL . 'rows=64&fq=urlExact:'.urlencode('"http://www.seacoast.com/supplement/*"').'&q=' . urlencode($keyword);
-    
-    //if($_REQUEST['page']!=''){$gquery.='&start='.(($_REQUEST['page']*20)+1); }
-    
-    @$products=file_get_contents($gquery,0,$ctx);
-
-    
-    $results['total_prods']=$results['total_prods']<1 ? $results['total_prods']=(int)parse_section($products, 'numFound="','"') : $results['total_prods'];
-    
-    if(!is_array($results['products_id']))
-    {
-        $results['products_id']=Array();         
-    }
-    if(!is_array($results['products_id_similar']))
-    {
-        $results['products_id_similar']=Array();        
-    }
-     
-    if($results['total_prods']>0)
-    {
-        //Change titles to "Compare" & add manufacturer name if nescessary.
-        $results['found_products']=true;
-        process_oss_product_results($results['products_id'], $products);
-        $results['total_prods']=count($results['products_id']);
-        $results['products_id_similar']=array_slice($results['products_id'],0,7);  
-   
-    }
-    
-    /*
-    //run search for similar products module, or if no products are found
-    $gquery=GOOGLE_SEARCH_URL . "num=40&filter=0&q=inurl%3A/supplement/+" . urlencode($keyword);
-
-    @$products=file_get_contents($gquery,0,$ctx);
-
-    process_google_product_results($results['products_id'], $products);   //This loads the simlar products on to the end of searches
-    process_google_product_results($results['products_id_similar'], $products);
-    if($results['total_prods']<1)  //set the main results to the similar products and update the count
-    {
-      $results['total_prods']=(strlen($results['products_id_similar'][0])>0) ? count($results['products_id_similar']) : 0 ;
-      $results['products_id']=$results['products_id_similar'];
-    }
-    $results['products_id_similar']=array_slice($results['products_id_similar'],0,7);
-
-    */
-  }
-  
 
   if($products==false || !OSS_SERVING) //if no connection could be made, search using DB instead
   {
-
-       
        //Do DB search on titles
        $dbquery=tep_db_query('select p.products_id from products_description pd join products p on p.products_id=pd.products_id where products_head_title_tag like "%'.str_replace(' ','%',$keyword).'%" and products_status=1 order by products_name limit 0,40');
        $results['products_id']=Array();

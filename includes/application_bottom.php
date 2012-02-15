@@ -1,6 +1,7 @@
 <head>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <script src="/jquery/jquery.masonry.min.js"></script>
 </head>
 <?php
 

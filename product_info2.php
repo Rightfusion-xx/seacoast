@@ -184,34 +184,18 @@ $tmp_desc=stripslashes($product_info['products_description']);
 }
 ?>
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html <?php echo HTML_PARAMS; ?> itemscope itemtype="http://schema.org/Product">
-
-        <!-- Update your html tag to include the itemscope and itemtype attributes -->
-
-<!-- Add the following three tags inside head -->
-<meta itemprop="name" content="<?php echo $title; ?>">
-<meta itemprop="description" content="<?php echo $description; ?>">
+<html <?php echo HTML_PARAMS; ?>>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
 <title><?php echo $title; ?></title>
 <meta name="description" content="<?php echo $description; ?>" />
 <meta name="keywords" content="<?php echo $product_info['products_head_keywords_tag']; ?>" />
-<meta name="type" value="pp"  />
-
 <link rel="stylesheet" type="text/css" href="/stylesheet.css">
-<link rel="stylesheet" type="text/css" href="/960_16_gs.css">
 
-<!--[if IE]><style>
-#prod_details {
-	height: 0;
-	he\ight: auto;
-	zoom: 1;
-}
-</style><![endif]--> 
 
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
-<form id="main_form" name="mainform">
+
 <div id="fb-root"></div>
 <script>
 (function(d, s, id) {
@@ -224,333 +208,279 @@ $tmp_desc=stripslashes($product_info['products_description']);
 
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
 
-<div class="container_16 clearfix" style="margin-top:2em;">
-    <div class="grid_10">
-        <?php 
-            if(is_numeric($reviews_rating) && $reviews_rating>0){echo draw_stars($reviews_rating);
-        }?>
-        <h1 style="margin-top:0em;">
-        	
-           <?php echo $title; ?>.
-        </h1>
-        
-        
-        <div style="margin:1em;" class="fb-like" data-href="
-        	<?php echo HTTP_SERVER.$test_url;?>" data-send="false" data-width="450" data-show-faces="true" data-action="recommend" data-font="tahoma">
-    	</div>
-        
-        <div style="padding:5px 0 0 13px;">
-            <a href="<?php echo '/shopping_cart.php?products_id='.$product_info['products_id']; ?>">
-                <h2>
-                    Purchase and ship it to me.
-                    (<?php 
-                        echo $currencies->display_price($cm_price, tep_get_tax_rate($product_info['products_tax_class_id']));
-                    ?>)
-                    
-                <h2>
-            </a>
-        </div>
-        
-        <?php 
-        if(strlen($product_info['products_takeaway'])>0)
-        {
-            echo '<p>',$product_info['products_takeaway'],'</p>'; 
+    <div class="container">
+    <div class="row">
+        <div class="span8">
 
-    	if(strlen($first_review)>0)
-        {
-            //echo '<p>',$first_review,'</p>';
-        }
-        ?>
-  
-        <?php
-        
-        $cache->addCache('products_main'.$pmod);
-        }
-        ?>
-        
-        <div class="cool_box">
-         <div id="supplement_image" style="margin-bottom:.5em;float:left;">
-            <?php
-            if(isset($product_image_path) && file_exists($_SERVER['DOCUMENT_ROOT'].$product_image_path)) {
-                $dims=getimagesize($_SERVER['DOCUMENT_ROOT'].$product_image_path);
-                $width=$dims[0]>340 ? 340 : $dims[0];   ?>
-                <div id="actual_prod_image" style="background-color:#ffffff;">
-                    <img src="<?php echo $product_image_path;?>" id="prod_image" border="0" alt="<?php echo str_replace('"','\'',$product_info['products_head_desc_tag']);?>." title="<?php echo $product_info['products_name'];?>" width="<?php echo $width;?>"/>
-                </div>
-
-            <?php } ?>
-         </div>
-            
-            <div id="item_details" style="text-align:left;margin:1em;">
-
-                <table cellpadding=0 cellspacing=0 border=0>
-                    <tr>
-                        <td>
-                <b><?php echo $tmisc." ".$shortname; ?></b> from <b><?php echo $product_info['manufacturers_name'];?>.</b>
-                
-                <?php if($product_info['products_die'] && $product_info['products_dieqty']<1){?>
-                    <p><?php echo $product_info['products_name'];?> is not available from Seacoast Vitamins at this time. Look to the right for recommended alternatives.</p>
-                <?php }else{?> <span style="margin-left:1em";>  
-                    <?php echo tep_draw_form('cart_quantity', tep_href_link('/shopping_cart.php', tep_get_all_get_params(array('action')) . 'action=add_product')); ?>
-                    <?php if(!$product_info['products_die'] && $new_price){?>
-                                        <br/><span style="font-size:8pt;color:#FF0000;font-weight:bold;">Hurry! On sale while supplies last!</span><br/>
-                                    <?php }?>
-                    <br/><b>Quantity:</b>
-                    <select name="qty">
-                    <?php for($index=1;$index<=30;$index++){?>
-                        <option value="<?php echo $index; ?>"><?php echo $index; ?></option>
-                    <?php }?>
-                    </select>
-                    <br/>
-                    
-                    <?php if($product_info['products_die']){?>
-                        <br/><span style="font-size:8pt;color:#FF0000;font-weight:bold;">Hurry! Only <?php echo $product_info['products_dieqty']?> left at this price.</span>
-                    <?php } ?>
-                    <input type="hidden" name="products_id" value="<?php echo $product_info['products_id'];?>">
-                    <br/>
-                    <div style="float:left;">
-                        
-                        <div style="text-align:left">$GOOGLE_PLUS_ONE$</div>
-                        
-                        <?php if($is_cm_eligible){ ?>
-                        <?php if(!$_SESSION['cm_is_member']){ ?>
-                            <script type="text/javascript">
-                            function toggle_price(show_discount){
-                                if(show_discount){
-                                    document.getElementById('button_price').value='<?php echo $currencies->display_price($cm_price, tep_get_tax_rate($product_info['products_tax_class_id'])); ?> - Direct Price*';
-                                    document.getElementById('button_price').style.color='#66CC00';
-                                    document.getElementById('button_price').style.fontWeight='bold';
-                                    document.getElementById('cm_price_disclaimer').style.display='block';
-                                    document.getElementById('extra_savings').style.display='none';
-                                }else{
-                                    document.getElementById('button_price').value='<?php echo $currencies->display_price($price, tep_get_tax_rate($product_info['products_tax_class_id'])); ?>';
-                                    document.getElementById('button_price').style.color='#666666';
-                                    document.getElementById('button_price').style.fontWeight='normal';
-                                    document.getElementById('cm_price_disclaimer').style.display='none';
-                                    document.getElementById('extra_savings').style.display='inline';
-                                }
-                            }
-                            </script> 
-                            <br/><input type="checkbox" name="cm_freetrial" value="true" checked onclick="toggle_price(this.checked);"/>
-                                Yes! I want Direct-to-Member prices. My membership is FREE for 14-days.
-                            <span id="extra_savings" style="display:none;"><br/><span style="color:#ff0000;font-weight:bold;">
-                                    Save an extra <?php echo number_format(($price-$cm_price)/$price*100,0) ?>% plus
-                            </span></span>
-                            <br/><br/>
-                            I'll get:
-                            <br/><br/>
-                            <ul style="font-weight:bold;margin-left:3em;">
-                                <li>Member prices, cheap shipping</li>
-                                <li>Side Effects Protection; <i style="font-weight:normal;">Return opened product</i></li>
-                            </ul>
-                        <?php } ?>
-                        
-                        <div id="cm_price_disclaimer"><i>* Seacoast Vitamins-Direct price shown.</i><br/><br/>
-                        <?php if(!$_SESSION['cm_is_member']){ ?><a href="/community/" target="_blank" rel="nofollow">Learn more.</a><?php } ?>
-                         <br/><br/><a href="#product_description_loc">Ingredients & Description</a></div>
-                        <?php } ?>
-                    </div>
-                 <?php } ?>
-                <br style="clear:both"/></span></form>
-
-                    </td>
-                    </tr>
-                </table>
-             </div>
-            <br style="clear:both;"/>
-        </div>
-        <?php
-if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
-{
-	
-	$query =  "select r.*, rd.* from ".TABLE_REVIEWS. " r, ".TABLE_REVIEWS_DESCRIPTION." rd "; 
-	$query .= "where r.products_id=".(int)$product_info['products_id']." ";
-	$query .= "and r.reviews_id = rd.reviews_id and "; 
-	$query .= "rd.languages_id = '1';";
-		
- 	$parentResultset = tep_db_query($query);
-	$reviewHandler = new review_Handler($parentResultset);
-?>    
-
-		<!-- bottom reviews -->
-		
-	<table border="0" style="margin-bottom: 20px;" width="100%" cellspacing="0" cellpadding="2">
-	  <?php
-	  	
-	  	if ($reviewHandler->getReviewCount() > 0){
-	  		while ($reviews = tep_db_fetch_array($parentResultset)) 
-			{
-				if ($reviews['review_parent_id'] == NULL)
-			  	{
-			  		$reviewHandler->writeToPage($reviews); // print parent
-			  		$reviewHandler->printChildren($parentResultset,$reviews['reviews_id']); // print children
-			  	}
-			}
-	  	}
-		else {
-		?>
-			<tr><td style="padding-top: 20px; font-weight: bold;">
-			<?php
-				echo 'No reviews yet. <a href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, tep_get_all_get_params()) . 
-		  			'">'.'Review Now!</a>'; 
-			?>
-			</td></tr>
-		<?php
-		} 	  	
-	  ?>
-	</table>
-        
-        <div class="offset7" style="text-align:center;width: 220px;margin-bottom: 20px;">	
-            <?php 
-                echo '<a style="margin-bottom:40px;" href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, tep_get_all_get_params()) . 
-                        '">' . tep_image_button('button_write_review.gif', IMAGE_BUTTON_WRITE_REVIEW) . '
-                        <br />Make a review, comment, or quesiton</a>'; 
-                ?>
-            </div>
-<?php //echo $review;?>
-
-    <a name="product_description_loc"> </a><p><span class="buzz">Ingredients & Description</span></p>
-<?php echo $tmp_desc;   ?>
-               
-               <?php
-               if(strtotime($product_info['products_last_modified'])<strtotime('2007-03-01'))
-               { ?>
-                                <p>
-                                You have reached <?php echo $product_info['products_name']?> on Seacoast.com from the manufacturer <?php echo $product_info['manufacturers_name']?>. We're proud to have 
-                                served <?php echo $product_info['products_viewed']?> customers since <?php echo $product_info['products_date_added']?> who were also interested in purchasing <?php echo $product_info['products_name']?>.
-                                It currently ranks as our <?php echo $product_info['products_ordered']?> most popular natural health product.
-                                </p>
-                                <p><b>Technical <?php echo $product_info['products_name']?> Details:</b> Locate this product using sku number <?php echo $product_info['product_sku']?> or ISBN <?php echo $product_info['product_upc']?>. For shipping, the weight is
-                                equal to <?php echo $product_info['products_weight']?> pounds and is currently out of stock. Typical inquiries include
-                                <?php
-                                $keywords=preg_split('/,/',$product_info['products_head_keywords_tag']);
-                                $keywords=array_reverse($keywords);
-                                foreach($keywords as $keyword)
-                                {
-                                    echo $keyword.', ';
-                                }
+                <div style="text-align:center;padding:3em;">  
+                    <a class="btn btn-danger" href="<?php echo '/shopping_cart.php?products_id='.$product_info['products_id']; ?>"> 
+                        <span style="font-size:18pt; font-weight:bold">Choose Price & Options</span><br/>
+                        <?php 
+                            if($product_info['products_msrp']>0 && $product_info['products_price']<$product_info['products_msrp']){ echo '<span style="color:#000;font-weight:bold;"><strike>MSRP ' . $currencies->display_price($product_info['products_msrp'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '</strike> - ';
+                                echo ' (more than '. floor(($product_info['products_msrp']-$cm_price)/($product_info['products_msrp'])*100) . '% off)</span>';}
+                                elseif($product_info['products_price']>0) {
+                                    echo '<span style="color:#000;font-weight:bold;">' . $currencies->display_price($product_info['products_price'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '';    
                                     
-                             ?> and natural health. Seacoast Vitamins offers this product at a $<?php echo $product_info['products_msrp']-$product_info['products_price']?> discount
-                             off of the suggested retail price $<?php echo $product_info['products_msrp']?>. Our price is $<?php echo $product_info['products_price']?>.</p>
-                            
-                          <?php }  ?>   
-                          
-                          <?php $hubs=match_hub_links($page_links,  true);?>
-  
-             <?php              
-             $mflink=link_exists('/catalog.php?page=',$page_links);
-              if(strlen($mflink))
-              {
-                $catalog=automated_catalog::find(substr($mflink,strpos($mflink,'=')+1));
+                                }?>
+                    </a>
+                </div>
+                    
+                     <?php 
+                if(strlen($product_info['products_takeaway'])>0)
+                {
+                    echo '<p>',$product_info['products_takeaway'],'</p>'; 
+
+                    if(strlen($first_review)>0)
+                    {
+                        //echo '<p>',$first_review,'</p>';
+                    }
+                ?>
+
+                <?php
+
+                    $cache->addCache('products_main'.$pmod);
+                }
+            ?>
+
+            
+            <?php 
+                if(is_numeric($reviews_rating) && $reviews_rating>0){echo draw_stars($reviews_rating);
+            }?>
+            <h1 style="margin-top:0em;">
+
+                <?php echo $title; ?>.
+            </h1>
+
+
+            <div style="margin:1em;" class="fb-like" data-href="
+                <?php echo HTTP_SERVER.$test_url;?>" data-send="false" data-width="450" data-show-faces="true" data-action="recommend" data-font="tahoma">
+            </div>
+
+
+                
+                   
+                
+            
+
+           
+
                
-                echo '<p><a href="'.$mflink.'">Catalog of Nutritional Supplements '.$catalog->linktext.'</a></p>';
-              }
-              ?>
-    </div>
-    <div class="grid_6">
-      <?php  if(strlen($product_info['products_uses'])>0 || strlen($product_info['products_uses'])>0){
-        ?>
-                 <div style="padding:20px;border:1px solid #000000;background-color:#FFFFCC;">
+                
 
-                    <p><b>*Not intended to diagnose or treat diseases or ailments, and is not reviewed by the FDA.</b></p>
+                
+            <?php
+                if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
+                {
 
-                     <span class="buzz">Uses & Indications.</span>
+                    $query =  "select r.*, rd.* from ".TABLE_REVIEWS. " r, ".TABLE_REVIEWS_DESCRIPTION." rd "; 
+                    $query .= "where r.products_id=".(int)$product_info['products_id']." ";
+                    $query .= "and r.reviews_id = rd.reviews_id and "; 
+                    $query .= "rd.languages_id = '1' and review_parent_id is null order by r.date_added desc;";
+                    
 
-                     <ul>
-                         <?php
-                             $uses=preg_split('/,/',str_replace(', ',',',str_replace('  ',' ',$product_info['products_uses'])));
-                             $benefit_links='';
-                            shuffle($uses);
-                             foreach($uses as $usename)
-                             { ?>
-                             <li><?php echo ucwords($usename)?></li>
-                             <?php
-                                 if($mflink=link_exists('/natural_uses.php?use='.urlencode(strtolower($usename)),$page_links))
-                                 {
-                                     $benefits='<a href="'.$mflink.'">'.ucwords($usename).' '.$product_info['products_type'].'</a> &nbsp;'.$benefits;
-                                 }
+                    $parentResultset = tep_db_query($query);
+                    $reviewHandler = new review_Handler($parentResultset);
+                ?>    
 
-                             }
-                         ?>
-                     </ul>
-                     <?php if(strlen($product_info['products_uses'])>0){
-
-                     ?>
-
-               <span class="buzz" style="margin-top:1em;">Ailments & Concerns.</span>
-
-                <ul>
+                <!-- bottom reviews -->
+                <b>Most recent reviews</b>
+                <table border="0" style="margin-bottom: 20px;" cellspacing="0" cellpadding="2" width="100%">
                     <?php
-                        $uses=preg_split('/,/',str_replace(', ',',',str_replace('  ',' ',$product_info['products_ailments'])));
-                        $benefit_links='';
-                    shuffle($uses);
-                        foreach($uses as $usename)
-                        { ?>
-                            <li><?php echo ucwords($usename)?></li>
-                          <?php
-                          if($mflink=link_exists('/ailments.php?remedy='.urlencode(strtolower($usename)),$page_links))
-                          {
-                            $ailments='<a href="'.$mflink.'">'.ucwords($usename).' '.$product_info['products_type'].'</a> &nbsp;'.$ailments;
-                          }
-
+                        if ($reviewHandler->getReviewCount() > 0){
+                            while ($reviews = tep_db_fetch_array($parentResultset)) 
+                            {
+                                    
+                                    $reviewHandler->writeToPage($reviews); // print parent
+                                    $reviewHandler->printChildren($parentResultset,$reviews['reviews_id']); // print children
+                                
+                            }
+                        }
+                        else {
+                        ?>
+                        <tr><td style="padding-top: 20px; font-weight: bold;">
+                                <?php
+                                    echo 'No reviews yet. <a href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, tep_get_all_get_params()) . 
+                                    '">'.'Review Now!</a>'; 
+                                ?>
+                            </td></tr>
+                        <?php
                         }
                     ?>
-                </ul>
+                </table>
+                <b><a href="/product_reviews.php?products_id=<?php echo $product_info['products_id']?>">See All Reviews</a></b>
+                
+
+                <div style="text-align:right;">	
+                    <?php 
+                        echo '<a style="margin-bottom:40px;" href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, tep_get_all_get_params()) . 
+                        '">' . 'Post a review, comment, or quesiton</a><br/>Get quick feedback.'; 
+                    ?>
+                </div>
+                <?php //echo $review;?>
+
+                <a name="product_description_loc"> </a><p><span class="buzz">Ingredients & Description</span></p>
+                <?php echo $tmp_desc;   ?>
+
+                <?php
+                    if(strtotime($product_info['products_last_modified'])<strtotime('2007-03-01'))
+                    { ?>
+                    <p>
+                        You have reached <?php echo $product_info['products_name']?> on Seacoast.com from the manufacturer <?php echo $product_info['manufacturers_name']?>. We're proud to have 
+                        served <?php echo $product_info['products_viewed']?> customers since <?php echo $product_info['products_date_added']?> who were also interested in purchasing <?php echo $product_info['products_name']?>.
+                        It currently ranks as our <?php echo $product_info['products_ordered']?> most popular natural health product.
+                    </p>
+                    <p><b>Technical <?php echo $product_info['products_name']?> Details:</b> Locate this product using sku number <?php echo $product_info['product_sku']?> or ISBN <?php echo $product_info['product_upc']?>. For shipping, the weight is
+                        equal to <?php echo $product_info['products_weight']?> pounds and is currently out of stock. Typical inquiries include
+                        <?php
+                            $keywords=preg_split('/,/',$product_info['products_head_keywords_tag']);
+                            $keywords=array_reverse($keywords);
+                            foreach($keywords as $keyword)
+                            {
+                                echo $keyword.', ';
+                            }
+
+                        ?> and natural health. Seacoast Vitamins offers this product at a $<?php echo $product_info['products_msrp']-$product_info['products_price']?> discount
+                        off of the suggested retail price $<?php echo $product_info['products_msrp']?>. Our price is $<?php echo $product_info['products_price']?>.</p>
+
+                    <?php }  ?>   
+
+                <?php $hubs=match_hub_links($page_links,  true);?>
+
+               
+            </div>
+            <div class="span4">
+            <div id="supplement_image">
+                    <?php
+                        if(isset($product_image_path) && file_exists($_SERVER['DOCUMENT_ROOT'].$product_image_path) || 1==1) {
+                            @$dims=getimagesize($_SERVER['DOCUMENT_ROOT'].$product_image_path);
+                            $width=$dims[0]>340 || $dims[0]<1 ? 340 : $dims[0];   ?>
+                        <div id="actual_prod_image" style="background-color:#ffffff;">
+                            <img src="<?php echo $product_image_path;?>" id="prod_image" border="0" alt="<?php echo str_replace('"','\'',$product_info['products_head_desc_tag']);?>." title="<?php echo $product_info['products_name'];?>" width="<?php echo $width;?>"/>
+                        </div>
+
+                        <?php } ?>
+                </div>
+                <?php  if(strlen($product_info['products_uses'])>0 || strlen($product_info['products_uses'])>0){
+                    ?>
+                    <div class="alert alert-info">
+
+                        <p><b>*Not intended to diagnose or treat diseases or ailments, and is not reviewed by the FDA.</b></p>
+
+                        <span class="buzz">Uses & Indications.</span>
+
+                        <ul>
+                            <?php
+                                $uses=preg_split('/,/',str_replace(', ',',',str_replace('  ',' ',$product_info['products_uses'])));
+                                $benefit_links='';
+                                shuffle($uses);
+                                foreach($uses as $usename)
+                                { ?>
+                                <li><?php echo ucwords($usename)?></li>
+                                <?php
+                                    if($mflink=link_exists('/natural_uses.php?use='.urlencode(strtolower($usename)),$page_links))
+                                    {
+                                        $benefits='<a href="'.$mflink.'">'.ucwords($usename).' '.$product_info['products_type'].'</a> &nbsp;'.$benefits;
+                                    }
+
+                                }
+                            ?>
+                        </ul>
+                        <?php if(strlen($product_info['products_uses'])>0){
+
+                            ?>
+
+                            <span class="buzz" style="margin-top:1em;">Ailments & Concerns.</span>
+
+                            <ul>
+                                <?php
+                                    $uses=preg_split('/,/',str_replace(', ',',',str_replace('  ',' ',$product_info['products_ailments'])));
+                                    $benefit_links='';
+                                    shuffle($uses);
+                                    foreach($uses as $usename)
+                                    { ?>
+                                    <li><?php echo ucwords($usename)?></li>
+                                    <?php
+                                        if($mflink=link_exists('/ailments.php?remedy='.urlencode(strtolower($usename)),$page_links))
+                                        {
+                                            $ailments='<a href="'.$mflink.'">'.ucwords($usename).' '.$product_info['products_type'].'</a> &nbsp;'.$ailments;
+                                        }
+
+                                    }
+                                ?>
+                            </ul>
 
 
 
-                <?php } ?>
-                      </div>
-                 <?php } ?>
+                            <?php } ?>
+                    </div>
+                    <?php } ?>
 
-            <p>
-                 <?php
-            if (strlen($product_info['products_sku'])>0){
-            echo 'SKU: '.$product_info['products_sku'] . '<br />'; }
+                <p>
+                    <?php
+                        if (strlen($product_info['products_sku'])>0){
+                            echo 'SKU: '.$product_info['products_sku'] . '<br />'; }
 
-            if (strlen($product_info['products_upc'])>0 ){
-            echo 'UPC: '.$product_info['products_upc'] . '<br />';
-            }
+                        if (strlen($product_info['products_upc'])>0 ){
+                            echo 'UPC: '.$product_info['products_upc'] . '<br />';
+                        }
 
-            echo 'Distributed or manufactured from ',$product_info['manufacturers_name'] , '. See more ';
-              $mflink=link_exists('/index.php?manufacturers_id='.(int)$product_info['manufacturers_id'],$page_links);
-              if(!strlen($mflink))
-              {
+                        echo 'Distributed or manufactured from ',$product_info['manufacturers_name'] , '. See more ';
+                        $mflink=link_exists('/index.php?manufacturers_id='.(int)$product_info['manufacturers_id'],$page_links);
+                        if(!strlen($mflink))
+                        {
 
-                $mflink='/index.php?manufacturers_id='.(int)$product_info['manufacturers_id'];
-              }
-              echo '<a href="',$mflink,'">',$product_info['manufacturers_name'],'</a> products.';
-            echo '<br />';
-            ?>
-            </p>        
-     <?php if(strtotime($product_info['products_last_modified'])>strtotime('2007-03-01')||strlen($tmp_desc)<150)
-                          {
-                          include(DIR_WS_MODULES . 'similar_products_google.php');}?>                   
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
+                            $mflink='/index.php?manufacturers_id='.(int)$product_info['manufacturers_id'];
+                        }
+                        echo '<a href="',$mflink,'">',$product_info['manufacturers_name'],'</a> products.';
+                        echo '<br />';
+                    ?>
+                </p>        
+                
+                <script type="text/javascript">
+
+//<![CDATA[
+
+<!--
+
+    google_ad_client = "ca-pub-6691107876972130";
+
+    /* Product Page Right Side */
+
+    google_ad_slot = "3365106085";
+
+    google_ad_width = 336;
+
+    google_ad_height = 280;
+
+    //-->
+
+//]]>
+
+</script> <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+
 </script>
-    </div>
-</div>
+                <?php if(strtotime($product_info['products_last_modified'])>strtotime('2007-03-01')||strlen($tmp_desc)<150)
+                    {
+                        include(DIR_WS_MODULES . 'similar_products_google.php');}?>                   
+                
+            </div>
+        </div>
         <?php
-        $cache->addCache('products_main2'.$pmod);
+            $cache->addCache('products_main2'.$pmod);
         } //end cache 
-            ?>   
-<?php 
-            if($seacoast_crawler)
-            {
-                echo '<div>',$product_info['products_id'],'</div><div>',HTTP_SERVER.$_SERVER['REQUEST_URI'],'</div>';
-            }
-        ?>
-
-<?php $product_info['products_name']='';?>
-<?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
-<br>
+    ?>   
+    <?php 
+        if($seacoast_crawler)
+        {
+            echo '<div>',$product_info['products_id'],'</div><div>',HTTP_SERVER.$_SERVER['REQUEST_URI'],'</div>';
+        }
+    ?>
+     </div>
+    <?php $product_info['products_name']='';?>
+    <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
+    <br>
 </body>
-</form>
+
 </html>
 
 <?php require(DIR_WS_INCLUDES . 'application_bottom.php'); ?>

@@ -33,70 +33,54 @@
 <!-- header_eof //-->
 
 <!-- body //-->
-<TABLE BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
-  <TR>
-    <TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" BGCOLOR="#336699">
-	  <TABLE BORDER="0" WIDTH="<?php echo BOX_WIDTH; ?>" CELLSPACING="2" CELLPADDING="0">
-<!-- left_navigation //-->
-<?php require(DIR_WS_INCLUDES . 'column_left.php'); ?>
-<!-- left_navigation_eof //-->
-      </TABLE></TD>
-<!-- body_text //-->
-    <td width="100%" valign="top">
+<div class="container">
+<div class="row">
+<div class="span12">
+<h1>FAQ & Shipping</h1>
 		
 		<table border="0" width="100%" cellspacing="0" cellpadding="12">
-      <tr>
-        <td><table border="0" width="100%" cellspacing="0" cellpadding="0">
-          <tr>
-            <td class="pageHeading"><?php echo HEADING_TITLE; ?></td>
-            <td class="pageHeading" align="right"><?php //echo tep_image(DIR_WS_IMAGES . 'table_background_specials.gif', HEADING_TITLE, HEADING_IMAGE_WIDTH, HEADING_IMAGE_HEIGHT); ?></td>
-          </tr>
-        </table></td>
-      </tr>
-      <tr>
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
-      </tr>
+     
       <tr>
           <td>
             <table width="680" border="0" height="48" align="center">
               <tr> 
-                <td width="328" height="2"><font face="Arial, Helvetica, sans-serif" size="3"><a href="http://usps.com"><img src="http://www.seacoastvitamins.com/img_index/usps.jpg" alt="http://www.usps.com" border="0"></a></font></td>
-                <td width="342" height="2"><font face="Arial, Helvetica, sans-serif" size="3"><a href="http://ups.com"><img src="http://www.seacoastvitamins.com/img_index/ups.JPG" alt="http://www.ups.com" border="0"></a></font></td>
+                <td width="328" height="2"><a href="http://usps.com"><img src="http://www.seacoastvitamins.com/img_index/usps.jpg" alt="http://www.usps.com" border="0"></a></td>
+                <td width="342" height="2"><a href="http://ups.com"><img src="http://www.seacoastvitamins.com/img_index/ups.JPG" alt="http://www.ups.com" border="0"></a></td>
               </tr>
               <tr> 
                 <td width="328" height="60"> 
                   <ul>
-                    <li><font face="Arial, Helvetica, sans-serif" size="3"> USPS 
-                      Flat Rate Shipping</font></li>
-                    <li><font face="Arial, Helvetica, sans-serif" size="3">Same 
-                      Day Shipping </font></li>
-                    <li><font face="Arial, Helvetica, sans-serif" size="3">If 
-                      your order is placed before 2:00pm;EST</font></li>
-                    <li><font face="Arial, Helvetica, sans-serif" size="3">No 
-                      Padded Shipping Cost</font></li>
-                    <li><font face="Arial, Helvetica, sans-serif" size="3">All 
-                      Shipping At Cost</font></li>
-                    <li><a href="http://www.stamps.com/shipstatus/"><font face="Arial, Helvetica, sans-serif" size="3">USPS 
-                      - Tracking</font></a><font face="Arial, Helvetica, sans-serif" size="3"><br>
+                    <li> USPS 
+                      Flat Rate Shipping</li>
+                    <li>Same 
+                      Day Shipping </li>
+                    <li>If 
+                      your order is placed before 2:00pm;EST</li>
+                    <li>No 
+                      Padded Shipping Cost</li>
+                    <li>All 
+                      Shipping At Cost</li>
+                    <li><a href="http://www.stamps.com/shipstatus/">USPS 
+                      - Tracking</a><br>
                       <br>
-                      </font></li>
+                      </li>
                   </ul>
                 </td>
                 <td width="342" height="60"> 
                   <ul>
-                    <li><font face="Arial, Helvetica, sans-serif" size="3">UPS</font></li>
-                    <li><font face="Arial, Helvetica, sans-serif" size="3">Same 
-                      Day Shipping</font></li>
-                    <li><font face="Arial, Helvetica, sans-serif" size="3"> If 
-                      your order is placed before 5:00pm; EST</font></li>
-                    <li><font face="Arial, Helvetica, sans-serif" size="3">No 
-                      Padded Shipping Cost</font></li>
-                    <li><font face="Arial, Helvetica, sans-serif" size="3">All 
-                      Shipping At Cost</font></li>
-                    <li><font face="Arial, Helvetica, sans-serif" size="3">Commercial 
-                      Shipping Available</font></li>
-                    <li><font face="Arial, Helvetica, sans-serif" size="3"><a href="http://www.ups.com/WebTracking/track?loc=en_US">UPS 
-                      - Tracking</a></font></li>
+                    <li>UPS</li>
+                    <li>Same 
+                      Day Shipping</li>
+                    <li> If 
+                      your order is placed before 5:00pm; EST</li>
+                    <li>No 
+                      Padded Shipping Cost</li>
+                    <li>All 
+                      Shipping At Cost</li>
+                    <li>Commercial 
+                      Shipping Available</li>
+                    <li><a href="http://www.ups.com/WebTracking/track?loc=en_US">UPS 
+                      - Tracking</a></li>
                   </ul>
                 </td>
               </tr>
@@ -125,8 +109,8 @@
                             is that orders shipped via UPS will be trackable throughout 
                             their journey, while orders shipped via Priority Mail 
                             receive delivery confirmation only.
-                          <LI>Insurance only by request <font size="2">-</font><b><font size="1">extra 
-                            charges may apply</font></b>
+                          <LI>Insurance only by request <font size="2">-<b>extra 
+                            charges may apply</b>
                         </UL>
 				</td>
 				  <td width="50%"> <strong>International Shipping</strong><BR>
@@ -144,7 +128,7 @@
                             service.
                           <LI>Shipping costs are non-refundable.
                         </UL>
-                        <p><font size="1">International Shipping<br>
+                        <p>International Shipping<br>
                           Seacoast Vitamins ships nutritional supplements to countries 
                           around the world. Please note: It is important for you 
                           to become familiar with the Customs policies for your 
@@ -154,13 +138,13 @@
                           to can result in your order incurring high import duties, 
                           delivery being delayed, or returned to us. It is your 
                           responsibility to check with your Customs office to 
-                          see if your country permits the shipment of our products.</font></p>
-                        <p><font size="1">International Shipping Terms &amp; Conditions:<br>
+                          see if your country permits the shipment of our products.</p>
+                        <p>International Shipping Terms &amp; Conditions:<br>
                           All prices listed are in U.S. dollars. When you pay 
                           by credit card, the credit card company will calculate 
                           the exchange rate and include it in your monthly statement. 
-                          </font></p>
-                        <p><font size="1">All International shipments will be 
+                          </p>
+                        <p>All International shipments will be 
                           charged postage costs calculated by weight and destination. 
                           Seacoast Vitamins&#146;s prices do not include customs 
                           fees, taxes and tariffs. Customers outside of the United 
@@ -171,8 +155,8 @@
                           control over these charges and cannot predict what they 
                           may be. It is your responsibility to make sure that 
                           you are allowed to import nutritional supplements from 
-                          the US</font></p>
-                        <p><font size="1">If the package(s) is returned to us 
+                          the US</p>
+                        <p>If the package(s) is returned to us 
                           because of an address error made by the customer or 
                           the items ordered are not allowed into the country by 
                           customs, the customer will be responsible for the shipping 
@@ -195,7 +179,7 @@
                           with your country&#146;s&#146; laws and regulations, 
                           a refund will be issued for the merchandise only there 
                           will be a 15% restocking fee.<br>
-                          </font><font size="2"> </font> </p>
+                          <font size="2">  </p>
                       </td>
               </tr>
 			  <tr>
@@ -219,32 +203,9 @@
           </tr>
         </table></td>
       </tr>
-      <tr>
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
-      </tr>
-      <tr>
-        <td><table border="0" width="100%" cellspacing="1" cellpadding="2" class="infoBox">
-          <tr class="infoBoxContents">
-            <td><table border="0" width="100%" cellspacing="0" cellpadding="2">
-              <tr>
-                <td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1'); ?></td>
-                <td align="right"><?php echo '<a href="' . tep_href_link(FILENAME_DEFAULT) . '">' . tep_image_button('button_continue.gif', IMAGE_BUTTON_CONTINUE) . '</a>'; ?></td>
-                <td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1'); ?></td>
-              </tr>
-            </table></td>
-          </tr>
-        </table></td>
-      </tr>
     </table></td>
 		
-<!-- body_text_eof //-->
-   <TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" >
-     <TABLE BORDER="0" WIDTH="<?php echo BOX_WIDTH; ?>" CELLSPACING="2" CELLPADDING="0">
-<!-- right_navigation //-->
-<?php require(DIR_WS_INCLUDES . 'column_right.php'); ?>
-<!-- right_navigation_eof //-->
-     </TABLE></TD></TR></TABLE>
-<!-- body_eof //-->
+</div></div></div>
 
 <!-- footer //-->
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>

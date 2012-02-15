@@ -8,11 +8,6 @@ FROM reviews r JOIN reviews_description rd ON rd.reviews_id=r.reviews_id where r
     $num_reviews = tep_db_num_rows($reviews_query);
     if ($num_reviews >= 1) {
 	
-	
-?>
-<!-- also_purchased_products //-->
-
-<?php
       
       while ($reviews = tep_db_fetch_array($reviews_query)) {
       
@@ -29,9 +24,6 @@ FROM reviews r JOIN reviews_description rd ON rd.reviews_id=r.reviews_id where r
           }
       }
 
-      ?>
-
-  <?php
   }
 
     }

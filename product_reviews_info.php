@@ -122,9 +122,9 @@ $breadcrumb -> add(NAVBAR_TITLE, tep_href_link(FILENAME_PRODUCT_REVIEWS, tep_get
 												<td>
 												<table border="0" width="100%" cellspacing="0" cellpadding="2">
 													<tr>
-														<td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1');?></td>
+														
 														<td valign="top" class="main"><?php echo tep_break_string(nl2br(tep_output_string_protected($review['reviews_text'])), 60, '-<br>') . '<br><br><i>' . sprintf(TEXT_REVIEW_RATING, tep_image(DIR_WS_IMAGES . 'stars_' . $review['reviews_rating'] . '.gif', sprintf(TEXT_OF_5_STARS, $review['reviews_rating'])), sprintf(TEXT_OF_5_STARS, $review['reviews_rating'])) . '</i>';?></td>
-														<td width="10" align="right"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1');?></td>
+
 													</tr>
 												</table></td>
 											</tr>
@@ -181,12 +181,12 @@ $breadcrumb -> add(NAVBAR_TITLE, tep_href_link(FILENAME_PRODUCT_REVIEWS, tep_get
 					<td>
 					<table border="0" width="100%" cellspacing="0" cellpadding="2">
 						<tr>
-							<td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1');?></td>
+							
 							<td class="main"><?php echo '<a href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS, 'products_id=' . $review['products_id']) . '">' . tep_image_button('button_back.gif', IMAGE_BUTTON_BACK) . '<br/>All Reviews</a>';?></td>
 							<td class="main" align="right" width="150px"><?php echo '<a href="' . 
 								tep_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, 'products_id=' . $review['products_id']) . 
 								'">' . tep_image_button('button_write_review.gif', IMAGE_BUTTON_WRITE_REVIEW) . '<br/>Write a Review!</a>';?></td>
-							<td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1');?></td>
+							
 						</tr>
 					</table></td>
 				</tr>
@@ -219,14 +219,7 @@ document.write('<?php echo '<a href="javascript:popupWindow(\\\'' . tep_href_lin
 			</tr>
 		</table></td>
 		<!-- body_text_eof //-->
-		<TD WIDTH="<?php echo BOX_WIDTH;?>" VALIGN="top" rowspan="2">
-		<TABLE BORDER="0" WIDTH="<?php echo BOX_WIDTH;?>" CELLSPACING="2" CELLPADDING="0">
-			<!-- right_navigation //-->
-			<?php
-				require (DIR_WS_INCLUDES . 'column_right.php');
-			?>
-			<!-- right_navigation_eof //-->
-		</TABLE></TD></TR></TABLE>
+		</TR></TABLE>
 		<!-- body_eof //-->
 		<!-- footer //-->
 		<?php

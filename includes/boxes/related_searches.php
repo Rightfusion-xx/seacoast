@@ -1,5 +1,10 @@
 <?php
 
+$rscache=new megacache(60*60*24);
+            if(!$rscache->doCache('related_searches',true))
+            {
+                
+
     
         $page_param=parse_section(str_replace('&','<eof>',$_SERVER['REQUEST_URI']).'<eof>','?','<eof>');
         if(1==1)//strlen($page_param)>0)
@@ -22,9 +27,9 @@
 if(strlen($searches_string)>0 || strpos($_SERVER['REQUEST_URI'],'zyflamend')>0){
 ?>
 <!-- similar_products //-->
-<div id="nav_manufacturers" class="nav_box">
+<div id="si" class="si">
 
-  <div class="nav_header">Similar Picks</div>
+  <p style="font-weight:bold;">Similar Picks</p>
   <?php
 
     echo $searches_string;
@@ -41,4 +46,6 @@ if(strlen($searches_string)>0 || strpos($_SERVER['REQUEST_URI'],'zyflamend')>0){
 <!-- similar_products_eof //-->
 <?php
   }
+                $rscache->doCache('related_searches');               
+            }
 ?>
