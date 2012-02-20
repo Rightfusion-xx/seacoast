@@ -588,68 +588,18 @@
 <!-- header_eof //-->
 
 
+       
 
-<!-- body //-->
+<div class="container">
+<div class="row">
+<div class="span12">
 
-<TABLE BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
 
-  <TR>
+                        
+           <h1>Shipping Information</h1>
 
-    <TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" rowspan="2">
-
-	  <TABLE BORDER="0" WIDTH="<?php echo BOX_WIDTH; ?>" CELLSPACING="2" CELLPADDING="0">
-
-<!-- left_navigation //-->
-
-<?php require(DIR_WS_INCLUDES . 'column_left.php'); ?>
-
-<!-- left_navigation_eof //-->
-
-      </TABLE></TD>
-
-<td valign="top" colspan="2" valign="top"><?php require(DIR_WS_INCLUDES . 'titlebar.php'); ?></td></tr><tr><!-- body_text //-->
-
-    <td width="100%" valign="top"><div id="content">
-
-		
-
-		<?php echo tep_draw_form('create_account', tep_href_link(FILENAME_CREATE_ACCOUNT, '', 'SSL'), 'post', 'onSubmit="return check_form(create_account);"') . 
-                        tep_draw_hidden_field('action', 'process'); ?>
-                        <table border="0" width="100%" cellspacing="0" cellpadding="0">
-
-      <tr>
-
-        <td><table border="0" width="100%" cellspacing="0" cellpadding="0">
-
-          <tr>
-
-            <td ><h1>Shipping Information</h1></td>
-
-            <td class="pageHeading" align="right"><?php //echo tep_image(DIR_WS_IMAGES . 'table_background_account.gif', HEADING_TITLE, HEADING_IMAGE_WIDTH, HEADING_IMAGE_HEIGHT); ?></td>
-
-          </tr>
-
-        </table></td>
-
-      </tr>
-
-      <tr>
-
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
-
-      </tr>
-
-      <tr>
-
-        <td class="smallText"><br><b>Already a member?</b><br/><a href="/login.php"><img src="/includes/languages/english/images/buttons/button_login.gif" border="0"></a></td>
-
-      </tr>
-
-      <tr>
-
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
-
-      </tr>
+        <p><b>Already a member?</b><br/><a href="/login.php"><img src="/includes/languages/english/images/buttons/button_login.gif" border="0"></a>  </p>
+      
 
 <?php
 
@@ -657,222 +607,114 @@
 
 ?>
 
-      <tr>
-
-        <td><?php echo $messageStack->output('create_account'); ?></td>
-
-      </tr>
-
-      <tr>
-
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
-
-      </tr>
+      <div class="alert alert-error"><?php echo $messageStack->output('create_account'); ?></div>
 
 <?php
 
   }
 
 ?>
+ <form action="create_account.php" method="post" class="form-horizontal" id="create_account">
+  <?php echo tep_draw_hidden_field('action', 'process'); ?>
+                         
+                        
+                        <?php echo FORM_REQUIRED_INFORMATION; ?><br/> 
+ <fieldset>
+ 
+    <legend>
+       <?php echo CATEGORY_PERSONAL; ?>
+    </legend>
+ 
+ 
+   
 
-      
 
-	  <tr>
-
-        <td><table border="0" width="100%" cellspacing="0" cellpadding="2">
-
-          <tr>
-
-            <td class="main"><b><?php echo CATEGORY_PERSONAL; ?></b></td>
-
-           <td class="inputRequirement" align="right"><?php echo FORM_REQUIRED_INFORMATION; ?></td>
-
-          </tr>
-
-        </table></td>
-
-      </tr>
-
-      <tr>
-
-        <td><table border="0" width="100%" cellspacing="1" cellpadding="2" class="infoBox">
-
-          <tr class="infoBoxContents">
-
-            <td><table border="0" cellspacing="2" cellpadding="2">
-                         <tr>
-
-                <td class="main"><?php echo ENTRY_COUNTRY; ?></td>
-
+<div class="control-group">
+    <label class="control-label" for="country">
+         <?php echo ENTRY_COUNTRY; ?>
+    </label>
+    <div class="controls">
+    
 <?php // +Country-State Selector ?>
 
-                <td class="main"><?php echo tep_get_country_list('country',$country,
+               <?php echo tep_get_country_list('country',$country,
 
                    'onChange="return refresh_form(create_account);"') . '&nbsp;' . 
 
                    (tep_not_null(ENTRY_COUNTRY_TEXT) ? '<span class="inputRequirement">' . ENTRY_COUNTRY_TEXT . 
 
-                   '</span>': ''); ?></td>
+                   '</span>': ''); ?>
 
                 <?php // -Country-State Selector ?> 
+    </div>
+</div>
 
-              </tr>
+<div class="control-group">
+    <label class="control-label" >
+         <?php echo ENTRY_FIRST_NAME; ?>
+    </label>
+    <div class="controls">
+         <?php echo tep_draw_input_field('firstname') . '&nbsp;' . (tep_not_null(ENTRY_FIRST_NAME_TEXT) ? '<span class="inputRequirement">' . ENTRY_FIRST_NAME_TEXT . '</span>': ''); ?>
+    </div>
+</div>
 
-<?php
+<div class="control-group">
+    <label class="control-label" >
+         <?php echo ENTRY_LAST_NAME; ?>
+    </label>
+    <div class="controls">
+         <?php echo tep_draw_input_field('lastname') . '&nbsp;' . (tep_not_null(ENTRY_LAST_NAME_TEXT) ? '<span class="inputRequirement">' . ENTRY_LAST_NAME_TEXT . '</span>': ''); ?>
+    </div>
+</div>
+          
+                  
+<div class="control-group">
+    <label class="control-label" >
+         <?php echo ENTRY_EMAIL_ADDRESS; ?>
+    </label>
+    <div class="controls">
+         <?php echo tep_draw_input_field('email_address') . '&nbsp;' . (tep_not_null(ENTRY_EMAIL_ADDRESS_TEXT) ? '<span class="inputRequirement">' . ENTRY_EMAIL_ADDRESS_TEXT . '</span>': ''); ?>
+    </div>
+</div>
 
-  if (ACCOUNT_GENDER == 'true') {
+<legend><?php echo CATEGORY_PASSWORD; ?></legend>
 
-?>
+<div class="control-group">
+    <label class="control-label" >            
+            <?php echo ENTRY_PASSWORD; ?>    
+    </label>
+    <div class="controls">
+         <?php echo tep_draw_password_field('password') . '&nbsp;' . (tep_not_null(ENTRY_PASSWORD_TEXT) ? '<span class="inputRequirement">' . ENTRY_PASSWORD_TEXT . '</span>': ''); ?>
+    </div>
+</div>
 
-              <tr>
-
-                <td class="main"><?php echo ENTRY_GENDER; ?></td>
-
-                <td class="main"><?php echo tep_draw_radio_field('gender', 'm') . '&nbsp;&nbsp;' . MALE . '&nbsp;&nbsp;' . tep_draw_radio_field('gender', 'f') . '&nbsp;&nbsp;' . FEMALE . '&nbsp;' . (tep_not_null(ENTRY_GENDER_TEXT) ? '<span class="inputRequirement">' . ENTRY_GENDER_TEXT . '</span>': ''); ?></td>
-
-              </tr>
-
-<?php
-
-  }
-
-?>
-
-              <tr>
-
-                <td class="main"><?php echo ENTRY_FIRST_NAME; ?></td>
-
-                <td class="main"><?php echo tep_draw_input_field('firstname') . '&nbsp;' . (tep_not_null(ENTRY_FIRST_NAME_TEXT) ? '<span class="inputRequirement">' . ENTRY_FIRST_NAME_TEXT . '</span>': ''); ?></td>
-
-              </tr>
-
-              <tr>
-
-                <td class="main"><?php echo ENTRY_LAST_NAME; ?></td>
-
-                <td class="main"><?php echo tep_draw_input_field('lastname') . '&nbsp;' . (tep_not_null(ENTRY_LAST_NAME_TEXT) ? '<span class="inputRequirement">' . ENTRY_LAST_NAME_TEXT . '</span>': ''); ?></td>
-
-              </tr>
-
-<?php
-
-  if (ACCOUNT_DOB == 'true') {
-
-?>
-
-              <tr>
-
-                <td class="main"><?php echo ENTRY_DATE_OF_BIRTH; ?></td>
-
-                <td class="main"><?php echo tep_draw_input_field('dob') . '&nbsp;' . (tep_not_null(ENTRY_DATE_OF_BIRTH_TEXT) ? '<span class="inputRequirement">' . ENTRY_DATE_OF_BIRTH_TEXT . '</span>': ''); ?></td>
-
-              </tr>
-
-<?php
-
-  }
-
-?>
-
-              <tr>
-
-                <td class="main"><?php echo ENTRY_EMAIL_ADDRESS; ?></td>
-
-                <td class="main"><?php echo tep_draw_input_field('email_address') . '&nbsp;' . (tep_not_null(ENTRY_EMAIL_ADDRESS_TEXT) ? '<span class="inputRequirement">' . ENTRY_EMAIL_ADDRESS_TEXT . '</span>': ''); ?></td>
-
-              </tr>
-
-            </table></td>
-
-          </tr>
-
-        </table></td>
-
-      </tr>
-      <tr>
-
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
-
-      </tr>      <tr>
-
-        <td class="main"><b><?php echo CATEGORY_PASSWORD; ?></b></td>
-
-      </tr>
-
-      <tr>
-
-        <td><table border="0" width="100%" cellspacing="1" cellpadding="2" class="infoBox">
-
-          <tr class="infoBoxContents">
-
-            <td><table border="0" cellspacing="2" cellpadding="2">
-
-              <tr>
-
-                <td class="main"><?php echo ENTRY_PASSWORD; ?></td>
-
-                <td class="main"><?php echo tep_draw_password_field('password') . '&nbsp;' . (tep_not_null(ENTRY_PASSWORD_TEXT) ? '<span class="inputRequirement">' . ENTRY_PASSWORD_TEXT . '</span>': ''); ?></td>
-
-              </tr>
-
-              <tr>
-
-                <td class="main"><?php echo ENTRY_PASSWORD_CONFIRMATION; ?></td>
-
-                <td class="main"><?php echo tep_draw_password_field('confirmation') . '&nbsp;' . (tep_not_null(ENTRY_PASSWORD_CONFIRMATION_TEXT) ? '<span class="inputRequirement">' . ENTRY_PASSWORD_CONFIRMATION_TEXT . '</span>': ''); ?></td>
-
-              </tr>
-
-            </table></td>
-
-          </tr>
-
-        </table></td>
-
-      </tr>
+<div class="control-group">
+    <label class="control-label" >
+         <?php echo ENTRY_PASSWORD_CONFIRMATION; ?>
+    </label>
+    <div class="controls">
+         <?php echo tep_draw_password_field('confirmation') . '&nbsp;' . (tep_not_null(ENTRY_PASSWORD_CONFIRMATION_TEXT) ? '<span class="inputRequirement">' . ENTRY_PASSWORD_CONFIRMATION_TEXT . '</span>': ''); ?>
+    </div>
+</div>
 
 
 <?php
 
   if (ACCOUNT_COMPANY == 'true') {
 
-?>
+?>   
+<legend>
+         <?php echo CATEGORY_COMPANY; ?>
+   </legend>
 
-      <tr>
-
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
-
-      </tr>
-
-      <tr>
-
-        <td class="main"><b><?php echo CATEGORY_COMPANY; ?></b></td>
-
-      </tr>
-
-      <tr>
-
-        <td><table border="0" width="100%" cellspacing="1" cellpadding="2" class="infoBox">
-
-          <tr class="infoBoxContents">
-
-            <td><table border="0" cellspacing="2" cellpadding="2">
-
-              <tr>
-
-                <td class="main"><?php echo ENTRY_COMPANY; ?></td>
-
-                <td class="main"><?php echo tep_draw_input_field('company') . '&nbsp;' . (tep_not_null(ENTRY_COMPANY_TEXT) ? '<span class="inputRequirement">' . ENTRY_COMPANY_TEXT . '</span>': ''); ?></td>
-
-              </tr>
-
-            </table></td>
-
-          </tr>
-
-        </table></td>
-
-      </tr>
+<div class="control-group">
+    <label class="control-label" >
+         <?php echo ENTRY_COMPANY; ?>
+    </label>
+    <div class="controls">
+         <?php echo tep_draw_input_field('company') . '&nbsp;' . (tep_not_null(ENTRY_COMPANY_TEXT) ? '<span class="inputRequirement">' . ENTRY_COMPANY_TEXT . '</span>': ''); ?>
+    </div>
+</div>
 
 <?php
 
@@ -880,69 +722,37 @@
 
 ?>
 
-      <tr>
 
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
+         <legend><?php echo CATEGORY_ADDRESS; ?></legend>
 
-      </tr>
 
-      <tr>
+<div class="control-group">
+    <label class="control-label" >
+         <?php echo ENTRY_STREET_ADDRESS; ?>
+    </label>
+    <div class="controls">
+         <?php echo tep_draw_input_field('street_address') . '&nbsp;' . (tep_not_null(ENTRY_STREET_ADDRESS_TEXT) ? '<span class="inputRequirement">' . ENTRY_STREET_ADDRESS_TEXT . '</span>': ''); ?>
+    </div>
+</div>
 
-        <td class="main"><b><?php echo CATEGORY_ADDRESS; ?></b></td>
+<div class="control-group">
+    <label class="control-label" >
+         <?php echo ENTRY_CITY; ?>
+    </label>
+    <div class="controls">
+         <?php echo tep_draw_input_field('city') . '&nbsp;' . (tep_not_null(ENTRY_CITY_TEXT) ? '<span class="inputRequirement">' . ENTRY_CITY_TEXT . '</span>': ''); ?>
+    </div>
+</div>
 
-      </tr>
+<div class="control-group">
+    <label class="control-label" >
+         <?php echo ENTRY_POST_CODE; ?>
+    </label>
+    <div class="controls">
+         <?php echo tep_draw_input_field('postcode') . '&nbsp;' . (tep_not_null(ENTRY_POST_CODE_TEXT) ? '<span class="inputRequirement">' . ENTRY_POST_CODE_TEXT . '</span>': ''); ?>
+    </div>
+</div>
 
-      <tr>
-
-        <td><table border="0" width="100%" cellspacing="1" cellpadding="2" class="infoBox">
-
-          <tr class="infoBoxContents">
-
-            <td><table border="0" cellspacing="2" cellpadding="2">
-
-              <tr>
-
-                <td class="main"><?php echo ENTRY_STREET_ADDRESS; ?></td>
-
-                <td class="main"><?php echo tep_draw_input_field('street_address') . '&nbsp;' . (tep_not_null(ENTRY_STREET_ADDRESS_TEXT) ? '<span class="inputRequirement">' . ENTRY_STREET_ADDRESS_TEXT . '</span>': ''); ?></td>
-
-              </tr>
-
-<?php
-
-  if (ACCOUNT_SUBURB == 'true') {
-
-?>
-
-              <tr>
-
-                <td class="main"><?php echo ENTRY_SUBURB; ?></td>
-
-                <td class="main"><?php echo tep_draw_input_field('suburb') . '&nbsp;' . (tep_not_null(ENTRY_SUBURB_TEXT) ? '<span class="inputRequirement">' . ENTRY_SUBURB_TEXT . '</span>': ''); ?></td>
-
-              </tr>
-
-<?php
-
-  }
-
-?>
-
-              <tr>
-
-                <td class="main"><?php echo ENTRY_POST_CODE; ?></td>
-
-                <td class="main"><?php echo tep_draw_input_field('postcode') . '&nbsp;' . (tep_not_null(ENTRY_POST_CODE_TEXT) ? '<span class="inputRequirement">' . ENTRY_POST_CODE_TEXT . '</span>': ''); ?></td>
-
-              </tr>
-
-              <tr>
-
-                <td class="main"><?php echo ENTRY_CITY; ?></td>
-
-                <td class="main"><?php echo tep_draw_input_field('city') . '&nbsp;' . (tep_not_null(ENTRY_CITY_TEXT) ? '<span class="inputRequirement">' . ENTRY_CITY_TEXT . '</span>': ''); ?></td>
-
-              </tr>
 
 <?php
 
@@ -950,13 +760,13 @@
 
 ?>
 
-              <tr>
-
-                <td class="main"><?php echo ENTRY_STATE; ?></td>
-
-                <td class="main">
-
-<?php
+ <div class="control-group">
+    <label class="control-label" >
+         <?php echo ENTRY_STATE; ?>
+    </label>
+    <div class="controls">
+ 
+         <?php
 
 // +Country-State Selector
 
@@ -995,10 +805,8 @@
     if (tep_not_null(ENTRY_STATE_TEXT)) echo '&nbsp;<span class="inputRequirement">' . ENTRY_STATE_TEXT;
 
 ?>
-
-                </td>
-
-              </tr>
+    </div>
+</div>
 
 <?php
 
@@ -1007,96 +815,29 @@
 ?>
 
 
+         <legend><?php echo CATEGORY_CONTACT; ?></legend>
 
-            </table></td>
 
-          </tr>
 
-        </table></td>
+<div class="control-group">
+    <label class="control-label" >
+         <?php echo ENTRY_TELEPHONE_NUMBER; ?>
+    </label>
+    <div class="controls">
+         <?php echo tep_draw_input_field('telephone') . '&nbsp;' . (tep_not_null(ENTRY_TELEPHONE_NUMBER_TEXT) ? '<span class="inputRequirement">' . ENTRY_TELEPHONE_NUMBER_TEXT . '</span>': ''); ?>
+    </div>
+</div>
 
-      </tr>
+<legend>
+         <b><?php echo CATEGORY_OPTIONS; ?></b>
+</legend>   
 
-      <tr>
-
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
-
-      </tr>
-
-      <tr>
-
-        <td class="main"><b><?php echo CATEGORY_CONTACT; ?></b></td>
-
-      </tr>
-
-      <tr>
-
-        <td><table border="0" width="100%" cellspacing="1" cellpadding="2" class="infoBox">
-
-          <tr class="infoBoxContents">
-
-            <td><table border="0" cellspacing="2" cellpadding="2">
-
-              <tr>
-
-                <td class="main"><?php echo ENTRY_TELEPHONE_NUMBER; ?></td>
-
-                <td class="main"><?php echo tep_draw_input_field('telephone') . '&nbsp;' . (tep_not_null(ENTRY_TELEPHONE_NUMBER_TEXT) ? '<span class="inputRequirement">' . ENTRY_TELEPHONE_NUMBER_TEXT . '</span>': ''); ?></td>
-
-              </tr>
-
-              <tr>
-
-                <td class="main"><?php echo ENTRY_FAX_NUMBER; ?></td>
-
-                <td class="main"><?php echo tep_draw_input_field('fax') . '&nbsp;' . (tep_not_null(ENTRY_FAX_NUMBER_TEXT) ? '<span class="inputRequirement">' . ENTRY_FAX_NUMBER_TEXT . '</span>': ''); ?></td>
-
-              </tr>
-
-            </table></td>
-
-          </tr>
-
-        </table></td>
-
-      </tr>
-
-      <tr>
-
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
-
-      </tr>
-
-      <tr>
-
-        <td class="main"><b><?php echo CATEGORY_OPTIONS; ?></b></td>
-
-      </tr>
-
-      <tr>
-
-        <td><table border="0" width="100%" cellspacing="1" cellpadding="2" class="infoBox">
-
-          <tr class="infoBoxContents">
-
-            <td>
-
-                  <table border="0" cellspacing="2" cellpadding="2">
-
-                    <tr> 
-
-                      <td class="main" width="17"> 
-
-                        <?php echo ENTRY_NEWSLETTER; ?>
-
-                      </td>
-
-                      <td class="main" width="39"> 
-
-                        <?php echo tep_draw_checkbox_field('newsletter', '1', 'true') . '&nbsp;' . (tep_not_null(ENTRY_NEWSLETTER_TEXT) ? '<span class="inputRequirement">' . ENTRY_NEWSLETTER_TEXT . '</span>': ''); ?>
-
-                        &nbsp; </td>
-
-                      <td width="500"><p>Seacoast Natural Health Newsletter 
+<div class="control-group">
+    <label class="control-label" >
+         <?php echo ENTRY_NEWSLETTER; ?>  <?php echo tep_draw_checkbox_field('newsletter', '1', 'true') . '&nbsp;' . (tep_not_null(ENTRY_NEWSLETTER_TEXT) ? '<span class="inputRequirement">' . ENTRY_NEWSLETTER_TEXT . '</span>': ''); ?>
+    </label>
+    <div class="controls">
+         <p>Seacoast Natural Health Newsletter 
 
                         contains New Product Information, Natural Health Articles, and
 
@@ -1104,73 +845,24 @@
 
                         <a href="/privacy.php" target="_blank">Policy/Spam 
 
-                        Notice </a></td>
-
-                    </tr>
-
-                  </table>
-
-                </td>
-
-          </tr>
-
-        </table>
-        </td></tr>
-              <tr>
-
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
-
-      </tr>
+                        Notice </a>
+    </div>
+</div>    
 
 
+         <?php echo tep_image_submit('button_continue.gif', IMAGE_BUTTON_CONTINUE); ?>
+                    <BR><FONT SIZE="-1">(Information is encrypted for your privacy and security).</FONT>
+  
+      
 
-      <tr>
+  </fieldset>   
+              </form>                    
 
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
+                        
+            
+            
+</div> </div></div>   
 
-      </tr>
-
-
-
-      <tr>
-
-        <td><table border="0" width="100%" cellspacing="1" cellpadding="2" class="infoBox">
-
-          <tr class="infoBoxContents">
-
-            <td><table border="0" width="100%" cellspacing="0" cellpadding="2">
-
-              <tr>
-
-                <td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1'); ?></td>
-
-                <td><?php echo tep_image_submit('button_continue.gif', IMAGE_BUTTON_CONTINUE); ?>
-                	<BR><FONT SIZE="-2">(Information is encrypted for your privacy and security).</FONT></td>
-
-                <td width="10"><?php echo tep_draw_separator('pixel_trans.gif', '10', '1'); ?></td>
-
-              </tr>
-
-            </table></td>
-
-          </tr>
-
-        </table></td>
-
-      </tr>
-
-    </table></form></div></td>
-
-		
-
-		
-
-<!-- body_text_eof //-->
-
-
-  </tr>
-
-</table>
 
 <!-- body_eof //-->
 

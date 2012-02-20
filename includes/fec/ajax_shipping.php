@@ -10,7 +10,7 @@
 
           <tr>
 
-            <td class="main"><b><?php echo TABLE_HEADING_SHIPPING_METHOD; ?> </b></td>
+            <td class="main"><h2><?php echo TABLE_HEADING_SHIPPING_METHOD; ?> </h2></td>
 
           </tr>
 
@@ -28,7 +28,7 @@
 
 
 
-            <td width="100%"><table border="0" width="100%" cellspacing="0" cellpadding="2">
+            <td width="100%"  ><table border="0" width="100%" cellspacing="0" cellpadding="2">
 
 
 

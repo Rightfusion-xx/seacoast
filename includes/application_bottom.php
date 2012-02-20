@@ -91,6 +91,7 @@ $clean = str_replace('iso-8859-1','UTF-8', $clean);
 $clean = str_replace('stylesheet.css','stylesheet-a.css', $clean);  // Replace cached stylesheet
 
 $clean=utf8_encode($clean); //Strip bad characters
+$clean=preg_replace("/[^\x01-\x7F]/","",$clean);
 
 // circumvent tidyhtml
 $plusonecode='<g:plusone size="tall"></g:plusone>';

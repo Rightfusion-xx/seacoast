@@ -74,13 +74,13 @@ window.open("<?php echo tep_href_link(FILENAME_INFO_SHOPPING_CART); ?>","info_sh
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
+<div class="container">
+<div class="row">
+<div class="span12">
+
 <TABLE BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
 <TR>
-<TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" rowspan="2">
-<TABLE BORDER="0" WIDTH="<?php echo BOX_WIDTH; ?>" CELLSPACING="2" CELLPADDING="0">
-<?php require(DIR_WS_INCLUDES . 'column_left.php'); ?>
-</TABLE></TD>
-<td valign="top" colspan="2" valign="top"><?php require(DIR_WS_INCLUDES . 'titlebar.php'); ?></td></tr><tr>
+
 <td width="100%" valign="top">
 <?php echo tep_draw_form('login', tep_href_link(FILENAME_LOGIN, 'action=process', 'SSL')); ?><table border="0" width="100%" cellspacing="0" cellpadding="12">
 <tr>
@@ -118,10 +118,10 @@ require(DIR_WS_INCLUDES . FILENAME_PWA_PWA_LOGIN);
 </table></td>
 </tr>
 </table></form></td>
-<TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" rowspan="2">
-<TABLE BORDER="0" WIDTH="<?php echo BOX_WIDTH; ?>" CELLSPACING="2" CELLPADDING="0">
-<?php require(DIR_WS_INCLUDES . 'column_right.php'); ?>
-</TABLE></TD></TR></TABLE>
+</TR></TABLE>
+</div>
+</div>
+</div>
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
 <br>
 </body>

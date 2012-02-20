@@ -166,9 +166,9 @@
           break;
       }
      
-      if ( ($result == false) || ($result < 1) ) {
-        $payment_error_return = 'payment_error=' . $this->code . '&error=' . urlencode($error) . '&cc_owner=' . urlencode($HTTP_POST_VARS['cc_owner']) . '&cc_expires_month=' . $HTTP_POST_VARS['cc_expires_month'] . '&cc_expires_year=' . $HTTP_POST_VARS['cc_expires_year'];
-     
+      if ( ($result == false) || ($result < 1) ) {   
+        $payment_error_return = 'payment_error=' . $this->code ;// '&error=' . urlencode($error) ;//. '&cc_owner=' . urlencode($HTTP_POST_VARS['cc_owner']) . '&cc_expires_month=' . $HTTP_POST_VARS['cc_expires_month'] . '&cc_expires_year=' . $HTTP_POST_VARS['cc_expires_year'];
+        $_SESSION['payment_error_text']=$error;                  
         tep_redirect(tep_href_link(FILENAME_CHECKOUT_PAYMENT, $payment_error_return, 'SSL', true, false));
       }
 

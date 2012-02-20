@@ -1,9 +1,9 @@
 <?php
 
-
   require('includes/application_top.php');
 //fast easy checkout start
 tep_session_unregister('payment');
+
 //fast easy checkout end 
 // if the customer is not logged on, redirect them to the login page
   if (!tep_session_is_registered('customer_id')) {
@@ -127,20 +127,26 @@ window.open(url,'popupWindow','toolbar=no,location=no,directories=no status=no,m
 
 <!-- body //-->
 
-    <div id="content">
+    <div class="container">
+    <div class="row">
+    <div class="span12">
+    
+    
 	<?php echo tep_draw_form('checkout_payment', tep_href_link(FILENAME_CHECKOUT_SHIPPING, 'action=process', 'SSL'), 'post', 'onsubmit="return check_form();"'); ?>
 	<h1>Update Payment Information</h1>
                             
                     <?php
-  if (isset($HTTP_GET_VARS['payment_error']) && is_object(${$HTTP_GET_VARS['payment_error']}) && ($error = ${$HTTP_GET_VARS['payment_error']}->get_error())) {
+  if (isset($HTTP_GET_VARS['payment_error']) && is_object(${$HTTP_GET_VARS['payment_error']}) && ($error = ${$HTTP_GET_VARS['payment_error']}->get_error())) {    
 ?>
-                    <p><b>
-                              <?php echo tep_output_string_protected($error['title']); ?>
-                              </b>
-                    </p>
-                    <p class="quote">
-                    	<?php echo $error['error']; ?>
-                    </p>
+        <div class="alert alert-error">
+            <p><b>
+                    <?php echo tep_output_string_protected($error['title']); ?>
+                </b>
+            </p>
+            <p class="quote">
+                <?php echo $_SESSION['payment_error_text']; ?>
+            </p>
+        </div>
                                     
                                   
                     <?php
@@ -231,7 +237,7 @@ window.open(url,'popupWindow','toolbar=no,location=no,directories=no status=no,m
                        
                          </p>
                 </form>
-                </div><br/>
+                </div></div></div><br/>
            
 <!-- body_eof //-->
 

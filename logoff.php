@@ -51,15 +51,13 @@
 <!-- header_eof //-->
 
 <!-- body //-->
+<div class="container">
+<div class="row">
+<div class="span12">
+
+
 <TABLE BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
-  <TR>
-    <TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" rowspan="2">
-	  <TABLE BORDER="0" WIDTH="<?php echo BOX_WIDTH; ?>" CELLSPACING="2" CELLPADDING="0">
-<!-- left_navigation //-->
-<?php require(DIR_WS_INCLUDES . 'column_left.php'); ?>
-<!-- left_navigation_eof //-->
-      </TABLE></TD>
-<td valign="top" colspan="2" valign="top"><?php require(DIR_WS_INCLUDES . 'titlebar.php'); ?></td></tr><tr><!-- body_text //-->
+  <tr><!-- body_text //-->
     <td width="100%" valign="top">
 		
 		<table border="0" width="100%" cellspacing="0" cellpadding="12">
@@ -69,7 +67,7 @@
             <td><?php //echo tep_image(DIR_WS_IMAGES . 'table_background_man_on_board.gif', HEADING_TITLE); ?></td>
             <td valign="top"><table border="0" width="100%" cellspacing="0" cellpadding="2">
               <tr>
-                <td class="pageHeading" align="center"><?php echo HEADING_TITLE; ?></td>
+                <td align="center"><h1>Now logged off</h1></td>
               </tr>
               <tr>
                 <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
@@ -100,12 +98,10 @@
     </table></td>
 		
 <!-- body_text_eof //-->
-   <TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" rowspan="2">
-     <TABLE BORDER="0" WIDTH="<?php echo BOX_WIDTH; ?>" CELLSPACING="2" CELLPADDING="0">
-<!-- right_navigation //-->
-<?php require(DIR_WS_INCLUDES . 'column_right.php'); ?>
-<!-- right_navigation_eof //-->
-     </TABLE></TD></TR></TABLE>
+   </TR></TABLE>
+   </div>
+</div>
+</div>
 <!-- body_eof //-->
 
 <!-- footer //-->

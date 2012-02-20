@@ -39,12 +39,7 @@ if(!($product_info = tep_db_fetch_array($product_info_query))){
 }
 else
 {
-    //check URL
-    if(seo_url_title($product_info['manufacturers_name'].' '.$product_info['products_name']." ".$product_info['products_id'])<>$url_title)
-    {
-    	redir301($processor.seo_url_title($product_info['manufacturers_name'].' '.$product_info['products_name'].
-        	" ".$product_info['products_id'],$pagenum));
-    }
+
   
   if(strpos(' '.$_SERVER['HTTP_USER_AGENT'],'gsa-crawler')>0 )
   {
@@ -108,7 +103,17 @@ else
   // get all url links
   populate_backlinks();
   
-  
+  $product_parts=parse_nameparts($product_info['products_name']);
+$tname=$product_parts['name'];
+$tmisc=$product_parts['attributes'];
+$shortname=$tname;
+
+    //check URL
+$test_url=(str_replace('//','/',"/".seo_url_title($tname)."/".seo_url_title($product_info["manufacturers_name"])."/".seo_url_title($tmisc)."/p".$product_info['products_id']));
+  if($test_url<>$_SERVER["REQUEST_URI"])
+  {
+      redir301(str_replace('//','/',"/".seo_url_title($tname)."/".seo_url_title($product_info["manufacturers_name"])."/".seo_url_title($tmisc)."/p".$product_info['products_id']));
+  }
 
 $cache=new megacache(24*60*60);
 if(!$cache->doCache('products_main'.$pmod, true, $lastmod))
@@ -127,10 +132,7 @@ else
 }
 */
 
-$product_parts=parse_nameparts($product_info['products_name']);
-$tname=$product_parts['name'];
-$tmisc=$product_parts['attributes'];
-$shortname=$tname;
+
 
 
 $title=$tname . ' | '.$product_info['manufacturers_name'].' | '. $tmisc;
