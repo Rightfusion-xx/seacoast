@@ -366,6 +366,16 @@ if(isset($_SERVER['HTTP_REFERER']))
      $navigation = new navigationHistory;
   }
   $navigation->add_current_page();
+  
+  
+  if($_POST['country'])
+{
+    $_SESSION['country']=$_POST['country'];
+}
+if($_POST['postcode'])
+{
+    $_SESSION['postcode']=$_POST['postcode'];
+}
 
 
 //if($cart->in_cart(CM_FTPID)) {$_SESSION['cm_is_member']=true;}

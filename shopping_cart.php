@@ -2,6 +2,8 @@
 
 $hide_cart = true;
 require ("includes/application_top.php");
+
+
 require(DIR_WS_CLASSES . 'http_client.php');
 require(DIR_WS_CLASSES . 'geo_locator.php');
 require(DIR_WS_CLASSES . 'shipping.php');
@@ -62,13 +64,13 @@ if (!tep_session_is_registered('customer_id')) // NOT logged in
     }
 }
 
-if (isset($HTTP_POST_VARS['country']))
+if (isset($_SESSION['country']))
 {
-    populateDeliveryFields($HTTP_POST_VARS['country']);
+    populateDeliveryFields($_SESSION['country']);
             
-    if (($HTTP_POST_VARS[country] == 'US') && isset($HTTP_POST_VARS[postcode]))
+    if (($_SESSION[country] == 'US') && isset($_SESSION[postcode]))
     {
-        $order->delivery['postcode'] = $HTTP_POST_VARS[postcode];
+        $order->delivery['postcode'] = $_SESSION[postcode];
     }
 }
 else 
@@ -497,7 +499,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                                 
                                                 if (!tep_session_is_registered('customer_id'))
                                                 {
-                                                    if ((isset($HTTP_POST_VARS[country]) && ($HTTP_POST_VARS[country] == "US")) || 
+                                                    if ((isset($_SESSION['country']) && ($_SESSION['country'] == "US")) || 
                                                             ($order->delivery['country']['iso_code_2'] == "US"))
                                                     {
                                                             echo 'Enter zip code: <br />';
