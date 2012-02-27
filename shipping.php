@@ -80,7 +80,7 @@
                             charges apply (at-cost)</b>
                         </UL>
 				</td>             
-				  <td width="50%"> <strong>International Shipping</strong><BR>
+				  <td width="50%" rowspan="5" valign="top"> <strong>International Shipping</strong><BR>
 				        <UL>
                           <LI>For international shipping, we prefer USPS Global Express Mail.
                           <LI>Sorry. Shipping to international destination is sometimes difficult. It is up to you 
@@ -135,6 +135,8 @@
                   <td width="50%" valign="top"> <strong>Order Tracking</strong><BR>
 				<UL><LI>Tracking is available on all domestic orders shipped via UPS.<LI>International orders are trackable up to the time they leave the US. After that, trackability varies depending on destination country.</UL>
 				</td>
+              </tr>
+              <tr>
 				  <td width="50%" valign="top"> <strong>Tax Policy</strong><BR>
 				Michigan residents will be charge a 6% sales tax on non-food items. Nevada residents will be charge 8.1% for all purchases
 				</td>
@@ -144,6 +146,8 @@
 				We try really hard to keep all of our 10,000 products in stock. Occasionally, we will be out of stock on an item.  If an item is out of stock, we will ship the rest of the order to you right away. 
                 When the backorder item comes in, it will automatically be shipped. We will let you know the status of your order in any event! 
 				</td>
+                </tr>
+                <tr>
 				  <td width="50%" valign="top"> <strong>Return Policy</strong><BR>
 				 <p>Any unopened items may be returned within 30 days of purchase. There is no re-stocking fee! Woohoo! :) Vitamins-Direct members may return un-opened product past 30 days, and may also return opened products within 30 days 
                  for a full refund. Just return the product to our warehouse with your order number, and the adjustments will be made. You will be notified by email with a confirmation of the refund.</p>

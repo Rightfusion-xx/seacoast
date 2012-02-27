@@ -308,12 +308,12 @@ function rowOutEffect(object) {
 //--></script>
 <script language="javascript"><!--
 var selected;
-<?php//rmh M-S_ccgv begin ?>
+<?php //rmh M-S_ccgv begin ?>
 var submitter = null;
 function submitFunction() {
    submitter = 1;
    }
-<?php//rmh M-S_ccgv end ?>
+<?php //rmh M-S_ccgv end ?>
 function selectRowEffect(object, buttonSelect) {
   if (!selected) {
     if (document.getElementById) {
