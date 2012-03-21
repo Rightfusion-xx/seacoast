@@ -75,7 +75,21 @@ $tidy_opt=Array(
                     
                                                         
   $tidy = new tidy();
+  // Skip script tags
+  /* $buffer=str_replace('<script','<!--<script',$buffer);
+  $buffer=str_replace('</script>','</script>-->',$buffer);     */
+  $buffer=str_replace('</noscript>','<!--</noscript>-->',$buffer);      
   $clean = $tidy->repairString(substr($buffer, strpos($buffer,'<')),$tidy_opt);
+  /* $clean=str_replace('<!--<script','<script',$clean);
+  $clean=str_replace('</script>-->','</script>',$clean);        */
+  $clean=str_replace('<!--</noscript>-->','</noscript>',$clean);
+  
+  // Remove CDATA Tags
+  $clean=str_replace('/*<![CDATA[*/','',$clean);
+  $clean=str_replace('/*]]>*/','',$clean);    
+  $clean=str_replace('//<![CDATA[','',$clean);
+  $clean=str_replace('//]]>','',$clean);    
+  $clean=str_replace('<\/sc\'+\'ript>\')})();','</sc\'+\'ript>\')})();',$clean);    
 }
 else
 {

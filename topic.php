@@ -244,10 +244,37 @@ else // Third tier, no results found
 <meta name="keywords" content="<?php echo $searchterm; ?>"/>
 <meta name="description" content="<?php echo $description; ?>"/>
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
+<link rel="stylesheet" type="text/css" href="/jquery/css/ui-lightness/jquery-ui-1.8.18.custom.css">
 
 <script type="text/javascript" src="/jquery/js/jquery-1.3.2.min.js"></script>    
 <script type="text/javascript" src="/jquery/js/jquery.masonry.min.js"></script>     
+<script type="text/javascript" src="/jquery/js/jquery-ui-1.8.18.custom.min.js"></script>        
 
+<!-- Google Website Optimizer Control Script -->
+<script>
+function utmx_section(){}function utmx(){}
+(function(){var k='1931044731',d=document,l=d.location,c=d.cookie;function f(n){
+if(c){var i=c.indexOf(n+'=');if(i>-1){var j=c.indexOf(';',i);return escape(c.substring(i+n.
+length+1,j<0?c.length:j))}}}var x=f('__utmx'),xx=f('__utmxx'),h=l.hash;
+d.write('<sc'+'ript src="'+
+'http'+(l.protocol=='https:'?'s://ssl':'://www')+'.google-analytics.com'
++'/siteopt.js?v=1&utmxkey='+k+'&utmx='+(x?x:'')+'&utmxx='+(xx?xx:'')+'&utmxtime='
++new Date().valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
+'" type="text/javascript" charset="utf-8"></sc'+'ript>')})();
+</script>
+<!-- End of Google Website Optimizer Control Script -->
+<!-- Google Website Optimizer Tracking Script -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['gwo._setAccount', 'UA-889784-5']);
+  _gaq.push(['gwo._trackPageview', '/1931044731/test']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- End of Google Website Optimizer Tracking Script -->
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0px;" rightmargin="0">
 
@@ -519,7 +546,40 @@ $container.imagesLoaded(function(){
          </div>
 
 
-</div>      
+</div>    
+
+
+<?php if(strpos($_SERVER['HTTP_REFERER'],'google.com') && !strpos(' '. $_SERVER['HTTP_USER_AGENT'],'googlebot') && !strpos(' '. $_SERVER['HTTP_USER_AGENT'],'mediapartners-google'))
+{
+    ?>
+    
+    <div  id="cb_dialog" title="Beta - New Idea for Weight Loss" style="display:none;">
+        <p>We think low-fat diets are making people fatter (insulin response). Based on research, Seacoast.com is testing a new idea for losing weight fast. It is:</p>
+        <ul>
+            <li>
+                Completely natural, & eliminates most "health-foods"
+            </li>
+            <li>
+                Based on science
+            </li>
+            <li>
+                Is focused on nutrition, not excercise
+            </li>
+            <li>
+                Amounts to 10 lbs of bady fat in about 30 days, and continues on
+            </li>
+        </ul>
+        <p>Would you be willing to watch our video?</p>
+        <a class="btn btn-primary" style="color:#fff;text-align: center;" href="http://dd478hiwqdjp5wnrl6ld2kal89.hop.clickbank.net/?tid=BETA-WEIGHT-LOSS" onclick="javascript:$('#cb_dialog').dialog('close')" rel="nofollow" target="_blank">OK</a>
+    </div>
+    
+    <?php
+    
+} 
+?>
+
+<script>utmx_section("cb")</script>
+</noscript>
 
 <!-- body_eof //-->
 
