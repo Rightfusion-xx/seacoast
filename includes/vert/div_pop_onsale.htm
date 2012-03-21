@@ -1,0 +1,44 @@
+<?php if( time()<strtotime('2007/10/10')){ 
+
+  setcookie("divprod", "1");
+  ?>
+  
+  
+<div id="divbg" style="position: absolute; left: 515px; top: 165px; width: 425px;
+    height: 250px; background: #CCCCCC; font-family: Arial;
+    padding: 5px; <?php if(isset($_COOKIE["divprod"])){?>display:none;<?php }?>">
+</div>
+    <div onmouseout="javascript:document.getElementById('divpop').style.display='none';document.getElementById('divbg').style.display='none';" onmouseover="javascript:document.getElementById('divpop').style.display='block';document.getElementById('divbg').style.display='block';" style="position:absolute;left:500px;top:150px;width:425px;height:250px;border:solid 6px #FFFF33;background:#ffffff;font-family:Arial;padding:5px; <?php if(isset($_COOKIE["divprod"])){?>display:none;<?php }?>" id="divpop">
+
+            <table cellpadding="0" cellspacing="0"><tr><td><b style="font-size:14pt;">25% Off Orders of $75 or More</b></td><td><img src="/images/sealogo.gif" /></td></tr></table>
+           <table cellpadding="0" cellspacing="0"><tr><td>
+            <p>
+                Limited time savings!
+            </p>
+            <p>
+                <ul>
+                    <li><b>Save 25% off orders of $75 or more.</b></li>
+                    <li><b>Use coupon code 25PCT75OCT</b></li>
+                    <li>Fast, cheap shipping. Amazing support!</li>
+                    <li>Order online or toll free 1-800-555-6792</li>
+                    <li>Excludes Prostasol, clearance items and products marked (*)</li>
+                    <li>Expires Monday, October 29th, 2007</li>
+                </ul>
+            </p>
+    
+                         </td>
+                         <td valign="top">
+                            <img src="/images/onsale.gif" width="150"/>
+                         </td>
+                    </tr>
+
+
+                    
+                 </table>
+            <p></p>
+            <b><a href="javascript:return(false);" onclick="javascript:document.getElementById('divpop').style.display='none';document.getElementById('divbg').style.display='none'">Ok, thanks. [Close Window]</a></b>
+        
+
+</div>
+
+<?php } ?>

@@ -1,0 +1,10 @@
+BODY
+{
+}
+
+#content:hover
+{
+    border:dashed 1px #cccccc;
+    padding:-1px;
+}
+

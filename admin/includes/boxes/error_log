@@ -1,0 +1,1 @@
+[23-Nov-2004 14:00:29] PHP Fatal error:  Call to undefined function:  tep_href_link() in /home/lancem/public_html/Store/admin/includes/boxes/customers.php on line 21

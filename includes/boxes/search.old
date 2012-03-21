@@ -1,0 +1,4 @@
+<?php
+$skin_slice_set = 1;
+include (DIR_WS_INCLUDES . 'boxes_content/search.php');
+?>

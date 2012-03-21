@@ -1,0 +1,132 @@
+a {font-family: Verdana, Arial, Helvetica, sans-serif;	font-size: 10px;color: #000000;text-decoration: none;border:none}
+a :link{border:none}
+a :hover {text-decoration:underline}
+
+.LinkTop {font-family: Verdana, Arial, Helvetica, sans-serif;	font-size: 10px;color: #901C05;text-decoration: none;font-weight:bold}
+.LinkTop a:link{font-family: Verdana, Arial, Helvetica, sans-serif;	font-size: 10px;color: #901C05;text-decoration: none;font-weight:bold}
+.LinkTop a:active{font-family: Verdana, Arial, Helvetica, sans-serif;	font-size: 10px;color: #901C05;text-decoration: none;font-weight:bold}
+.LinkTop a:hover {text-decoration:none; color: #ffffff;font-weight:bold}
+
+#dropmenudiv{position:absolute;border:1px solid gray;font:normal 12px Verdana;line-height:18px;z-index:100}
+
+.header1 {font-family: Arial, Helvetica, sans-serif;font-size: 18px;color: #FFFFFF;font-style: normal;font-weight: normal;background-color: #5B909E}
+
+.header2 {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 12px;color: #AE5017;font-weight: bold}
+
+.text1 {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;font-weight:normal;color: #395B64;background-color: #C83B59}
+
+.text2 {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;font-weight: normal;color: #7C5B4E;background-color: #C83B59}
+
+.text2 a:link {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;font-weight: normal;color: #C46642;background-color: #C83B59}
+.text2 a:hover {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;font-weight: normal;color: #C46642;background-color: #C83B59;text-decoration:underline}
+
+.text3 {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 12px;font-weight: normal;color: #7C5B4E}
+
+
+#textnormal {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;font-weight: normal;color: #395B64}
+#textnormal a:link{color :#395B64 }
+#textnormal a:active{color :#395B64}
+#textnormal a:hover{text-decoration: none; font-weight :bold}
+
+.newsText {ont-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;color: #FF3300;background-color: #C83B59}
+
+.header3 {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 12px;font-weight: bold;color: #901C05;	background-color: #F5C392}
+
+.leftLink a:link {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;color: #C46642;}
+.leftLink a:hover{text-decoration:none;font-weight:bold}
+
+.topNav a:link {font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: bold;color: #AE5017},.topNav a:hover{text-decoration : underline}
+
+.bodyback {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;color: #333333}
+.bodyback1 {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 11px;color: #333333}
+
+
+.bluelink {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;font-weight:bold;color: #3394FF}
+.bluelink a:link{font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;font-weight:bold;color: #3394FF}
+.bluelink a:visited{font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;font-weight:bold;color: #3394FF}
+.bluelink a:hover{text-decoration:underline}
+
+body {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 8px;color: #333333}
+
+.email {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;color: #FFFFFF;font-weight: normal;background-color: #5B909E}
+.email a:link{font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;color: #000000;font-weight: bold}
+.email a:link{font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 10px;color: #000000;font-weight: bold}
+.email a:hover{text-decoration:none; color:#000000; font-weight: bold; background:#93C5D2}
+
+.quote {font-family: Georgia;font-size: 14px;font-weight: bold;color: #3394FF}
+.quote1 {
+	font-family: Georgia;
+	font-size: 14px;
+	font-weight: normal;
+	color: #3394FF;
+	font-style: italic;
+		line-height: 30px;
+}
+.quote2 {
+	font-family: Georgia;
+	font-size: 14px;
+	font-weight: normal;
+	color: #3394FF;
+	font-style: italic;
+		line-height: 22px;
+}
+
+.StudL {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 18px;
+	font-weight: bold;
+	font-style:italic;
+	color: #ffae46;
+}
+
+.HeadDept {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 18px;
+	font-weight: bold;
+	color: #CB5201;
+}
+.HeadDept a:link {font-family: Georgia, "Times New Roman", Times, serif;font-size: 18px;font-weight: bold;color: #CB5201}
+.HeadDept a:visited {font-family: Georgia, "Times New Roman", Times, serif;font-size: 18px;font-weight: bold;color: #CB5201}
+.HeadDept a:hover {font-family: Georgia, "Times New Roman", Times, serif;font-size: 18px;font-weight: bold;color: #00AEFF; text-decoration:underline}
+
+.HeadDept1 {font-family: Georgia, "Times New Roman", Times, serif;font-size: 14px;font-weight: bold;color: #CB5201}
+.HeadDept1 a:link {font-family: Georgia, "Times New Roman", Times, serif;font-size: 14px;font-weight: bold;color: #CB5201}
+.HeadDept1 a:visited {font-family: Georgia, "Times New Roman", Times, serif;font-size: 14px;font-weight: bold;color: #CB5201}
+.HeadDept1 a:hover {font-family: Georgia, "Times New Roman", Times, serif;font-size: 14px;font-weight: bold;color: #00AEFF;text-decoration:underline}
+
+.HeadDept2 {font-family: Georgia, "Times New Roman", Times, serif;font-size: 14px;font-weight: bold;color: #CB5201}
+.HeadDept2 a:link {font-family: Georgia, "Times New Roman", Times, serif;font-size: 14px;font-weight: bold;color: #CB5201}
+.HeadDept2 a:visited {font-family: Georgia, "Times New Roman", Times, serif;font-size: 14px;font-weight: bold;color: #CB5201}
+.HeadDept2 a:hover {font-family: Georgia, "Times New Roman", Times, serif;font-size: 14px;font-weight: bold;color: #ffffff;text-decoration:none}
+
+
+.unitlink {font-family: Geneva, Arial, Helvetica, sans-serif;font-size: 12px;color: #CC5700;text-decoration: none}
+.unitlink a:link{font-family: Geneva, Arial, Helvetica, sans-serif;font-size: 12px;color: #CC5700;text-decoration: none} 
+.unitlink a:hover{font-family: Geneva, Arial, Helvetica, sans-serif;font-size: 12px;font-weight:normal;text-decoration:underline;color:#00AEFF}
+
+.newstext {font-family: Arial, Helvetica, sans-serif;font-size: 12px;background-color: #C83B59}
+
+.spl_txt {border-color: #5E2A00;border-width:1;border-style:ridge;background-color: #FFF5EB; font-family:  Verdana, Geneva, Arial, Helvetica, sans-serif;font-weight:normal; font-size:12; color: #482A0C}
+
+.spl_btn {border-color: #5E2A00;border-width:1;border-style:solid;background-color:#F5C392;font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;font-weight: bold;font-size:12;color: #552A00}	
+
+.leftmenu {font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: NORMAL;color: #CB5201}
+.leftmenu a:link{font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: NORMAL;color: #00479F}
+.leftmenu a:visited{font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: NORMAL;color: #00479F}
+.leftmenu a:hover{font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: NORMAL;color: #00479F}
+
+.sideBack {background-color: #C83B59}
+
+.whiteLink {font-family: Arial, Helvetica, sans-serif;font-size: 10px;color: #FFFFFF}
+.whiteLink a:link {font-family: Arial, Helvetica, sans-serif;font-size: 10px;color: #FFFFFF}
+.whiteLink a:visited {font-family: Arial, Helvetica, sans-serif;font-size: 10px;color: #FFFFFF}
+.whiteLink a:hover {text-decoration : underline}
+
+.bodyStory {background-color: #FFFAF0}
+
+.aboutAc {font-family: Verdana, Arial, Helvetica, sans-serif;color: #4E1403;background-color: #336699;font-size: 12px}
+
+.backColour {background-color: #336699;border-right-width: 1px;border-right-style: solid;border-right-color: #F5C392}
+
+
+

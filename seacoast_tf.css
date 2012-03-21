@@ -1,0 +1,46 @@
+/*
+COLORS QUICKLIST:
+dark blue - #333367, mid blue - #c6e3f5, light yellow - #fcfcda, link - #135383
+*/
+body {color: #222; font-family:Arial; font-size:10pt;}
+/*Header*/
+div#header {background-color: #FFFFFF;}
+div#header_navbox {border: 0px !important; background-color: #333367 !important; color: #FFF !important; padding: 0.5em;} 
+a.headerNavigation, a.headerNavigation:link, a.headerNavigation:visited {background-color: #333367 !important; color: #FFF;}
+a.headerNavigation:hover, a.headerNavigation:active {background-color: #333367 !important; color: #c6e3f5;}
+div#header_support {color: #333367 !important;}
+
+/*Leftcol*/
+td#scv_leftcol {border: 0px solid orange; margin: 0 10px 0 0; padding: 0; width: 185px !important;}
+
+/*Rightcol*/
+td#scv_rightcol table {margin: 0; padding: 0;}
+td#scv_rightcol {border: 0px solid green; background-color: #FFF; margin: 0 0 0 10px; padding: 0; width: 290px !important;}
+td#scv_rightcol input + input {border: 1px solid #000; margin-bottom: 10px;}
+
+/*Damned HR*/
+div.nav_box hr {background-color: #FFF; width: 45% !important;}
+
+/*Bothcols*/
+div.nav_box {border: 0px solid lime; background-color: #FFF; margin: 0; padding: 0 0 20px 0; width: 200px;}
+div.nav_header {border: 0; background-color: #c6e3f5 !important; color: #333367 !important; padding: 0.2em; width: 200px;}
+div.nav_box a {padding-left: 8px; text-decoration: underline;}
+
+/*Interior tables*/
+table#scv_header tbody tr td table tbody tr td table tbody tr td table tbody tr td {border: 0px solid yellow; background-color: #FFF;}
+td#scv_frontads table tbody tr td {border: 1px solid #CCC !important;}
+.scv_bestprod_box {}
+td.scv_price font {border: 0px solid red; color: #c6e3f5 !important;}
+.style11 font {color: crimson !important;}
+td.headernavigation {background-color: #c6e3f5 !important; border: 1px solid #c6e3f5; height: 10px;}
+
+/*Interior tables*/
+#scv_maincol {border: 0px solid purple; margin: 0 20px;}
+td.footer {border: 0px !important; background-color: #333367 !important; color: #FFF !important; padding: 0.5em;}
+
+
+/*----------------------------=links---------------------------------*/
+a, a:link {background-color: inherit; color: #135383; text-decoration: underline;}
+a:visited {background-color: inherit; color: #444; text-decoration: underline;}
+a:hover {background-color: #135383; color: #FFF; text-decoration: none;}
+a:active {background-color: #fcfcda; color: #000; text-decoration: none;}

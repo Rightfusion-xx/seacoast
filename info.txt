@@ -1,0 +1,20 @@
+
+# Contact info submission
+
+url: seacoastvitamins.com/
+site_owner: Seacoast Natural Foods
+address1:  P.O. Box 57
+address2: 
+city:  Deerton
+state: MI
+country: US
+postal_code: 49822
+phone_number: 1-800-555-6792
+display_email: orders@seacoastvitamins.com
+site_name: Seacoastvitamins.com
+site_description: Seacoast Vitamins offers quality nutritional 
+supplements at deep discount prices.  Don't 
+let chronic disease and degenerative 
+conditions control your life, give your body 
+the nutritional support it needs to heal and 
+regenerate naturally.
