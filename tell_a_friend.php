@@ -11,9 +11,6 @@
 */
 
   require('includes/application_top.php');
-  
-  redir301('/');  // disable page.
-  
 
   if (!tep_session_is_registered('customer_id') && (ALLOW_GUEST_TO_TELL_A_FRIEND == 'false')) {
     $navigation->set_snapshot();
