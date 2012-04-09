@@ -47,21 +47,10 @@ function rowOutEffect(object) {
 //--></script>
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
-<!-- header //-->
+<!-- header //-->             
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
-<!-- header_eof //-->
+<div class="container">
 
-<!-- body //-->
-<TABLE BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
-  <TR>
-    <TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" rowspan="2">
-	  <TABLE BORDER="0" WIDTH="<?php echo BOX_WIDTH; ?>" CELLSPACING="2" CELLPADDING="0">
-<!-- left_navigation //-->
-<?php require(DIR_WS_INCLUDES . 'column_left.php'); ?>
-<!-- left_navigation_eof //-->
-      </TABLE></TD>
-<td valign="top" colspan="2" valign="top"><?php require(DIR_WS_INCLUDES . 'titlebar.php'); ?></td></tr><tr><!-- body_text //-->
-    <td width="100%" valign="top">
 		
 		<table border="0" width="100%" cellspacing="0" cellpadding="12">
       <tr>
@@ -242,14 +231,8 @@ function rowOutEffect(object) {
           </tr>
         </table></TD></TR></TABLE></TD></TR></TABLE></td>
       </tr>
-    </table></td>
-<!-- body_text_eof //-->
-   <TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" rowspan="2">
-     <TABLE BORDER="0" WIDTH="<?php echo BOX_WIDTH; ?>" CELLSPACING="2" CELLPADDING="0">
-<!-- right_navigation //-->
-<?php require(DIR_WS_INCLUDES . 'column_right.php'); ?>
-<!-- right_navigation_eof //-->
-     </TABLE></TD></TR></TABLE>
+    </table>
+</div>
 <!-- body_eof //-->
 
 <!-- footer //-->
