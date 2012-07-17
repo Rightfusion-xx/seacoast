@@ -13,17 +13,13 @@ if($HTTP_GET_VARS['login'] == 'fail')
     $fail_reason = (!empty($HTTP_GET_VARS['reason'])) ? urldecode($HTTP_GET_VARS['reason']) : TEXT_LOGIN_ERROR;
     $messageStack->add('login', $fail_reason);
 }
-if(empty($_SESSION['state']))
-{
-    $_SESSION['state'] = md5(uniqid(rand(), TRUE));
-}
+
 if(isset($HTTP_GET_VARS['action']))
 {
     if($HTTP_GET_VARS['action'] == 'remote_login')
     {
         $code = $_REQUEST["code"];
-
-        if($_SESSION['state'] && ($_SESSION['state'] === $_REQUEST['state'])) {
+        if((FB_APP_ID === $_REQUEST['state'])) {
             $token_url = "https://graph.facebook.com/oauth/access_token?"
                 . "client_id=" . FB_APP_ID . "&redirect_uri=" . urlencode(tep_href_link(FILENAME_LOGIN, 'action=remote_login', 'SSL'))
                 . "&client_secret=" . FB_APP_SECRET . "&code=" . $code;
@@ -197,7 +193,7 @@ $breadcrumb->add(NAVBAR_TITLE, tep_href_link(FILENAME_LOGIN, '', 'SSL'));
     <div class="container">
         <div class="row">
             <div class="span12">
-                <a href="https://www.facebook.com/dialog/oauth?state=<?php echo $_SESSION['state']?>&client_id=<?php echo FB_APP_ID?>&redirect_uri=<?php echo urlencode(tep_href_link(FILENAME_LOGIN, 'action=remote_login', 'SSL'))?>&response_type=code&scope=email,publish_stream,publish_actions" class="fb-logn" accesskey="">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                <a href="https://www.facebook.com/dialog/oauth?state=<?php echo FB_APP_ID?>&client_id=<?php echo FB_APP_ID?>&redirect_uri=<?php echo urlencode(tep_href_link(FILENAME_LOGIN, 'action=remote_login', 'SSL'))?>&response_type=code&scope=email,publish_stream,publish_actions" class="fb-logn" accesskey="">&nbsp;&nbsp;&nbsp;&nbsp;</a>
                 <TABLE BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
                     <TR>
                         <td width="100%" valign="top">
