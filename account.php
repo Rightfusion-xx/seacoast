@@ -200,7 +200,7 @@ function rowOutEffect(object) {
                         );
                         if(!empty($snRecord)):
                         ?>
-                            <a href="http://www.facebook.com/<?php echo $snRecord['customers_sn_key']?>" style="float:left; overflow:hidden; margin-top:10px; display:block;border: 1px solid #ccc; padding:3px;">
+                            <a target="_blank" href="http://www.facebook.com/<?php echo $snRecord['customers_sn_key']?>" style="float:left; overflow:hidden; margin-top:10px; display:block;border: 1px solid #ccc; padding:3px;">
                                 <img src="http://graph.facebook.com/<?php echo $snRecord['customers_sn_key']?>/picture" style="float: left;" />
                                 <span style="float: left;margin-left:3px;">Connected facebook account<span>
                             </a>
