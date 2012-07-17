@@ -36,7 +36,7 @@ if(isset($HTTP_GET_VARS['action']))
             $snUser = tep_db_query("
                 SELECT
                     c.*
-                FROM `customers_sns` AS sns
+                FROM `" . TABLE_CUSTOMER_SNS . "` AS sns
                 INNER JOIN " . TABLE_CUSTOMERS . " AS c ON (c.customers_id = sns.customers_id)
                 WHERE
                     sns.customers_sn_key = '" . $user->id . "' AND
@@ -70,7 +70,7 @@ if(isset($HTTP_GET_VARS['action']))
                     $customer = tep_db_fetch_array($check_email_query);
                 }
                 tep_db_query("
-                    INSERT INTO `customers_sns`
+                    INSERT INTO `" . TABLE_CUSTOMER_SNS . "`
                         (customers_id, customers_sn_key, customers_sn_type)
                     VALUES ('" . $customer['customers_id'] . "', '" . $user->id . "', 'facebook');
                 ");

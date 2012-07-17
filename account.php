@@ -20,11 +20,37 @@
   require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_ACCOUNT);
 
   $breadcrumb->add(NAVBAR_TITLE, tep_href_link(FILENAME_ACCOUNT, '', 'SSL'));
-  
+
   if($_POST['preventionmag']=='1'){
       tep_db_query("insert into leads (customers_id, leads_code, leads_date) values ('" . (int)$customer_id . "', 'PREVENTIONMAG', now())");
 }
-  
+
+if(isset($HTTP_GET_VARS['action']) && $HTTP_GET_VARS['action'] == 'remote_login')
+{
+    $code = $_REQUEST["code"];
+    if((FB_APP_ID === $_REQUEST['state']))
+    {
+        $token_url = "https://graph.facebook.com/oauth/access_token?"
+            . "client_id=" . FB_APP_ID . "&redirect_uri=" . urlencode(tep_href_link('account.php', 'action=remote_login', 'SSL'))
+            . "&client_secret=" . FB_APP_SECRET . "&code=" . $code;
+
+        $response = file_get_contents($token_url);
+
+        $params = null;
+        parse_str($response, $params);
+        $graph_url = "https://graph.facebook.com/me?access_token="
+            . $params['access_token'];
+
+        $user = json_decode(file_get_contents($graph_url));
+        tep_db_query("
+            INSERT INTO `" . TABLE_CUSTOMER_SNS . "`
+                (customers_id, customers_sn_key, customers_sn_type)
+            VALUES ('" . $_SESSION['customer_id'] . "', '" . $user->id . "', 'facebook');
+        ");
+    }
+    tep_redirect('/account.php');exit();
+}
+
 ?>
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html <?php echo HTML_PARAMS; ?>>
@@ -47,11 +73,11 @@ function rowOutEffect(object) {
 //--></script>
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
-<!-- header //-->             
+<!-- header //-->
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
 <div class="container">
 
-		
+
 		<table border="0" width="100%" cellspacing="0" cellpadding="12">
       <tr>
         <td><TABLE WIDTH="100%" BORDER="0" CELLPADDING="1" CELLSPACING="0"><TR><TD>
@@ -61,15 +87,15 @@ function rowOutEffect(object) {
            </tr>
         </table></td>
       </tr>
-	
+
       <tr>
-      
+
 
         <td>
         <?php if($_SESSION['cm_is_member'] && !$_SESSION['cm_renew']) { ?><span style="background:yellow;">Your Seacoast Vitamins-Direct Membership will expire. <a href="account_cm.php">Please update your renewal options</a>.</span><?php } ?>
 		<?php echo tep_draw_separator('pixel_trans.gif', '100%', '10');?></td>
 
-      </tr>     
+      </tr>
 <?php
   if ($messageStack->size('account') > 0) {
 ?>
@@ -79,7 +105,7 @@ function rowOutEffect(object) {
       <tr>
         <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
       </tr>
-      
+
 <?php
   }
 
@@ -159,6 +185,39 @@ function rowOutEffect(object) {
                   </tr>
                   <tr>
                     <td class="main"><?php echo tep_image(DIR_WS_IMAGES . 'arrow_green.gif') . ' <a href="' . tep_href_link(FILENAME_ACCOUNT_PASSWORD, '', 'SSL') . '">' . MY_ACCOUNT_PASSWORD . '</a>'; ?></td>
+                  </tr>
+<!-- FACEBOOK -->
+                  <tr>
+                    <td class="main">
+                        <?php
+                        $snRecord = tep_db_fetch_array(
+                            tep_db_query("
+                                SELECT
+                                    *
+                                FROM `" . TABLE_CUSTOMER_SNS . "`
+                                WHERE `customers_id` = '" . $_SESSION['customer_id'] . "'
+                            ")
+                        );
+                        if(!empty($snRecord)):
+                        ?>
+                            <a href="http://www.facebook.com/<?php echo $snRecord['customers_sn_key']?>" style="float:left; overflow:hidden; margin-top:10px; display:block;border: 1px solid #ccc; padding:3px;">
+                                <img src="http://graph.facebook.com/<?php echo $snRecord['customers_sn_key']?>/picture" style="float: left;" />
+                                <span style="float: left;margin-left:3px;">Connected facebook account<span>
+                            </a>
+                        <?php else:?>
+                            <style>
+                                a.fb-logn {
+                                    background: url("/face_bool_login_button.jpg") repeat scroll 0 0 transparent;
+                                    color: transparent;
+                                    display: block;
+                                    height: 18px;
+                                    width: 134px;
+                                }
+                            </style>
+                            <a href="https://www.facebook.com/dialog/oauth?state=<?php echo FB_APP_ID?>&client_id=<?php echo FB_APP_ID?>&redirect_uri=<?php echo urlencode(tep_href_link('account.php', 'action=remote_login', 'SSL'))?>&response_type=code&scope=email,publish_stream,publish_actions" class="fb-logn" accesskey="">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                        <?php endif; ?>
+
+                    </td>
                   </tr>
                   <?php if($_SESSION['cm_is_member']) { ?><tr>
                     <td class="main"><?php echo tep_image(DIR_WS_IMAGES . 'arrow_green.gif') . ' <a href="' . tep_href_link('account_cm.php', '', 'SSL') . '">' . 'Seacoast Vitamins-Direct Membership Options' . '</a>'; ?></td>
