@@ -50,6 +50,7 @@ if(isset($HTTP_GET_VARS['action']))
             $snUser = tep_db_fetch_array($snUser);
             if(!$snUser)
             {
+
                 $check_email_query = tep_db_query("
                     SELECT
                         *
