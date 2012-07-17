@@ -67,19 +67,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="login.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/login.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="43" selection-start="1567" selection-end="1567" vertical-scroll-proportion="0.297005">
+            <state line="42" column="43" selection-start="1567" selection-end="1567" vertical-scroll-proportion="-13.730769">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search_tools.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/includes/functions/search_tools.php">
+      <file leaf-file-name="17.07.2012.addedConnectionsTableConsumersToSns.sql" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sql-cahnges/17.07.2012.addedConnectionsTableConsumersToSns.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="3" selection-start="673" selection-end="673" vertical-scroll-proportion="0.0">
+            <state line="7" column="61" selection-start="457" selection-end="457" vertical-scroll-proportion="0.09589041">
               <folding />
             </state>
           </provider>
@@ -158,7 +158,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/../php538a/php.ini" />
         <option value="$PROJECT_DIR$/includes/application_top.php" />
         <option value="$PROJECT_DIR$/includes/301urls.php" />
         <option value="D:/Program Files (x86)/Apache Software Foundation/Apache2.2/conf/httpd.conf" />
@@ -174,6 +173,7 @@
         <option value="$PROJECT_DIR$/includes/modules/similar_products_google.php" />
         <option value="$PROJECT_DIR$/product_info2.php" />
         <option value="$PROJECT_DIR$/login.php" />
+        <option value="$PROJECT_DIR$/sql-cahnges/17.07.2012.addedConnectionsTableConsumersToSns.sql" />
       </list>
     </option>
   </component>
@@ -239,6 +239,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Seacoast" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Seacoast Vitamins" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Seacoast" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sql-cahnges" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -503,11 +517,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/includes/functions/general.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2753" column="23" selection-start="47787" selection-end="47790" vertical-scroll-proportion="-11.48" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/product_info.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="128" column="16" selection-start="4472" selection-end="4472" vertical-scroll-proportion="0.0" />
@@ -590,7 +599,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/login.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="43" selection-start="1567" selection-end="1567" vertical-scroll-proportion="0.297005">
+        <state line="42" column="43" selection-start="1567" selection-end="1567" vertical-scroll-proportion="-13.730769">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sql-cahnges/17.07.2012.addedConnectionsTableConsumersToSns.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="61" selection-start="457" selection-end="457" vertical-scroll-proportion="0.09589041">
           <folding />
         </state>
       </provider>
