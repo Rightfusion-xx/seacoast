@@ -238,11 +238,6 @@ class shoppingCart
 
     public function get_saved_contents($code)
     {
-        global $customer_id;
-        if($customer_id == null)
-        {
-            return false;
-        }
         $saved = tep_db_fetch_array(tep_db_query('SELECT
                     *
                 FROM `customers_basket_saved`
