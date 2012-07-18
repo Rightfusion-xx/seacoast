@@ -214,7 +214,7 @@ function rowOutEffect(object) {
                                     width: 134px;
                                 }
                             </style>
-                            <a href="https://www.facebook.com/dialog/oauth?state=<?php echo FB_APP_ID?>&client_id=<?php echo FB_APP_ID?>&redirect_uri=<?php echo urlencode(tep_href_link('account.php', 'action=remote_login', 'SSL'))?>&response_type=code&scope=email,publish_stream,publish_actions" class="fb-logn" accesskey="">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                            <a href="https://www.facebook.com/dialog/oauth?state=<?php echo FB_APP_ID?>&client_id=<?php echo FB_APP_ID?>&redirect_uri=<?php echo urlencode(tep_href_link('account.php', 'action=remote_login', 'SSL'))?>&response_type=code&scope=<?php echo FB_APP_SCOPE?>" class="fb-logn" accesskey="">&nbsp;&nbsp;&nbsp;&nbsp;</a>
                         <?php endif; ?>
 
                     </td>

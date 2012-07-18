@@ -1,5 +1,6 @@
 <?php
 
+
 $hide_cart = true;
 require ("includes/application_top.php");
 
@@ -15,19 +16,19 @@ $breadcrumb->add(NAVBAR_TITLE, tep_href_link(FILENAME_SHOPPING_CART));
 $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_savings() / $cart -> show_total() * 100, 0) : 0;
 
 // if no shipping destination address was selected, use the customers own address as default
-if (!tep_session_is_registered('sendto')) 
+if (!tep_session_is_registered('sendto'))
 {
     tep_session_register('sendto');
     $sendto = $_SESSION['customer_default_address_id'];
-} 
+}
 else
 {
     // verify the selected shipping address
-    $check_address_query = tep_db_query("select count(*) as total from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . 
+    $check_address_query = tep_db_query("select count(*) as total from " . TABLE_ADDRESS_BOOK . " where customers_id = '" .
                                     (int)$customer_id . "' and address_book_id = '" . (int)$sendto . "'");
     $check_address = tep_db_fetch_array($check_address_query);
 
-    if ($check_address['total'] != '1') 
+    if ($check_address['total'] != '1')
     {
         $sendto = $_SESSION['customer_default_address_id'];
         if (tep_session_is_registered('shipping')) tep_session_unregister('shipping');
@@ -42,9 +43,9 @@ $locator = new geo_locator();
 function populateDeliveryFields($cCode)
 {
     global $order,$locator;
-    
+
     $country_info = $locator->getCountryInfoFromDb($cCode);
-    
+
     $order->delivery['country']['iso_code_2'] = $cCode;
     $order->delivery['country']['id'] = $country_info['countries_id'];
     $order->delivery['country_id'] = $country_info['countries_id'];
@@ -52,12 +53,12 @@ function populateDeliveryFields($cCode)
 }
 
 if (!tep_session_is_registered('customer_id')) // NOT logged in
-{    
+{
     // USA   Sample Ip: 65.65.219.98
     // Spain Sample Ip: 79.159.137.155
     $requestIp = $_SERVER [ 'REMOTE_ADDR' ];
     $cCode = $locator->locate($requestIp);
-    
+
     if ($locator->isValid($cCode))
     {
         populateDeliveryFields($cCode);
@@ -67,13 +68,13 @@ if (!tep_session_is_registered('customer_id')) // NOT logged in
 if (isset($_SESSION['country']))
 {
     populateDeliveryFields($_SESSION['country']);
-            
+
     if (($_SESSION[country] == 'US') && isset($_SESSION[postcode]))
     {
         $order->delivery['postcode'] = $_SESSION[postcode];
     }
 }
-else 
+else
 { // IF LOGGED IN, DELIVERY ADDRESS WILL BE POPULATED AUTOMATICALLY THROUGH ORDER CONSTRUCTOR
 }
 
@@ -105,44 +106,44 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 			require (DIR_WS_INCLUDES . 'header.php');
 		?>
 		<!-- header_eof //-->
-		
-        
+
+
 			<?php
-			
+
 			if (isset($_GET['products_id']) && !$cart -> in_cart($_GET['products_id'])) {
 				$cart -> add_cart($_GET['products_id']);
 			}
-			
-                 
+
+
                         ?>
 <?php
 	// the second condition "$cart->in_cart" is to cover a situation where user might enter
 	// a random number for products_id query string. (AH 30 January 2012)
 	if (isset($_GET['products_id']) && $cart->in_cart($_GET['products_id']) && strlen($_POST['qty'])<1)
-	{   
+	{
 
-                $product_info_query = tep_db_query("select pd.products_target_keyword, p.products_keywords, p.products_die, p.products_sku, p.products_upc,                                         
-                p.products_dieqty, pd.products_head_title_tag, pd.products_head_keywords_tag, 
+                $product_info_query = tep_db_query("select pd.products_target_keyword, p.products_keywords, p.products_die, p.products_sku, p.products_upc,
+                p.products_dieqty, pd.products_head_title_tag, pd.products_head_keywords_tag,
                 pd.products_head_desc_tag, pd.products_type,
-                pd.products_departments,pd.products_ailments,pd.products_uses, 
-                p.products_weight, p.products_ordered, pd.products_head_keywords_tag, 
-                pd.products_viewed, date_format(p.products_date_added,'%m/%d/%Y') as 
-                products_date_added, p.products_last_modified, 
-                p.products_id, pd.products_name, pd.products_description, p.products_model, 
+                pd.products_departments,pd.products_ailments,pd.products_uses,
+                p.products_weight, p.products_ordered, pd.products_head_keywords_tag,
+                pd.products_viewed, date_format(p.products_date_added,'%m/%d/%Y') as
+                products_date_added, p.products_last_modified,
+                p.products_id, pd.products_name, pd.products_description, p.products_model,
                 p.products_quantity, p.products_image, pd.products_url, p.products_msrp,
                 p.products_price, p.products_tax_class_id, p.products_date_available,
                 p.manufacturers_id, m.manufacturers_name, pd.products_takeaway
                 from " . TABLE_PRODUCTS . " p join  " . TABLE_PRODUCTS_DESCRIPTION . " pd on
                 p.products_id=pd.products_id join ". TABLE_MANUFACTURERS ." m on m.manufacturers_id=p.manufacturers_id
-                where p.products_status = '1' and p.products_id = '" . (int)$_REQUEST['products_id'] . 
+                where p.products_status = '1' and p.products_id = '" . (int)$_REQUEST['products_id'] .
             "' and pd.language_id =' " . (int)$languages_id . "'");
-            
+
 
             if(!($product_info = tep_db_fetch_array($product_info_query))){
             //No product found, redirect.
             redir301(HTTP_SERVER);
-        }                
-        
+        }
+
          $is_cm_eligible=strpos($product_info['products_name'],'*') ? 0 : 1;
 
     //Get price
@@ -151,13 +152,13 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 
     //Get product name
     $products_name = $product_info['products_name'];
-    
+
     //Get price
     if ($new_price != '')
         { $price=($new_price);}
           else
           { $price=$product_info['products_price'];}
-          
+
     //Calculate membership discounts
     if($product_info['manufacturers_id']==69)
     {
@@ -165,17 +166,17 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
     }
     elseif(!strpos($product_info['products_name'],'*'))
     {
-        $cm_price=$price*.85; //15% Off 
+        $cm_price=$price*.85; //15% Off
     }
     else {
         $cm_price=$price;
     }
 
-          
 
-        
-		?>  
-        
+
+
+		?>
+
                                 <div class="container">
         <div class="row">
         <div class="span12">
@@ -183,7 +184,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                 <tr>
                     <td valign="top" width="700">
         <a href="/product_info.php?products_id=<?php echo $product_info['products_id'];?>"><?php echo '<h1>'.$product_info['products_name'] .'</h1>'; ?>   </a>
-                                            
+
 		<table border="0" width="100%" cellspacing="1" cellpadding="2">
 			<tr>
 				<td style="padding-bottom:5px;">
@@ -197,16 +198,16 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 				$productDetailHtml .= '</div>';
 				echo $productDetailHtml;
 				?>
-				</td>      
+				</td>
                 <td>
                 <div id="item_details" style="text-align:left;margin:1em;">
 
-                   
-                          
-                
+
+
+
                 <?php if($product_info['products_die'] && $product_info['products_dieqty']<1){?>
                     <p><?php echo $product_info['products_name'];?> is not available from Seacoast Vitamins at this time. We recommend the following alternatives, below.</p>
-                <?php }else{?> <span style="margin-left:1em";>  
+                <?php }else{?> <span style="margin-left:1em";>
                     <form method="post" action="/shopping_cart.php" >
                     <input type="hidden" name="action" value="add_product">
                     <input type="hidden" name="products_id" value="<?php echo $_REQUEST['products_id']; ?>">
@@ -247,7 +248,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                     document.getElementById('extra_savings').style.display='inline';
                                 }
                             }
-                            </script> 
+                            </script>
                             <input type="checkbox" name="cm_freetrial" value="true" checked onclick="toggle_price(this.checked);"/> Yes! I want Direct-to-Member prices.<br/>My membership is FREE for 14-days.
                             <span id="extra_savings" style="display:none;"><br/><span style="color:#ff0000;font-weight:bold;">Save an extra <?php echo number_format(($price-$cm_price)/$price*100,0) ?>% plus
                             </span></span>
@@ -257,19 +258,19 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                 <li>Side Effects Protection; <br/><i style="font-weight:normal;">Return opened product</i></li>
                             </ul>
                         <?php } ?>
-                        
+
                         <div id="cm_price_disclaimer"><i>* Seacoast Vitamins-Direct price shown.</i><br/>
                         <?php if(!$_SESSION['cm_is_member']){ ?><a href="/community/" target="_blank" rel="nofollow">Learn more.</a><?php } ?>
                         </div>
-                        <?php } ?> 
+                        <?php } ?>
                     </div>
-                 <?php } ?>  <br style="clear:both"/></span></form> 
-                
-             </div>  
-                    
-                    
-                
-                </td>   
+                 <?php } ?>  <br style="clear:both"/></span></form>
+
+             </div>
+
+
+
+                </td>
                 <td>
                 <div style="border:1px solid #665;padding:1em;margin:0px;text-align:center;">
                         <p>
@@ -290,14 +291,14 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 
 		</table> </td></tr></table>
         </div> </div></div>
-        
 
-        
-        
-                
-                                            
-            <?php }else{ 
-            
+
+
+
+
+
+            <?php }else{
+
             echo tep_draw_form('cart_quantity', tep_href_link(FILENAME_SHOPPING_CART, '', 'SSL'), 'post');
             ?>
 <div class="container">
@@ -305,9 +306,9 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 <div class="span12">
 <h1>Seacoast Vitamins-Direct Savings</h1>
 
-        
+
         <table style="margin-top: 30px;" border="0" width="100%" cellspacing="0" cellpadding="2">
-    
+
         <tr>
             <td colspan="5">
             <?php
@@ -344,16 +345,16 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                 }
             }
         }
-        
+
         for ($i = 0, $n = sizeof($products); $i < $n; $i++) {
-            
+
                 $info_box_contents[] = array();
-              
+
                 $cur_row = sizeof($info_box_contents) - 1;
-                $info_box_contents[$cur_row][] = array('align' => 'center', 'params' => 'class="productListing-data" valign="top"', 
+                $info_box_contents[$cur_row][] = array('align' => 'center', 'params' => 'class="productListing-data" valign="top"',
                                         'text' => tep_draw_checkbox_field('cart_delete[]', $products[$i]['id']));
-                
-                $products_name = '' . '<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $products[$i]['id']) . '"><b>' . 
+
+                $products_name = '' . '<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $products[$i]['id']) . '"><b>' .
                                     $products[$i]['name'] . '</b></a>';
                 if (STOCK_CHECK == 'true') {
                         $stock_check = tep_check_stock($products[$i]['id'], $products[$i]['quantity']);
@@ -362,7 +363,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                 $products_name .= $stock_check;
                         }
                 }
-                
+
                 if (isset($products[$i]['attributes']) && is_array($products[$i]['attributes'])) {
                         reset($products[$i]['attributes']);
                         while (list($option, $value) = each($products[$i]['attributes'])) {
@@ -370,15 +371,15 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                         }
                 }
                 $products_name .= '';
-                
+
                 $info_box_contents[$cur_row][] = array('params' => 'class="productListing-data"', 'text' => $products_name);
-                $info_box_contents[$cur_row][] = array('align' => 'center', 'params' => 'class="productListing-data" valign="top"', 'text' => $products[$i]['id'] == CM_FTPID ? tep_draw_hidden_field('products_id[]', $products[$i]['id']) . '&nbsp;' : tep_draw_input_field('cart_quantity[]', $products[$i]['quantity'], 'size="4"') . 
+                $info_box_contents[$cur_row][] = array('align' => 'center', 'params' => 'class="productListing-data" valign="top"', 'text' => $products[$i]['id'] == CM_FTPID ? tep_draw_hidden_field('products_id[]', $products[$i]['id']) . '&nbsp;' : tep_draw_input_field('cart_quantity[]', $products[$i]['quantity'], 'size="4"') .
                         tep_draw_hidden_field('products_id[]', $products[$i]['id']));
 
                 $info_box_contents[$cur_row][] = array('align' => 'right', 'params' => 'class="productListing-data" valign="top"', 'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b>' . $currencies -> display_price($products[$i]['final_price'], tep_get_tax_rate($products[$i]['tax_class_id']), $products[$i]['quantity']) . '</b>');
-                $info_box_contents[$cur_row][] = array('align' => 'right', 'params' => 'class="productListing-data" valign="top"', 'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b>' . $currencies -> display_price($products[$i]['savings'], tep_get_tax_rate($products[$i]['tax_class_id']), $products[$i]['quantity']) . '</b>');   
+                $info_box_contents[$cur_row][] = array('align' => 'right', 'params' => 'class="productListing-data" valign="top"', 'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b>' . $currencies -> display_price($products[$i]['savings'], tep_get_tax_rate($products[$i]['tax_class_id']), $products[$i]['quantity']) . '</b>');
         }
-        
+
         // shopping cart table starts here (AH 07 Feb 2012)
         $pl =  '<table style="border-top:1px solid lightgray" class="table table-striped">';
         $pl .= '<thead>';
@@ -389,15 +390,15 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
         $pl .= '<th>Savings</th>';
         $pl .= '</thead>';
         $pl .= '<tbody>';
-        
+
         for ($i=1; $i<count($info_box_contents); $i++)
         {
             $pl .= '<tr>';
-            
+
             for ($j=0; $j<count($info_box_contents[$i]); $j++)
             {
                 //if (($i % 2) == 1) { $pl .= '<td style="background-color:#F9F9F9">'. $info_box_contents[$i][$j][text]. '</td>'; }
-                //else { 
+                //else {
                     $pl .= '<td>'. $info_box_contents[$i][$j][text]. '</td>';
                 //}
             }
@@ -406,23 +407,23 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
         $pl.='<tr><td colspan="2">
                 <input type="hidden" name="action" value="update_product" />
                 <input type="submit" value="Remove Selected">
-                </td><td><input type="submit" value="Update Quantity" /></td><td></td><td></td></tr>';                                                            
+                </td><td><input type="submit" value="Update Quantity" /></td><td></td><td></td></tr>';
         $pl .= '</tbody>';
         $pl .= '</table>';
-        
+
         echo $pl;
-        
+
         // shopping cart table ends
 
                                 ?>
-            </td>             
+            </td>
                                 </tr>
-                                </table>            
+                                </table>
                                 </div>
                                 </div>
-                                
+
 <div class="row">
-    <div class="span12">  
+    <div class="span12">
      <?php if($cart->in_cart(CM_FTPID) || (!$_SESSION['cm_is_member']) && $psavings>0){
                                         ?>
 
@@ -438,16 +439,17 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 
 <?php }?>
                                                 </div>
-                                                
+
                                         </div><?php }?>
-                                        
-                                        
+
+
     </div>
-</div>                                
-                                             
+</div>
+
 <div class="row" style="padding-top:20px;padding-bottom:40px;">
-    <div class="span6"> 
-        <?php echo '<a class="btn btn-primary" title="Checkout Now" href="' . tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '"><i class="icon-play icon-white">&nbsp;</i>&nbsp;Checkout Now</a><BR>';?>
+    <div class="span6">
+        <?php echo '<a style="float:left;" class="btn btn-primary" title="Checkout Now" href="' . tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '"><i class="icon-play icon-white">&nbsp;</i>&nbsp;Checkout Now</a>';?>
+        <?php if($_SESSION['customer_id']):?><a style="margin-left:10px;" class="btn btn-primary" target="_blank" href="/publish_cart.php">Publish to facebook</a><?php endif;?>
     </div>
     <div class="span6">
     <?php if($cart->show_savings()>0) {
@@ -455,19 +457,19 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                         <br/>
                                         <?php }?>
                                         <?php echo SUB_TITLE_SUB_TOTAL;?>
-                                        <?php echo $currencies -> format($cart -> show_total());?>    
-        
+                                        <?php echo $currencies -> format($cart -> show_total());?>
+
     </div>
 </div>
 
-                                
-                                
-                                
-                              
-                                
-                                
+
+
+
+
+
+
                                 <div class="row ">
-                                    
+
                                 <div class="span12">
                                 <div class="alert alert-info">
                                         <?php
@@ -491,15 +493,15 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                                         f.submit();
                                                         return true;
                                                     }
-                                                    
+
                                                 </script>
-                                                
-                                                
+
+
                                                 <?php
-                                                
+
                                                 if (!tep_session_is_registered('customer_id'))
                                                 {
-                                                    if ((isset($_SESSION['country']) && ($_SESSION['country'] == "US")) || 
+                                                    if ((isset($_SESSION['country']) && ($_SESSION['country'] == "US")) ||
                                                             ($order->delivery['country']['iso_code_2'] == "US"))
                                                     {
                                                             echo 'Enter zip code: <br />';
@@ -509,8 +511,8 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                                     }
                                                 }
                                                 ?>
-                               
-                                    
+
+
                                         <?php
                                             function getLowestShippingCost()
                                             {
@@ -518,8 +520,8 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                                 return number_format($cheapestShippingRate, 2);
                                             }
 
-                                            if($cart->show_total()>=25 && 
-                                                defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && 
+                                            if($cart->show_total()>=25 &&
+                                                defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') &&
                                                 (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true'))
                                             {
                                                 echo 'Ships FREE<br/>(US Lower 48)';
@@ -541,32 +543,32 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                             }
                                          ?>
                                          <?php echo '<br/><a class="btn btn-primary" title="Checkout Now" href="' . tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '"><i class="icon-play icon-white">&nbsp;</i>&nbsp;Checkout Now</a><BR>';?>
-                               
+
 
     <p><b>Need international or expedited shipping? Continue to checkout for real-time rates. </b></p></div>
     </div>
     </div>
-    
+
 
 </div>
 </div>
 
-                                
-                                
-        
-            
-   
 
-           
-            
 
-       
+
+
+
+
+
+
+
+
                                                            <script type="text/javascript">
 
                                                         function updateProd(obj, actionValue) {
-                                                            
+
                                                             var f = document.forms(obj);
-                                                            
+
                                                             //var f = list.form;
                                                             if (actionValue) {
                                                                 f.action = '?action=' + actionValue;
@@ -575,8 +577,8 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                                             return true;
                                                         }
                                                         </script>
-					
-			
+
+
 			<?php
 			if ((USE_CACHE == 'true') && empty($SID)) {
 				echo tep_cache_also_purchased(3600);
@@ -603,7 +605,7 @@ on m.manufacturers_id = p.manufacturers_id where p.products_id = '" . (int)$HTTP
 					}
 					?>
 					</td>
-					
+
 					</tr> <?php
 
 if ($cart->count_contents() > 0) {
@@ -642,12 +644,12 @@ if (STOCK_ALLOW_CHECKOUT == 'true') {
 					<tr>
 						<td align="center" class="main"><?php new infoBox( array( array('text' => TEXT_CART_EMPTY)));?></td>
 					</tr>
-					
+
 					<?php
 					}
 					?> <?php } ?>
-					</table></form>  
-		
+					</table></form>
+
 		<?php
 			require (DIR_WS_INCLUDES . 'footer.php');
 		?>
@@ -703,9 +705,9 @@ if (STOCK_ALLOW_CHECKOUT == 'true') {
 			}
 		</script>
 		<!-- End of Google Website Optimizer Conversion Script -->
-		
-        
-        
+
+
+
 	</body>
 </html>
 <?php
