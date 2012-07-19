@@ -5,13 +5,15 @@ $server_url=((substr($_SERVER['SERVER_PROTOCOL'],0,4)=="HTTP")?"http://":"https:
 
 if(empty($_SESSION['customer_id']))
 {
-    echo '<script type="text/javascript">window.close();</script>';
+    header('Location: https://www.facebook.com/dialog/oauth?state=' .
+        FB_APP_ID . '&client_id=' . FB_APP_ID . '&redirect_uri=' .
+        urlencode(tep_href_link(FILENAME_LOGIN, 'action=remote_login&back=publish_cart.php', 'SSL')) . '&response_type=code&scope=' . FB_APP_SCOPE);
     exit();
 }
 
-if(!empty($_REQUEST['action']) && $_REQUEST['action'] == 'callback' && !empty($_REQUEST['code']))
+if(!empty($_REQUEST['action']) && $_REQUEST['action'] == 'callback' && !empty($_REQUEST['scode']))
 {
-    $code = $_REQUEST['code'];
+    $code = $_REQUEST['scode'];
     $saved = $cart->get_saved_contents($code);
     if(!empty($saved))
     {
@@ -45,7 +47,7 @@ else
         'name=' . urlencode('Share Shopping Cart') . '&' .
         'caption=' . urlencode('My Shopping Cart') . '&' .
         'description=' . urlencode($contents) . '&' .
-        'redirect_uri=' . urlencode($server_url.'/publish_cart.php?action=callback&code=' . $code);
+        'redirect_uri=' . urlencode($server_url.'/publish_cart.php?action=callback&scode=' . $code);
     header('Location: ' . addslashes($url));
     exit();
 }

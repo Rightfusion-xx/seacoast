@@ -141,7 +141,14 @@ if(isset($HTTP_GET_VARS['action']))
                 }
                 else
                 {
-                    tep_redirect(tep_href_link(FILENAME_DEFAULT));
+                    if(empty($_REQUEST['back']))
+                    {
+                        tep_redirect(tep_href_link(FILENAME_DEFAULT));
+                    }
+                    else
+                    {
+                        tep_redirect(tep_href_link($_REQUEST['back']));
+                    }
                 }
             }
         }
@@ -193,7 +200,9 @@ $breadcrumb->add(NAVBAR_TITLE, tep_href_link(FILENAME_LOGIN, '', 'SSL'));
     <div class="container">
         <div class="row">
             <div class="span12">
-                <a href="https://www.facebook.com/dialog/oauth?state=<?php echo FB_APP_ID?>&client_id=<?php echo FB_APP_ID?>&redirect_uri=<?php echo urlencode(tep_href_link(FILENAME_LOGIN, 'action=remote_login', 'SSL'))?>&response_type=code&scope=<?php echo FB_APP_SCOPE?>" class="fb-logn" accesskey="">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                <a href="https://www.facebook.com/dialog/oauth?state=<?php echo FB_APP_ID?>&client_id=<?php echo FB_APP_ID?>&redirect_uri=<?php echo urlencode(tep_href_link(FILENAME_LOGIN, 'action=remote_login' . (
+                    !empty($_REQUEST['back'])? '&back=' . $_REQUEST['back'] : ''
+                ), 'SSL'))?>&response_type=code&scope=<?php echo FB_APP_SCOPE?>" class="fb-logn" accesskey="">&nbsp;&nbsp;&nbsp;&nbsp;</a>
                 <TABLE BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
                     <TR>
                         <td width="100%" valign="top">

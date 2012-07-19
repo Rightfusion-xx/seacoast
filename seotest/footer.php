@@ -121,7 +121,7 @@
         <b><a class="btn" href="/checkout_shipping.php">Checkout Now </a></b>
         -->
             <input class="btn" type="button" value="Checkout Now" onClick="document.location='/checkout_shipping.php';">
-            <?php if($_SESSION['customer_id']):?><a target="_blank" href="/publish_cart.php">Publish to facebook</a><?php endif;?>
+            <a target="_blank" href="/publish_cart.php">Publish to facebook</a>
         </nobr>
     </div>
 

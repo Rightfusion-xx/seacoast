@@ -363,7 +363,9 @@ function rowOutEffect(object) {
       <tr>
         <td><table border="0" width="100%" cellspacing="0" cellpadding="0">
           <tr>
-            <td><h1>Select Shipping</h1></td>
+            <td>
+                <h1>Select Shipping</h1>
+            </td>
             <td class="pageHeading" align="right"></td>
           </tr>
         </table></td>
@@ -409,7 +411,6 @@ function rowOutEffect(object) {
         </table></td>
       </tr>
         <?php require('includes/fec/products_box.php');?>
-        <?php if(!empty($_SESSION['customer_id'])):?>
             <tr>
                 <td>
                     <div style="border: 1px solid #0088CC;margin-top: 10px;padding:10px;">
@@ -417,15 +418,11 @@ function rowOutEffect(object) {
                     </div>
                 </td>
             </tr>
-        <?php endif;?>
  		<tr>
              <td  valign="top" style="line-height:175%; ">
              	<h2 style="padding-top:30px;">Your Information</h2>
 				<div style="padding-bottom:20px;padding-right:100px;float:left;"><?php echo '<b>' . 'Shipping To:' . '</b> <a href="' . tep_href_link(FILENAME_CHECKOUT_SHIPPING_ADDRESS, '', 'SSL') . '"><span class="orderEdit">(' . 'Change Address' . ')</span></a>'; ?>
-             		 <br/><?php echo tep_address_format($order->delivery['format_id'], $order->delivery, 1, ' ', '<br>');
-
-
-                              ?>
+             		 <br/><?php echo tep_address_format($order->delivery['format_id'], $order->delivery, 1, ' ', '<br>');?>
             	  </div>
 
 				<div style="padding-bottom:20px;float:left;clear:right;"><?php echo '<b>' . 'Bill To:' . '</b> <a href="' . tep_href_link(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL') . '"><span class="orderEdit">(' . 'Change Address' . ')</span></a>'; ?>
