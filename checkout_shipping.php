@@ -408,10 +408,16 @@ function rowOutEffect(object) {
                </tr>
         </table></td>
       </tr>
- <?php	require('includes/fec/products_box.php');
-
- ?>
-
+        <?php require('includes/fec/products_box.php');?>
+        <?php if(!empty($_SESSION['customer_id'])):?>
+            <tr>
+                <td>
+                    <div style="border: 1px solid #0088CC;margin-top: 10px;padding:10px;">
+                        <a style="margin-left:10px;" target="_blank" href="/publish_cart.php">Publish your shopping cart to facebook and a free shipping in U.S.</a>
+                    </div>
+                </td>
+            </tr>
+        <?php endif;?>
  		<tr>
              <td  valign="top" style="line-height:175%; ">
              	<h2 style="padding-top:30px;">Your Information</h2>
