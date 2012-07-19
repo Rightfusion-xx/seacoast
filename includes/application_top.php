@@ -1,9 +1,8 @@
 <?php
-
 if(!$app_top_included)
 {
-    
-  
+
+
 
 ob_start();
 //check referrer
@@ -23,7 +22,7 @@ if(strlen($_SERVER['HTTP_REFERER'])>0 && strpos(substr($_SERVER['HTTP_REFERER'],
 	{
 		$rulsid=$_COOKIE['rulsid'];
 	}
-	
+
 	//Log referrer
 	//tep_db_query('insert into referers("rulsid","referer_url") values("'.tep_db_input($rulsid).'","'.tep_db_input($_SERVER['HTTP_REFERER']).'")');
 
@@ -32,7 +31,7 @@ if(strlen($_SERVER['HTTP_REFERER'])>0 && strpos(substr($_SERVER['HTTP_REFERER'],
 
 //PHP 5.0 Upgrade workaround
 //PHP 5.0 Upgrade workaround
-$HTTP_GET_VARS=& $_GET;                                       
+$HTTP_GET_VARS=& $_GET;
 $HTTP_POST_VARS=& $_POST;
 $HTTP_COOKIE_VARS=& $_COOKIE;
 $HTTP_SERVER_VARS=& $_SERVER;
@@ -46,7 +45,7 @@ $HTTP_SESSION_VARS=& $_SESSION;
         $_SERVER['HTTPS']='off';
     }
 
-                      
+
 
 //$language='english';
 //$languages_id=1;
@@ -117,22 +116,26 @@ ActiveRecord\Config::initialize(function($cfg)
     $cfg->set_model_directory(DIR_WS_INCLUDES . '/db_models');
     $cfg->set_connections(array(
         DB_DATABASE => 'mysql://'.DB_SERVER_USERNAME.':'.DB_SERVER_PASSWORD.'@'.DB_SERVER.'/'.DB_DATABASE));
-    
+
     $cfg->set_default_connection(DB_DATABASE);
 
 });
-  
+
 // define general functions used application-wide
   require(DIR_WS_FUNCTIONS . 'general.php');
   require(DIR_WS_FUNCTIONS . 'html_output.php');
 
 // make a connection to the database... now
   tep_db_connect() or die('Unable to connect to database server!');
-  
+
 // see if configuration file exists, and how old.
    require(DIR_WS_CLASSES . 'megacache.php');
-   
+
    $cache=new megacache(600, 'application_top');
+
+
+
+
    if(!$evcode=$cache->doCache('constants', false))
    {
     $evcode='';
@@ -142,8 +145,15 @@ ActiveRecord\Config::initialize(function($cfg)
     while ($configuration = tep_db_fetch_array($configuration_query)) {
       if(!defined($configuration["cfgKey"]))
       {
-        $evcode.='define(\''.$configuration["cfgKey"].'\', \''.$configuration["cfgValue"].'\');';
-        define($configuration["cfgKey"],  $configuration["cfgValue"]);
+        if($configuration["cfgKey"] == 'MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING')
+        {
+            $freeShippingDefined = '\''.$configuration["cfgValue"].'\'';
+        }
+        else
+        {
+            $evcode.='define(\''.$configuration["cfgKey"].'\', \''.$configuration["cfgValue"].'\');';
+            define($configuration["cfgKey"],  $configuration["cfgValue"]);
+        }
       }
     }
     $cache->addCache('constants', $evcode);
@@ -152,7 +162,6 @@ ActiveRecord\Config::initialize(function($cfg)
    {
      eval($evcode);
    }
-   
 
 
 
@@ -164,7 +173,7 @@ ActiveRecord\Config::initialize(function($cfg)
 if(isset($_SERVER['HTTP_REFERER']))
   {
   if((strpos($_SERVER['HTTP_REFERER'],'health=')>0 || strpos($_SERVER['HTTP_REFERER'],'q=')>0 || strpos($_SERVER['HTTP_REFERER'],'p=')>0) && strpos($_SERVER['HTTP_REFERER'],'cache:')<1 && strpos($_SERVER['HTTP_USER_AGENT'],'scanalert')<1)
-  {   
+  {
       $searchq=parse_section($_SERVER['HTTP_REFERER'].'<eof>','?','<eof>');
       $searchq=preg_split('/&/',$searchq);
       $ntc=true;
@@ -175,14 +184,14 @@ if(isset($_SERVER['HTTP_REFERER']))
           {
               $search_ref=trim(urldecode(parse_section($item.'<eof>','=','<eof>')));
               $test=preg_split('/=/',str_replace('<bof>','',$item));
-  
+
               if($test[0]=='q' || $test[0]=='p')
               {
                   //no need to go further.
                   $ntc=false;
                   break;
               }
-              
+
           }
        }
       if(strpos('<bof>'.$search_ref,'site:')>0)
@@ -190,7 +199,7 @@ if(isset($_SERVER['HTTP_REFERER']))
           //modify for site: queries
           $search_ref=trim(substr($search_ref,strpos($search_ref,' ')+1));
       }
-      
+
        if(strlen($search_ref)>0)
        {
           //keyword found. Capitalize on the opportunity.
@@ -200,19 +209,19 @@ if(isset($_SERVER['HTTP_REFERER']))
               if(tep_db_fetch_array(tep_db_query('SELECT * FROM site_queries WHERE param_id="'.tep_db_input($page_param).'" and query="'.tep_db_input($search_ref).'"')))
               {
                   tep_db_query('UPDATE site_queries SET hits=hits+1 WHERE param_id="'.tep_db_input($page_param).'" and query="'.tep_db_input($search_ref).'"');
-                  
+
               }
               else
               {
                   tep_db_query('INSERT INTO site_queries(param_id,query) VALUES("'.tep_db_input($page_param).'","'.tep_db_input(strtolower($search_ref)).'")');
               }
-          }   
+          }
       }
-  }    
+  }
 }
 
 // include modURLs for URL Rewrite
-  require(DIR_WS_MODULES.'modURLs.php');  
+  require(DIR_WS_MODULES.'modURLs.php');
 
 // include shopping cart class
   require(DIR_WS_CLASSES . 'shopping_cart.php');
@@ -248,7 +257,7 @@ if(isset($_SERVER['HTTP_REFERER']))
 
   $session_started = tep_session_start();
   tep_session_is_registered('osCsid') ;
-  
+
   // Log http_referer chain
   /*
   if(!tep_session_is_registered('referer'))
@@ -258,11 +267,11 @@ if(isset($_SERVER['HTTP_REFERER']))
   }
   if(!strpos($_SERVER['HTTP_REFERER'],' '.HTTP_SERVER))
     {
-       echo strpos($_SERVER['HTTP_REFERER'],' '.HTTP_SERVER); exit(); 
+       echo strpos($_SERVER['HTTP_REFERER'],' '.HTTP_SERVER); exit();
         array_push($referer,$_SERVER['HTTP_REFERER']);
-        
-    }  
-                                          
+
+    }
+
                                           echo serialize($referer);exit();      */
 
 // set SID once, even if empty
@@ -334,8 +343,8 @@ if(isset($_SERVER['HTTP_REFERER']))
     $language=&$_SESSION['language'];
     $languages_id=&$_SESSION['languages_id'];
   }
-  
-  
+
+
   require(DIR_WS_LANGUAGES . $language . '.php');
 
 // currency
@@ -352,7 +361,7 @@ if(isset($_SERVER['HTTP_REFERER']))
     $currency=&$_SESSION['currency'];
 
   }
-  
+
 
 
 
@@ -366,8 +375,8 @@ if(isset($_SERVER['HTTP_REFERER']))
      $navigation = new navigationHistory;
   }
   $navigation->add_current_page();
-  
-  
+
+
   if($_POST['country'])
 {
     $_SESSION['country']=$_POST['country'];
@@ -546,35 +555,35 @@ if($_REQUEST['do_admin']=='true')
 }
 
 tep_session_is_registered('do_admin');
-  
+
   if($do_admin)
   {
-      
+
     if(!tep_session_is_registered('authenticated'))
     {
-        
+
         tep_session_register($authenticated);
-        $authenticated=false;   
+        $authenticated=false;
     }
 
     if(!tep_session_is_registered('tries'))
     {
-        $tries=1; 
-        tep_session_register($tries); 
-    }  
+        $tries=1;
+        tep_session_register($tries);
+    }
 
     if( isset($_SERVER['PHP_AUTH_USER']) && !$authenticated)
     {
-        // Authenticate user  
-        
+        // Authenticate user
+
         $get_user=tep_db_fetch_array(tep_db_query('select * from customers c join user_rights ur on ur.customers_id=c.customers_id where customers_email_address="'.$_SERVER['PHP_AUTH_USER'].'" and user_rights like "%admin%"'));
-        
+
 
         if(tep_validate_password($_SERVER['PHP_AUTH_PW'], $get_user['customers_password']))
         {
             $authenticated=true;
         }
-                      
+
     }
 
     if (!$authenticated && !$system_login) {
@@ -584,12 +593,12 @@ tep_session_is_registered('do_admin');
             tep_redirect(HTTP_SERVER);
         }
         header('WWW-Authenticate: Basic realm="Seacoast"');
-        header('HTTP/1.0 401 Unauthorized');  
-        $tries+=1;  
+        header('HTTP/1.0 401 Unauthorized');
+        $tries+=1;
         exit();
     }
   }
-  
+
   */
 
   require(DIR_WS_FUNCTIONS . 'articles.php');
@@ -677,16 +686,16 @@ if(strlen($handler['redirect'])>0)
 {
 	require($_SERVER['DOCUMENT_ROOT'].$handler['handler']);
 	exit();
-	
+
 }
 
 
 
   tep_expire_specials();
-  
-  
 
-  
+
+
+
     ////////////////////////////////////////////////////////////////////
 //Price modifier
 
@@ -698,6 +707,23 @@ $pmod=1.0;
 
 $app_top_included=true;
 }
-
 ob_clean();
+
+if($_SESSION['customer_id'])
+{
+    $customer = tep_db_fetch_array(tep_db_query('select * from customers where customers_id="'.tep_db_input($_SESSION['customer_id']).'"'));
+    if($customer['customers_basket_published'] == 'yes')
+    {
+        define('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING', 'true');
+        define('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING_over', 999999999999999999);
+    }
+    else
+    {
+        define('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING', (empty($freeShippingDefined) ? 'false' : $freeShippingDefined));
+    }
+}
+else
+{
+    define('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING', (empty($freeShippingDefined) ? 'false' : $freeShippingDefined));
+}
 ?>

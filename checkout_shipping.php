@@ -100,6 +100,7 @@ while (list($key, $value) = each($_POST))
 if ( defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true') ) {
     $pass = false;
     $state = tep_get_zone_code($order->delivery['country_id'], $order->delivery['zone_id'], $state);
+
     switch (MODULE_ORDER_TOTAL_SHIPPING_DESTINATION) {
         case 'national':
             if ($order->delivery['country_id'] == STORE_COUNTRY  && strtoupper($state)!='HI' && strtoupper($state)!='AK' && strtoupper($state)!='PR') {
