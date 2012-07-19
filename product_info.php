@@ -447,7 +447,7 @@ if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
             and whole-body health, chose potent nutrition with our affordable, discounted <?php echo $product_info['products_name'];?>. Your satisfaction is <b>Fully Guaranteed</b>."
         </p> 
                  
-                 <div id="adsense_ad" style="margin-top:1em;">
+          <?php if($product_info['products_id']<>'9861'){?>       <div id="adsense_ad" style="margin-top:1em;">
     <script type="text/javascript"><!--
     google_ad_client = "ca-pub-6691107876972130";
     /* Product Page Right Side */
@@ -460,7 +460,7 @@ if(!$cache->doCache('products_main2'.$pmod, true, $lastmod))
     src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
     </script>
     </div>
-    
+                            <?php } ?>
 
     
     

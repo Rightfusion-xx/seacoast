@@ -22,10 +22,7 @@
       $check_customer = tep_db_fetch_array($check_customer_query);
 
       $new_password = tep_create_random_value(ENTRY_PASSWORD_MIN_LENGTH);
-	  
-	  echo "changing password";
-	  exit();
-	  
+	  	  
 	  $crypted_password = tep_encrypt_password($new_password);
 	  
 	  $update_query = "update " . TABLE_CUSTOMERS . " set customers_password = '" . tep_db_input($crypted_password) . "' where customers_id = '" . (int)$check_customer['customers_id'] . "'";

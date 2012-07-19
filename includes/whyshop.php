@@ -1,7 +1,9 @@
 
 
 <h1>Vitamins - Direct To Members from Seacoast Vitamins</h1>
-
+<p>
+<a href="https://plus.google.com/101363395290698488178" rel="publisher">Find us on Google+</a>
+</p>
 <br/>
 <h2>Movers & Shakers - Best Selling & Featured Supplements</h2>
 
@@ -20,10 +22,10 @@ $listing_sql='select ' . $select_column_list .'  sum(op.products_quantity)  as v
     from products p join products_description pd on pd.products_id=p.products_id join orders_products op on op.products_id=p.products_id
 	  join orders o on o.orders_id=op.orders_id join manufacturers m on m.manufacturers_id=p.manufacturers_id
     LEFT OUTER join specials s on s.products_id=p.products_id
-    where op.products_id=p.products_id and date_purchased>=curdate()- INTERVAL 4 DAY and orders_status=3
+    where (op.products_id=p.products_id and date_purchased>=curdate()- INTERVAL 4 DAY and orders_status=3) or p.products_id=9861
     group by p.products_id
     order by velocity desc
-    limit 0,25';
+    limit 0,28';
         
     $rows=1;
    $listing_sql=tep_db_query($listing_sql);

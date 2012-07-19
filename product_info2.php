@@ -435,7 +435,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
                         echo '<br />';
                     ?>
                 </p>        
-                
+ <?php if($product_info['products_id']<>'9861'){?>                      
                 <script type="text/javascript">
 
 //<![CDATA[
@@ -459,6 +459,7 @@ $tmp_desc=stripslashes($product_info['products_description']);
 </script> <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 
 </script>
+<?php } ?>
                 <?php if(strtotime($product_info['products_last_modified'])>strtotime('2007-03-01')||strlen($tmp_desc)<150)
                     {
                         include(DIR_WS_MODULES . 'similar_products_google.php');}?>                   
