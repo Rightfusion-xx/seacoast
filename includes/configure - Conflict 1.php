@@ -46,5 +46,8 @@
   
   define('CM_FTPID','2531');
   define('CM_PID','2526');
+  
+  define('FB_APP_ID','322579717834677');
+define('FB_APP_SECRET','518d413dd48ca39f82bd9f521156b689');
 
 ?>

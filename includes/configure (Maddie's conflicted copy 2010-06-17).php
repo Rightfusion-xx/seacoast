@@ -51,4 +51,7 @@
   define('FILE_CACHE_LOCATION','c:\\tmp\\');
   
   define('ENABLE_MEGACACHE',true);
+  
+  define('FB_APP_ID','322579717834677');
+define('FB_APP_SECRET','518d413dd48ca39f82bd9f521156b689');
 ?>
