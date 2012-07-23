@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/404.php" afterPath="$PROJECT_DIR$/404.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/publish_cart.php" afterPath="$PROJECT_DIR$/publish_cart.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/saved_cart.php" afterPath="$PROJECT_DIR$/saved_cart.php" />
     </list>
     <ignored path="Seacoast Vitamins.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -102,7 +99,25 @@
       <file leaf-file-name="404.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/404.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="283" column="23" selection-start="7645" selection-end="7645" vertical-scroll-proportion="0.22386831">
+            <state line="242" column="18" selection-start="6595" selection-end="6595" vertical-scroll-proportion="0.454321">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="313" column="7" selection-start="13006" selection-end="13006" vertical-scroll-proportion="-46.576923">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application_top.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/includes/application_top.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="720" column="39" selection-start="23976" selection-end="23976" vertical-scroll-proportion="-38.6">
               <folding />
             </state>
           </provider>
@@ -223,6 +238,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Seacoast" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Seacoast Vitamins" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Seacoast" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="includes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -515,23 +544,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="313" column="7" selection-start="13006" selection-end="13006" vertical-scroll-proportion="-15.230769">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/includes/301urls.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="7" column="12" selection-start="525" selection-end="525" vertical-scroll-proportion="0.1325167">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/application_top.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="3" selection-start="9" selection-end="9" vertical-scroll-proportion="0.018930959">
           <folding />
         </state>
       </provider>
@@ -557,13 +572,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/saved_cart.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="41" selection-start="68" selection-end="68" vertical-scroll-proportion="40.666668">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/publish_cart.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="47" column="33" selection-start="1731" selection-end="1731" vertical-scroll-proportion="0.0">
@@ -571,9 +579,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/includes/application_top.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="720" column="39" selection-start="23976" selection-end="23976" vertical-scroll-proportion="-38.6">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="313" column="7" selection-start="13006" selection-end="13006" vertical-scroll-proportion="-46.576923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/saved_cart.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="41" selection-start="68" selection-end="68" vertical-scroll-proportion="40.666668">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/404.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="283" column="23" selection-start="7645" selection-end="7645" vertical-scroll-proportion="0.22386831">
+        <state line="242" column="18" selection-start="6595" selection-end="6595" vertical-scroll-proportion="0.454321">
           <folding />
         </state>
       </provider>

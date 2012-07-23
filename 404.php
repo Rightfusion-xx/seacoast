@@ -242,7 +242,6 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
             exit();
             break;
 
-
         case '/naturalist/':
             header("HTTP/1.0 200 OK");
             preg_match('/(-\d+$|-\d+-p\d+$)/i', $url_title, $matches);
@@ -254,6 +253,7 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
             $modURL=true;
             set_old_uri();
             include('./index.php');
+            $_SERVER['QUERY_STRING'] = 'indexphp?manufacturers_id='.$cPath;
             exit();
             break;
 
