@@ -42,10 +42,10 @@ else
 
     $url = 'http://www.facebook.com/dialog/feed?'.
         'app_id=' . FB_APP_ID . '&' .
-        'link=' . urlencode($server_url . '/saved_cart.php?code=' . $code) . '&' .
+        'link=' . urlencode($server_url . '/cart/' . $code) . '&' .
         'picture=' . urlencode($server_url . '/favicon.ico') .'&' .
-        'name=' . urlencode('Share Shopping Cart') . '&' .
-        'caption=' . urlencode('My Shopping Cart') . '&' .
+        'name=' . urlencode('I just got free shipping on my Seacoast Vitamins, and you can, too! Here\'s my shopping cart!') . '&' .
+        'caption=' . urlencode(' ') . '&' .
         'description=' . urlencode($contents) . '&' .
         'redirect_uri=' . urlencode($server_url.'/publish_cart.php?action=callback&scode=' . $code);
     header('Location: ' . addslashes($url));

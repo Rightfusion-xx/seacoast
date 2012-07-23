@@ -78,10 +78,33 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
     {
         $products_id=$products_id[1];
     }
-
+    function convertUriVarsToReq($uri)
+    {
+        $uri = explode('/', $uri);
+        $key = null;
+        foreach($uri as $k => $part)
+        {
+            if($k == 0) continue;
+            if(($k % 2) == 0)
+            {
+                $_REQUEST[$key] = $part;
+                $_GET[$key] = $part;
+                $key = null;
+            }
+            else
+            {
+                $key = $part;
+            }
+        }
+    }
 
     switch($processor)
     {
+        case '/cart/':
+            convertUriVarsToReq($_SERVER['REQUEST_URI']);
+            include_once './saved_cart.php';
+            exit();
+            break;
         case '/images/':
             exit();
 
@@ -110,7 +133,7 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
 
             //$_SERVER['REQUEST_URI']='/catalog.php?page='.$pagenum;
             set_old_uri();
-            include('/health_library.php');
+            include('./health_library.php');
 
             exit();
             break;
@@ -123,7 +146,7 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
             $modURL=true;
             set_old_uri();
             //$_SERVER['REQUEST_URI']='/catalog.php?page='.$pagenum;
-            include('/catalog.php');
+            include('./catalog.php');
             exit();
             break;
 
@@ -150,11 +173,11 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
                 }
             }
 
-            $_SERVER['PHP_SELF']='/topic.php';
+            $_SERVER['PHP_SELF']='./topic.php';
             $modURL=true;
             set_old_uri();
             //$_SERVER['REQUEST_URI']='/catalog.php?page='.$pagenum;
-            include('/search_topics.php');
+            include('./search_topics.php');
             exit();
             break;
         case '/remedies/':
@@ -164,7 +187,7 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
             $_SERVER['PHP_SELF']='/natural_uses.php';
             $modURL=true;
             set_old_uri();
-            include('/natural_uses.php');
+            include('./natural_uses.php');
             exit();
             break;
 
@@ -175,7 +198,7 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
             $_SERVER['PHP_SELF']='/ailments.php';
             $modURL=true;
             set_old_uri();
-            include('/ailments.php');
+            include('./ailments.php');
             exit();
             break;
 
@@ -186,7 +209,7 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
             $_SERVER['PHP_SELF']='/departments.php';
             $modURL=true;
             set_old_uri();
-            include('/departments.php');
+            include('./departments.php');
             exit();
             break;
 
@@ -200,7 +223,7 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
             $_SERVER['PHP_SELF']='/product_info2.php';
             $modURL=true;
             set_old_uri();
-            include('/product_info.php');
+            include('./product_info.php');
             exit();
             break;
 
@@ -215,7 +238,7 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
             $_SERVER['PHP_SELF']='/index.php';
             $modURL=true;
             set_old_uri();
-            include('/index.php');
+            include('./index.php');
             exit();
             break;
 
@@ -230,7 +253,7 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
             $_SERVER['PHP_SELF']='/index.php';
             $modURL=true;
             set_old_uri();
-            include('/index.php');
+            include('./index.php');
             exit();
             break;
 
@@ -247,7 +270,7 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
                 $_GET['products_id']=(int)$products_id;
                 $modURL=true;
                 set_old_uri();
-                include('/product_info2.php');
+                include('./product_info2.php');
                 exit();
                 break;
 
@@ -258,7 +281,7 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
 }
 
 //check for hub pages before continuing.
-        require_once('/hub.php');
+        require_once('./hub.php');
 
    header("HTTP/1.0 404 Not Found");
   require_once('includes/application_top.php');

@@ -3,86 +3,11 @@
 
 $hide_cart = true;
 require ("includes/application_top.php");
-
-
 require(DIR_WS_CLASSES . 'http_client.php');
-require(DIR_WS_CLASSES . 'geo_locator.php');
-require(DIR_WS_CLASSES . 'shipping.php');
-require(DIR_WS_CLASSES . 'order_total.php');
-require(DIR_WS_CLASSES . 'order.php');
 require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_SHOPPING_CART);
 
 $breadcrumb->add(NAVBAR_TITLE, tep_href_link(FILENAME_SHOPPING_CART));
 $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_savings() / $cart -> show_total() * 100, 0) : 0;
-
-// if no shipping destination address was selected, use the customers own address as default
-if (!tep_session_is_registered('sendto'))
-{
-    tep_session_register('sendto');
-    $sendto = $_SESSION['customer_default_address_id'];
-}
-else
-{
-    // verify the selected shipping address
-    $check_address_query = tep_db_query("select count(*) as total from " . TABLE_ADDRESS_BOOK . " where customers_id = '" .
-        (int)$customer_id . "' and address_book_id = '" . (int)$sendto . "'");
-    $check_address = tep_db_fetch_array($check_address_query);
-
-    if ($check_address['total'] != '1')
-    {
-        $sendto = $_SESSION['customer_default_address_id'];
-        if (tep_session_is_registered('shipping')) tep_session_unregister('shipping');
-    }
-}
-tep_session_unregister('payment');
-$order = new order;
-
-global $total_weight;
-$locator = new geo_locator();
-
-function populateDeliveryFields($cCode)
-{
-    global $order,$locator;
-
-    $country_info = $locator->getCountryInfoFromDb($cCode);
-
-    $order->delivery['country']['iso_code_2'] = $cCode;
-    $order->delivery['country']['id'] = $country_info['countries_id'];
-    $order->delivery['country_id'] = $country_info['countries_id'];
-    $order->delivery['country']['title'] = $country_info['countries_name'];
-}
-
-if (!tep_session_is_registered('customer_id')) // NOT logged in
-{
-    // USA   Sample Ip: 65.65.219.98
-    // Spain Sample Ip: 79.159.137.155
-    $requestIp = $_SERVER [ 'REMOTE_ADDR' ];
-    $cCode = $locator->locate($requestIp);
-
-    if ($locator->isValid($cCode))
-    {
-        populateDeliveryFields($cCode);
-    }
-}
-
-if (isset($_SESSION['country']))
-{
-    populateDeliveryFields($_SESSION['country']);
-
-    if (($_SESSION[country] == 'US') && isset($_SESSION[postcode]))
-    {
-        $order->delivery['postcode'] = $_SESSION[postcode];
-    }
-}
-else
-{ // IF LOGGED IN, DELIVERY ADDRESS WILL BE POPULATED AUTOMATICALLY THROUGH ORDER CONSTRUCTOR
-}
-
-$total_weight = $cart->show_weight();
-
-$shipping_module = new shipping();
-$cheapestShippingRate = $shipping_module->getCheapestRate();
-
 ?>
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html <?php echo HTML_PARAMS;?>>
@@ -107,15 +32,6 @@ require (DIR_WS_INCLUDES . 'header.php');
 ?>
 <!-- header_eof //-->
 
-
-<?php
-
-if (isset($_GET['products_id']) && !$cart -> in_cart($_GET['products_id'])) {
-    $cart -> add_cart($_GET['products_id']);
-}
-
-
-?>
 <?php
 // the second condition "$cart->in_cart" is to cover a situation where user might enter
 // a random number for products_id query string. (AH 30 January 2012)
@@ -315,7 +231,7 @@ if (isset($_GET['products_id']) && $cart->in_cart($_GET['products_id']) && strle
                     $info_box_contents[0][] = array('align' => 'center', 'params' => 'style="font-weight:bold;"', 'text' => TABLE_HEADING_QUANTITY);
                     $info_box_contents[0][] = array('align' => 'right', 'params' => 'style="font-weight:bold;"', 'text' => TABLE_HEADING_TOTAL);
                     $any_out_of_stock = 0;
-                    $saved = $cart->get_saved_contents($_REQUEST['code']);
+                    $saved = $cart->get_saved_contents($_REQUEST['cart']);
                     $products = $saved['products'];
 
                     for ($i = 0, $n = sizeof($products); $i < $n; $i++) {

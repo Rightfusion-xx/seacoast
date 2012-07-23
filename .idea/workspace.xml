@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/product_info2.php" afterPath="$PROJECT_DIR$/product_info2.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/404.php" afterPath="$PROJECT_DIR$/404.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/publish_cart.php" afterPath="$PROJECT_DIR$/publish_cart.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/saved_cart.php" afterPath="$PROJECT_DIR$/saved_cart.php" />
     </list>
     <ignored path="Seacoast Vitamins.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -72,7 +75,7 @@
       <file leaf-file-name="publish_cart.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/publish_cart.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="41" selection-start="789" selection-end="789" vertical-scroll-proportion="0.0">
+            <state line="47" column="33" selection-start="1731" selection-end="1731" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -87,19 +90,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="product_info2.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="product_info2.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/product_info2.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="218" column="28" selection-start="8782" selection-end="8782" vertical-scroll-proportion="0.19495413">
+            <state line="218" column="28" selection-start="8782" selection-end="8782" vertical-scroll-proportion="-0.65384614">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="404.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="404.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/404.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="9" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0">
+            <state line="283" column="23" selection-start="7645" selection-end="7645" vertical-scroll-proportion="0.22386831">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="saved_cart.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/saved_cart.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="41" selection-start="68" selection-end="68" vertical-scroll-proportion="40.666668">
               <folding />
             </state>
           </provider>
@@ -120,12 +132,10 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/admin/configuration.php" />
         <option value="$PROJECT_DIR$/admin/includes/application_top.php" />
         <option value="$PROJECT_DIR$/admin/includes/configure.php" />
         <option value="$PROJECT_DIR$/login.php" />
         <option value="$PROJECT_DIR$/shopping_cart.php" />
-        <option value="$PROJECT_DIR$/publish_cart.php" />
         <option value="$PROJECT_DIR$/seotest/footer.php" />
         <option value="$PROJECT_DIR$/checkout_shipping.php" />
         <option value="$PROJECT_DIR$/checkout_success.php" />
@@ -134,8 +144,10 @@
         <option value="$PROJECT_DIR$/includes/301urls.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/product_info.php" />
-        <option value="$PROJECT_DIR$/404.php" />
         <option value="$PROJECT_DIR$/product_info2.php" />
+        <option value="$PROJECT_DIR$/saved_cart.php" />
+        <option value="$PROJECT_DIR$/publish_cart.php" />
+        <option value="$PROJECT_DIR$/404.php" />
       </list>
     </option>
   </component>
@@ -150,10 +162,10 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="2552" />
-    <option name="y" value="352" />
-    <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="2576" />
+    <option name="height" value="1426" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -186,6 +198,16 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -202,16 +224,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="Seacoast" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -382,7 +394,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2552" y="352" width="1936" height="1096" extended-state="7" />
+    <frame x="-8" y="-8" width="2576" height="1426" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -390,7 +402,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24972129" sideWeight="0.38187703" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998884" sideWeight="0.600863" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17895299" sideWeight="0.67094016" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18272293" sideWeight="0.67094016" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34843582" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -466,11 +478,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/includes/modules/shipping/item.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="52" selection-start="560" selection-end="560" vertical-scroll-proportion="0.27250308" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/includes/languages/english/english/modules/shipping/flat.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="7" selection-start="231" selection-end="231" vertical-scroll-proportion="0.061893202" />
@@ -536,13 +543,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/publish_cart.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="41" selection-start="789" selection-end="789" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/product_info.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="0" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0">
@@ -550,16 +550,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/404.php">
+    <entry file="file://$PROJECT_DIR$/product_info2.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="9" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0">
+        <state line="218" column="28" selection-start="8782" selection-end="8782" vertical-scroll-proportion="-0.65384614">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/product_info2.php">
+    <entry file="file://$PROJECT_DIR$/saved_cart.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="218" column="28" selection-start="8782" selection-end="8782" vertical-scroll-proportion="0.19495413">
+        <state line="4" column="41" selection-start="68" selection-end="68" vertical-scroll-proportion="40.666668">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/publish_cart.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="33" selection-start="1731" selection-end="1731" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/404.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="283" column="23" selection-start="7645" selection-end="7645" vertical-scroll-proportion="0.22386831">
           <folding />
         </state>
       </provider>
