@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="" />
+    <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/404.php" afterPath="$PROJECT_DIR$/404.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/application_top.php" afterPath="$PROJECT_DIR$/admin/includes/application_top.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/301urls.php" afterPath="$PROJECT_DIR$/includes/301urls.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/application_bottom.php" afterPath="$PROJECT_DIR$/includes/application_bottom.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/application_top.php" afterPath="$PROJECT_DIR$/includes/application_top.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/product_info.php" afterPath="$PROJECT_DIR$/product_info.php" />
+    </list>
     <ignored path="Seacoast Vitamins.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -58,102 +68,50 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="shopping_cart.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shopping_cart.php">
+      <file leaf-file-name="configure.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/includes/configure.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="451" column="176" selection-start="22775" selection-end="22943" vertical-scroll-proportion="-10.038462">
-              <folding>
-                <marker date="1342621593553" expanded="true" signature="20179:20435" placeholder="..." />
-                <marker date="1342621593553" expanded="true" signature="20195:20356" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="checkout_shipping.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/checkout_shipping.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="414" column="88" selection-start="13970" selection-end="13970" vertical-scroll-proportion="0.7322122">
+            <state line="25" column="16" selection-start="0" selection-end="2390" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="footer.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/footer.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="0" selection-start="1132" selection-end="1132" vertical-scroll-proportion="-18.23077">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="footer.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/seotest/footer.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="123" column="130" selection-start="4521" selection-end="4639" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="publish_cart.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="publish_cart.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/publish_cart.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="18" selection-start="1227" selection-end="1227" vertical-scroll-proportion="0.0">
+            <state line="21" column="41" selection-start="789" selection-end="789" vertical-scroll-proportion="0.30954996">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="saved_cart.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/saved_cart.php">
+      <file leaf-file-name="product_info.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/product_info.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="348" column="66" selection-start="17350" selection-end="17350" vertical-scroll-proportion="-0.65384614">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="shopping_cart.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/includes/classes/shopping_cart.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="239" column="5" selection-start="10435" selection-end="10435" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="database_tables.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/includes/database_tables.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="64" selection-start="1034" selection-end="1056" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="order.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/includes/classes/order.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="79" column="49" selection-start="3440" selection-end="3440" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="login.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/login.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="195" column="271" selection-start="9134" selection-end="9134" vertical-scroll-proportion="0.0">
+            <state line="11" column="0" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0">
               <folding>
-                <marker date="1342604302254" expanded="true" signature="9298:9333" placeholder="..." />
-                <marker date="1342604302254" expanded="true" signature="9605:9701" placeholder="..." />
-                <marker date="1342604302254" expanded="true" signature="9646:9701" placeholder="..." />
-                <marker date="1342604302254" expanded="true" signature="9799:9858" placeholder="..." />
-                <marker date="1342604302254" expanded="true" signature="10633:10729" placeholder="..." />
-                <marker date="1342604302254" expanded="true" signature="10674:10729" placeholder="..." />
+                <marker date="1343038389648" expanded="true" signature="8045:8110" placeholder="..." />
+                <marker date="1343038389648" expanded="true" signature="8061:8102" placeholder="{...}" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="product_info2.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/product_info2.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="518" column="18" selection-start="21103" selection-end="21103" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="404.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/404.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="9" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -168,26 +126,27 @@
   <component name="Git.Settings">
     <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="SYNC_SETTING" value="DONT" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/sql-cahnges/17.07.2012.addedConnectionsTableConsumersToSns.sql" />
-        <option value="$PROJECT_DIR$/includes/database_tables.php" />
-        <option value="$PROJECT_DIR$/product_info2.php" />
-        <option value="$PROJECT_DIR$/includes/configure.php" />
-        <option value="$PROJECT_DIR$/account.php" />
+        <option value="$PROJECT_DIR$/saved_cart.php" />
+        <option value="$PROJECT_DIR$/admin/configuration.php" />
+        <option value="$PROJECT_DIR$/admin/includes/application_top.php" />
+        <option value="$PROJECT_DIR$/admin/includes/configure.php" />
         <option value="$PROJECT_DIR$/login.php" />
-        <option value="$PROJECT_DIR$/admin/includes/classes/order.php" />
-        <option value="$PROJECT_DIR$/includes/checkout_guts.php" />
-        <option value="$PROJECT_DIR$/admin/includes/database_tables.php" />
-        <option value="$PROJECT_DIR$/sql-cahnges/18.07.12.publishingCart.sql" />
-        <option value="$PROJECT_DIR$/seotest/footer.php" />
         <option value="$PROJECT_DIR$/shopping_cart.php" />
         <option value="$PROJECT_DIR$/publish_cart.php" />
-        <option value="$PROJECT_DIR$/includes/classes/shopping_cart.php" />
-        <option value="$PROJECT_DIR$/saved_cart.php" />
+        <option value="$PROJECT_DIR$/seotest/footer.php" />
         <option value="$PROJECT_DIR$/checkout_shipping.php" />
+        <option value="$PROJECT_DIR$/checkout_success.php" />
+        <option value="$PROJECT_DIR$/includes/application_bottom.php" />
+        <option value="$PROJECT_DIR$/includes/application_top.php" />
+        <option value="$PROJECT_DIR$/includes/301urls.php" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/product_info.php" />
+        <option value="$PROJECT_DIR$/404.php" />
       </list>
     </option>
   </component>
@@ -202,17 +161,17 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="2576" />
-    <option name="height" value="1426" />
+    <option name="x" value="2552" />
+    <option name="y" value="352" />
+    <option name="width" value="1936" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state />
     </entry>
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -276,7 +235,7 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="project.propVCSSupport.VCSs.Git" />
+    <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="recentsLimit" value="5" />
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../php538a" />
@@ -434,16 +393,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="2576" height="1426" extended-state="6" />
+    <frame x="2552" y="352" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32938388" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24972129" sideWeight="0.38187703" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998884" sideWeight="0.600863" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12420382" sideWeight="0.6706161" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17681624" sideWeight="0.67094016" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34843582" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -454,6 +412,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32905984" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -518,108 +477,103 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/includes/modules/shipping/item.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="52" selection-start="560" selection-end="560" vertical-scroll-proportion="0.27250308" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/languages/english/english/modules/shipping/flat.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="7" selection-start="231" selection-end="231" vertical-scroll-proportion="0.061893202" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/modules/shipping/flat.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="40" selection-start="463" selection-end="463" vertical-scroll-proportion="0.25154132" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/checkout_shipping - Conflict 1.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="134" column="52" selection-start="4610" selection-end="4610" vertical-scroll-proportion="1.2493734" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/checkout_shipping.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="98" column="0" selection-start="3234" selection-end="3234" vertical-scroll-proportion="-4.7058825" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/checkout_success.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="10" selection-start="208" selection-end="208" vertical-scroll-proportion="0.19172932" />
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/tidy.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="308" column="20" selection-start="10185" selection-end="10185" vertical-scroll-proportion="0.33279613" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/application_bottom.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="18" selection-start="1551" selection-end="1551" vertical-scroll-proportion="-1.7843137">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="313" column="7" selection-start="13006" selection-end="13006" vertical-scroll-proportion="-15.230769">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/301urls.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="12" selection-start="525" selection-end="525" vertical-scroll-proportion="0.1325167">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/application_top.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="3" selection-start="9" selection-end="9" vertical-scroll-proportion="0.018930959">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/product_info.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="0" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1343038389648" expanded="true" signature="8045:8110" placeholder="..." />
+            <marker date="1343038389648" expanded="true" signature="8061:8102" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/product_info2.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="208" column="40" selection-start="8315" selection-end="8315" vertical-scroll-proportion="0.0" />
+        <state line="518" column="18" selection-start="21103" selection-end="21103" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/404.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="9" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/includes/configure.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="24" selection-start="2332" selection-end="2344" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/account.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="216" column="282" selection-start="10405" selection-end="10405" vertical-scroll-proportion="-26.615385" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/checkout_guts.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="96" selection-start="2428" selection-end="2428" vertical-scroll-proportion="-18.72" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/database_tables.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="51" selection-start="892" selection-end="892" vertical-scroll-proportion="0.3919903" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/includes/classes/shopping_cart.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="292" column="13" selection-start="14016" selection-end="14016" vertical-scroll-proportion="0.3329223" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/seotest/footer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="123" column="130" selection-start="4521" selection-end="4639" vertical-scroll-proportion="0.0">
+        <state line="25" column="16" selection-start="0" selection-end="2390" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/publish_cart.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="18" selection-start="1227" selection-end="1227" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/classes/shopping_cart.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="239" column="5" selection-start="10435" selection-end="10435" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/includes/database_tables.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="64" selection-start="1034" selection-end="1056" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/includes/classes/order.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="49" selection-start="3440" selection-end="3440" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/login.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="195" column="271" selection-start="9134" selection-end="9134" vertical-scroll-proportion="0.0">
-          <folding>
-            <marker date="1342604302254" expanded="true" signature="9298:9333" placeholder="..." />
-            <marker date="1342604302254" expanded="true" signature="9605:9701" placeholder="..." />
-            <marker date="1342604302254" expanded="true" signature="9646:9701" placeholder="..." />
-            <marker date="1342604302254" expanded="true" signature="9799:9858" placeholder="..." />
-            <marker date="1342604302254" expanded="true" signature="10633:10729" placeholder="..." />
-            <marker date="1342604302254" expanded="true" signature="10674:10729" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/footer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="0" selection-start="1132" selection-end="1132" vertical-scroll-proportion="-18.23077">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/saved_cart.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="348" column="66" selection-start="17350" selection-end="17350" vertical-scroll-proportion="-0.65384614">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopping_cart.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="451" column="176" selection-start="22775" selection-end="22943" vertical-scroll-proportion="-10.038462">
-          <folding>
-            <marker date="1342621593553" expanded="true" signature="20179:20435" placeholder="..." />
-            <marker date="1342621593553" expanded="true" signature="20195:20356" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/checkout_shipping.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="414" column="88" selection-start="13970" selection-end="13970" vertical-scroll-proportion="0.7322122">
+        <state line="21" column="41" selection-start="789" selection-end="789" vertical-scroll-proportion="0.30954996">
           <folding />
         </state>
       </provider>

@@ -1,5 +1,5 @@
 <?php
-if(!$app_top_included)
+if(empty($app_top_included) || !$app_top_included)
 {
 
 
@@ -38,7 +38,10 @@ $HTTP_SERVER_VARS=& $_SERVER;
 
 
 $HTTP_SESSION_VARS=& $_SESSION;
-
+if(empty($_SERVER['HTTPS']))
+{
+    $_SERVER['HTTPS'] = null;
+}
 // IIS Fix
     if(is_null($_SERVER['HTTPS']))
     {
