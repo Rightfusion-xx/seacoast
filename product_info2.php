@@ -209,7 +209,7 @@ if(!$cache->doCache('products_main' . $pmod, true, $lastmod))
         if(d.getElementById(id)) return;
         js = d.createElement(s);
         js.id = id;
-        js.src = "//connect.facebook.net/ru_RU/all.js#xfbml=1&appId=<?php echo FB_APP_ID?>";
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo FB_APP_ID?>";
         fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
     FB.init({appId: "<?php echo FB_APP_ID?>", status: true, cookie: true});

@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/404.php" afterPath="$PROJECT_DIR$/404.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/application_top.php" afterPath="$PROJECT_DIR$/admin/includes/application_top.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/301urls.php" afterPath="$PROJECT_DIR$/includes/301urls.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/application_bottom.php" afterPath="$PROJECT_DIR$/includes/application_bottom.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/application_top.php" afterPath="$PROJECT_DIR$/includes/application_top.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/product_info.php" afterPath="$PROJECT_DIR$/product_info.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/product_info2.php" afterPath="$PROJECT_DIR$/product_info2.php" />
     </list>
     <ignored path="Seacoast Vitamins.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -77,10 +69,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="publish_cart.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="publish_cart.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/publish_cart.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="41" selection-start="789" selection-end="789" vertical-scroll-proportion="0.30954996">
+            <state line="21" column="41" selection-start="789" selection-end="789" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -98,10 +90,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="product_info2.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="product_info2.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/product_info2.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="518" column="18" selection-start="21103" selection-end="21103" vertical-scroll-proportion="0.0">
+            <state line="211" column="46" selection-start="8415" selection-end="8415" vertical-scroll-proportion="0.33293977">
               <folding />
             </state>
           </provider>
@@ -131,7 +123,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/saved_cart.php" />
         <option value="$PROJECT_DIR$/admin/configuration.php" />
         <option value="$PROJECT_DIR$/admin/includes/application_top.php" />
         <option value="$PROJECT_DIR$/admin/includes/configure.php" />
@@ -147,6 +138,7 @@
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/product_info.php" />
         <option value="$PROJECT_DIR$/404.php" />
+        <option value="$PROJECT_DIR$/product_info2.php" />
       </list>
     </option>
   </component>
@@ -550,13 +542,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/product_info2.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="518" column="18" selection-start="21103" selection-end="21103" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/404.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="9" selection-start="241" selection-end="241" vertical-scroll-proportion="0.0">
@@ -573,7 +558,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/publish_cart.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="41" selection-start="789" selection-end="789" vertical-scroll-proportion="0.30954996">
+        <state line="21" column="41" selection-start="789" selection-end="789" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/product_info2.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="211" column="46" selection-start="8415" selection-end="8415" vertical-scroll-proportion="0.33293977">
           <folding />
         </state>
       </provider>
