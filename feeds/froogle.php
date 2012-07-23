@@ -1,7 +1,9 @@
 <?php
 
+@ini_set('zlib.output_compression', 0);
+    @ini_set('implicit_flush', 1);
+
   set_time_limit(1200);
-  ob_start();
   
   $_SERVER['DOCUMENT_ROOT']='..';
   require('../includes/application_top.php');  
@@ -9,7 +11,7 @@
   $newline="\r\n";
   // Set headers as Text XML
   
-  //header('Content-type: text/xml');
+  header('Content-type: text/xml');
   
   // Here are the initial XML tags
 
@@ -26,7 +28,7 @@ $data="<?xml version=\"1.0\" encoding=\"UTF-8\" ?>".$newline.
 
         
     fwrite($file,utf8_encode($data));
-  
+  echo utf8_encode($data);
   // Get all product info
   $products=products::all(array('conditions'=>'products_status=1'));
   
@@ -95,6 +97,7 @@ $data.="</item>".$newline;
 fwrite($file,utf8_encode($data));
 unset($products[$index]);
 $index++;
+echo $data; 
   
                
   }
@@ -108,9 +111,11 @@ fwrite($file,utf8_encode($data));
 
 fclose($file);
                                  
-redir301('froogle.xml');
+//redir301('froogle.xml');
 
-exit();
+//exit();
+
+echo $data;
 
 
 //redir301('froogle.xml');

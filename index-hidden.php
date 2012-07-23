@@ -46,6 +46,7 @@ $linkcachetime=60*10;
 <div class="row">
 <div class="span12">
 
+
                   <?php require(DIR_WS_INCLUDES . 'whyshop.php'); ?>
 
 
