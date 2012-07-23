@@ -217,9 +217,7 @@ if(!$cache->doCache('products_main' . $pmod, true, $lastmod))
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
     <div id="fb-root"></div>
-
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
-
 <div class="container">
     <div class="row">
     <div class="span8">
