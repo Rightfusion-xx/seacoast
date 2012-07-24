@@ -1,5 +1,4 @@
 <?php
-
 require('includes/application_top.php');
 require('includes/classes/review_handler.php');
 
@@ -87,7 +86,6 @@ else
         $price = $product_info['products_price'];
     }
 
-    //Calculate membership discounts
     if($product_info['manufacturers_id'] == 69)
     {
         $cm_price = $price * .75; //25% Off
@@ -216,163 +214,157 @@ if(!$cache->doCache('products_main' . $pmod, true, $lastmod))
     </script>
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
-    <div id="fb-root"></div>
+<div id="fb-root"></div>
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
 <div class="container">
-    <div class="row">
-    <div class="span8">
+<div class="row">
+<div class="span8">
 
-        <div style="text-align:center;padding:3em;">
-            <a class="btn btn-danger"
-               href="<?php echo '/shopping_cart.php?products_id=' . $product_info['products_id']; ?>">
-                <span style="font-size:18pt; font-weight:bold">Choose Price & Options</span><br/>
-                <?php
-                if($product_info['products_msrp'] > 0 && $product_info['products_price'] < $product_info['products_msrp'])
-                {
-                    echo '<span style="color:#000;font-weight:bold;"><strike>MSRP ' . $currencies->display_price($product_info['products_msrp'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '</strike> - ';
-                    echo ' (more than ' . floor(($product_info['products_msrp'] - $cm_price) / ($product_info['products_msrp']) * 100) . '% off)</span>';
-                }
-                elseif($product_info['products_price'] > 0)
-                {
-                    echo '<span style="color:#000;font-weight:bold;">' . $currencies->display_price($product_info['products_price'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '';
-                }?>
+    <div style="text-align:center;padding:3em;">
+        <a class="btn btn-danger"
+           href="<?php echo '/shopping_cart.php?products_id=' . $product_info['products_id']; ?>">
+            <span style="font-size:18pt; font-weight:bold">Choose Price & Options</span><br/>
+            <?php
+            if($product_info['products_msrp'] > 0 && $product_info['products_price'] < $product_info['products_msrp'])
+            {
+                echo '<span style="color:#000;font-weight:bold;"><strike>MSRP ' . $currencies->display_price($product_info['products_msrp'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '</strike> - ';
+                echo ' (more than ' . floor(($product_info['products_msrp'] - $cm_price) / ($product_info['products_msrp']) * 100) . '% off)</span>';
+            }
+            elseif($product_info['products_price'] > 0)
+            {
+                echo '<span style="color:#000;font-weight:bold;">' . $currencies->display_price($product_info['products_price'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '';
+            }?>
+        </a>
+    </div>
+    <?php if($is_cm_eligible == 0):?>
+    <div class="alert alert-info">
+        <a href="<?php echo '/shopping_cart.php?products_id=' . $product_info['products_id']; ?>">
+        The prices is Less Than <?php echo $currencies->display_price($product_info['products_msrp'], tep_get_tax_rate($product_info['products_tax_class_id']))?>, but it's Too Low to show you until you add it to your cart!
             </a>
-        </div>
+    </div>
+    <?php endif; ?>
+<?php
+if(strlen($product_info['products_takeaway']) > 0)
+{
+    echo '<p>', $product_info['products_takeaway'], '</p>';
 
-    <?php
-    if(strlen($product_info['products_takeaway']) > 0)
+    if(strlen($first_review) > 0)
     {
-        echo '<p>', $product_info['products_takeaway'], '</p>';
-
-        if(strlen($first_review) > 0)
-        {
-            //echo '<p>',$first_review,'</p>';
-        }
-        ?>
-
-        <?php
-
-        $cache->addCache('products_main' . $pmod);
+        //echo '<p>',$first_review,'</p>';
     }
     ?>
 
-
     <?php
-    if(is_numeric($reviews_rating) && $reviews_rating > 0)
-    {
-        echo draw_stars($reviews_rating);
-    }?>
-        <h1 style="margin-top:0em;">
 
-            <?php echo $title; ?>.
-        </h1>
+    $cache->addCache('products_main' . $pmod);
+}
+?>
 
 
-        <div style="margin:1em;" class="fb-like" data-href="
+<?php
+if(is_numeric($reviews_rating) && $reviews_rating > 0)
+{
+    echo draw_stars($reviews_rating);
+}?>
+    <h1 style="margin-top:0em;">
+
+        <?php echo $title; ?>.
+    </h1>
+
+
+    <div style="margin:1em;" class="fb-like" data-href="
                     <?php echo HTTP_SERVER . $test_url;?>" data-send="false" data-width="450" data-show-faces="true"
-             data-action="recommend" data-font="tahoma">
-        </div>
+         data-action="recommend" data-font="tahoma">
+    </div>
 
+<?php
+if(!$cache->doCache('products_main2' . $pmod, true, $lastmod))
+{
 
+    $query = "select r.*, rd.* from " . TABLE_REVIEWS . " r, " . TABLE_REVIEWS_DESCRIPTION . " rd ";
+    $query .= "where r.products_id=" . (int)$product_info['products_id'] . " ";
+    $query .= "and r.reviews_id = rd.reviews_id and ";
+    $query .= "rd.languages_id = '1' and review_parent_id is null order by r.date_added desc;";
 
+    $parentResultset = tep_db_query($query);
+    $reviewHandler   = new review_Handler($parentResultset);
+    ?>
 
-
-
-
-
-
-
-
-
-
-    <?php
-    if(!$cache->doCache('products_main2' . $pmod, true, $lastmod))
-    {
-
-        $query = "select r.*, rd.* from " . TABLE_REVIEWS . " r, " . TABLE_REVIEWS_DESCRIPTION . " rd ";
-        $query .= "where r.products_id=" . (int)$product_info['products_id'] . " ";
-        $query .= "and r.reviews_id = rd.reviews_id and ";
-        $query .= "rd.languages_id = '1' and review_parent_id is null order by r.date_added desc;";
-
-        $parentResultset = tep_db_query($query);
-        $reviewHandler   = new review_Handler($parentResultset);
-        ?>
-
-        <!-- bottom reviews -->
-        <b>Most recent reviews</b>
-        <table border="0" style="margin-bottom: 20px;" cellspacing="0" cellpadding="2" width="100%">
-            <?php
-            if($reviewHandler->getReviewCount() > 0)
-            {
-                while($reviews = tep_db_fetch_array($parentResultset))
-                {
-
-                    $reviewHandler->writeToPage($reviews); // print parent
-                    $reviewHandler->printChildren($parentResultset, $reviews['reviews_id']); // print children
-
-                }
-            }
-            else
-            {
-                ?>
-                <tr>
-                    <td style="padding-top: 20px; font-weight: bold;">
-                        <?php
-                        echo 'No reviews yet. <a href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, tep_get_all_get_params()) . '">' . 'Review Now!</a>';
-                        ?>
-                    </td>
-                </tr>
-                <?php
-            }
-            ?>
-        </table>
-        <b><a href="/product_reviews.php?products_id=<?php echo $product_info['products_id']?>">See All Reviews</a></b>
-
-
-        <div style="text-align:right;">
-            <?php
-            echo '<a style="margin-bottom:40px;" href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, tep_get_all_get_params()) . '">' . 'Post a review, comment, or quesiton</a><br/>Get quick feedback.';
-            ?>
-        </div>
-        <?php //echo $review;?>
-
-        <a name="product_description_loc"> </a><p><span class="buzz">Ingredients & Description</span></p>
-        <?php echo $tmp_desc; ?>
-
+    <!-- bottom reviews -->
+    <b>Most recent reviews</b>
+    <table border="0" style="margin-bottom: 20px;" cellspacing="0" cellpadding="2" width="100%">
         <?php
-        if(strtotime($product_info['products_last_modified']) < strtotime('2007-03-01'))
+        if($reviewHandler->getReviewCount() > 0)
+        {
+            while($reviews = tep_db_fetch_array($parentResultset))
+            {
+
+                $reviewHandler->writeToPage($reviews); // print parent
+                $reviewHandler->printChildren($parentResultset, $reviews['reviews_id']); // print children
+
+            }
+        }
+        else
         {
             ?>
-            <p>
-                You have reached <?php echo $product_info['products_name']?> on Seacoast.com from the
-                manufacturer <?php echo $product_info['manufacturers_name']?>. We're proud to have
-                served <?php echo $product_info['products_viewed']?> customers
-                since <?php echo $product_info['products_date_added']?> who were also interested in
-                purchasing <?php echo $product_info['products_name']?>.
-                It currently ranks as our <?php echo $product_info['products_ordered']?> most popular natural health
-                product.
-            </p>
-            <p><b>Technical <?php echo $product_info['products_name']?> Details:</b> Locate this product using sku
-                number <?php echo $product_info['product_sku']?> or ISBN <?php echo $product_info['product_upc']?>. For
-                shipping, the weight is
-                equal to <?php echo $product_info['products_weight']?> pounds and is currently out of stock. Typical
-                inquiries include
-                <?php
-                $keywords = preg_split('/,/', $product_info['products_head_keywords_tag']);
-                $keywords = array_reverse($keywords);
-                foreach($keywords as $keyword)
-                {
-                    echo $keyword . ', ';
-                }
+            <tr>
+                <td style="padding-top: 20px; font-weight: bold;">
+                    <?php
+                    echo 'No reviews yet. <a href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, tep_get_all_get_params()) . '">' . 'Review Now!</a>';
+                    ?>
+                </td>
+            </tr>
+            <?php
+        }
+        ?>
+    </table>
+    <b><a href="/product_reviews.php?products_id=<?php echo $product_info['products_id']?>">See All Reviews</a></b>
 
-                ?> and natural health. Seacoast Vitamins offers this product at a
-                $<?php echo $product_info['products_msrp'] - $product_info['products_price']?> discount
-                off of the suggested retail price $<?php echo $product_info['products_msrp']?>. Our price is
-                $<?php echo $product_info['products_price']?>.</p>
 
-            <?php } ?>
+    <div style="text-align:right;">
+        <?php
+        echo '<a style="margin-bottom:40px;" href="' . tep_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, tep_get_all_get_params()) . '">' . 'Post a review, comment, or quesiton</a><br/>Get quick feedback.';
+        ?>
+    </div>
+    <?php //echo $review;?>
 
-        <?php $hubs = match_hub_links($page_links, true); ?>
+    <a name="product_description_loc"> </a><p><span class="buzz">Ingredients & Description</span></p>
+    <?php echo $tmp_desc; ?>
+
+    <?php
+    if(strtotime($product_info['products_last_modified']) < strtotime('2007-03-01'))
+    {
+        ?>
+        <p>
+            You have reached <?php echo $product_info['products_name']?> on Seacoast.com from the
+            manufacturer <?php echo $product_info['manufacturers_name']?>. We're proud to have
+            served <?php echo $product_info['products_viewed']?> customers
+            since <?php echo $product_info['products_date_added']?> who were also interested in
+            purchasing <?php echo $product_info['products_name']?>.
+            It currently ranks as our <?php echo $product_info['products_ordered']?> most popular natural health
+            product.
+        </p>
+        <p><b>Technical <?php echo $product_info['products_name']?> Details:</b> Locate this product using sku
+            number <?php echo $product_info['product_sku']?> or ISBN <?php echo $product_info['product_upc']?>. For
+            shipping, the weight is
+            equal to <?php echo $product_info['products_weight']?> pounds and is currently out of stock. Typical
+            inquiries include
+            <?php
+            $keywords = preg_split('/,/', $product_info['products_head_keywords_tag']);
+            $keywords = array_reverse($keywords);
+            foreach($keywords as $keyword)
+            {
+                echo $keyword . ', ';
+            }
+
+            ?> and natural health. Seacoast Vitamins offers this product at a
+            $<?php echo $product_info['products_msrp'] - $product_info['products_price']?> discount
+            off of the suggested retail price $<?php echo $product_info['products_msrp']?>. Our price is
+            $<?php echo $product_info['products_price']?>.</p>
+
+        <?php } ?>
+
+    <?php $hubs = match_hub_links($page_links, true); ?>
 
 
                 </div>
@@ -396,7 +388,8 @@ if(!$cache->doCache('products_main' . $pmod, true, $lastmod))
                     ?>
                     <div class="alert alert-info">
 
-                        <p><b>*Not intended to diagnose or treat diseases or ailments, and is not reviewed by the FDA.</b>
+                        <p><b>*Not intended to diagnose or treat diseases or ailments, and is not reviewed by the
+                            FDA.</b>
                         </p>
 
                         <span class="buzz">Uses & Indications.</span>
@@ -505,16 +498,17 @@ if(!$cache->doCache('products_main' . $pmod, true, $lastmod))
                 </div>
             </div>
             <?php
-        $cache->addCache('products_main2' . $pmod);
-    } //end cache
-    ?>
-    <?php
-    if($seacoast_crawler)
-    {
-        echo '<div>', $product_info['products_id'], '</div><div>', HTTP_SERVER . $_SERVER['REQUEST_URI'], '</div>';
-    }
-    ?>
-    <div class="fb-comments" data-href="http://<?php echo $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']?>" data-num-posts="4" data-width="770"></div>
+    $cache->addCache('products_main2' . $pmod);
+} //end cache
+?>
+<?php
+if($seacoast_crawler)
+{
+    echo '<div>', $product_info['products_id'], '</div><div>', HTTP_SERVER . $_SERVER['REQUEST_URI'], '</div>';
+}
+?>
+<div class="fb-comments" data-href="http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']?>"
+     data-num-posts="4" data-width="770"></div>
 </div>
 <?php $product_info['products_name'] = '';?>
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>

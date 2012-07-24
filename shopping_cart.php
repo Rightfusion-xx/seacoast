@@ -353,7 +353,6 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                 $cur_row = sizeof($info_box_contents) - 1;
                 $info_box_contents[$cur_row][] = array('align' => 'center', 'params' => 'class="productListing-data" valign="top"',
                                         'text' => tep_draw_checkbox_field('cart_delete[]', $products[$i]['id']));
-
                 $products_name = '' . '<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $products[$i]['id']) . '"><b>' .
                                     $products[$i]['name'] . '</b></a>';
                 if (STOCK_CHECK == 'true') {
@@ -552,31 +551,18 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 
 </div>
 </div>
+<script type="text/javascript">
+function updateProd(obj, actionValue) {
+    var f = document.forms(obj);
 
-
-
-
-
-
-
-
-
-
-
-                                                           <script type="text/javascript">
-
-                                                        function updateProd(obj, actionValue) {
-
-                                                            var f = document.forms(obj);
-
-                                                            //var f = list.form;
-                                                            if (actionValue) {
-                                                                f.action = '?action=' + actionValue;
-                                                            }
-                                                            f.submit();
-                                                            return true;
-                                                        }
-                                                        </script>
+    //var f = list.form;
+    if (actionValue) {
+    f.action = '?action=' + actionValue;
+    }
+    f.submit();
+    return true;
+}
+</script>
 
 
 			<?php
