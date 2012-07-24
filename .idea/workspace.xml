@@ -3,12 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/application_top.php" afterPath="$PROJECT_DIR$/admin/includes/application_top.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/configure.php" afterPath="$PROJECT_DIR$/admin/includes/configure.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/product_info2.php" afterPath="$PROJECT_DIR$/product_info2.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/publish_cart.php" afterPath="$PROJECT_DIR$/publish_cart.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/saved_cart.php" afterPath="$PROJECT_DIR$/saved_cart.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopping_cart.php" afterPath="$PROJECT_DIR$/shopping_cart.php" />
     </list>
     <ignored path="Seacoast Vitamins.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -99,7 +94,7 @@
       <file leaf-file-name="product_info2.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/product_info2.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="275" column="6" selection-start="11302" selection-end="11302" vertical-scroll-proportion="0.48067227">
+            <state line="274" column="147" selection-start="11287" selection-end="11287" vertical-scroll-proportion="0.46638656">
               <folding />
             </state>
           </provider>
@@ -600,7 +595,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/product_info2.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="275" column="6" selection-start="11302" selection-end="11302" vertical-scroll-proportion="0.48067227">
+        <state line="274" column="147" selection-start="11287" selection-end="11287" vertical-scroll-proportion="0.46638656">
           <folding />
         </state>
       </provider>

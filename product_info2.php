@@ -272,7 +272,7 @@ if(strlen($product_info['products_takeaway']) > 0)
     </div>
 */?>
 <div style="float:right">
-    <a target="_blank" href="/publish_cart.php?products_id=<?php echo $product_info['products_id']; ?>" class="btn btn-primary">Share cart</a>
+    <a target="_blank" href="/publish_cart.php?products_id=<?php echo $product_info['products_id']; ?>" class="btn btn-primary">Share shopping cart</a>
 </div>
 <?php
 if(!$cache->doCache('products_main2' . $pmod, true, $lastmod))
