@@ -128,6 +128,7 @@ if ( defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL
         $free_shipping = false;
     }
 }
+
 // process the selected shipping method
 if ( isset($_REQUEST['action']) && ($_REQUEST['action'] == 'process') )
 {
@@ -144,56 +145,55 @@ if ( isset($_REQUEST['action']) && ($_REQUEST['action'] == 'process') )
 
     if((tep_count_shipping_modules() > 0) || ($free_shipping == true))
     {
-
         if (((isset($HTTP_POST_VARS['shipping'])) && (strpos($HTTP_POST_VARS['shipping'], '_')) || tep_session_is_registered('shipping')))
         {
-                if(((isset($HTTP_POST_VARS['shipping'])) && (strpos($HTTP_POST_VARS['shipping'], '_'))))
+
+            if(((isset($HTTP_POST_VARS['shipping'])) && (strpos($HTTP_POST_VARS['shipping'], '_'))))
+            {
+                $shipping = $HTTP_POST_VARS['shipping'];
+                tep_session_register('shipping');
+
+                list($module, $method) = explode('_', $shipping);
+                if ( is_object($$module) || ($shipping == 'free_free') )
                 {
-                    $shipping = $HTTP_POST_VARS['shipping'];
-                    tep_session_register('shipping');
+                    if ($shipping == 'free_free') {
+                        $quote[0]['methods'][0]['title'] = FREE_SHIPPING_TITLE;
+                        $quote[0]['methods'][0]['cost'] = '0';
+                    }
+                    else {
+                        $quote = $shipping_modules->quote($method, $module);
+                    }
 
-                    list($module, $method) = explode('_', $shipping);
-                    if ( is_object($$module) || ($shipping == 'free_free') )
+                    if (isset($quote['error']))
                     {
-                        if ($shipping == 'free_free') {
-                            $quote[0]['methods'][0]['title'] = FREE_SHIPPING_TITLE;
-                            $quote[0]['methods'][0]['cost'] = '0';
-                        } else {
-                            $quote = $shipping_modules->quote($method, $module);
-                        }
-
-                        if (isset($quote['error']))
+                        tep_session_unregister('shipping');
+                    }
+                    else
+                    {
+                        if ( (isset($quote[0]['methods'][0]['title'])) && (isset($quote[0]['methods'][0]['cost'])) )
                         {
-                            tep_session_unregister('shipping');
-                        }
-                        else
-                        {
-                            if ( (isset($quote[0]['methods'][0]['title'])) && (isset($quote[0]['methods'][0]['cost'])) )
-                            {
-                                $shipping = array('id' => $shipping,
-                                'title' => (($free_shipping == true) ? $quote[0]['methods'][0]['title'] : $quote[0]['module'] . ' (' . $quote[0]['methods'][0]['title'] . ')'),
-                                'cost' => $quote[0]['methods'][0]['cost']);
-                            }
+                            $shipping = array('id' => $shipping,
+                            'title' => (($free_shipping == true) ? $quote[0]['methods'][0]['title'] : $quote[0]['module'] . ' (' . $quote[0]['methods'][0]['title'] . ')'),
+                            'cost' => $quote[0]['methods'][0]['cost']);
                         }
                     }
                 }
-
-        require('includes/checkout_guts.php');
-        tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION,'paynow='.$paynow, 'SSL'));
-
+            }
+            require('includes/checkout_guts.php');
+            tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION,'paynow='.$paynow, 'SSL'));
         }
         else
         {
             tep_session_unregister('shipping');
         }
     }
-else
-{
-    $shipping = false;
+    else
+    {
+        $shipping = false;
 
 
-	require('includes/checkout_guts.php');
-    tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, 'paynow='.$paynow, 'SSL'));
+        require('includes/checkout_guts.php');
+        tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, 'paynow='.$paynow, 'SSL'));
     }
 }
 

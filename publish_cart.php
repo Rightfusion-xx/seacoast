@@ -17,9 +17,9 @@ if(empty($_SESSION['customer_id']))
 if(!empty($_REQUEST['action']) && $_REQUEST['action'] == 'callback' && !empty($_REQUEST['scode']))
 {
     $code = $_REQUEST['scode'];
-    $saved = $cart->get_saved_contents($code);
-    if(!empty($saved))
-    {
+    //$saved = $cart->get_saved_contents($code);
+    //if(!empty($saved))
+    //{
         tep_db_query('
             UPDATE
                 `' . TABLE_CUSTOMERS . '`
@@ -28,24 +28,24 @@ if(!empty($_REQUEST['action']) && $_REQUEST['action'] == 'callback' && !empty($_
             WHERE
                 `customers_id` = \'' . $_SESSION['customer_id'] . '\'
         ');
-    }
+    //}
     echo '<script type="text/javascript">window.opener.location.reload();window.close();</script>';
     exit();
 
 }
 else
 {
-    $code = $cart->save_contents();
-    $saved = $cart->get_saved_contents($code);
+    //$code = $cart->save_contents();
+    $saved = $cart->get_products();
     $contents = '';
-    foreach($saved['products'] as $product)
+    foreach($saved as $product)
     {
         $contents .= $product['name'] . ' x ' . $product['quantity']."<center> </center>";
     }
 
     $url = 'http://www.facebook.com/dialog/feed?'.
         'app_id=' . FB_APP_ID . '&' .
-        'link=' . urlencode($server_url . '/cart/' . $code) . '&' .
+        'link=' . urlencode($server_url . '/cart/' . $_SESSION['customer_id']) . '&' .
         'picture=' . urlencode($server_url . '/favicon.ico') .'&' .
         'name=' . urlencode('I just got free shipping on my Seacoast Vitamins, and you can, too! Here\'s my shopping cart!') . '&' .
         'caption=' . urlencode(' ') . '&' .

@@ -13,6 +13,25 @@ class shoppingCart
     }
 
 
+    public function get_customer_cart($customer_id)
+    {
+        //ICW RPLACE LINE
+        global $gv_id, $REMOTE_ADDR;
+        $contents = array();
+        $products_query = tep_db_query("select products_id, customers_basket_quantity from " . TABLE_CUSTOMERS_BASKET . " where customers_id = '" . (int)$customer_id . "'");
+        while($products = tep_db_fetch_array($products_query))
+        {
+            $contents[$products['products_id']] = array('qty' => $products['customers_basket_quantity']);
+            // attributes
+            $attributes_query = tep_db_query("select products_options_id, products_options_value_id from " . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . " where customers_id = '" . (int)$customer_id . "' and products_id = '" . tep_db_input($products['products_id']) . "'");
+            while($attributes = tep_db_fetch_array($attributes_query))
+            {
+                $contents[$products['products_id']]['attributes'][$attributes['products_options_id']] = $attributes['products_options_value_id'];
+            }
+        }
+        return $this->get_products($contents);
+    }
+
     function restore_contents()
     {
         //ICW RPLACE LINE
@@ -228,9 +247,9 @@ class shoppingCart
             tep_db_query('
                 INSERT INTO
                     `customers_basket_saved`
-                    (`saved_code`, `customer_id`, `saved_content`)
+                    (`saved_code`, `customer_id`, `saved_content`, `saved_time`)
                 VALUES
-                    (\'' . $code . '\', \'' . $customer_id . '\', \'' . json_encode($this->contents) . '\')
+                    (\'' . $code . '\', \'' . $customer_id . '\', \'' . json_encode($this->contents) . '\', \'' . date('Y-m-d H:i:s') . '\')
             ');
         //}
         return $code;
