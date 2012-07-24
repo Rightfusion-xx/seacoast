@@ -2,6 +2,9 @@
 require ("includes/application_top.php");
 $server_url=((substr($_SERVER['SERVER_PROTOCOL'],0,4)=="HTTP")?"http://":"https://").$_SERVER['HTTP_HOST'];
 
+if (isset($_GET['products_id']) && !$cart -> in_cart($_GET['products_id'])) {
+    $cart->add_cart($_GET['products_id']);
+}
 
 if(empty($_SESSION['customer_id']))
 {

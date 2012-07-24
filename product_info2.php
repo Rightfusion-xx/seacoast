@@ -261,22 +261,19 @@ if(strlen($product_info['products_takeaway']) > 0)
 ?>
 
 
-<?php
-if(is_numeric($reviews_rating) && $reviews_rating > 0)
-{
-    echo draw_stars($reviews_rating);
-}?>
+<?php if(is_numeric($reviews_rating) && $reviews_rating > 0){echo draw_stars($reviews_rating);}?>
     <h1 style="margin-top:0em;">
-
         <?php echo $title; ?>.
     </h1>
-
-
+<?php /*
     <div style="margin:1em;" class="fb-like" data-href="
                     <?php echo HTTP_SERVER . $test_url;?>" data-send="false" data-width="450" data-show-faces="true"
          data-action="recommend" data-font="tahoma">
     </div>
-
+*/?>
+<div style="float:right">
+    <a target="_blank" href="/publish_cart.php?products_id=<?php echo $product_info['products_id']; ?>" class="btn btn-primary">Add to curt and publish</a>
+</div>
 <?php
 if(!$cache->doCache('products_main2' . $pmod, true, $lastmod))
 {

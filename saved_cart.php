@@ -6,6 +6,21 @@ require ("includes/application_top.php");
 require(DIR_WS_CLASSES . 'http_client.php');
 require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_SHOPPING_CART);
 
+
+$saved = $cart->get_saved_contents($_REQUEST['cart']);
+if(!$saved)
+{
+    header('Location: 404.php');
+    exit();
+}
+$owner = tep_db_fetch_array(tep_db_query('
+    SELECT
+        *
+    FROM `' . TABLE_CUSTOMERS . '`
+    WHERE `customers_id` = ' . $saved['customer_id'] . '
+'));
+
+
 $breadcrumb->add(NAVBAR_TITLE, tep_href_link(FILENAME_SHOPPING_CART));
 $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_savings() / $cart -> show_total() * 100, 0) : 0;
 ?>
@@ -89,8 +104,6 @@ if (isset($_GET['products_id']) && $cart->in_cart($_GET['products_id']) && strle
     }
 
 
-
-
     ?>
 
 <div class="container">
@@ -117,10 +130,6 @@ if (isset($_GET['products_id']) && $cart->in_cart($_GET['products_id']) && strle
                                 </td>
                                 <td>
                                     <div id="item_details" style="text-align:left;margin:1em;">
-
-
-
-
                                         <?php if($product_info['products_die'] && $product_info['products_dieqty']<1){?>
                                         <p><?php echo $product_info['products_name'];?> is not available from Seacoast Vitamins at this time. We recommend the following alternatives, below.</p>
                                         <?php }else{?> <span style="margin-left:1em";>
@@ -214,13 +223,12 @@ if (isset($_GET['products_id']) && $cart->in_cart($_GET['products_id']) && strle
 
 
     <?php }else{
-
-    echo tep_draw_form('cart_quantity', tep_href_link(FILENAME_SHOPPING_CART, '', 'SSL'), 'post');
+        echo tep_draw_form('cart_quantity', tep_href_link(FILENAME_SHOPPING_CART, '', 'SSL'), 'post');
     ?>
 <div class="container">
     <div class="row">
     <div class="span12">
-        <h1>Seacoast Vitamins-Direct Savings</h1>
+        <h1><?php echo $owner['customers_firstname']?>'s Vitamin Cabinet</h1>
         <table style="margin-top: 30px;" border="0" width="100%" cellspacing="0" cellpadding="2">
 
             <tr>
@@ -231,7 +239,7 @@ if (isset($_GET['products_id']) && $cart->in_cart($_GET['products_id']) && strle
                     $info_box_contents[0][] = array('align' => 'center', 'params' => 'style="font-weight:bold;"', 'text' => TABLE_HEADING_QUANTITY);
                     $info_box_contents[0][] = array('align' => 'right', 'params' => 'style="font-weight:bold;"', 'text' => TABLE_HEADING_TOTAL);
                     $any_out_of_stock = 0;
-                    $saved = $cart->get_saved_contents($_REQUEST['cart']);
+
                     $products = $saved['products'];
 
                     for ($i = 0, $n = sizeof($products); $i < $n; $i++) {
@@ -280,8 +288,6 @@ if (isset($_GET['products_id']) && $cart->in_cart($_GET['products_id']) && strle
 
                     echo $pl;
 
-                    // shopping cart table ends
-
                     ?>
                 </td>
             </tr>
@@ -317,49 +323,8 @@ on m.manufacturers_id = p.manufacturers_id where p.products_id = '" . (int)$HTTP
     }
     ?>
     </td>
-
-    </tr> <?php
-
-    if ($cart->count_contents() > 0) {
-
-        ?>
-        <?php
-        if ($any_out_of_stock == 1) {
-            if (STOCK_ALLOW_CHECKOUT == 'true') {
-                ?>
-                <tr>
-                    <td class="stockWarning" align="center">
-                        <br>
-                        <?php echo OUT_OF_STOCK_CAN_CHECKOUT;?></td>
-                </tr>
-                <?php
-            } else {
-                ?>
-                <tr>
-                    <td class="stockWarning" align="center">
-                        <br>
-                        <?php echo OUT_OF_STOCK_CANT_CHECKOUT;?></td>
-                </tr>
-                <?php
-            }
-        }
-        ?>
-        <tr>
-            <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10');?></td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-        </tr>
-        <?php
-    } else {
-        ?>
-        <tr>
-            <td align="center" class="main"><?php new infoBox( array( array('text' => TEXT_CART_EMPTY)));?></td>
-        </tr>
-
-        <?php
-    }
-    ?> <?php } ?>
+</tr>
+<?php } ?>
     </table></form>
 
 <?php

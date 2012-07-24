@@ -1,6 +1,4 @@
 <?php
-
-
 $hide_cart = true;
 require ("includes/application_top.php");
 
@@ -111,7 +109,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 			<?php
 
 			if (isset($_GET['products_id']) && !$cart -> in_cart($_GET['products_id'])) {
-				$cart -> add_cart($_GET['products_id']);
+                $cart->add_cart($_GET['products_id']);
 			}
 
 
