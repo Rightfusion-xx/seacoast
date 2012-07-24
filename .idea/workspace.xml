@@ -5,8 +5,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/application_top.php" afterPath="$PROJECT_DIR$/admin/includes/application_top.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/configure.php" afterPath="$PROJECT_DIR$/admin/includes/configure.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/product_info2.php" afterPath="$PROJECT_DIR$/product_info2.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopping_cart.php" afterPath="$PROJECT_DIR$/shopping_cart.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/login.php" afterPath="$PROJECT_DIR$/login.php" />
     </list>
     <ignored path="Seacoast Vitamins.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -88,10 +87,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="product_info2.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="product_info2.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/product_info2.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="240" column="11" selection-start="10049" selection-end="10049" vertical-scroll-proportion="0.7549148">
+            <state line="240" column="11" selection-start="10049" selection-end="10049" vertical-scroll-proportion="-11.294118">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/login.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="84" column="83" selection-start="3655" selection-end="3655" vertical-scroll-proportion="0.35096774">
               <folding />
             </state>
           </provider>
@@ -112,7 +120,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/login.php" />
         <option value="$PROJECT_DIR$/seotest/footer.php" />
         <option value="$PROJECT_DIR$/checkout_shipping.php" />
         <option value="$PROJECT_DIR$/checkout_success.php" />
@@ -128,6 +135,7 @@
         <option value="$PROJECT_DIR$/admin/includes/application_top.php" />
         <option value="$PROJECT_DIR$/shopping_cart.php" />
         <option value="$PROJECT_DIR$/product_info2.php" />
+        <option value="$PROJECT_DIR$/login.php" />
       </list>
     </option>
   </component>
@@ -457,11 +465,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/checkout_success.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="10" selection-start="208" selection-end="208" vertical-scroll-proportion="0.19172932" />
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/php/lib/php.jar!/com/jetbrains/php/lang/psi/stubs/data/tidy.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="308" column="20" selection-start="10185" selection-end="10185" vertical-scroll-proportion="0.33279613" />
@@ -567,7 +570,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/product_info2.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="240" column="11" selection-start="10049" selection-end="10049" vertical-scroll-proportion="0.7549148">
+        <state line="240" column="11" selection-start="10049" selection-end="10049" vertical-scroll-proportion="-11.294118">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/login.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="84" column="83" selection-start="3655" selection-end="3655" vertical-scroll-proportion="0.35096774">
           <folding />
         </state>
       </provider>

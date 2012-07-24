@@ -82,7 +82,7 @@ if(isset($HTTP_GET_VARS['action']))
             }
             else
             {
-                $HTTP_POST_VARS['email_address'] = $user->email;
+                $HTTP_POST_VARS['email_address'] = $snUser['customers_email_address'];
                 $HTTP_POST_VARS['password'] = $snUser['customers_password'];
                 $passwordEncrypted = true;
                 $HTTP_GET_VARS['action'] = 'process';
