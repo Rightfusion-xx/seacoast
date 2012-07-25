@@ -445,12 +445,13 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 
 <div class="row" style="padding-top:20px;padding-bottom:40px;">
     <div class="span6">
-        <?php echo '<a style="float:left;" class="btn btn-primary" title="Checkout Now" href="' . tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '"><i class="icon-play icon-white">&nbsp;</i>&nbsp;Checkout Now</a>';?>
+        <a style="float:left;" class="btn btn-primary" title="Checkout Now" href="<?php echo tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL');?>">
+            <i class="icon-play icon-white">&nbsp;</i>&nbsp;Checkout Now
+        </a>
         <a style="margin-left:10px;" class="btn btn-primary" target="_blank" href="/publish_cart.php">Publish to facebook</a>
     </div>
     <div class="span6">
-    <?php if($cart->show_savings()>0) {
-                                        ?><b>Member Only Savings: <span style="color:#ff0000;background:yellow;">$<?php echo number_format($cart -> show_savings(), 2);?></span></b>
+    <?php if($cart->show_savings()>0) {?><b>Member Only Savings: <span style="color:#ff0000;background:yellow;">$<?php echo number_format($cart -> show_savings(), 2);?></span></b>
                                         <br/>
                                         <?php }?>
                                         <?php echo SUB_TITLE_SUB_TOTAL;?>

@@ -100,29 +100,22 @@
 
 <div style="padding-top:17px; margin-bottom:40px;" class="container alert">
     <div class="row show-grid">
-    <div style="padding-top:4px;" class="span2">
-        <h5 style="display:inline;padding-left:5px;">Shopping Cart</h5>
-    </div>
+        <div style="padding-top:4px;" class="span2">
+            <h5 style="display:inline;padding-left:5px;">Shopping Cart</h5>
+        </div>
     <div class="span2">
-        <!--
-        <b><a class="btn" href="/shopping_cart.php">View All Items</a></b>
-        -->
         <input class="btn" type="button" value="View All Items" onClick="document.location='/shopping_cart.php';">
     </div>
-    <div style="padding-top:4px;text-align:center;" class="span5">
+    <div class="span5" style="padding-top:4px;">
         <h5 style="display:inline;padding-left:5px;">
             <?php echo $cart->count_contents()?> item<?php if($cart->count_contents()>1) echo 's';?>: $<?php echo number_format($cart->show_total(),2);?>
             &nbsp;&nbsp;
             (<span>Savings of $<?php echo number_format($cart->show_savings(),2); ?></span>)
         </h5>
     </div>
-    <div class="span2">&nbsp;
-        <nobr><!--
-        <b><a class="btn" href="/checkout_shipping.php">Checkout Now </a></b>
-        -->
+    <div class="span2" style="white-space: nowrap;">
             <input class="btn" type="button" value="Checkout Now" onClick="document.location='/checkout_shipping.php';">
-            <a target="_blank" href="/publish_cart.php">Publish to facebook</a>
-        </nobr>
+            <input class="btn" type="button" value="Publish Shopping Cart" onClick="window.open('/publish_cart.php');">
     </div>
 
 </div>
