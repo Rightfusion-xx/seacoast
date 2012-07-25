@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/admin/top_messages.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/admin/top_messages_update.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/boxes/configuration.php" afterPath="$PROJECT_DIR$/admin/includes/boxes/configuration.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/boxes/tools.php" afterPath="$PROJECT_DIR$/admin/includes/boxes/tools.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/header.php" afterPath="$PROJECT_DIR$/admin/includes/header.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/languages/english.php" afterPath="$PROJECT_DIR$/admin/includes/languages/english.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/stylesheet.css" afterPath="$PROJECT_DIR$/admin/includes/stylesheet.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/whos_online.php" afterPath="$PROJECT_DIR$/admin/whos_online.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sql-cahnges/18.07.2012.publishingCart.sql" afterPath="$PROJECT_DIR$/sql-cahnges/18.07.2012.publishingCart.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/topic.php" afterPath="$PROJECT_DIR$/topic.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/application_top.php" afterPath="$PROJECT_DIR$/includes/application_top.php" />
     </list>
     <ignored path="Seacoast Vitamins.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -70,101 +60,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="application_top.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/includes/application_top.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="716" column="61" selection-start="23785" selection-end="23789" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="25.07.2012.free.shipping.from.cart.count.sql" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/sql-cahnges/25.07.2012.free.shipping.from.cart.count.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="0" selection-start="0" selection-end="447" vertical-scroll-proportion="0.082424246">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="configuration.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/includes/boxes/configuration.php">
+        <entry file="file://$PROJECT_DIR$/admin/configuration.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="0" selection-start="927" selection-end="927" vertical-scroll-proportion="-9.807693">
+            <state line="24" column="59" selection-start="844" selection-end="844" vertical-scroll-proportion="-4.509804">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tools.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/includes/boxes/tools.php">
+      <file leaf-file-name="database_tables.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/includes/database_tables.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="123" selection-start="2685" selection-end="2685" vertical-scroll-proportion="-10.230769">
+            <state line="10" column="9" selection-start="413" selection-end="413" vertical-scroll-proportion="0.0">
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="english.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/includes/languages/english.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="410" column="53" selection-start="5150" selection-end="5150" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="top_messages.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/admin/top_messages.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="11" selection-start="247" selection-end="247" vertical-scroll-proportion="-1.1951516">
-              <folding>
-                <marker date="1343220938296" expanded="true" signature="2644:2959" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="2661:2959" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="2728:2959" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="2851:2959" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="3134:4689" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="3218:4689" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="3248:3923" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="3952:4689" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="3985:4689" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="4081:4689" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="4150:4588" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="5377:5499" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="5716:5799" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="6507:6635" placeholder="..." />
-                <marker date="1343220938296" expanded="true" signature="7227:7263" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="configure.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/includes/configure.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="37" column="61" selection-start="1620" selection-end="1620" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="topic.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/topic.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="279" column="23" selection-start="10275" selection-end="10275" vertical-scroll-proportion="-28.923077">
-              <folding>
-                <marker date="1343224184336" expanded="true" signature="11384:11487" placeholder="..." />
-                <marker date="1343224184336" expanded="true" signature="11414:11487" placeholder="..." />
-                <marker date="1343224184336" expanded="true" signature="11451:11487" placeholder="..." />
-                <marker date="1343224184336" expanded="true" signature="13707:13766" placeholder="..." />
-                <marker date="1343224184336" expanded="true" signature="13909:13930" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="top_messages_update.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/top_messages_update.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="11" selection-start="740" selection-end="785" vertical-scroll-proportion="0.0">
-              <folding>
-                <marker date="1343220722950" expanded="true" signature="1200:1273" placeholder="..." />
-                <marker date="1343220722950" expanded="true" signature="1213:1273" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="whos_online.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/whos_online.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="362" column="125" selection-start="16213" selection-end="16217" vertical-scroll-proportion="-14.176471">
-              <folding>
-                <element signature="e#6#234#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -184,8 +111,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/saved_cart.php" />
-        <option value="$PROJECT_DIR$/publish_cart.php" />
         <option value="$PROJECT_DIR$/seotest/footer.php" />
         <option value="$PROJECT_DIR$/shopping_cart.php" />
         <option value="$PROJECT_DIR$/product_info2.php" />
@@ -200,6 +125,8 @@
         <option value="$PROJECT_DIR$/topic.php" />
         <option value="$PROJECT_DIR$/sql-cahnges/25.07.2012.topMessages.sql" />
         <option value="$PROJECT_DIR$/admin/includes/languages/english.php" />
+        <option value="$PROJECT_DIR$/includes/application_top.php" />
+        <option value="$PROJECT_DIR$/sql-cahnges/25.07.2012.free.shipping.from.cart.count.sql" />
       </list>
     </option>
   </component>
@@ -289,20 +216,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="sql-cahnges" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Seacoast Vitamins" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Seacoast" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -566,34 +479,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/sql-cahnges/17.07.2012.addedConnectionsTableConsumersToSns.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sql-cahnges/18.07.2012.publishingCart.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="0" selection-start="101" selection-end="101" vertical-scroll-proportion="0.01369863">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/product_info2.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="494" column="0" selection-start="20376" selection-end="20376" vertical-scroll-proportion="0.20246914">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/includes/boxes/configuration.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="927" selection-end="927" vertical-scroll-proportion="-9.807693">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/includes/stylesheet.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="88" column="147" selection-start="3570" selection-end="3570" vertical-scroll-proportion="0.0">
@@ -624,7 +509,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/whos_online.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="362" column="125" selection-start="16213" selection-end="16217" vertical-scroll-proportion="-14.176471">
+        <state line="362" column="125" selection-start="16213" selection-end="16217" vertical-scroll-proportion="0.95006573">
           <folding>
             <element signature="e#6#234#0" expanded="false" />
           </folding>
@@ -633,17 +518,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/top_messages_update.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="11" selection-start="740" selection-end="785" vertical-scroll-proportion="0.0">
+        <state line="28" column="11" selection-start="740" selection-end="785" vertical-scroll-proportion="0.5769697">
           <folding>
-            <marker date="1343220722950" expanded="true" signature="1200:1273" placeholder="..." />
-            <marker date="1343220722950" expanded="true" signature="1213:1273" placeholder="..." />
+            <marker date="1343220722950" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220722950" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/includes/configure.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="61" selection-start="1620" selection-end="1620" vertical-scroll-proportion="0.0">
+        <state line="37" column="61" selection-start="1620" selection-end="1620" vertical-scroll-proportion="0.6181818">
           <folding />
         </state>
       </provider>
@@ -657,13 +542,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/topic.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="279" column="23" selection-start="10275" selection-end="10275" vertical-scroll-proportion="-28.923077">
+        <state line="279" column="23" selection-start="10275" selection-end="10275" vertical-scroll-proportion="0.956743">
           <folding>
-            <marker date="1343224184336" expanded="true" signature="11384:11487" placeholder="..." />
-            <marker date="1343224184336" expanded="true" signature="11414:11487" placeholder="..." />
-            <marker date="1343224184336" expanded="true" signature="11451:11487" placeholder="..." />
-            <marker date="1343224184336" expanded="true" signature="13707:13766" placeholder="..." />
-            <marker date="1343224184336" expanded="true" signature="13909:13930" placeholder="..." />
+            <marker date="1343224184336" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343224184336" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343224184336" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343224184336" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343224184336" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -684,24 +569,52 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/top_messages.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="11" selection-start="247" selection-end="247" vertical-scroll-proportion="-1.1951516">
+        <state line="97" column="38" selection-start="4839" selection-end="4839" vertical-scroll-proportion="0.63878787">
           <folding>
-            <marker date="1343220938296" expanded="true" signature="2644:2959" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="2661:2959" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="2728:2959" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="2851:2959" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="3134:4689" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="3218:4689" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="3248:3923" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="3952:4689" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="3985:4689" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="4081:4689" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="4150:4588" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="5377:5499" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="5716:5799" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="6507:6635" placeholder="..." />
-            <marker date="1343220938296" expanded="true" signature="7227:7263" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1343220938296" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/configuration.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="59" selection-start="844" selection-end="844" vertical-scroll-proportion="-4.509804">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/database_tables.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="9" selection-start="413" selection-end="413" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/application_top.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="716" column="61" selection-start="23785" selection-end="23789" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sql-cahnges/25.07.2012.free.shipping.from.cart.count.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="0" selection-end="447" vertical-scroll-proportion="0.082424246">
+          <folding />
         </state>
       </provider>
     </entry>
