@@ -141,8 +141,8 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
             //No product found, redirect.
             redir301(HTTP_SERVER);
         }
-
-         $is_cm_eligible=strpos($product_info['products_name'],'*') ? 0 : 1;
+        // $is_cm_eligible=strpos($product_info['products_name'],'*') ? 0 : 1;
+        $is_cm_eligible=1;//strpos($product_info['products_name'],'*') ? 0 : 1;
 
     //Get price
     //check for product specials

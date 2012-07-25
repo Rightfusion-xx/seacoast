@@ -19,21 +19,49 @@ if((int)$HTTP_GET_VARS['products_id'] == CM_FTPID || (int)$HTTP_GET_VARS['produc
 {
     redir301('/community/');
 }
-
-$product_info_query = tep_db_query("select pd.products_target_keyword, p.products_keywords, p.products_die, p.products_sku, p.products_upc,
-        p.products_dieqty, pd.products_head_title_tag, pd.products_head_keywords_tag,
-        pd.products_head_desc_tag, pd.products_type,
-        pd.products_departments,pd.products_ailments,pd.products_uses,
-        p.products_weight, p.products_ordered, pd.products_head_keywords_tag,
-        pd.products_viewed, date_format(p.products_date_added,'%m/%d/%Y') as
-        products_date_added, p.products_last_modified,
-        p.products_id, pd.products_name, pd.products_description, p.products_model,
-        p.products_quantity, p.products_image, pd.products_url, p.products_msrp,
-        p.products_price, p.products_tax_class_id, p.products_date_available,
-        p.manufacturers_id, m.manufacturers_name, pd.products_takeaway
-        from " . TABLE_PRODUCTS . " p join  " . TABLE_PRODUCTS_DESCRIPTION . " pd on
-        p.products_id=pd.products_id join " . TABLE_MANUFACTURERS . " m on m.manufacturers_id=p.manufacturers_id
-        where p.products_status = '1' and p.products_id = '" . (int)$_REQUEST['products_id'] . "' and pd.language_id =' " . (int)$languages_id . "'");
+$isAsterisked = false;
+$product_info_query = tep_db_query("
+    SELECT
+        pd.products_target_keyword,
+        p.products_keywords,
+        p.products_die,
+        p.products_sku,
+        p.products_upc,
+        p.products_dieqty,
+        pd.products_head_title_tag,
+        pd.products_head_keywords_tag,
+        pd.products_head_desc_tag,
+        pd.products_type,
+        pd.products_departments,
+        pd.products_ailments,
+        pd.products_uses,
+        p.products_weight,
+        p.products_ordered,
+        pd.products_head_keywords_tag,
+        pd.products_viewed,
+        date_format(p.products_date_added,'%m/%d/%Y') as products_date_added, p.products_last_modified,
+        p.products_id,
+        pd.products_name,
+        pd.products_description,
+        p.products_model,
+        p.products_quantity,
+        p.products_image,
+        pd.products_url,
+        p.products_msrp,
+        p.products_price,
+        p.products_tax_class_id,
+        p.products_date_available,
+        p.manufacturers_id,
+        m.manufacturers_name,
+        pd.products_takeaway
+    FROM " . TABLE_PRODUCTS . " p
+    JOIN " . TABLE_PRODUCTS_DESCRIPTION . " pd ON (p.products_id = pd.products_id)
+    JOIN " . TABLE_MANUFACTURERS . " m on (m.manufacturers_id = p.manufacturers_id)
+    WHERE
+        p.products_status = '1' AND
+        p.products_id = '" . (int)$_REQUEST['products_id'] . "' AND
+        pd.language_id =' " . (int)$languages_id . "'
+    ");
 
 if(!($product_info = tep_db_fetch_array($product_info_query)))
 {
@@ -42,12 +70,11 @@ if(!($product_info = tep_db_fetch_array($product_info_query)))
 }
 else
 {
-
+    $isAsterisked = (strpos($product_info['products_name'], '*') !== false);
     $product_parts = parse_nameparts($product_info['products_name']);
     $tname         = $product_parts['name'];
     $tmisc         = $product_parts['attributes'];
     $shortname     = $tname;
-
     //check URL
     //echo $_SERVER["REQUEST_URI"]."<br/>".str_replace('//','/',"/".seo_url_title($tname)."/".seo_url_title($product_info["manufacturers_name"])."/".seo_url_title($tmisc)."/p".$product_info['products_id']);exit();
     $test_url = (str_replace('//', '/', "/" . seo_url_title($tname) . "/" . seo_url_title($product_info["manufacturers_name"]) . "/" . seo_url_title($tmisc) . "/p" . $product_info['products_id']));
@@ -236,10 +263,11 @@ if(!$cache->doCache('products_main' . $pmod, true, $lastmod))
             }?>
         </a>
     </div>
-    <?php if($is_cm_eligible == 0):?>
+
+    <?php if($isAsterisked):?>
     <div class="alert alert-info">
         <a href="<?php echo '/shopping_cart.php?products_id=' . $product_info['products_id']; ?>">
-        The prices is Less Than <?php echo $currencies->display_price($product_info['products_msrp'], tep_get_tax_rate($product_info['products_tax_class_id']))?>, but it's Too Low to show you until you add it to your cart!
+        The prices is Less Than <?php echo $currencies->display_price($product_info['products_price'], tep_get_tax_rate($product_info['products_tax_class_id']))?>, but it's Too Low to show you until you add it to your cart!
             </a>
     </div>
     <?php endif; ?>
