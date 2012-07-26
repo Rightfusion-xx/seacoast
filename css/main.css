@@ -68,7 +68,7 @@ body{
     height: 22px;
     line-height: 22px;
     text-align: center;
-    padding: 0 7px;
+    padding: 0 5px;
     margin: 0 13px;
 }
 
@@ -97,6 +97,7 @@ body{
     background-position: -175px -61px;
 }
 
+
 .header div span{
     font: 20px RotondaCRegular;
     display: inline-block;
@@ -112,7 +113,7 @@ body{
     position: absolute;
     top: 0;
 }
-
+.header > div.blue{text-align: right;}
 .header div span.country i{
     background-position: 0 -61px;
 }
@@ -122,6 +123,10 @@ body{
     height: 23px;
     top: -2px;
     width: 25px;
+}
+
+.header div span.country{
+   margin-left: 0;
 }
 
 .user-controls .logo{
@@ -267,6 +272,7 @@ body{
 .content h2{
     font: 24px/32px SwankyandMooMooRegular;
     text-align: center;
+    padding: 15px 0;
 }
 
 
@@ -278,4 +284,19 @@ body{
 .basket a:hover{
     text-decoration: none;
     color: #fff;
+}
+
+@media (max-width: 980px) and (min-width: 768px){
+    .header ul li a{
+    	margin: 0 7px;
+    }
+
+    .user-controls .logo{
+    	margin-bottom: 20px;
+    }
+
+    .user-controls .log-button{
+      margin-bottom: 20px;
+      margin-top: 19px;	
+    }
 }
