@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/application_top.php" afterPath="$PROJECT_DIR$/includes/application_top.php" />
-    </list>
+    <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="" />
     <ignored path="Seacoast Vitamins.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
