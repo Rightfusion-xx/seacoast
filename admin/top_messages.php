@@ -69,11 +69,11 @@ if(!empty($_REQUEST['remove_id']))
                 </td>
                 <td width="100%" valign="top">
                     <table border="0" width="100%" cellspacing="0" cellpadding="2">
-
                         <tr>
                             <td>
                                 <table border="0" width="100%" cellspacing="0" cellpadding="2">
                                     <tr>
+
                                         <td class="pageHeading" style="padding:10px;">Top Messages</td>
                                         <td class="pageHeading" style="padding:10px;text-align: right">
                                             <a href="top_messages_update.php" class="ae-action">Add</a>
@@ -97,9 +97,9 @@ if(!empty($_REQUEST['remove_id']))
                                     ');
                                     ?>
                                     <?php if(tep_db_num_rows($query) == 0):?>
-                                    <tr class="dataTableRow">
-                                        <td class="dataTableContent" colspan="4" style="text-align: center; padding: 10px;"> No data to show </td>
-                                    </tr>
+                                        <tr class="dataTableRow">
+                                            <td class="dataTableContent" colspan="4" style="text-align: center; padding: 10px;"> No data to show </td>
+                                        </tr>
                                     <?php else:?>
                                         <?php while($row = tep_db_fetch_array($query)):?>
                                             <tr class="dataTableRow">

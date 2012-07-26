@@ -11,7 +11,7 @@ if(!empty($_POST))
           INSERT INTO `top_messages`
             (`message_keyword`, `message_text`)
           VALUES
-            (\'' . tep_db_input($_POST['keyword']) . '\', \'' . tep_db_input($_POST['html']) . '\')
+            (\'' . tep_db_input($_POST['keyword']) . '\', \'' . str_replace("'", "\'", $_POST['html']) . '\')
         ';
         tep_db_query($query);
     }
@@ -20,7 +20,7 @@ if(!empty($_POST))
         tep_db_query('
             UPDATE
                 `top_messages`
-            SET `message_keyword` = \'' . tep_db_input($_POST['keyword']) . '\', `message_text` = \'' . tep_db_input($_POST['html']) . '\'
+            SET `message_keyword` = \'' . tep_db_input($_POST['keyword']) . '\', `message_text` = \'' . str_replace("'", "\'", $_POST['html']) . '\'
             WHERE `message_id` = \''.$text_id.'\'
         ');
     }
@@ -47,7 +47,7 @@ if(!empty($text_id))
         </tr>
         <tr>
             <td>Html:</td>
-            <td><textarea name="html" style="min-width: 500px;min-height: 300px;"><?php echo addslashes($row['message_text'])?></textarea></td>
+            <td><textarea name="html" style="min-width: 500px;min-height: 300px;"><?php echo $row['message_text']?></textarea></td>
         </tr>
     </table>
 </form>

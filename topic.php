@@ -1,61 +1,57 @@
 <?php
-
-
-  require('includes/application_top.php');
-
-  //$stop_tidy=true;
-
-  if(preg_match('/[A-Z]/',$_SERVER['REQUEST_URI']))
-  {
-      redir301(strtolower($_SERVER['REQUEST_URI']));
-  }
-
-  //Only search if valid. clean search request
-  $_REQUEST['health']=str_replace("\'","'",$_REQUEST['health']);
-  $searchterm=trim(UCWords($_REQUEST['health']));
-  $strip_search=str_replace('  ',' ',preg_replace("/[^a-zA-Z0-9s_\-\s']/", "", $searchterm));
-
-
-  if($searchterm!=$strip_search)
-  {
-    redir301('/topic.php?health='.urlencode($strip_search));
-  }
-
-  require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_ADVANCED_SEARCH);
-  require(DIR_WS_FUNCTIONS . '/render_products.php');
-  require(DIR_WS_FUNCTIONS . '/search_tools.php');
-
-
- $pagenum=(int)$_REQUEST['page'];
- if($pagenum<1){
-    $pagenum=1;
+    require('includes/application_top.php');
+    if(preg_match('/[A-Z]/',$_SERVER['REQUEST_URI']))
+    {
+        redir301(strtolower($_SERVER['REQUEST_URI']));
+    }
+    //Only search if valid. clean search request
+    $_REQUEST['health']=str_replace("\'","'",$_REQUEST['health']);
+    $searchterm=trim(UCWords($_REQUEST['health']));
+    $strip_search=str_replace('  ',' ',preg_replace("/[^a-zA-Z0-9s_\-\s']/", "", $searchterm));
+    if($searchterm!=$strip_search)
+    {
+        redir301('/topic.php?health='.urlencode($strip_search));
     }
 
- if($searchterm==''){ redir301('/'); }
-
-$results['searchterm']=$searchterm;
-
-//Find hub articles
-
-if($hub =tep_db_fetch_array(tep_db_query('select meta_value from wp_postmeta pm where pm.meta_key="hub" and meta_value="'.tep_db_input($searchterm).'"')))
-{
-
-    redir301('/'.strtolower($hub['meta_value']));
-    exit();
-}      //else, check for tags
-elseif($hub =tep_db_fetch_array(tep_db_query('select meta_value from wp_terms t join wp_term_taxonomy tt on t.term_id=tt.term_id and tt.taxonomy="post_tag" join wp_term_relationships tr on tt.term_taxonomy_id=tr.term_taxonomy_id join wp_postmeta pm on pm.post_id=tr.object_id where t.name="'.tep_db_input($searchterm).'" and meta_key="hub"')))
-{
-    redir301('/'.strtolower($hub['meta_value']));
-    exit();
-}
+    require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_ADVANCED_SEARCH);
+    require(DIR_WS_FUNCTIONS . '/render_products.php');
+    require(DIR_WS_FUNCTIONS . '/search_tools.php');
 
 
+    $pagenum=(int)$_REQUEST['page'];
+    if($pagenum<1)
+    {
+        $pagenum=1;
+    }
 
-//Find KeyMatches
-$keymatch=tep_db_fetch_array(tep_db_query('SELECT URL FROM keymatch WHERE ("'.strtolower($searchterm).'"=SearchTerm AND MatchType="ExactMatch") OR ("'.strtolower($searchterm).'" LIKE CONCAT("%",SearchTerm,"%") AND (MatchType="PhraseMatch" OR MatchType="KeywordMatch"))'));
+    if($searchterm=='')
+    {
+        redir301('/');
+    }
 
-if(strlen($keymatch['URL'])>0)
-{redir301($keymatch['URL']);}
+    $results['searchterm']=$searchterm;
+
+    //Find hub articles
+
+    if($hub =tep_db_fetch_array(tep_db_query('select meta_value from wp_postmeta pm where pm.meta_key="hub" and meta_value="'.tep_db_input($searchterm).'"')))
+    {
+
+        redir301('/'.strtolower($hub['meta_value']));
+        exit();
+    }      //else, check for tags
+    elseif($hub =tep_db_fetch_array(tep_db_query('select meta_value from wp_terms t join wp_term_taxonomy tt on t.term_id=tt.term_id and tt.taxonomy="post_tag" join wp_term_relationships tr on tt.term_taxonomy_id=tr.term_taxonomy_id join wp_postmeta pm on pm.post_id=tr.object_id where t.name="'.tep_db_input($searchterm).'" and meta_key="hub"')))
+    {
+        redir301('/'.strtolower($hub['meta_value']));
+        exit();
+    }
+
+    //Find KeyMatches
+    $keymatch=tep_db_fetch_array(tep_db_query('SELECT URL FROM keymatch WHERE ("'.strtolower($searchterm).'"=SearchTerm AND MatchType="ExactMatch") OR ("'.strtolower($searchterm).'" LIKE CONCAT("%",SearchTerm,"%") AND (MatchType="PhraseMatch" OR MatchType="KeywordMatch"))'));
+
+    if(strlen($keymatch['URL'])>0)
+    {
+        redir301($keymatch['URL']);
+    }
 
 
 // check to see if this is the best page to land on, based on search results.
@@ -238,127 +234,91 @@ else // Third tier, no results found
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html <?php echo HTML_PARAMS; ?>>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
-<base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
-<title><?php echo $title; ?> </title>
-<meta name="keywords" content="<?php echo $searchterm; ?>"/>
-<meta name="description" content="<?php echo $description; ?>"/>
-<link rel="stylesheet" type="text/css" href="stylesheet.css">
-
-<script type="text/javascript" src="/jquery/js/jquery-1.3.2.min.js"></script>
-<script type="text/javascript" src="/jquery/js/jquery.masonry.min.js"></script>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
+    <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
+    <title><?php echo $title; ?> </title>
+    <meta name="keywords" content="<?php echo $searchterm; ?>"/>
+    <meta name="description" content="<?php echo $description; ?>"/>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <script type="text/javascript" src="/jquery/js/jquery-1.3.2.min.js"></script>
+    <script type="text/javascript" src="/jquery/js/jquery.masonry.min.js"></script>
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0px;" rightmargin="0">
+    <!-- header //-->
+    <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
+    <!-- header_eof //-->
+    <div id="container" style="margin-left:15px;">
 
-<!-- header //-->
-<?php require(DIR_WS_INCLUDES . 'header.php'); ?>
-<!-- header_eof //-->
- <div id="container" style="margin-left:15px;">
-<?php
-$parts = explode(' ', $searchterm);
-$parts = "LOWER(`message_keyword`) = '" . implode("' OR LOWER(`message_keyword`) = '", $parts). "'";
-
-$topMessage = tep_db_fetch_array(tep_db_query('
-    SELECT * FROM `top_messages` WHERE ' . $parts . '
-'));
-if(!empty($topMessage))
-{
-    echo $topMessage['message_text'];
-}
-if($cart->count_contents() < 1 && $_SERVER['HTTPS']=='off' && $no_results)
-{?>
-<div name="chitika" style="margin:30px 0 30px 0;text-align:center;display:block;">
- <!-- Chitika -->
-<script type="text/javascript"><!--
-ch_client = "NealBozeman";
-ch_type = "mpu";
-ch_width = 550;
-ch_height = 250;
-ch_non_contextual = 4;
-ch_vertical ="premium";
-ch_sid = "Topic Pages";
-var ch_queries = new Array( );
-var ch_selected=Math.floor((Math.random()*ch_queries.length));
-if ( ch_selected < ch_queries.length ) {
-ch_query = ch_queries[ch_selected];
-}
-//--></script>
-<script  src="http://scripts.chitika.net/eminimalls/amm.js" type="text/javascript">
-</script>
-
-</div>
-
-<?php }
-
-
-if($cart->count_contents() < 1 && $no_results){ ?>
-
-            <script type="text/javascript" charset="utf-8">
-                HL_WIDGET_OPTIONS = {
-                "linksResultsPageUrl" : "",
-                "widgetID" : 613,
-                "customerID" : 17672
+    <?php if($cart->count_contents() < 1 && $_SERVER['HTTPS']=='off' && $no_results):?>
+        <div name="chitika" style="margin:30px 0 30px 0;text-align:center;display:block;">
+            <!-- Chitika -->
+            <script type="text/javascript"><!--
+                ch_client = "NealBozeman";
+                ch_type = "mpu";
+                ch_width = 550;
+                ch_height = 250;
+                ch_non_contextual = 4;
+                ch_vertical ="premium";
+                ch_sid = "Topic Pages";
+                var ch_queries = new Array( );
+                var ch_selected=Math.floor((Math.random()*ch_queries.length));
+                if ( ch_selected < ch_queries.length ) {
+                ch_query = ch_queries[ch_selected];
                 }
+                //-->
             </script>
-            <script src="http://js.hotkeys.com/js/widget/hotlinks.js" type="text/javascript" charset="utf-8" id="hotlinksScript"></script>
-
-<?php
+            <script  src="http://scripts.chitika.net/eminimalls/amm.js" type="text/javascript"></script>
+        </div>
+    <?php endif;?>
+    <?php if($cart->count_contents() < 1 && $no_results): ?>
+        <script type="text/javascript" charset="utf-8">
+            HL_WIDGET_OPTIONS = {
+            "linksResultsPageUrl" : "",
+            "widgetID" : 613,
+            "customerID" : 17672
             }
-
-
-
-
-
-     if($mflink=link_exists('/natural_uses.php?use='.urlencode(strtolower($usename)),$page_links))
-                          {
-                            $benefits='<a href="'.$mflink.'">'.ucwords($usename).' '.$product_info['products_type'].'</a> &nbsp;'.$benefits;
-                          }
-
-     ?>
-
-         <div class="container">
-            <div class="row">
-                <div class="span12">
-
-
-
-		<?php
-
-        $mt=preg_split('/[|]{1}/',$title) ;
-        $first=true;
-        foreach($mt as $item)
-        {
-            if($first)
+        </script>
+        <script src="http://js.hotkeys.com/js/widget/hotlinks.js" type="text/javascript" charset="utf-8" id="hotlinksScript"></script>
+    <?php endif;?>
+    <?php if($mflink=link_exists('/natural_uses.php?use='.urlencode(strtolower($usename)),$page_links))
+          {
+            $benefits='<a href="'.$mflink.'">'.ucwords($usename).' '.$product_info['products_type'].'</a> &nbsp;'.$benefits;
+          }
+    ?>
+    <div class="container">
+        <?php
+            $parts = explode(' ', $searchterm);
+            $parts = "LOWER(`message_keyword`) = '" . implode("' OR LOWER(`message_keyword`) = '", $parts). "'";
+            $topMessage = tep_db_fetch_array(tep_db_query('SELECT * FROM `top_messages` WHERE ' . $parts));
+            if(!empty($topMessage))
             {
-                echo '<h1>',$item,'</h1>';
-                $first=false;
-
+                echo $topMessage['message_text'];
             }
-            else
-            {
-                echo '<p>',$item,'</p>';
-            }
-
-
-        }
-
         ?>
-
-		<?php 		if($pagenum==1){ ?>
-
-
-		        <p>
-	                   <?php echo $paragraph;?>
-
-		        </p>
-
-
-		<?php } ?>
-
-		<?php
-		if($cart->count_contents() < 1 && !$no_results){?>
-
+        <div class="row">
+            <div class="span12">
+                <?php
+                    $mt=preg_split('/[|]{1}/',$title) ;
+                    $first=true;
+                    foreach($mt as $item)
+                    {
+                        if($first)
+                        {
+                            echo '<h1>',$item,'</h1>';
+                            $first=false;
+                        }
+                        else
+                        {
+                            echo '<p>',$item,'</p>';
+                        }
+                    }
+                ?>
+                <?php if($pagenum==1):?>
+		            <p>
+                        <?php echo $paragraph;?>
+                    </p>
+                <?php endif; ?>
+		        <?php if($cart->count_contents() < 1 && !$no_results):?>
 					<div style="margin-top:3em;margin-bottom:3em;">
 						<script type="text/javascript"><!--
 							google_ad_client = "pub-6691107876972130";
@@ -372,8 +332,8 @@ if($cart->count_contents() < 1 && $no_results){ ?>
 							src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 						</script>
 					</div>
-
-		<?php }if($cart->count_contents() < 1 && $no_results){ ?>
+                <?php endif;?>
+		        <?php if($cart->count_contents() < 1 && $no_results){?>
         <div style="margin-top:3em;margin-bottom:3em;">
         <script type="text/javascript" charset="utf-8">
             HL_WIDGET_OPTIONS = {

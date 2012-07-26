@@ -24,16 +24,21 @@
           </div>
           <div class="clear"></div>
       </div>
+
          <div class="user-controls row">
+
            <div class="span7">
               <a href="<?php echo HTTP_SERVER?>" class="logo fl-left" title="Vitamins, Exclusive Discounts, Direct to You."></a>
               <div class="search-container fl-left relative">
                   <i class="left"></i>
-                  <input type="text" value="<?php echo $_REQUEST['health']?>">
-                  <input type="submit" value="" tytle="Search Seacoast">
+                    <form action="/topic.php" method="get" style="display:inline;">
+                      <input type="text" name="health" maxlength="250" value="<?php echo htmlentities($_REQUEST['health'])?>">
+                      <input type="submit" value="" tytle="Search Seacoast" onclick="this.parentNode.submit();">
+                    </form>
                   <i class="right"></i>
               </div>
            </div>
+
            <div class="span5">
               <a href="<?php echo (tep_session_is_registered('customer_id') ? tep_href_link(FILENAME_LOGOFF, '', 'SSL') : tep_href_link(FILENAME_ACCOUNT, '', 'SSL'))?>" class="log-button fl-right relative">
                   <i class="left"></i>
@@ -59,13 +64,13 @@
                   </p>
               </div>
            </div>
-           <div class="clear"></div>  
+           <div class="clear"></div>
       </div>
         <div class="content row">
             <h2 class="span12"><?php echo(!empty($_REQUEST['page_caption']) ? $_REQUEST['page_caption'] :'Vitamins - Direct To Members from Seacoast Vitamins')?></h2>
         </div>
       </div>
-   </div>  
+   </div>
 </div>
 <?php /*
 <div id="header">

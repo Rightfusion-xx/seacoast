@@ -13,7 +13,7 @@
                 while ($configuration_groups = tep_db_fetch_array($configuration_groups_query)) {
                     $cfg_groups .= '<a href="' . tep_href_link(FILENAME_CONFIGURATION, 'gID=' . $configuration_groups['cgID'], 'NONSSL') . '" class="menuBoxContentLink">' . $configuration_groups['cgTitle'] . '</a><br>';
                 }
-
+                $cfg_groups .= '<a href="' . tep_href_link('top_messages.php') . '" class="menuBoxContentLink">' . BOX_TOOLS_TOP_MESSAGES . '</a>';
                 $contents[] = array('text'  => $cfg_groups);
             }
 
