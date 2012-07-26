@@ -27,109 +27,13 @@
   </table>
   <?php
   }
-  ?>
 
-<div id="header" >
-
-    <div class="container">
-  <div  class="row">
-      <div class="span4">
-          <?php
-            echo '<a href="'.HTTP_SERVER.'/"><img src="/images/seacoast_logo.png" border="0"
-              alt="" title="Vitamins, Exclusive Discounts, Direct to You. " width="179" height="60">
-              </a>';
-          ?>
-      </div>
-      <div class="span4">
-          <div style="text-align:center;">
-              <form name="quick_find" action="/topic.php" method="get" style="display:inline;">
-                  <input type="text" name="health" size="10" maxlength="250" style="width: 200px" value="<?php echo $_REQUEST['health']?>"/>&nbsp;
-                  <input class="primary" type="submit" value="Search" alt="Search Seacoast" title=" Search Seacoast "/>
-              </form>
-          </div>
-          <div style="text-align:center;">
-            <a href="/brands">Our Brands</a>
-            <?php if(!$_SESSION['cm_is_member']) {?>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/community/">Join Vitamins-Direct</a>   <?php } ?>
-          </div>
-      </div>
-      <div class="span4" style="text-align:right">
-
-              <?php if (tep_session_is_registered('customer_id')) { ?>
-                  <a href="<?php echo tep_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>" class="headerNavigation">
-                      <?php echo HEADER_TITLE_LOGOFF; ?>
-                  </a> &nbsp;|&nbsp;
-                  <?php } ?>
-              <a href="<?php echo tep_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="headerNavigation">
-                  <?php echo tep_session_is_registered('customer_id') ? 'My Account' : 'Log In To Your Account'; ?>
-
-              </a>
-              <?php if($cart->count_contents()>0){?> &nbsp;|&nbsp;
-                  <a href="<?php echo tep_href_link(FILENAME_SHOPPING_CART); ?>" class="headerNavigation" rel="nofollow">
-                      Shopping Cart
-                  </a>
-                  <?php } ?>
-
-
-              <p style="font-size:10pt;color:#CC6600;font-weight:bold;text-align:right;">U.S. 800.555.6792<br/>
-                  Int'l (1+) 702.508.9054</p>
-
-      </div>
-
-
-
-
- </div>
- </div>
-    <hr style="width:100%; height:1px; background-color:#333367;" />
-  <?php
-  if($do_admin && $authenticated)
-  {
-      ?>
-      <div id="admin" class="green box">
-      User: <?php echo substr($_SERVER['PHP_AUTH_USER'],0,strpos($_SERVER['PHP_AUTH_USER'],'@'));?>
-      </div>
-
-      <?php
-  }
-        ?>
-
-
-</div>
-
-<?php if ($cart->count_contents() > 0 && $_SERVER['HTTPS']=='off' && !$hide_cart): ?>
-
-<div style="padding-top:17px; margin-bottom:40px;" class="container alert">
-    <div class="row show-grid">
-        <div style="padding-top:4px;" class="span2">
-            <h5 style="display:inline;padding-left:5px;">Shopping Cart</h5>
-        </div>
-    <div class="span2">
-        <input class="btn" type="button" value="View All Items" onClick="document.location='/shopping_cart.php';">
-    </div>
-    <div class="span5" style="padding-top:4px;">
-        <h5 style="display:inline;padding-left:5px;">
-            <?php echo $cart->count_contents()?> item<?php if($cart->count_contents()>1) echo 's';?>: $<?php echo number_format($cart->show_total(),2);?>
-            &nbsp;&nbsp;
-            (<span>Savings of $<?php echo number_format($cart->show_savings(),2); ?></span>)
-        </h5>
-    </div>
-    <div class="span2" style="white-space: nowrap;">
-            <input class="btn" type="button" value="Checkout Now" onClick="document.location='/checkout_shipping.php';">
-            <input class="btn" type="button" value="Publish Shopping Cart" onClick="window.open('/publish_cart.php');">
-    </div>
-
-</div>
-</div>
-<?php endif; ?>
-
-<?php
-   $header_inject=substr(ob_get_contents(),$start);
-   $buffer=substr(ob_get_clean(),0,$start-1);
-   ob_start();
-   echo str_replace('$HEADER$',$header_inject, $buffer);
-
-
-  ?>
+    require(DIR_WS_INCLUDES . 'header_template.php');
+    $header_inject=substr(ob_get_contents(),$start);
+    $buffer=substr(ob_get_clean(),0,$start-1);
+    ob_start();
+    echo str_replace('$HEADER$',$header_inject, $buffer);
+?>
 
 
   <?php if($cart->count_contents() < 1 && $_SERVER['HTTPS']=='off'){?>

@@ -1,0 +1,281 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.header ul, ol{
+    list-style: none;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+input{
+    outline: none;
+}
+
+/*-------------------------------control styles--------------------------------------------*/
+.fl-left, .header ul li{
+    float: left;
+}
+
+.fl-right{
+    float: right;
+}
+
+.block-center{
+    margin: 0 auto;
+}
+
+.relative{
+    position: relative;
+}
+
+.clear{
+    clear: both;
+}
+/*-------------------------------control styles end----------------------------------------*/
+
+/*-------------------------------color styles----------------------------------------------*/
+.turquoise, a, .content h2{
+    color: #24B4B9;
+}
+
+.blue{
+    color: #6391B5;
+}
+/*-------------------------------color styles end------------------------------------------*/
+
+body{
+    font: 14px/18px Verdana, Tahoma;
+}
+
+.content-width{
+    width: 1170px;
+}
+
+.header, .user-controls{
+    /*margin: 0 57px;*/
+}
+
+.header ul li{
+    margin: 24px 0;
+}
+
+.header ul li a{
+    display: block;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    padding: 0 7px;
+    margin: 0 13px;
+}
+
+.header ul li a.active{
+    background: #38C9CE;
+    color: #FFF;
+    cursor: default;
+    text-decoration: none;
+}
+
+.header ul li a.active i{
+    background: url("./seacost_sprite.png") no-repeat;
+    position: absolute;
+    top: 0;
+    height: 22px;
+    width: 13px;
+}
+
+.header ul li a.active i.left{
+    left: -13px;
+    background-position: -162px -61px;
+}
+
+.header ul li a.active i.right{
+    right: -13px;
+    background-position: -175px -61px;
+}
+
+.header div span{
+    font: 20px RotondaCRegular;
+    display: inline-block;
+    margin: 24px 0 24px 15px;
+    padding-left: 30px;
+}
+
+.header div span i{
+    background: url("./seacost_sprite.png") no-repeat;
+    left: 0;
+    height: 19px;
+    width: 23px;
+    position: absolute;
+    top: 0;
+}
+
+.header div span.country i{
+    background-position: 0 -61px;
+}
+
+.header div span.world i{
+    background-position: -24px -60px;
+    height: 23px;
+    top: -2px;
+    width: 25px;
+}
+
+.user-controls .logo{
+    background: url("./seacost_sprite.png") no-repeat;
+    height: 60px;
+    margin-right: 55px;
+    width: 180px;
+}
+
+.user-controls .search-container{
+    background: #C4E0F2;
+    height: 40px;
+    margin: 0 4px;
+    width: 350px;
+}
+
+.user-controls .search-container i{
+    background: url(./seacost_sprite.png) no-repeat;
+    height: 40px;
+    position: absolute;
+    top: 0;
+    width: 4px;
+}
+
+.user-controls .search-container i.left{
+    background-position: -192px -60px;
+    left: -4px;
+}
+
+.user-controls .search-container input[type="text"], .user-controls .search-container input[type="text"]:focus{
+    color: #FFF;
+    font-size: 16px;
+    background: transparent;
+    border: 0;
+    padding: 10px 0;
+    width: 310px;
+    margin: 0px;
+    box-shadow: none;
+    height: auto;
+}
+
+.user-controls .search-container input[type="submit"]{
+    background: url("./seacost_sprite.png") -138px -60px no-repeat;
+    border: 0;
+    height: 25px;
+    width: 25px;
+    top: 6px;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.user-controls .search-container i.right{
+    background-position: right -60px;
+    right: -4px;
+}
+
+.user-controls .basket{
+    padding-left: 52px;
+    margin-left: 22px;
+}
+
+.user-controls .basket label{
+    background: url("./seacost_sprite.png") -52px -60px;
+    position: absolute;
+    left: 0;
+    top: -10px;
+    height: 52px;
+    width: 66px;
+}
+
+.user-controls .basket p{
+    background: #88D98A;
+    color: #FFF;
+    height: 39px;
+    line-height: 39px;
+    padding: 0 5px;
+    margin: 0 4px 0 14px;
+    min-width: 200px;
+    text-align: center;
+}
+
+.user-controls .basket p i{
+    background: url("./seacost_sprite.png") no-repeat;
+    position: absolute;
+    top: 0;
+    height: 39px;
+}
+
+.user-controls .basket p i.left{
+    background-position: -121px -60px;
+    left: -14px;
+    width: 14px;
+}
+
+.user-controls .basket p i.right{
+    background-position: -13px -80px;
+    right: -4px;
+    width: 4px;
+}
+
+.user-controls .basket p strong{
+    color: #366D38;
+}
+
+.user-controls .log-button{
+    color: #FFF;
+    background: #94C2E0;
+    margin: 0 4px 0 24px;
+    height: 39px;
+    padding: 0 6px 0 31px;
+    line-height: 39px;
+}
+
+.user-controls .log-button label{
+    background: url(./seacost_sprite.png) -22px -88px;
+    height: 23px;
+    position: absolute;
+    left: 5px;
+    width: 18px;
+    top: 6px;
+}
+
+.user-controls .log-button i{
+    background: url(./seacost_sprite.png) no-repeat;
+    height: 39px;
+    position: absolute;
+    top: 0;
+    width: 4px;
+}
+
+.user-controls .log-button i.left{
+    background-position: 0 -80px;
+    left: -4px;
+}
+
+.user-controls .log-button i.right{
+    background-position: -4px -80px;
+    right: -4px;
+}
+
+.content h2{
+    font: 24px/32px SwankyandMooMooRegular;
+    text-align: center;
+}
+
+
+.basket a{
+    text-decoration: none;
+    color: #fff;
+}
+
+.basket a:hover{
+    text-decoration: none;
+    color: #fff;
+}

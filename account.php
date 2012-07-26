@@ -74,41 +74,35 @@ function rowOutEffect(object) {
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 <!-- header //-->
-<?php require(DIR_WS_INCLUDES . 'header.php'); ?>
-<div class="container">
-
-
-		<table border="0" width="100%" cellspacing="0" cellpadding="12">
-      <tr>
-        <td><TABLE WIDTH="100%" BORDER="0" CELLPADDING="1" CELLSPACING="0"><TR><TD>
-<TABLE WIDTH="100%" BORDER="0" CELLPADDING="7" CELLSPACING="0" BGCOLOR="#FFFFFF"><TR><TD><table border="0" width="100%" cellspacing="0" cellpadding="0">
-          <tr>
-            <td class="pageHeading"><?php echo HEADING_TITLE; ?></td>
-           </tr>
-        </table></td>
-      </tr>
-
-      <tr>
-
-
-        <td>
-        <?php if($_SESSION['cm_is_member'] && !$_SESSION['cm_renew']) { ?><span style="background:yellow;">Your Seacoast Vitamins-Direct Membership will expire. <a href="account_cm.php">Please update your renewal options</a>.</span><?php } ?>
-		<?php echo tep_draw_separator('pixel_trans.gif', '100%', '10');?></td>
-
-      </tr>
-<?php
-  if ($messageStack->size('account') > 0) {
+<?php require(DIR_WS_INCLUDES . 'header.php');
+$_REQUEST['page_caption'] = HEADING_TITLE;
 ?>
-      <tr>
-        <td><?php echo $messageStack->output('account'); ?></td>
-      </tr>
-      <tr>
-        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
-      </tr>
-
+<div class="container">
+    <table border="0" width="100%" cellspacing="0" cellpadding="12">
+        <tr>
+            <td>
+                <TABLE WIDTH="100%" BORDER="0" CELLPADDING="1" CELLSPACING="0">
+                    <TR>
+                        <TD>
+                            <TABLE WIDTH="100%" BORDER="0" CELLPADDING="7" CELLSPACING="0" BGCOLOR="#FFFFFF">
+                                <TR>
+                                    <TD></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <?php if($_SESSION['cm_is_member'] && !$_SESSION['cm_renew']) { ?><span style="background:yellow;">Your Seacoast Vitamins-Direct Membership will expire. <a href="account_cm.php">Please update your renewal options</a>.</span><?php } ?>
+		                                <?php echo tep_draw_separator('pixel_trans.gif', '100%', '10');?>
+                                    </td>
+                                </tr>
+                                <?php if ($messageStack->size('account') > 0):?>
+                                    <tr>
+                                        <td><?php echo $messageStack->output('account'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
+                                    </tr>
+                                <?php endif;?>
 <?php
-  }
-
   if (tep_count_customer_orders() > 0) {
 ?>
       <tr>
@@ -159,7 +153,8 @@ function rowOutEffect(object) {
         <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10'); ?></td>
       </tr>
 <?php
-  }
+}
+
 ?>
       <tr>
         <td><table border="0" width="100%" cellspacing="0" cellpadding="2">
