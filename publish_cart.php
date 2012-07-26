@@ -1,9 +1,14 @@
 <?php
+$code = time().'_'.rand();
 require ("includes/application_top.php");
 $server_url=((substr($_SERVER['SERVER_PROTOCOL'],0,4)=="HTTP")?"http://":"https://").$_SERVER['HTTP_HOST'];
 
 if (isset($_GET['products_id']) && !$cart -> in_cart($_GET['products_id'])) {
     $cart->add_cart($_GET['products_id']);
+    if(!empty($_GET['products_id']))
+    {
+        $_SESSION['temp_products_id'] = $_GET['products_id'];
+    }
 }
 
 if(empty($_SESSION['customer_id']))
@@ -16,7 +21,7 @@ if(empty($_SESSION['customer_id']))
 
 if(!empty($_REQUEST['action']) && $_REQUEST['action'] == 'callback' && !empty($_REQUEST['scode']))
 {
-    $code = $_REQUEST['scode'];
+    //$code = $_REQUEST['scode'];
     //$saved = $cart->get_saved_contents($code);
     //if(!empty($saved))
     //{
@@ -29,9 +34,12 @@ if(!empty($_REQUEST['action']) && $_REQUEST['action'] == 'callback' && !empty($_
                 `customers_id` = \'' . $_SESSION['customer_id'] . '\'
         ');
     //}
-    echo '<script type="text/javascript">window.opener.location.reload();window.close();</script>';
+    header('Location: /shopping_cart.php'.(!empty($_SESSION['temp_products_id'])?'?products_id='.$_SESSION['temp_products_id'] : ''));
+    if(!empty($_SESSION['temp_products_id']))
+    {
+        unset($_SESSION['temp_products_id']);
+    }
     exit();
-
 }
 else
 {
@@ -47,10 +55,11 @@ else
         'app_id=' . FB_APP_ID . '&' .
         'link=' . urlencode($server_url . '/cart/' . $_SESSION['customer_id']) . '&' .
         'picture=' . urlencode($server_url . '/favicon.ico') .'&' .
-        'name=' . urlencode('I just got free shipping on my Seacoast Vitamins, and you can, too! Here\'s my shopping cart!') . '&' .
+        'name=' . urlencode(SHOPPINGCART_PUBLISH_MESSAGE) . '&' .
         'caption=' . urlencode(' ') . '&' .
         'description=' . urlencode($contents) . '&' .
         'redirect_uri=' . urlencode($server_url.'/publish_cart.php?action=callback&scode=' . $code);
+    //var_dump($server_url.'/publish_cart.php?action=callback&scode=' . $code);exit();
     header('Location: ' . addslashes($url));
     exit();
 }
