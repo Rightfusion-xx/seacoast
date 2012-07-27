@@ -15,6 +15,7 @@
   define('TABLE_COUNTRIES', 'countries');
   define('TABLE_CURRENCIES', 'currencies');
   define('TABLE_CUSTOMERS', 'customers');
+  define('TABLE_CUSTOMER_SNS', 'customers_sns');
   define('TABLE_CUSTOMERS_BASKET', 'customers_basket');
   define('TABLE_CUSTOMERS_BASKET_ATTRIBUTES', 'customers_basket_attributes');
   define('TABLE_CUSTOMERS_INFO', 'customers_info');

@@ -51,6 +51,8 @@ define('TABLE_COUPONS_A', 'coupons_a');
 
   define('TABLE_CUSTOMERS_BASKET', 'customers_basket');
 
+  define('TABLE_CUSTOMERS_BASKET_SAVED', 'customers_basket_saved');
+
   define('TABLE_CUSTOMERS_BASKET_ATTRIBUTES', 'customers_basket_attributes');
 
   define('TABLE_CUSTOMERS_INFO', 'customers_info');
@@ -115,7 +117,7 @@ define('TABLE_COUPONS_A', 'coupons_a');
 
   define('TABLE_ZONES', 'zones');
 
-  
+
 
 // added for infobox skin manager
 
@@ -143,7 +145,7 @@ define('TABLE_COUPONS_A', 'coupons_a');
 
   define('TABLE_TOPICS_DESCRIPTION', 'topics_description');
 
-  
+
 
 // VJ Links Manager v1.00 begin
 

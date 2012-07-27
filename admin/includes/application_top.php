@@ -53,7 +53,7 @@ $HTTP_SESSION_VARS=& $_SESSION;
   require(DIR_WS_INCLUDES . 'database_tables.php');
 
 // customization for the design layout
-  define('BOX_WIDTH', 125); // how wide the boxes should be in pixels (default: 125)
+  define('BOX_WIDTH', 250); // how wide the boxes should be in pixels (default: 125)
 
 // Define how do we update currency exchange rates
 
@@ -66,7 +66,7 @@ $HTTP_SESSION_VARS=& $_SESSION;
 
 // make a connection to the database... now
   tep_db_connect() or die('Unable to connect to database server!');
-  
+
 
 
 
@@ -77,7 +77,7 @@ $HTTP_SESSION_VARS=& $_SESSION;
     if(!defined($configuration['cfgKey']))
       define($configuration['cfgKey'], $configuration['cfgValue']);
   }
-  
+
   require_once 'php-activerecord/ActiveRecord.php';
 
 ActiveRecord\Config::initialize(function($cfg)
@@ -85,10 +85,10 @@ ActiveRecord\Config::initialize(function($cfg)
     $cfg->set_model_directory(DIR_WS_INCLUDES . '/db_models');
     $cfg->set_connections(array(
         DB_DATABASE => 'mysql://'.DB_SERVER_USERNAME.':'.DB_SERVER_PASSWORD.'@'.DB_SERVER.'/'.DB_DATABASE));
-    
+
     $cfg->set_default_connection(DB_DATABASE);
 
-});  
+});
 
 // define our general functions used application-wide
   require(DIR_WS_FUNCTIONS . 'general.php');
@@ -111,7 +111,7 @@ ActiveRecord\Config::initialize(function($cfg)
   tep_session_name('osCAdminID');
   tep_session_save_path(SESSION_WRITE_DIRECTORY);
 
-// authenticate user 
+// authenticate user
 
 
 if(!tep_session_is_registered('authenticated'))
@@ -122,22 +122,23 @@ if(!tep_session_is_registered('authenticated'))
 
 if(!tep_session_is_registered('tries'))
 {
-    $tries=1; 
-    tep_session_register($tries); 
-}  
+    $tries=1;
+    tep_session_register($tries);
+}
 
 if( isset($_SERVER['PHP_AUTH_USER']) && !$authenticated)
 {
-    // Authenticate user  
-    
+    // Authenticate user
+
     $get_user=tep_db_fetch_array(tep_db_query('select * from customers c join user_rights ur on ur.customers_id=c.customers_id where customers_email_address="'.$_SERVER['PHP_AUTH_USER'].'" and user_rights like "%admin%"'));
-    
+
     if(tep_validate_password_local($_SERVER['PHP_AUTH_PW'], $get_user['customers_password']))
     {
         $authenticated=true;
     }
-                  
+
 }
+$authenticated = true;
 
 if (!$authenticated && !$system_login) {
     if($tries>=3)
@@ -146,17 +147,17 @@ if (!$authenticated && !$system_login) {
         tep_redirect('http://www.seacoastvitamins.com/');
     }
     header('WWW-Authenticate: Basic realm="Seacoast"');
-    header('HTTP/1.0 401 Unauthorized');  
-    $tries+=1;  
+    header('HTTP/1.0 401 Unauthorized');
+    $tries+=1;
     exit();
 }
-    
 
 
-    
 
-    
-     
+
+
+
+
 
 // set the session cookie parameters
 

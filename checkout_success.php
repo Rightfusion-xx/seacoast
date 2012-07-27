@@ -1,13 +1,20 @@
 <?php
-
-
-  require('includes/application_top.php');
-
+require('includes/application_top.php');
+if($_SESSION['customer_id'])
+{
+    tep_db_query('
+        UPDATE
+            `customers`
+        SET
+            `customers_basket_published` = \'no\'
+        WHERE customers_id="'.tep_db_input($_SESSION['customer_id']).'"
+    ');
+}
 // if the customer is not logged on, redirect them to the shopping cart page
   if (!tep_session_is_registered('customer_id')) {
     tep_redirect(tep_href_link(FILENAME_SHOPPING_CART));
   }
-  
+
   refresh_user_info();
 
   if (isset($HTTP_GET_VARS['action']) && ($HTTP_GET_VARS['action'] == 'update')) {
@@ -20,13 +27,13 @@
     if (strlen($notify_string) > 0) $notify_string = substr($notify_string, 0, -1);
 
     tep_redirect(tep_href_link(FILENAME_DEFAULT, $notify_string));
-// Added a check for a Guest checkout and cleared the session - 030411 
-if (tep_session_is_registered('noaccount')) { 
+// Added a check for a Guest checkout and cleared the session - 030411
+if (tep_session_is_registered('noaccount')) {
 tep_session_destroy();
-tep_redirect(tep_href_link(FILENAME_DEFAULT, '', 'NONSSL')); 
-} 
-else { 
-tep_redirect(tep_href_link(FILENAME_DEFAULT, $notify_string, 'SSL')); 
+tep_redirect(tep_href_link(FILENAME_DEFAULT, '', 'NONSSL'));
+}
+else {
+tep_redirect(tep_href_link(FILENAME_DEFAULT, $notify_string, 'SSL'));
 }
   }
 
@@ -55,7 +62,7 @@ tep_redirect(tep_href_link(FILENAME_DEFAULT, $notify_string, 'SSL'));
       $pipe=true;
     }
   }
-  
+
 // PWA:  Added a check for a Guest checkout and cleared the session - 030411 v0.71
 if (tep_session_is_registered('noaccount')) {
  $order_update = array('purchased_without_account' => '1');
@@ -68,20 +75,20 @@ if (tep_session_is_registered('noaccount')) {
  tep_db_query("delete from " . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . " where customers_id = '" . tep_db_input($customer_id) . "'");
  tep_db_query("delete from " . TABLE_WHOS_ONLINE . " where customer_id = '" . tep_db_input($customer_id) . "'");
  tep_session_destroy();
- 
+
 
 }
    require(DIR_WS_CLASSES . 'order.php');
   $o_info = new order($orders['orders_id']);
-  
+
   tep_session_unregister('cc_number');
-  
+
   tep_session_unregister('cc_owner');
-  
+
   tep_session_unregister('cvvnumber');
-  
+
   tep_session_unregister('cc_expires_month');
-  
+
   tep_session_unregister('cc_expires_year');
 
 ?>
@@ -101,7 +108,7 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
   var pageTracker = _gat._getTracker("UA-207538-1");
   pageTracker._initData();
   pageTracker._trackPageview();
-  
+
    pageTracker._addTrans(
     "<?php echo $orders['orders_id'] ?>",                                     // Order ID
     "",                            // Affiliation
@@ -116,7 +123,7 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 
- 
+
 
 <!-- header //-->
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
@@ -135,13 +142,13 @@ document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.
       <tr>
         <td><table border="0" width="100%" cellspacing="4" cellpadding="2">
           <tr>
-            
+
             <td valign="top" class="main"><?php //echo tep_draw_separator('pixel_trans.gif', '1', '10'); ?><div align="center" class="pageHeading"><?php echo HEADING_TITLE; ?></div><br>
             Thank you for shopping! Seacoast Vitamins ships orders FAST!
             <br><br>
-            
-            
-<?php 
+
+
+<?php
 switch (rand(0,2)){
 case 0:
 
@@ -151,7 +158,7 @@ case 0:
 <script language="JavaScript" src="https://eval.bizrate.com/js/pos_162489.js" type="text/javascript"></script>
 
 <!-- END: BizRate Survey Invitation HTML -->
-<?php break; 
+<?php break;
 
 case 1: ?>
 <!-- BEGIN: Shopping.com Survey -->
@@ -165,7 +172,7 @@ case 2: ?>
 
 <link rel="stylesheet" href="https://merchants.nextag.com/serv/main/buyer/dhtmlpopup/dhtmlwindow.css" type="text/css" />
 <script type="text/javascript"> seller_id = 3768833;
-document.write('<'+ 'script type="text/javascript" src="https://merchants.nextag.com/seller/review/popup_include.js"><'+'\/script>'); 
+document.write('<'+ 'script type="text/javascript" src="https://merchants.nextag.com/seller/review/popup_include.js"><'+'\/script>');
 </script>
 
 <?php  break; }?>
@@ -178,27 +185,27 @@ document.write('<'+ 'script type="text/javascript" src="https://merchants.nextag
     for ($i=0, $n=sizeof($products_array); $i<$n; $i++) {
       if (!in_array($products_array[$i]['id'], $products_displayed)) {
       	?>
-      	
+
 			 <script type="text/javascript">
-			
+
 			  pageTracker._addItem(
 			    "<?php echo $orders['orders_id']?>",                                     // Order ID
 			    "<?php echo $products_array[$i]['id']?>",                                     // SKU
-			    "<?php echo $products_array[$i]['text']?>",                                  // Product Name 
+			    "<?php echo $products_array[$i]['text']?>",                                  // Product Name
 			    "",                             // Category
 			    "<?php echo $products_array[$i]['price']?>",                                    // Price
 			    "<?php echo $products_array[$i]['qty']?>"                                         // Quantity
 			  );
-			
+
 			  pageTracker._trackTrans();
 			</script>
-			
+
 			<!--Merchant Advantage-->
 			<img src="zmam=56141451&zmas=1&zmaq=N&quantity=<?php echo $products_array[$i]['qty']?>&pcode=<?php echo $products_array[$i]['id']?>&zman=<?php echo $orders['orders_id']?>&zmat=<?php echo $products_array[$i]['price']*$products_array[$i]['qty']?>" width=0 height=0 border=0>
       	    <!--End Merchant Advantage-->
 
       	<?php
-      	
+
         echo ' ' . $products_array[$i]['text'] . '<br>';
         $products_displayed[] = $products_array[$i]['id'];
       }
@@ -263,7 +270,7 @@ document.write('<'+ 'script type="text/javascript" src="https://merchants.nextag
 <!-- Pricegrabber -->
 <img src="https://www.pricegrabber.com/conversion.php?retid=11556" width=1 height=1>
  <!-- End Pricegrabber -->
-   
+
 <script type="text/javascript">
 <!--
     /* NexTag ROI Optimizer Data */
@@ -313,7 +320,7 @@ var product_name = '<?php echo $hpoutput;?>'
    $pap_orders_query = tep_db_query($sql);
    $pap_orders = tep_db_fetch_array($pap_orders_query);
    $pap_order_id = $pap_orders['orders_id'];
- 
+
    // get total amount of order
    $sql = "select value from ".TABLE_ORDERS_TOTAL.
           " where orders_id='".(int)$pap_order_id.
@@ -321,7 +328,7 @@ var product_name = '<?php echo $hpoutput;?>'
    $pap_orders_total_query = tep_db_query($sql);
    $pap_orders_total = tep_db_fetch_array($pap_orders_total_query);
    $pap_total_value = $pap_orders_total['value'];
- 
+
    // draw invisible image to register sale
    if($pap_total_value != "" && $pap_order_id != "")
    {
@@ -340,7 +347,7 @@ papSale();
    //--------------------------------------------------------------------------
             */
 ?>
-            
+
 <!--Merchant Advantage-->
 <script language="JavaScript" src="https://secure.merchantadvantage.com/inChannel/ma2q.js"></script>
 <!--End Merchant Advantage-->

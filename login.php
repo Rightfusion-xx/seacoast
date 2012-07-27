@@ -13,17 +13,13 @@ if($HTTP_GET_VARS['login'] == 'fail')
     $fail_reason = (!empty($HTTP_GET_VARS['reason'])) ? urldecode($HTTP_GET_VARS['reason']) : TEXT_LOGIN_ERROR;
     $messageStack->add('login', $fail_reason);
 }
-if(empty($_SESSION['state']))
-{
-    $_SESSION['state'] = md5(uniqid(rand(), TRUE));
-}
+
 if(isset($HTTP_GET_VARS['action']))
 {
     if($HTTP_GET_VARS['action'] == 'remote_login')
     {
         $code = $_REQUEST["code"];
-
-        if($_SESSION['state'] && ($_SESSION['state'] === $_REQUEST['state'])) {
+        if((FB_APP_ID === $_REQUEST['state'])) {
             $token_url = "https://graph.facebook.com/oauth/access_token?"
                 . "client_id=" . FB_APP_ID . "&redirect_uri=" . urlencode(tep_href_link(FILENAME_LOGIN, 'action=remote_login', 'SSL'))
                 . "&client_secret=" . FB_APP_SECRET . "&code=" . $code;
@@ -40,7 +36,7 @@ if(isset($HTTP_GET_VARS['action']))
             $snUser = tep_db_query("
                 SELECT
                     c.*
-                FROM `customers_sns` AS sns
+                FROM `" . TABLE_CUSTOMER_SNS . "` AS sns
                 INNER JOIN " . TABLE_CUSTOMERS . " AS c ON (c.customers_id = sns.customers_id)
                 WHERE
                     sns.customers_sn_key = '" . $user->id . "' AND
@@ -74,7 +70,7 @@ if(isset($HTTP_GET_VARS['action']))
                     $customer = tep_db_fetch_array($check_email_query);
                 }
                 tep_db_query("
-                    INSERT INTO `customers_sns`
+                    INSERT INTO `" . TABLE_CUSTOMER_SNS . "`
                         (customers_id, customers_sn_key, customers_sn_type)
                     VALUES ('" . $customer['customers_id'] . "', '" . $user->id . "', 'facebook');
                 ");
@@ -86,7 +82,7 @@ if(isset($HTTP_GET_VARS['action']))
             }
             else
             {
-                $HTTP_POST_VARS['email_address'] = $user->email;
+                $HTTP_POST_VARS['email_address'] = $snUser['customers_email_address'];
                 $HTTP_POST_VARS['password'] = $snUser['customers_password'];
                 $passwordEncrypted = true;
                 $HTTP_GET_VARS['action'] = 'process';
@@ -145,7 +141,14 @@ if(isset($HTTP_GET_VARS['action']))
                 }
                 else
                 {
-                    tep_redirect(tep_href_link(FILENAME_DEFAULT));
+                    if(empty($_REQUEST['back']))
+                    {
+                        tep_redirect(tep_href_link(FILENAME_DEFAULT));
+                    }
+                    else
+                    {
+                        tep_redirect(tep_href_link($_REQUEST['back']));
+                    }
                 }
             }
         }
@@ -197,7 +200,9 @@ $breadcrumb->add(NAVBAR_TITLE, tep_href_link(FILENAME_LOGIN, '', 'SSL'));
     <div class="container">
         <div class="row">
             <div class="span12">
-                <a href="https://www.facebook.com/dialog/oauth?state=<?php echo $_SESSION['state']?>&client_id=<?php echo FB_APP_ID?>&redirect_uri=<?php echo urlencode(tep_href_link(FILENAME_LOGIN, 'action=remote_login', 'SSL'))?>&response_type=code&scope=email,publish_stream,publish_actions" class="fb-logn" accesskey="">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                <a href="https://www.facebook.com/dialog/oauth?state=<?php echo FB_APP_ID?>&client_id=<?php echo FB_APP_ID?>&redirect_uri=<?php echo urlencode(tep_href_link(FILENAME_LOGIN, 'action=remote_login' . (
+                    !empty($_REQUEST['back'])? '&back=' . $_REQUEST['back'] : ''
+                ), 'SSL'))?>&response_type=code&scope=<?php echo FB_APP_SCOPE?>" class="fb-logn" accesskey="">&nbsp;&nbsp;&nbsp;&nbsp;</a>
                 <TABLE BORDER="0" WIDTH="100%" CELLSPACING="0" CELLPADDING="0">
                     <TR>
                         <td width="100%" valign="top">

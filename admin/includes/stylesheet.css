@@ -86,7 +86,7 @@ body { background-color: #ffffff; color: #000000; margin: 0px; font-family:helve
 
 .headerBar { background-color: #B3BAC5; }
 
-.headerBarContent { font-family: Verdana, Arial, sans-serif; font-size: 10px; color: #ffffff; font-weight: bold; padding: 2px; }
+.headerBarContent { font-family: Verdana, Arial, sans-serif; font-size: 10px; color: #ffffff; font-weight: bold; padding: 2px; white-space: nowrap;}
 
 .columnLeft { background-color: #F0F1F1; border-color: #999999; border-width: 1px; border-style: solid; padding: 2px; }
 

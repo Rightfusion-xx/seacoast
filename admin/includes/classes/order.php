@@ -25,11 +25,11 @@
 
     function query($order_id) {
 
-// begin cvv contribution        
+// begin cvv contribution
 
       $order_query = tep_db_query("select *, ot.value as ot_total, case when pnref is null then '0' else '1' end as paid
-                                    from " . TABLE_ORDERS . " o 
-                                    join orders_total ot on ot.orders_id=o.orders_id and ot.class='ot_total' 
+                                    from " . TABLE_ORDERS . " o
+                                    join orders_total ot on ot.orders_id=o.orders_id and ot.class='ot_total'
                                     left outer join orders_pnref op on op.orders_id=o.orders_id
                                     where o.orders_id = '" . (int)$order_id . "'");
 
@@ -42,11 +42,11 @@
 
                 $freightamt=$totals['value'];}
         $this->totals[] = array(
-	  'title' => $totals['title'], 
-	  'text' => $totals['text'], 
-	  'class' => $totals['class'], 
+	  'title' => $totals['title'],
+	  'text' => $totals['text'],
+	  'class' => $totals['class'],
 	  'value' => $totals['value'],
-	  'sort_order' => $totals['sort_order'], 
+	  'sort_order' => $totals['sort_order'],
 	  'orders_total_id' => $totals['orders_total_id']);
       }
 
@@ -76,7 +76,7 @@ $this->info = array('currency' => $order['currency'],
                               'postcode' => $order['customers_postcode'],
                               'state' => $order['customers_state'],
                               'country' => $order['customers_country'],
-                              'format_id' => $order['customers_address_format_id'],
+                              'format_id' => intval($order['customers_address_format_id']),
                               'telephone' => $order['customers_telephone'],
                               'email_address' => $order['customers_email_address']);
 
@@ -102,29 +102,29 @@ $this->info = array('currency' => $order['currency'],
 
       $countryid = tep_get_country_id($this->delivery["country"]);
   $zoneid = tep_get_zone_id($countryid, $this->delivery["state"]);
-	
+
  $index = 0;
      $orders_products_query = tep_db_query("
-   SELECT 
+   SELECT
           (SELECT location from products_location where products_id=op.products_id order by time_created desc limit 0,1) as location,
 	 op.orders_products_id, op.products_id,
    m.manufacturers_name,
-	 op.products_name, 
-	 op.products_model, 
+	 op.products_name,
+	 op.products_model,
 	 op.products_price,
-	 op.products_tax, 
-	 op.products_quantity, 
+	 op.products_tax,
+	 op.products_quantity,
 	 op.final_price,
 	 p.products_tax_class_id,
 	 p.products_weight,
 	 p.products_available
   FROM " . TABLE_ORDERS_PRODUCTS . " op
-  LEFT JOIN " . TABLE_PRODUCTS . " p 
+  LEFT JOIN " . TABLE_PRODUCTS . " p
   ON op.products_id = p.products_id  join manufacturers m on m.manufacturers_id=p.manufacturers_id
   WHERE orders_id = '" . (int)$order_id . "'");
- 
+
        while ($orders_products = tep_db_fetch_array($orders_products_query)) {
-            
+
          $this->products[$index] = array('qty' => $orders_products['products_quantity'],
                                          'location' => $orders_products['location'],
                                          'name' => $orders_products['products_name'],
@@ -138,12 +138,12 @@ $this->info = array('currency' => $order['currency'],
 										 'products_id' => $orders_products['products_id'],
 										 'qty_avail' => $orders_products['products_available'],
                                    'orders_products_id' => $orders_products['orders_products_id']);
- 
+
         $subindex = 0;
         $attributes_query = tep_db_query("select * from " . TABLE_ORDERS_PRODUCTS_ATTRIBUTES . " where orders_id = '" . (int)$order_id . "' and orders_products_id = '" . (int)$orders_products['orders_products_id'] . "'");
         if (tep_db_num_rows($attributes_query)) {
           while ($attributes = tep_db_fetch_array($attributes_query)) {
-            $this->products[$index]['attributes'][$subindex] = 
+            $this->products[$index]['attributes'][$subindex] =
 			array('option' => $attributes['products_options'],
                   'value' => $attributes['products_options_values'],
                   'prefix' => $attributes['price_prefix'],
@@ -156,14 +156,14 @@ $this->info = array('currency' => $order['currency'],
         $index++;
       }
     }
-    
+
     function deductInventory()
     {
         foreach($this->products as $item)
         {
             tep_db_query('update products set products_available=products_available-'.$item['qty'].' where products_id='. $item['products_id']);
         }
-    
+
     }
     function restockInventory()
     {
