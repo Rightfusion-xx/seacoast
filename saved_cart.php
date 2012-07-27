@@ -93,7 +93,7 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                         $pl =  '<table style="border-top:1px solid lightgray" class="table table-striped">';
                         $pl .= '<thead>';
                         $pl .= '<th>Product Name</th>';
-                        $pl .= '<th>Price</th>';
+                        $pl .= '<th style="width:75px;">Price</th>';
                         $pl .= '</thead>';
                         $pl .= '<tbody>';
                         for ($i=1; $i<count($info_box_contents); $i++)
@@ -145,7 +145,7 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                                         </b>
                                     </a>
                                 </td>
-                                <td>
+                                <td  style="width:75px;">
                                     <?php
                                     echo ($row['products_id'] == CM_FTPID ? '&nbsp;' : '<b>' .
                                         $currencies->display_price($row['products_price'], tep_get_tax_rate($row['products_tax_class_id']), 1) . '</b>')
