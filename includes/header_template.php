@@ -30,12 +30,18 @@
            <div class="span7">
               <a href="<?php echo HTTP_SERVER?>" class="logo fl-left" title="Vitamins, Exclusive Discounts, Direct to You."></a>
               <div class="search-container fl-left relative">
-                  <i class="left"></i>
-                    <form action="/topic.php" method="get" style="display:inline;">
-                      <input type="text" name="health" maxlength="250" value="<?php echo htmlentities($_REQUEST['health'])?>">
-                      <input type="submit" value="" tytle="Search Seacoast" onclick="this.parentNode.submit();">
-                    </form>
-                  <i class="right"></i>
+                  <form action="/topic.php" method="get" style="display:inline;">
+                    <input id="search_input" type="text" name="health" maxlength="250" onFocus="changeSubmit()" onBlur="resetSubmit()" value="<?php echo htmlentities($_REQUEST['health'])?>">
+                    <input type="submit" value="" tytle="Search Seacoast" onclick="this.parentNode.submit();">
+                  </form>
+                  <script type="text/javascript">
+                     function changeSubmit(){
+                         document.getElementById("search_input").setAttribute("class", "focused");
+                     }
+                     function resetSubmit(){
+                        document.getElementById("search_input").removeAttribute("class", "focused");
+                     }
+                  </script>
               </div>
            </div>
 
