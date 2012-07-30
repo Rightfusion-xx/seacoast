@@ -5,6 +5,8 @@ require('includes/classes/http_client.php');
 
 require(DIR_WS_LANGUAGES . $language . '/' . 'fast_account.php');
 
+
+$customerData = tep_db_fetch_array(tep_db_query('SELECT * FROM `' . TABLE_CUSTOMERS . '` where customers_id = \'' . (int)$customer_id . '\''));
  // if the customer is not logged on, redirect them to the login page
 if (!tep_session_is_registered('customer_id')) {
     $navigation->set_snapshot();
@@ -416,7 +418,7 @@ function rowOutEffect(object) {
                 <td>
                     <div style="border: 1px solid #0088CC;margin-top: 10px;padding:10px;">
                         <a style="margin-left:10px;" target="_blank" href="/publish_cart.php">
-                            <?php echo GET_FREE_SHIPPING_MESSAGE?>
+                            <?php echo ((empty($customerData) || empty($customerData['customers_basket_published']) || $customerData['customers_basket_published'] != 'yes') ? GET_FREE_SHIPPING_MESSAGE : GET_FREE_SHIPPING_ENABLED_MESSAGE)?>
                         </a>
                     </div>
                 </td>
