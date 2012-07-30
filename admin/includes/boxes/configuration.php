@@ -16,6 +16,7 @@
                 $cfg_groups .= '<a href="' . tep_href_link('top_messages.php') . '" class="menuBoxContentLink">' . BOX_TOOLS_TOP_MESSAGES . '</a><br>';
                 $cfg_groups .= '<a href="' . tep_href_link('email_templates.php') . '" class="menuBoxContentLink">' . BOX_EMAIL_TEMPLATES . '</a><br>';
                 $cfg_groups .= '<a href="' . tep_href_link('newsletter_subscribers.php') . '" class="menuBoxContentLink">' . BOX_NEWSLETTER_SUBSCRIBERS . '</a><br>';
+                $cfg_groups .= '<a href="' . tep_href_link('newsletters.php') . '" class="menuBoxContentLink">' . BOX_NEWSLETTERS . '</a><br>';
                 $contents[] = array('text'  => $cfg_groups);
             }
 

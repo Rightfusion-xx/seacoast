@@ -415,7 +415,9 @@ function rowOutEffect(object) {
             <tr>
                 <td>
                     <div style="border: 1px solid #0088CC;margin-top: 10px;padding:10px;">
-                        <a style="margin-left:10px;" target="_blank" href="/publish_cart.php">Publish your shopping cart to facebook and a free shipping in U.S.</a>
+                        <a style="margin-left:10px;" target="_blank" href="/publish_cart.php">
+                            <?php echo GET_FREE_SHIPPING_MESSAGE?>
+                        </a>
                     </div>
                 </td>
             </tr>
