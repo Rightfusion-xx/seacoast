@@ -1,4 +1,11 @@
 <?php
+
+if(stristr($_SERVER['REQUEST_URI'], '/images/') && !stristr($_SERVER['HTTP_HOST'], 'seacoast.com'))
+{
+    header('Location: http://www.seacoast.com'.$_SERVER['REQUEST_URI']);
+    exit();
+}
+
 function set_old_uri()
 {
     global $old_uri;

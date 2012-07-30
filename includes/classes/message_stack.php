@@ -17,20 +17,21 @@
   if ($messageStack->size('general') > 0) echo $messageStack->output('general');
 */
 
-  class messageStack extends tableBox {
-
-// class constructor
-    function messageStack() {
-      global $messageToStack;
-
-      $this->messages = array();
-
-      if (tep_session_is_registered('messageToStack')) {
-        for ($i=0, $n=sizeof($messageToStack); $i<$n; $i++) {
-          $this->add($messageToStack[$i]['class'], $messageToStack[$i]['text'], $messageToStack[$i]['type']);
+class messageStack extends tableBox
+{
+    // class constructor
+    function messageStack()
+    {
+        global $messageToStack;
+        $this->messages = array();
+        if (tep_session_is_registered('messageToStack'))
+        {
+            for ($i=0, $n=sizeof($messageToStack); $i<$n; $i++)
+            {
+                $this->add($messageToStack[$i]['class'], $messageToStack[$i]['text'], $messageToStack[$i]['type']);
+            }
+            tep_session_unregister('messageToStack');
         }
-        tep_session_unregister('messageToStack');
-      }
     }
 
 // class methods

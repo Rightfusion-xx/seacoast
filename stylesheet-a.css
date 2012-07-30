@@ -85,7 +85,7 @@ color: #ff0000;
 /* message box */
 .messageBox {  }
 .messageStackError, .messageStackWarning {background-color: #ffb3b5; }
-.messageStackSuccess {background-color: #99ff00; }
+.messageStackSuccess {background-color: #99ff00; padding:10px;}
 /* input requirement */
 .inputRequirement {color: #ff0000; }
 
