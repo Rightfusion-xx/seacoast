@@ -135,7 +135,6 @@ foreach($products as &$product)
     );
     unset($products[$index]);
     $index++;
-    if($index > 10) break;
 }
 
 // End XML Tags

@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/boxes/configuration.php" afterPath="$PROJECT_DIR$/admin/includes/boxes/configuration.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/languages/english.php" afterPath="$PROJECT_DIR$/admin/includes/languages/english.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/checkout_shipping.php" afterPath="$PROJECT_DIR$/checkout_shipping.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/feeds/sitemap.php" afterPath="$PROJECT_DIR$/feeds/sitemap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/db_models/products.php" afterPath="$PROJECT_DIR$/includes/db_models/products.php" />
     </list>
     <ignored path="Seacoast Vitamins.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -112,15 +111,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="newsletter_subscribers.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/newsletter_subscribers.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="579" selection-end="579" vertical-scroll-proportion="-12.423077">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="newsletters.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/newsletters.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -130,10 +120,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="checkout_shipping.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="checkout_shipping.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/checkout_shipping.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="439" column="5" selection-start="15261" selection-end="15261" vertical-scroll-proportion="0.64705884">
+            <state line="422" column="17" selection-start="14145" selection-end="14145" vertical-scroll-proportion="-9.431373">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sitemap.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/feeds/sitemap.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="83" selection-start="735" selection-end="735" vertical-scroll-proportion="0.3561644">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="products.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/includes/db_models/products.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="54" selection-start="145" selection-end="145" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -154,8 +162,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/admin/top_messages.php" />
-        <option value="$PROJECT_DIR$/admin/email_templates.php" />
         <option value="$PROJECT_DIR$/404.php" />
         <option value="$PROJECT_DIR$/admin/includes/classes/message_stack.php" />
         <option value="$PROJECT_DIR$/includes/classes/message_stack.php" />
@@ -170,6 +176,8 @@
         <option value="$PROJECT_DIR$/admin/includes/boxes/configuration.php" />
         <option value="$PROJECT_DIR$/sql-cahnges/27.07.2012.freeShippingMessage.sql" />
         <option value="$PROJECT_DIR$/checkout_shipping.php" />
+        <option value="$PROJECT_DIR$/includes/db_models/products.php" />
+        <option value="$PROJECT_DIR$/feeds/sitemap.php" />
       </list>
     </option>
   </component>
@@ -235,6 +243,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Seacoast" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Seacoast Vitamins" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Seacoast" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="includes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Seacoast Vitamins" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Seacoast" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="includes" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="db_models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -427,7 +467,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1426" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -435,7 +475,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328594" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24972129" sideWeight="0.38187703" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998884" sideWeight="0.600863" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19227707" sideWeight="0.67140603" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19227707" sideWeight="0.67140603" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34843582" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -510,34 +550,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/admin/includes/application_top.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="216" column="20" selection-start="5774" selection-end="5787" vertical-scroll-proportion="0.43636364">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/stylesheet-a.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="62" selection-start="2362" selection-end="2362" vertical-scroll-proportion="0.33333334">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/header_template.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="79" column="28" selection-start="4545" selection-end="4558" vertical-scroll-proportion="0.4680851">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/publish_cart.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="60" selection-start="1144" selection-end="1144" vertical-scroll-proportion="0.68">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/includes/classes/message_stack.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="37" column="39" selection-start="1058" selection-end="1059" vertical-scroll-proportion="-14.28">
@@ -624,7 +636,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/checkout_shipping.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="439" column="5" selection-start="15261" selection-end="15261" vertical-scroll-proportion="0.64705884">
+        <state line="422" column="17" selection-start="14145" selection-end="14145" vertical-scroll-proportion="-9.431373">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feeds/products-sitemap.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="40" selection-start="877" selection-end="877" vertical-scroll-proportion="0.31506848">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/db_models/productsdescription.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="27" selection-start="14" selection-end="33" vertical-scroll-proportion="0.01369863">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/db_models/products.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="54" selection-start="145" selection-end="145" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/feeds/sitemap.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="83" selection-start="735" selection-end="735" vertical-scroll-proportion="0.3561644">
           <folding />
         </state>
       </provider>
