@@ -39,18 +39,7 @@ class ActionAbstract
         {
             while($row = tep_db_fetch_array($req))
             {
-                echo '<tr class="dataTableRow">';
-                foreach($this->_gridFields as $field => $title)
-                {
-                    echo '<td class="dataTableContent">' . $row[$field] . '</td>';
-                }
-                echo '<td class="dataTableContent" style="width:75px;">
-                    <nobr>
-                        <a class="ae-action" href="' . $this->_scriptUrl . '?action=edit&id=' . $row[$this->_keyField] . '">Edit</a> |
-                        <a onclick="return confirm(\'Are you sure you want to remove this record?\')" href="' . $this->_scriptUrl . '?action=remove&id=' . $row[$this->_keyField] . '">Remove</a>
-                    </nobr>
-                </td>';
-                echo '</tr>';
+                $this->renderListRow($row);
             }
         }
         else
@@ -63,6 +52,22 @@ class ActionAbstract
         }
         echo "</table>";
         $this->footOut();
+    }
+
+    public function renderListRow($row)
+    {
+        echo '<tr class="dataTableRow">';
+        foreach($this->_gridFields as $field => $title)
+        {
+            echo '<td class="dataTableContent">' . $row[$field] . '</td>';
+        }
+        echo '<td class="dataTableContent" style="width:75px;">
+                    <nobr>
+                        <a class="ae-action" href="' . $this->_scriptUrl . '?action=edit&id=' . $row[$this->_keyField] . '">Edit</a> |
+                        <a onclick="return confirm(\'Are you sure you want to remove this record?\')" href="' . $this->_scriptUrl . '?action=remove&id=' . $row[$this->_keyField] . '">Remove</a>
+                    </nobr>
+                </td>';
+        echo '</tr>';
     }
 
     protected function _getGridReq()
@@ -238,17 +243,8 @@ class ActionAbstract
             <table border="0" width="100%" cellspacing="0" cellpadding="2">
                 <tr>
                     <td>
-                        <table border="0" width="100%" cellspacing="0" cellpadding="2">
-                            <tr>
+                        <?php echo $this->outTitleRow();?>
 
-                                <td class="pageHeading" style="padding:10px;"><?php echo $this->_pageTitle?></td>
-                                <td class="pageHeading" style="padding:10px;text-align: right">
-                                    <?php if(!$this->_hideAddButton):?>
-                                        <a href="<?php echo $this->_scriptUrl.'?action=add'?>" class="ae-action">Add</a>
-                                    <?php endif;?>
-                                </td>
-                            </tr>
-                        </table>
                     </td>
                 </tr>
                 <tr>
@@ -270,6 +266,21 @@ class ActionAbstract
     </body>
 </html>
     <?php
+    }
+
+    public function outTitleRow()
+    {?>
+            <table border="0" width="100%" cellspacing="0" cellpadding="2">
+                <tr>
+                    <td class="pageHeading" style="padding:10px;"><?php echo $this->_pageTitle?></td>
+                    <td class="pageHeading" style="padding:10px;text-align: right">
+                        <?php if(!$this->_hideAddButton):?>
+                            <a href="<?php echo $this->_scriptUrl.'?action=add'?>" class="ae-action">Add</a>
+                        <?php endif;?>
+                    </td>
+                </tr>
+            </table>
+        <?php
     }
 
     public function run()
