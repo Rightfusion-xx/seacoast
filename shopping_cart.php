@@ -34,7 +34,8 @@ else
 }
 
 $hasAddress = false;
-if(session_is_registered('customers_id'))
+
+if(tep_session_is_registered('customer_id'))
 {
     $check_address_query = tep_db_query("select * from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . ((int)$customer_id) . "'");
     if(tep_db_num_rows($check_address_query) == 0)
