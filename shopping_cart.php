@@ -471,7 +471,6 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                     Add address
                 </a>
             <?php endif;?>
-            <a style="margin-left:10px;" class="btn btn-primary" target="_blank" href="/publish_cart.php">Publish to facebook</a>
         </div>
         <div class="span6">
             <?php if($cart->show_savings()>0):?>
@@ -503,9 +502,15 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                     }
                 </script>
                 <?php
+                    $inUs48 = false;
+                    if(!empty($order->delivery['country']['iso_code_2']) && $order->delivery['country']['iso_code_2'] == 'US')
+                    {
+                        $inUs48 = true;
+                    }
+
                     if(!tep_session_is_registered('customer_id')):
                         if((isset($_SESSION['country']) && ($_SESSION['country'] == "US")) || ($order->delivery['country']['iso_code_2'] == "US")):
-                                echo 'Enter zip code: <br />';
+                                echo 'Enter zip code: ';
                                 echo tep_draw_input_field('postcode', $order->delivery['postcode'],'style="width:80px;"');
                                 echo tep_draw_input_field('postcode_btn','Calculate Shipping', "style='margin-left:10px;font-weight:bold;' onClick='return submitForm(this.form);'",'submit');
                         endif;
@@ -515,11 +520,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                         global $cheapestShippingRate;
                         return number_format($cheapestShippingRate, 2);
                     }
-                    $inUs48 = false;
-                    if(!empty($order->delivery['country']['iso_code_2']) && $order->delivery['country']['iso_code_2'] == 'US')
-                    {
-                        $inUs48 = true;
-                    }
+
                     if($inUs48 && $cart->show_total() >= 25 && defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true'))
                     {
                         echo '<p>Ships FREE (US Lower 48)</p>';
@@ -527,6 +528,11 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                     elseif(MODULE_SHIPPING_FLAT_STATUS=='True')
                     {
                         echo 'Shipping: $4.95 flat rate<br/>(US Lower 48)';
+                        if($inUs48):
+                            echo '<p></p><a href="/publish_cart.php">
+                                    We\'ve detected you are in the US. For free shipping in the Lower 48, publish your shopping cart to Facebook.
+                                </a></p>';
+                        endif;
                     }
                     else
                     {
@@ -537,7 +543,13 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                             $costStr .= '</b></p>';
                             echo $costStr;
                         }
+                        if($inUs48):
+                            echo '<p></p><a href="/publish_cart.php">
+                                    We\'ve detected you are in the US. For free shipping in the Lower 48, publish your shopping cart to Facebook.
+                                </a></p>';
+                        endif;
                     }
+
                 ?>
                 <?php echo '<br/><a class="btn btn-primary" title="Checkout Now" href="' . tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '"><i class="icon-play icon-white">&nbsp;</i>&nbsp;Checkout Now</a><BR>';?>
                 <p><b>Need international or expedited shipping? Continue to checkout for real-time rates. </b></p>
