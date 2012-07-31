@@ -1,6 +1,7 @@
 <?php
 require('includes/application_top.php');
 // redirect the customer to a friendly cookie-must-be-enabled page if cookies are disabled (or the session has not started)
+
 if($session_started == false)
 {
     tep_redirect(tep_href_link(FILENAME_COOKIE_USAGE));
@@ -19,9 +20,17 @@ if(isset($HTTP_GET_VARS['action']))
     if($HTTP_GET_VARS['action'] == 'remote_login')
     {
         $code = $_REQUEST["code"];
+        $uriParams = $_GET;
+        unset($uriParams['code']);
+        unset($uriParams['state']);
+        foreach($uriParams as $k=>$p)
+        {
+            $uriParams[$k] = $k . '=' . $p;
+        }
         if((FB_APP_ID === $_REQUEST['state'])) {
+
             $token_url = "https://graph.facebook.com/oauth/access_token?"
-                . "client_id=" . FB_APP_ID . "&redirect_uri=" . urlencode(tep_href_link(FILENAME_LOGIN, 'action=remote_login', 'SSL'))
+                . "client_id=" . FB_APP_ID . "&redirect_uri=" . urlencode(tep_href_link(FILENAME_LOGIN, implode('&', $uriParams), 'SSL'))
                 . "&client_secret=" . FB_APP_SECRET . "&code=" . $code;
 
             $response = file_get_contents($token_url);
