@@ -12,7 +12,6 @@ if (!tep_session_is_registered('customer_id')) {
     $navigation->set_snapshot();
     tep_redirect(tep_href_link(FILENAME_CREATE_ACCOUNT, '', 'SSL'));
 }
-
 // if no shipping destination address was selected, use the customers own address as default
 if (!tep_session_is_registered('sendto')) {
         tep_session_register('sendto');
