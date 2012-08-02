@@ -1,16 +1,17 @@
 <?php
-
 require('includes/application_top.php');
 require('includes/classes/http_client.php');
 
 require(DIR_WS_LANGUAGES . $language . '/' . 'fast_account.php');
 
+
+
+$customerData = tep_db_fetch_array(tep_db_query('SELECT * FROM `' . TABLE_CUSTOMERS . '` where customers_id = \'' . (int)$customer_id . '\''));
  // if the customer is not logged on, redirect them to the login page
 if (!tep_session_is_registered('customer_id')) {
     $navigation->set_snapshot();
     tep_redirect(tep_href_link(FILENAME_CREATE_ACCOUNT, '', 'SSL'));
 }
-
 // if no shipping destination address was selected, use the customers own address as default
 if (!tep_session_is_registered('sendto')) {
         tep_session_register('sendto');
@@ -55,6 +56,17 @@ $order_total_modules->pre_confirmation_check(); */
 
 require(DIR_WS_CLASSES . 'order.php');
 $order = new order;
+
+if($order->delivery['country_id'] == null)
+{
+    tep_redirect('checkout_shipping_address.php');
+    exit();
+}
+if($order->billing['country_id'] == null)
+{
+    tep_redirect('checkout_payment_address.php');
+    exit();
+}
 
 require(DIR_WS_CLASSES . 'payment.php');
 $payment_modules = new payment;
@@ -415,7 +427,9 @@ function rowOutEffect(object) {
             <tr>
                 <td>
                     <div style="border: 1px solid #0088CC;margin-top: 10px;padding:10px;">
-                        <a style="margin-left:10px;" target="_blank" href="/publish_cart.php">Publish your shopping cart to facebook and a free shipping in U.S.</a>
+                        <a style="margin-left:10px;" target="_blank" href="/publish_cart.php">
+                            <?php echo ((empty($customerData) || empty($customerData['customers_basket_published']) || $customerData['customers_basket_published'] != 'yes') ? GET_FREE_SHIPPING_MESSAGE : GET_FREE_SHIPPING_ENABLED_MESSAGE)?>
+                        </a>
                     </div>
                 </td>
             </tr>

@@ -77,7 +77,9 @@
         </div>
       </div>
    </div>
-</div>
+    <?php echo $messageStack->output('top_messages');?>
+
+
 <?php /*
 <div id="header">
 

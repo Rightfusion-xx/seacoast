@@ -1,6 +1,7 @@
 <?php
 $code = time().'_'.rand();
 require ("includes/application_top.php");
+
 $server_url=((substr($_SERVER['SERVER_PROTOCOL'],0,4)=="HTTP")?"http://":"https://").$_SERVER['HTTP_HOST'];
 
 if (isset($_GET['products_id']) && !$cart -> in_cart($_GET['products_id'])) {
@@ -21,20 +22,19 @@ if(empty($_SESSION['customer_id']))
 
 if(!empty($_REQUEST['action']) && $_REQUEST['action'] == 'callback' && !empty($_REQUEST['scode']))
 {
-    //$code = $_REQUEST['scode'];
-    //$saved = $cart->get_saved_contents($code);
-    //if(!empty($saved))
-    //{
-        tep_db_query('
-            UPDATE
-                `' . TABLE_CUSTOMERS . '`
-            SET
-                `customers_basket_published` = \'yes\'
-            WHERE
-                `customers_id` = \'' . $_SESSION['customer_id'] . '\'
-        ');
-    //}
+    tep_db_query('
+        UPDATE
+            `' . TABLE_CUSTOMERS . '`
+        SET
+            `customers_basket_published` = \'yes\'
+        WHERE
+            `customers_id` = \'' . $_SESSION['customer_id'] . '\'
+    ');
+
+    $messageStack->add_session('top_messages','Shopping cart published', 'success');
+
     header('Location: /shopping_cart.php'.(!empty($_SESSION['temp_products_id'])?'?products_id='.$_SESSION['temp_products_id'] : ''));
+
     if(!empty($_SESSION['temp_products_id']))
     {
         unset($_SESSION['temp_products_id']);

@@ -8,7 +8,7 @@
   Copyright (c) 2002 osCommerce
 
   Released under the GNU General Public License
-  
+
 */
 
 $clean=ob_get_clean();
@@ -25,11 +25,11 @@ $buffer=str_replace('</head>','
   echo utf8_encode($buffer);
 
 // close session (store variables)
-  tep_session_close();                    
-  
-  
+  tep_session_close();
+
+
   ob_flush();
-  
+
 
 
   if (STORE_PAGE_PARSE_TIME == 'true') {

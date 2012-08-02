@@ -14,6 +14,7 @@ $breadcrumb->add(NAVBAR_TITLE, tep_href_link(FILENAME_SHOPPING_CART));
 $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_savings() / $cart -> show_total() * 100, 0) : 0;
 
 // if no shipping destination address was selected, use the customers own address as default
+
 if (!tep_session_is_registered('sendto'))
 {
     tep_session_register('sendto');
@@ -22,8 +23,7 @@ if (!tep_session_is_registered('sendto'))
 else
 {
     // verify the selected shipping address
-    $check_address_query = tep_db_query("select count(*) as total from " . TABLE_ADDRESS_BOOK . " where customers_id = '" .
-                                    (int)$customer_id . "' and address_book_id = '" . (int)$sendto . "'");
+    $check_address_query = tep_db_query("select count(*) as total from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . ((int)$customer_id) . "' and address_book_id = '" . ((int)$sendto) . "'");
     $check_address = tep_db_fetch_array($check_address_query);
 
     if ($check_address['total'] != '1')
@@ -32,6 +32,22 @@ else
         if (tep_session_is_registered('shipping')) tep_session_unregister('shipping');
     }
 }
+
+$hasAddress = false;
+
+if(tep_session_is_registered('customer_id'))
+{
+    $check_address_query = tep_db_query("select * from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . ((int)$customer_id) . "'");
+    if(tep_db_num_rows($check_address_query) == 0)
+    {
+        $hasAddress = false;
+    }
+    else
+    {
+        $hasAddress = true;
+    }
+}
+
 tep_session_unregister('payment');
 $order = new order;
 
@@ -169,13 +185,9 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
     else {
         $cm_price=$price;
     }
+?>
 
-
-
-
-		?>
-
-                                <div class="container">
+    <div class="container">
         <div class="row">
         <div class="span12">
             <table border="0" cellspacing="0" cellpadding="12" width="100%">
@@ -419,134 +431,132 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                 </div>
                                 </div>
 
-<div class="row">
-    <div class="span12">
-     <?php if($cart->in_cart(CM_FTPID) || (!$_SESSION['cm_is_member']) && $psavings>0){
-                                        ?>
-
-                                        <div style="padding:1em 0 1em 0;">
-                                                <b class="spiffy"> <b class="spiffy1"><b></b></b> <b class="spiffy2"><b></b></b> <b class="spiffy3"></b> <b class="spiffy4"></b> <b class="spiffy5"></b></b>
-                                                <div class="spiffyfg" style="color:#ff0000;padding:20px;text-align: left;">
-                                                        <?php if($cart->in_cart(CM_FTPID)){
-                                                        ?>
-                                                        <b>Direct-to-member prices:</b> You are now using a FREE 14-Day Seacoast Vitamins-Direct trial membership. <a href="/" style="color:#ff0000;"><b>Shop Now</b></a> to
-                                                        receive member only prices on your entire order. <a href="/community/" style="color:#ff0000">Learn more...</a>
-                                                        <?php }elseif ($psavings>0){?>
-                                                        <b>Save <?php echo $psavings;?>% Now</b>: Join Seacoast Vitamins-Direct FREE for 14-Days. <a style="color:#ff0000;font-weight:bold;" href="/shopping_cart.php?action=buy_now&products_id=<?php echo CM_FTPID ?>">Start Now</a> or <a href="/community/" style="color:#ff0000">Learn more...</a>
-
-<?php }?>
-                                                </div>
-
-                                        </div><?php }?>
-
-
+    <div class="row">
+        <div class="span12">
+            <?php if($cart->in_cart(CM_FTPID) || (!$_SESSION['cm_is_member']) && $psavings>0):?>
+                <div style="padding:1em 0 1em 0;">
+                    <b class="spiffy">
+                        <b class="spiffy1">
+                            <b></b>
+                        </b>
+                        <b class="spiffy2">
+                            <b></b>
+                        </b>
+                        <b class="spiffy3"></b>
+                        <b class="spiffy4"></b>
+                        <b class="spiffy5"></b>
+                    </b>
+                    <div class="spiffyfg" style="color:#ff0000;padding:20px;text-align: left;">
+                        <?php if($cart->in_cart(CM_FTPID)):?>
+                            <b>Direct-to-member prices:</b> You are now using a FREE 14-Day Seacoast Vitamins-Direct trial membership.
+                            <a href="/" style="color:#ff0000;">
+                                <b>Shop Now</b>
+                            </a> to receive member only prices on your entire order.
+                            <a href="/community/" style="color:#ff0000">Learn more...</a>
+                        <?php elseif($psavings > 0):?>
+                            <b>Save <?php echo $psavings;?>% Now</b>: Join Seacoast Vitamins-Direct FREE for 14-Days.
+                            <a style="color:#ff0000;font-weight:bold;" href="/shopping_cart.php?action=buy_now&products_id=<?php echo CM_FTPID ?>">Start Now</a> or <a href="/community/" style="color:#ff0000">Learn more...</a>
+                        <?php endif;?>
+                    </div>
+                </div>
+            <?php endif;?>
+        </div>
     </div>
-</div>
-
-<div class="row" style="padding-top:20px;padding-bottom:40px;">
-    <div class="span6">
-        <a style="float:left;" class="btn btn-primary" title="Checkout Now" href="<?php echo tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL');?>">
-            <i class="icon-play icon-white">&nbsp;</i>&nbsp;Checkout Now
-        </a>
-        <a style="margin-left:10px;" class="btn btn-primary" target="_blank" href="/publish_cart.php">Publish to facebook</a>
+    <div class="row" style="padding-top:20px;padding-bottom:40px;">
+        <div class="span6">
+            <a style="float:left;" class="btn btn-primary" title="Checkout Now" href="<?php echo tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL');?>">
+                <i class="icon-play icon-white">&nbsp;</i>&nbsp;Checkout Now
+            </a>
+            <?php if(!$hasAddress && tep_session_is_registered('customer_id')):?>
+                <a style="float:left; margin-left:10px;" class="btn btn-primary" title="Add adress" href="<?php echo tep_href_link('address_book_process.php', '', 'SSL');?>">
+                    Add address
+                </a>
+            <?php endif;?>
+        </div>
+        <div class="span6">
+            <?php if($cart->show_savings()>0):?>
+                <b>Member Only Savings: <span style="color:#ff0000;background:yellow;">$<?php echo number_format($cart -> show_savings(), 2);?></span></b><br/>
+            <?php endif;?>
+            <?php echo SUB_TITLE_SUB_TOTAL;?>
+            <?php echo $currencies->format($cart->show_total());?>
+        </div>
     </div>
-    <div class="span6">
-    <?php if($cart->show_savings()>0) {?><b>Member Only Savings: <span style="color:#ff0000;background:yellow;">$<?php echo number_format($cart -> show_savings(), 2);?></span></b>
-                                        <br/>
-                                        <?php }?>
-                                        <?php echo SUB_TITLE_SUB_TOTAL;?>
-                                        <?php echo $currencies -> format($cart -> show_total());?>
+    <div class="row">
+        <div class="span12">
+            <div class="alert alert-info">
+                <?php
+                    if (!tep_session_is_registered('customer_id') || empty($order->delivery['city'])):
+                        echo '<b>Shipping Estimator</b> - Select country to calculate shipping:<br />';
+                        echo tep_get_country_list_with_iso_code("country", $order->delivery[country][iso_code_2],"onChange='return submitForm(this.form);'", (!tep_session_is_registered('customer_id') || empty($order->delivery['city'])));
+                    else:
+                        echo 'Your Location: <br /><b>'.$order->delivery['city'].', '.$order->delivery['country']['title'].'</b>';
+                    endif;
+                ?>
+                <script type="text/javascript">
+                    function submitForm(f,actionText) {
+                        //var f = list.form;
+                        if (actionText) {
+                            f.action = actionText;
+                        }
+                        f.submit();
+                        return true;
+                    }
+                </script>
+                <?php
+                    $inUs48 = false;
+                    if(!empty($order->delivery['country']['iso_code_2']) && $order->delivery['country']['iso_code_2'] == 'US')
+                    {
+                        $inUs48 = true;
+                    }
 
+                    if(!tep_session_is_registered('customer_id')):
+                        if((isset($_SESSION['country']) && ($_SESSION['country'] == "US")) || ($order->delivery['country']['iso_code_2'] == "US")):
+                                echo 'Enter zip code: ';
+                                echo tep_draw_input_field('postcode', $order->delivery['postcode'],'style="width:80px;"');
+                                echo tep_draw_input_field('postcode_btn','Calculate Shipping', "style='margin-left:10px;font-weight:bold;' onClick='return submitForm(this.form);'",'submit');
+                        endif;
+                    endif;
+                    function getLowestShippingCost()
+                    {
+                        global $cheapestShippingRate;
+                        return number_format($cheapestShippingRate, 2);
+                    }
+
+                    if($inUs48 && $cart->show_total() >= 25 && defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true'))
+                    {
+                        echo '<p>Ships FREE (US Lower 48)</p>';
+                    }
+                    elseif(MODULE_SHIPPING_FLAT_STATUS=='True')
+                    {
+                        echo 'Shipping: $4.95 flat rate<br/>(US Lower 48)';
+                        if($inUs48):
+                            echo '<p></p><a href="/publish_cart.php">
+                                    We\'ve detected you are in the US. For free shipping in the Lower 48, publish your shopping cart to Facebook.
+                                </a></p>';
+                        endif;
+                    }
+                    else
+                    {
+                        if ($cart->count_contents() > 0 && getLowestShippingCost() > 0)
+                        {
+                            $costStr =  '<p>Shipping: <b style="background:yellow;">';
+                            $costStr .= '$ ' . getLowestShippingCost();
+                            $costStr .= '</b></p>';
+                            echo $costStr;
+                        }
+                        if($inUs48):
+                            echo '<p></p><a href="/publish_cart.php">
+                                    We\'ve detected you are in the US. For free shipping in the Lower 48, publish your shopping cart to Facebook.
+                                </a></p>';
+                        endif;
+                    }
+
+                ?>
+                <?php echo '<br/><a class="btn btn-primary" title="Checkout Now" href="' . tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '"><i class="icon-play icon-white">&nbsp;</i>&nbsp;Checkout Now</a><BR>';?>
+                <p><b>Need international or expedited shipping? Continue to checkout for real-time rates. </b></p>
+            </div>
+        </div>
     </div>
-</div>
-
-
-
-
-
-
-
-                                <div class="row ">
-
-                                <div class="span12">
-                                <div class="alert alert-info">
-                                        <?php
-                                                if (!tep_session_is_registered('customer_id'))
-                                                {
-                                                echo '<b>Shipping Estimator</b> - Select country to calculate shipping:<br />';
-                                                echo tep_get_country_list_with_iso_code("country", $order->delivery[country][iso_code_2],
-                                                                "onChange='return submitForm(this.form);'", !tep_session_is_registered('customer_id'));
-                                                }
-                                                else {
-                                                    echo 'Your Location: <br /><b>'.$order->delivery[city].', '.$order->delivery[country][title].'</b>';
-                                                }
-                                                ?>
-                                                <script type="text/javascript">
-
-                                                    function submitForm(f,actionText) {
-                                                        //var f = list.form;
-                                                        if (actionText) {
-                                                            f.action = actionText;
-                                                        }
-                                                        f.submit();
-                                                        return true;
-                                                    }
-
-                                                </script>
-
-
-                                                <?php
-
-                                                if (!tep_session_is_registered('customer_id'))
-                                                {
-                                                    if ((isset($_SESSION['country']) && ($_SESSION['country'] == "US")) ||
-                                                            ($order->delivery['country']['iso_code_2'] == "US"))
-                                                    {
-                                                            echo 'Enter zip code: <br />';
-                                                            echo tep_draw_input_field('postcode', $order->delivery['postcode'],'style="width:80px;"');
-                                                            echo tep_draw_input_field('postcode_btn','Calculate Shipping',
-                                                                    "style='margin-left:10px;font-weight:bold;' onClick='return submitForm(this.form);'",'submit');
-                                                    }
-                                                }
-                                                ?>
-
-
-                                        <?php
-                                            function getLowestShippingCost()
-                                            {
-                                                global $cheapestShippingRate;
-                                                return number_format($cheapestShippingRate, 2);
-                                            }
-
-                                            if($cart->show_total()>=25 &&
-                                                defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') &&
-                                                (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true'))
-                                            {
-                                                echo 'Ships FREE<br/>(US Lower 48)';
-                                            }
-                                            elseif (MODULE_SHIPPING_FLAT_STATUS=='True')
-                                            {
-                                                echo 'Shipping: $4.95 flat rate<br/>(US Lower 48)';
-                                            }
-                                            else
-                                            {
-                                                if ($cart->count_contents() > 0 && getLowestShippingCost() > 0
-                                                   )
-                                                {
-                                                    $costStr =  '<p>Shipping: <b style="background:yellow;">';
-                                                    $costStr .= '$ ' . getLowestShippingCost();
-                                                    $costStr .= '</b></p>';
-                                                    echo $costStr;
-                                                }
-                                            }
-                                         ?>
-                                         <?php echo '<br/><a class="btn btn-primary" title="Checkout Now" href="' . tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '"><i class="icon-play icon-white">&nbsp;</i>&nbsp;Checkout Now</a><BR>';?>
-
-
-    <p><b>Need international or expedited shipping? Continue to checkout for real-time rates. </b></p></div>
-    </div>
-    </div>
-
 
 </div>
 </div>

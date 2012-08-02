@@ -214,6 +214,7 @@ if (!$authenticated && !$system_login) {
   require(DIR_WS_CLASSES . 'box.php');
 
 // initialize the message stack for output messages
+global $messageStack;
   require(DIR_WS_CLASSES . 'message_stack.php');
   $messageStack = new messageStack;
 

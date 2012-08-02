@@ -1,10 +1,5 @@
 <?php // inject header to appropriate place
-
 $start=ob_get_length();
-
-?>
-  <?php
-
   if (isset($HTTP_GET_VARS['error_message']) && tep_not_null($HTTP_GET_VARS['error_message'])) {
   ?>
   <table border="0" width="100%" cellspacing="0" cellpadding="2">
@@ -282,5 +277,4 @@ if(!$cart->in_cart(CM_FTPID) && !$cart->in_cart(CM_PID) && !$_SESSION['cm_is_mem
   echo $messageStack->output('header');
   }
   ?>
-
-
+</div>

@@ -383,7 +383,10 @@ define('BOX_TOOLS_SERVER_INFO', 'Server Info');
 define('BOX_TOOLS_WHOS_ONLINE', 'Who\'s Online');
 
 define('BOX_TOOLS_TOP_MESSAGES', 'Searces Top Messages');
-
+define('BOX_EMAIL_TEMPLATES', 'System Email Templates');
+define('BOX_NEWSLETTER_SUBSCRIBERS', 'Newsletter Subscribers');
+define('BOX_NEWSLETTERS', 'Newsletter Categories');
+define('BOX_NEWSLETTER_ITEMS', 'Newsletter Items');
 // localizaion box text in includes/boxes/localization.php
 
 
