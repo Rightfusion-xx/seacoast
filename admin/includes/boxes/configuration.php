@@ -15,8 +15,6 @@
                 }
                 $cfg_groups .= '<a href="' . tep_href_link('top_messages.php') . '" class="menuBoxContentLink">' . BOX_TOOLS_TOP_MESSAGES . '</a><br>';
                 $cfg_groups .= '<a href="' . tep_href_link('email_templates.php') . '" class="menuBoxContentLink">' . BOX_EMAIL_TEMPLATES . '</a><br>';
-                $cfg_groups .= '<a href="' . tep_href_link('newsletter_subscribers.php') . '" class="menuBoxContentLink">' . BOX_NEWSLETTER_SUBSCRIBERS . '</a><br>';
-                $cfg_groups .= '<a href="' . tep_href_link('newsletters.php') . '" class="menuBoxContentLink">' . BOX_NEWSLETTERS . '</a><br>';
                 $contents[] = array('text'  => $cfg_groups);
             }
 
@@ -26,3 +24,24 @@
     </td>
 </tr>
 <!-- configuration_eof //-->
+<tr>
+    <td>
+        <?php
+            $heading = array();
+            $contents = array();
+            $heading[] = array('text'  => 'Newsletters', 'link'  => tep_href_link('newsletters.php', 'gID=1&selected_box=newsletters'));
+
+            if ($selected_box == 'newsletters')
+            {
+                $cfg_groups = '';
+
+                $cfg_groups .= '<a href="' . tep_href_link('newsletters.php') . '" class="menuBoxContentLink">' . BOX_NEWSLETTERS . '</a><br>';
+                $cfg_groups .= '<a href="' . tep_href_link('newsletter_items.php') . '" class="menuBoxContentLink">' . BOX_NEWSLETTER_ITEMS . '</a><br>';
+                $cfg_groups .= '<a href="' . tep_href_link('newsletter_subscribers.php') . '" class="menuBoxContentLink">' . BOX_NEWSLETTER_SUBSCRIBERS . '</a><br>';
+                $contents[] = array('text'  => $cfg_groups);
+            }
+            $box = new box;
+            echo $box->menuBox($heading, $contents);
+        ?>
+    </td>
+</tr>

@@ -252,6 +252,9 @@ class ActionAbstract
         .action-abstract .dataTableRow{
             background-color: #F0F1F1;
         }
+        .action-abstract .dataTableRow .dataTableContent{
+            border-bottom: 1px dotted #333;
+        }
         .action-abstract .dataTableRow:hover{
             background-color: #ccc;
         }
