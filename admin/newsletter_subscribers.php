@@ -5,6 +5,52 @@ ob_start();?>
 <?php
 global $nav;
 $nav = ob_get_clean();
+
+class actionClass extends ActionAbstract
+{
+    protected $_table = 'newsletter_subscribers';
+
+    protected $_keyField = 'customers_id';
+
+    protected $_gridFields = array(
+        'customers_id'                     => 'Customer id',
+        'customer_name_concated'           => 'Customer Name',
+        'customers_email_address'          => 'Customer e-mail',
+        'newsletter_categories_subscribed' => 'Subscribed to'
+    );
+
+    protected function _getGridReq()
+    {
+        return '
+            SELECT
+                CONCAT (c.customers_firstname, \' \', c.customers_lastname) AS customer_name_concated,
+                concat(\'"\', GROUP_CONCAT(nc.category_title SEPARATOR \'"; "\'), \'"\') AS newsletter_categories_subscribed,
+                c.*
+            FROM `customers` AS c
+            INNER JOIN `' . $this->_table . '` AS s ON (s.customer_id = c.customers_id)
+            INNER JOIN `newsletter_categories` AS nc ON (s.newsletter_id = nc.category_id)
+            GROUP BY c.customers_id
+        ';
+    }
+
+    public function getListLineActions($row)
+    {
+        return '<a class="ae-action" href="' . $this->_scriptUrl . '?action=edit&id=' . $row[$this->_keyField] . '">Edit</a> |
+        <a onclick="return confirm(\'Are you sure you want to unsubscribe?\')" href="' . $this->_scriptUrl . '?action=remove&id=' . $row[$this->_keyField] . '">Unsubscribe all</a>';
+    }
+
+    public function removeAction()
+    {
+        tep_db_query('
+            DELETE FROM `newsletter_subscribers`
+            WHERE `customer_id` = \'' . $_GET['id'] . '\'
+        ');
+        tep_redirect($this->_scriptUrl);
+        exit();
+    }
+}
+
+/*
 class emailTemplates extends ActionAbstract
 {
     protected $_table = 'newsletter_emails';
@@ -125,6 +171,7 @@ class emailTemplates extends ActionAbstract
 
 $emailTemplates = new emailTemplates();
 
-
-$emailTemplates->run();
+*/
+$obj = new actionClass();
+$obj->run();
 ?>
