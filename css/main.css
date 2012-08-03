@@ -59,17 +59,28 @@ body{
     /*margin: 0 57px;*/
 }
 
+.header .right-menu{
+    display: none;
+}
+
 .header ul li{
     margin: 24px 0;
 }
 
 .header ul li a{
     display: block;
+    color: #24B4B9;
     height: 22px;
+    font-size: 14px;
     line-height: 22px;
     text-align: center;
     padding: 0 5px;
     margin: 0 13px;
+    text-decoration: underline;
+}
+
+.header ul li a:hover{
+    text-decoration: none;
 }
 
 .header ul li a.active{
@@ -97,7 +108,6 @@ body{
     background-position: -175px -61px;
 }
 
-
 .header div span{
     font: 20px RotondaCRegular;
     display: inline-block;
@@ -113,6 +123,7 @@ body{
     position: absolute;
     top: 0;
 }
+
 .header > div.blue{text-align: right;}
 .header div span.country i{
     background-position: 0 -61px;
@@ -129,35 +140,81 @@ body{
    margin-left: 0;
 }
 
+.span12.search.controllers{
+    display: none;
+}
+
 .user-controls .logo{
     background: url("./seacost_sprite.png") no-repeat;
     height: 60px;
-    margin-right: 55px;
+    margin-right: 60px;
     width: 180px;
+}
+
+#expansion_button{
+    background: transparent;
+    cursor: pointer;
+    height: 39px;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 40px;
 }
 
 .user-controls .search-container{
     height: 40px;
-    width: 350px;
+    width: 57%;
+    z-index: 1;
+}
+
+.width-223{
+    display: inline-block!important;
+    width: 182px!important;
+}
+
+.width-223 input[type="submit"]{
+    right: -140px!important;
+}
+
+.narrow .width-223{
+    display: inline-block!important;
+    width: 223px!important;
+}
+
+.narrow .width-223 input[type="submit"]{
+    right: -180px!important;
 }
 
 .user-controls .search-container input[type="text"]{
     background: #C4E0F2;
     border: 3px solid transparent!important;
-    color: #000;
+    color: #FFF;
     font-size: 16px;
-    border: 0;
-    padding: 10px 35px 10px 0;
-    width: 350px;
-    margin: 0px;
+    padding: 7px 35px 7px 0;
+    width: 100%;
+    margin: 0;
     box-shadow: none;
     height: auto;
     text-indent: 10px;
+    box-sizing: border-box;
+}
+
+.user-controls .narrow .width-223 input[type="text"]{
+    border-top: 4px solid #C4E0F2!important;
+    border-bottom: 8px solid #C4E0F2!important;
+    position: relative;
+    top: -4px;
 }
 
 .user-controls .search-container input[type="text"]:focus{
-   background: transparent;
+   background: #FFF;
    border: 3px solid #78a2c2!important;
+   color: #666;
+}
+
+.user-controls .narrow .width-223 input[type="text"]:focus{
+    padding: 10px 0 11px;
 }
 
 .user-controls .search-container input[type="submit"]{
@@ -165,9 +222,9 @@ body{
     border: 0;
     height: 25px;
     width: 25px;
-    top: 9px;
+    top: 6px;
     position: absolute;
-    right: 6px;
+    right: 10px;
     cursor: pointer;
     box-shadow: none;
 }
@@ -183,7 +240,7 @@ body{
 
 .user-controls .basket{
     padding-left: 52px;
-    margin-left: 22px;
+    width: 90%;
 }
 
 .user-controls .basket label{
@@ -195,6 +252,10 @@ body{
     width: 66px;
 }
 
+.user-controls .basket:hover label{
+    background-position: 2px -119px;
+}
+
 .user-controls .basket p{
     background: #88D98A;
     color: #FFF;
@@ -204,6 +265,15 @@ body{
     margin: 0 4px 0 14px;
     min-width: 200px;
     text-align: center;
+    font-size: 14px;
+}
+
+.user-controls .basket:hover p{
+    background: #53Cf56;
+}
+
+.user-controls .basket:active p{
+    background: url("./green_button_active.png") repeat-x;
 }
 
 .user-controls .basket p i{
@@ -225,29 +295,70 @@ body{
     width: 4px;
 }
 
+.user-controls .basket:hover p i.left{
+    background-position: -121px -100px;
+}
+
+.user-controls .basket:hover p i.right{
+    background-position: -138px -120px;
+}
+
+.user-controls .basket:active p i.left{
+    background-position: -64px -120px;
+}
+
+.user-controls .basket:active p i.right{
+    background-position: -142px -120px;
+}
+
 .user-controls .basket p strong{
     color: #366D38;
 }
 
-.user-controls .log-button{
+.user-controls .log-button, .account-button{
     color: #FFF;
     background: #94C2E0;
-    margin: 0 4px 0 24px;
+    margin: 0 4px 0 4px;
     height: 39px;
     padding: 0 6px 0 31px;
     line-height: 39px;
 }
 
-.user-controls .log-button label{
+.user-controls .log-button:hover, .account-button:hover{
+    background: #418CBD;
+}
+
+.user-controls .log-button:active, .account-button:active{
+    background: url("./blue_button_active.png") repeat-x;
+}
+
+.account-button{
+    padding: 0;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    width: 32px;
+}
+
+.user-controls .log-button label, .account-button label{
     background: url(./seacost_sprite.png) -22px -88px;
     height: 23px;
     position: absolute;
     left: 5px;
     width: 18px;
     top: 6px;
+    cursor: pointer;
 }
 
-.user-controls .log-button i{
+.account-button label{
+    background: url(./seacost_sprite.png) -171px -88px;
+    height: 25px;
+    left: 50%;
+    margin-left: -8px;
+    width: 16px;
+}
+
+.user-controls .log-button i, .account-button i{
     background: url(./seacost_sprite.png) no-repeat;
     height: 39px;
     position: absolute;
@@ -255,14 +366,44 @@ body{
     width: 4px;
 }
 
-.user-controls .log-button i.left{
+.user-controls .log-button i.left, .account-button i.left{
     background-position: 0 -80px;
     left: -4px;
 }
 
-.user-controls .log-button i.right{
+.user-controls .log-button i.right, .account-button i.right{
     background-position: -4px -80px;
     right: -4px;
+}
+
+.user-controls .log-button:hover i.left, .account-button:hover i.left{
+    background-position: -192px 0;
+}
+
+.user-controls .log-button:hover i.right, .account-button:hover i.right{
+    background-position: right 0;
+}
+
+.user-controls .log-button:active i.left, .account-button:active i.left{
+    background-position: -108px -120px;
+}
+
+.user-controls .log-button:active i.right, .account-button:active i.right{
+    background-position: -112px -120px;
+}
+
+.user-controls .log-button:hover, .account-button label:hover{
+    text-decoration: none;
+}
+
+.account-control{
+    padding-right: 20px;
+    width: 76%;
+}
+
+.account-control.account-button-on{
+    padding-right: 80px;
+    width: 71%;
 }
 
 .content h2{
@@ -270,7 +411,6 @@ body{
     text-align: center;
     padding: 15px 0;
 }
-
 
 .basket a{
     text-decoration: none;
@@ -282,17 +422,325 @@ body{
     color: #fff;
 }
 
-@media (max-width: 980px) and (min-width: 768px){
-    .header ul li a{
-    	margin: 0 7px;
+@media(max-width:1200px){
+    .user-controls .logo{
+        margin-right: 30px;
+    }
+
+    .user-controls .search-container{
+        width: 54%;
+    }
+
+    .account-control.account-button-on{
+        width: 57%;
+    }
+}
+
+@media(max-width:980px){
+    .header .left-menu{
+        visibility: hidden;
+    }
+
+    .header .right-menu{
+        display: block;
+        float: right;
+        margin: 0;
+        padding: 0 13px 0 0;
+    }
+
+    .header ul.right-menu li{
+        margin: 24px 0 0;
+    }
+
+    .header .span6.left-menu{
+        width: 31.491712705%;
+    }
+
+    .header .span6.left-menu li{
+        display: none;
+    }
+
+    .header .span6.blue{
+        width: 65.74585634900001%;
+    }
+
+    .header ul.right-menu li a{
+        margin: 0 0 0 26px;
     }
 
     .user-controls .logo{
-    	margin-bottom: 20px;
+        left: 0;
+        margin: 0;
+        position: absolute;
+        top: -90px;
+    }
+
+    .user-controls .span6.search{
+        width: 31.491712705%;
+    }
+
+    .user-controls .span6.controllers{
+        width: 65.74585634900001%;
+    }
+
+    .user-controls .search-container{
+        width: 100%;
+    }
+
+    .account-control.account-button-on{
+        width: 60%;
+    }
+}
+
+@media(max-width:768px){
+    .header .span6.left-menu{
+        display: none;
+    }
+
+    .header .span6.blue{
+        width: 100%;
+    }
+
+    .user-controls .span6.search{
+        float: left;
+    }
+
+    .user-controls .span6.controllers{
+        float: right;
+    }
+}
+
+@media(max-width:720px){
+    .user-controls .span6.search{
+        width: 65.95744680199999%;
+    }
+
+    .user-controls .span6.controllers{
+        float: right;
+        width: 31.914893614%;
+    }
+
+    .user-controls .basket label, .user-controls .basket p a span, .user-controls .basket p a strong,
+    .user-controls .log-button span, .user-controls .basket .items span{
+        display: none;
+    }
+
+    .user-controls .basket p a{
+        background: url("./seacost_sprite.png") -168px -119px;
+        width: 32px;
+        height: 26px;
+        display: block;
+        position: relative;
+        top: 6px;
+    }
+    
+    .user-controls .basket p{
+        min-width: 0;
+        padding: 0;
+        width: 32px;
+    }
+
+    .user-controls .basket{
+        padding-left: 0;
+        width: auto;
+    }
+
+    .account-control{
+        width: 65%;
+    }
+
+    .account-control.account-button-on{
+        width: 30%;
+    }
+
+    .user-controls .basket p i.left{
+        background-position: -9px -80px;
+        left: -4px;
+        width: 4px;
+    }
+
+    .user-controls .basket:hover p i.left{
+        background-position: -146px -120px;
+    }
+
+    .user-controls .basket:active p i.left{
+        background-position: -150px -120px;
     }
 
     .user-controls .log-button{
-      margin-bottom: 20px;
-      margin-top: 19px;	
+        padding: 0;
+        width: 32px;
     }
+
+    .user-controls .log-button label{
+        left: 7px;
+    }
+
+    .user-controls .basket .items{
+        background: url("./seacost_sprite.png") -81px -119px;
+        height: 24px;
+        line-height: 24px;
+        display: block;
+        position: absolute;
+        text-align: center;
+        width: 24px;
+        right: -10px;
+        top: -10px;
+        overflow: hidden;
+    }
+}
+
+@media(max-width:635px){
+    .user-controls .span6.search .search-container{
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 10;
+    }
+
+    .header .span6.blue span{
+        display: none;
+    }
+
+    .user-controls .span6.search.big, .user-controls .span6.controllers.big{
+        display: none;
+    }
+
+    .header ul.right-menu{
+        float: none;
+        margin: 0 auto;
+        width: 400px;
+        padding: 0;
+    }
+
+    .header ul.right-menu li{
+        margin: 24px 9px 24px 9px;
+    }
+
+    .header ul.right-menu li a{
+        margin: 0;
+    }
+
+    .user-controls .logo{
+        position: static;
+        margin-right: 40px;
+    }
+
+    .user-controls .search-container{
+        width: 32px;
+    }
+
+    .user-controls .search-container input[type="submit"]{
+        right: 0;
+    }
+
+    .span12.search.controllers{
+        display: block;
+    }
+
+    .account-control{
+        width: 25%;
+    }
+
+    .span12.search.controllers .account-control.account-button-on{
+        padding-right: 0;
+    }
+
+    .user-controls .account-control .basket{
+        position: absolute;
+        right: 30px;
+        top: 0;
+    }
+
+    .user-controls .account-button-on .basket{
+        right: 80px;
+    }
+
+    .account-control.account-button-on{
+        width: 10%;
+    }
+
+    .user-controls .search-container{
+        position: absolute;
+        top: 0;
+        right: 150px;
+    }
+
+    .user-controls .search-container.narrow{
+        right: 190px;
+    }
+}
+
+@media(max-width:480px){
+    .container{
+        min-width: 320px;
+        width: 100%;
+    }
+}
+
+@media(max-width:450px){
+    .header ul.right-menu{
+        width: 100%;
+    }
+
+    .header ul.right-menu li a{
+        font-size: 18px;
+    }
+
+    .header ul.right-menu li{
+        margin: 24px 0;
+    }
+
+    .header ul.right-menu li
+    .header ul.right-menu li.first{
+        float: left;
+    }
+
+    .header ul.right-menu li.second{
+        float: right;
+    }
+
+    .header ul.right-menu li.last{
+        float: none;
+        display: block;
+        text-align: center;
+        clear: both;
+    }
+
+    .user-controls{
+        padding-top: 65px;
+    }
+
+    .user-controls .logo{
+        left: 50%;
+        position: absolute;
+        margin-left: -90px;
+        top: -70px;
+    }
+
+    .min-width-align{
+        margin: 0 auto 10px;
+        height: 39px;
+        width: 180px;
+    }
+
+    .min-width-align.narrow-width{
+        width: 220px;
+    }
+
+    .user-controls .search-container{
+        right: 150px;
+    }
+
+    .min-width-align.narrow-width .user-controls .search-container{
+        right: 190px;
+    }
+}
+
+@media(max-width:320px){
+    .container{
+        width: 320px;
+    }
+
+
 }
