@@ -58,7 +58,7 @@ foreach($products as &$product)
         str_replace(
             '//',
             '/',
-            "/" . seo_url_title(!is_array($tname) ? $tname : $tname[0]) . "/" . urlencode($product->manufacturer->manufacturers_name) . "/" . seo_url_title($tmisc) . "/p" . $product->productsdescription->products_id
+            "/" . seo_url_title(!is_array($tname) ? $tname : $tname[0]) . "/" . seo_url_title($product->manufacturer->manufacturers_name) . "/" . seo_url_title($tmisc) . "/p" . $product->productsdescription->products_id
         )
     );
 
@@ -135,6 +135,7 @@ foreach($products as &$product)
     );
     unset($products[$index]);
     $index++;
+    //if($index > 5) break;
 }
 
 // End XML Tags
