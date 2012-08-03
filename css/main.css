@@ -200,21 +200,10 @@ body{
     box-sizing: border-box;
 }
 
-.user-controls .narrow .width-223 input[type="text"]{
-    border-top: 4px solid #C4E0F2!important;
-    border-bottom: 8px solid #C4E0F2!important;
-    position: relative;
-    top: -4px;
-}
-
 .user-controls .search-container input[type="text"]:focus{
    background: #FFF;
    border: 3px solid #78a2c2!important;
    color: #666;
-}
-
-.user-controls .narrow .width-223 input[type="text"]:focus{
-    padding: 10px 0 11px;
 }
 
 .user-controls .search-container input[type="submit"]{
@@ -403,7 +392,7 @@ body{
 
 .account-control.account-button-on{
     padding-right: 80px;
-    width: 71%;
+    width: 70%;
 }
 
 .content h2{
@@ -680,15 +669,12 @@ body{
 
 @media(max-width:450px){
     .header ul.right-menu{
-        width: 100%;
-    }
-
-    .header ul.right-menu li a{
-        font-size: 18px;
+        margin: 0 auto;
+        width: 240px;
     }
 
     .header ul.right-menu li{
-        margin: 24px 0;
+        margin: 15px 0;
     }
 
     .header ul.right-menu li
@@ -705,6 +691,8 @@ body{
         display: block;
         text-align: center;
         clear: both;
+        width: 125px;
+        margin: 15px auto;
     }
 
     .user-controls{
