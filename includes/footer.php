@@ -277,4 +277,3 @@ if(!$cart->in_cart(CM_FTPID) && !$cart->in_cart(CM_PID) && !$_SESSION['cm_is_mem
   echo $messageStack->output('header');
   }
   ?>
-</div>
