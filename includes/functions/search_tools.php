@@ -1,6 +1,6 @@
 <?php
 
-define ('OSS_SERVING',false);     
+define ('OSS_SERVING',true);     
 
     $ctx=stream_context_create(array(
                                      'http' => array(
@@ -25,14 +25,17 @@ function topic_search(&$results)
    
    // backwords compatibility with old searches
    $results['products_id']=Array();
-   foreach($results['results'] as $item)
-   {
-       if($item['type']=='product')
+   if(!empty($results['results']))
        {
-           $results['total_prods']=array_push($results['products_id'],$item['products_id']);
+           foreach($results['results'] as $item)
+           {
+               if($item['type']=='product')
+               {
+                   $results['total_prods']=array_push($results['products_id'],$item['products_id']);
+               }
+               
+           }                 
        }
-       
-   }                 
 
 
 }

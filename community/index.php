@@ -23,7 +23,7 @@ require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_PRODUCT_INFO);
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
 
-    <div id="content">
+    <div class="container">
     <h1>Want to Save Even More?</h1>
     
     <div style="float:right;margin:20px;width:200px;"><b class="spiffy">
