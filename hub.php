@@ -174,14 +174,7 @@ $products_name=$searchterm;
 
          <br/><br/>
         <hr class="sectiondivider"/>
-                           <?php include(DIR_WS_MODULES . 'similar_picks.php');?>
-                           
 
-                           
-      
-		
-		                           <?php //include(DIR_WS_MODULES . 'similar_picks.php');?>
-		                     
 		    
 		</div>
 		<br style="clear:both";/><br/>
