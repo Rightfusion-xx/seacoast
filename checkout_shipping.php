@@ -440,7 +440,7 @@ $breadcrumb->add(NAVBAR_TITLE_2, tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', '
                         <?php require('includes/fec/products_box.php');?>
                         <tr>
                             <td>
-                                <div style="border: 1px solid #0088CC;margin-top: 10px;padding:10px;">
+                                <div>
                                     <a style="margin-left:10px;" target="_blank" href="/publish_cart.php">
                                         <?php echo ((empty($customerData) || empty($customerData['customers_basket_published']) || $customerData['customers_basket_published'] != 'yes') ? GET_FREE_SHIPPING_MESSAGE : GET_FREE_SHIPPING_ENABLED_MESSAGE)?>
                                     </a>

@@ -55,6 +55,7 @@ class actionClass extends ActionAbstract
     {
         $this->_rowsCount++;
         $row['lastSet'] = '<nobr>' . date("F j, Y, g:i a", strtotime($row['lastSet'])) . '</nobr>';
+        $row['configuration_value'] = strip_tags($row['configuration_value']);
         $val = preg_split("/[\s]+/",$row['configuration_value']);
         if(count($val) > 4)
         {

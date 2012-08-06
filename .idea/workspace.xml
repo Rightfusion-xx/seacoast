@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/configuration.php" afterPath="$PROJECT_DIR$/admin/configuration.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/checkout_shipping.php" afterPath="$PROJECT_DIR$/checkout_shipping.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/classes/shipping.php" afterPath="$PROJECT_DIR$/includes/classes/shipping.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/fec/ajax_shipping.php" afterPath="$PROJECT_DIR$/includes/fec/ajax_shipping.php" />
     </list>
     <ignored path="Seacoast Vitamins.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -63,13 +61,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="checkout_shipping.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="checkout_shipping.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/checkout_shipping.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="47" selection-start="325" selection-end="325" vertical-scroll-proportion="0.08571429">
+            <state line="463" column="29" selection-start="18146" selection-end="18146" vertical-scroll-proportion="-14.764706">
               <folding>
-                <marker date="1344266983211" expanded="true" signature="8040:8950" placeholder="..." />
+                <marker date="1344267546289" expanded="true" signature="8040:8950" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="configuration.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/admin/configuration.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="57" column="78" selection-start="1854" selection-end="1854" vertical-scroll-proportion="0.26628664">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -127,13 +134,13 @@
         <option value="$PROJECT_DIR$/admin/includes/actionAbstract.php" />
         <option value="$PROJECT_DIR$/shopping_cart.php" />
         <option value="$PROJECT_DIR$/includes/classes/shopping_cart.php" />
-        <option value="$PROJECT_DIR$/admin/configuration.php" />
         <option value="$PROJECT_DIR$/checkout_shipping_address.php" />
         <option value="$PROJECT_DIR$/checkout_payment_address.php" />
         <option value="$PROJECT_DIR$/includes/fec/ajax_shipping.php" />
         <option value="$PROJECT_DIR$/admin/orders_tracking.php" />
         <option value="$PROJECT_DIR$/includes/classes/shipping.php" />
         <option value="$PROJECT_DIR$/checkout_shipping.php" />
+        <option value="$PROJECT_DIR$/admin/configuration.php" />
       </list>
     </option>
   </component>
@@ -199,6 +206,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Seacoast" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Seacoast Vitamins" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Seacoast" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="admin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -518,13 +539,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/configuration.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="309" column="43" selection-start="13630" selection-end="13630" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/publish_cart.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="47" selection-start="1131" selection-end="1131" vertical-scroll-proportion="0.0">
@@ -585,10 +599,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/checkout_shipping.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="47" selection-start="325" selection-end="325" vertical-scroll-proportion="0.08571429">
+        <state line="463" column="29" selection-start="18146" selection-end="18146" vertical-scroll-proportion="-14.764706">
           <folding>
-            <marker date="1344266983211" expanded="true" signature="8040:8950" placeholder="..." />
+            <marker date="1344267546289" expanded="true" signature="8040:8950" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/configuration.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="57" column="78" selection-start="1854" selection-end="1854" vertical-scroll-proportion="0.26628664">
+          <folding />
         </state>
       </provider>
     </entry>
