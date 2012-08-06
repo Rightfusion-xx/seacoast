@@ -1,11 +1,26 @@
 <?php
 require('includes/application_top.php');
 require('includes/classes/http_client.php');
+/*
+if($order->delivery['country_id'] == null)
+{
+    tep_redirect('checkout_shipping_address.php');
+    exit();
+}
+if($order->billing['country_id'] == null)
+{
+    tep_redirect('checkout_payment_address.php');
+    exit();
+}
+*/
+$addrCount = tep_db_fetch_array(tep_db_query("select count(*) as total from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . (int)$customer_id . "'"));
+if($addrCount['total'] < 1)
+{
+    tep_redirect('checkout_payment_address.php');
+    exit();
+}
 
 require(DIR_WS_LANGUAGES . $language . '/' . 'fast_account.php');
-
-
-
 $customerData = tep_db_fetch_array(tep_db_query('SELECT * FROM `' . TABLE_CUSTOMERS . '` where customers_id = \'' . (int)$customer_id . '\''));
  // if the customer is not logged on, redirect them to the login page
 if (!tep_session_is_registered('customer_id')) {
@@ -56,17 +71,6 @@ $order_total_modules->pre_confirmation_check(); */
 
 require(DIR_WS_CLASSES . 'order.php');
 $order = new order;
-
-if($order->delivery['country_id'] == null)
-{
-    tep_redirect('checkout_shipping_address.php');
-    exit();
-}
-if($order->billing['country_id'] == null)
-{
-    tep_redirect('checkout_payment_address.php');
-    exit();
-}
 
 require(DIR_WS_CLASSES . 'payment.php');
 $payment_modules = new payment;
