@@ -14,7 +14,7 @@
                     $cfg_groups .= '<a href="' . tep_href_link(FILENAME_CONFIGURATION, 'gID=' . $configuration_groups['cgID'], 'NONSSL') . '" class="menuBoxContentLink">' . $configuration_groups['cgTitle'] . '</a><br>';
                 }
                 $cfg_groups .= '<a href="' . tep_href_link('top_messages.php') . '" class="menuBoxContentLink">' . BOX_TOOLS_TOP_MESSAGES . '</a><br>';
-                $cfg_groups .= '<a href="' . tep_href_link('email_templates.php') . '" class="menuBoxContentLink">' . BOX_EMAIL_TEMPLATES . '</a><br>';
+                //$cfg_groups .= '<a href="' . tep_href_link('email_templates.php') . '" class="menuBoxContentLink">' . BOX_EMAIL_TEMPLATES . '</a><br>';
                 $contents[] = array('text'  => $cfg_groups);
             }
 
@@ -29,7 +29,7 @@
         <?php
             $heading = array();
             $contents = array();
-            $heading[] = array('text'  => 'Newsletters', 'link'  => tep_href_link('newsletters.php', 'gID=1&selected_box=newsletters'));
+            $heading[] = array('text'  => 'Emails', 'link'  => tep_href_link('newsletters.php', 'gID=1&selected_box=newsletters'));
 
             if ($selected_box == 'newsletters')
             {

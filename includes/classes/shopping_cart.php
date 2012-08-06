@@ -504,7 +504,21 @@ class shoppingCart
         reset($contents);
         while(list($products_id,) = each($contents))
         {
-            $products_query = tep_db_query("select p.manufacturers_id, p.products_id, pd.products_name, p.products_model, p.products_image, p.products_price, p.products_weight, p.products_carrot, p.products_tax_class_id from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id = '" . (int)$products_id . "' and pd.products_id = p.products_id and pd.language_id = '" . (int)$languages_id . "'");
+            $products_query = tep_db_query("
+                SELECT
+                    p.manufacturers_id,
+                    p.products_id,
+                    pd.products_name,
+                    p.products_model,
+                    p.products_image,
+                    p.products_price,
+                    p.products_weight,
+                    p.products_carrot,
+                    p.products_msrp,
+                    p.products_tax_class_id
+                FROM " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd
+                WHERE p.products_id = '" . (int)$products_id . "' and pd.products_id = p.products_id and pd.language_id = '" . (int)$languages_id . "'
+            ");
             if($products = tep_db_fetch_array($products_query))
             {
                 $prid           = $products['products_id'];
@@ -525,11 +539,11 @@ class shoppingCart
 
                     if($products['manufacturers_id'] == 69)
                     {
-                        $products_savings = $products_price * 0.25;
+                        $products_savings = (($products_price > $products['products_msrp']) ? $products_price : $products['products_msrp']) * 0.25;
                     }
                     elseif(!strpos($products['products_name'], '*'))
                     {
-                        $products_savings = $products_price * 0.15;
+                        $products_savings = (($products_price > $products['products_msrp']) ? $products_price : $products['products_msrp']) * 0.15;
                     }
                     $products_price -= $products_savings;
                 }
@@ -545,7 +559,8 @@ class shoppingCart
                     'weight'       => $products['products_weight'],
                     'final_price'  => ($products_price + $this->attributes_price($products_id)),
                     'tax_class_id' => $products['products_tax_class_id'],
-                    'attributes'   => (isset($this->contents[$products_id]['attributes']) ? $this->contents[$products_id]['attributes'] : '')
+                    'attributes'   => (isset($this->contents[$products_id]['attributes']) ? $this->contents[$products_id]['attributes'] : ''),
+                    'msrp'         => $products['products_msrp']
                 );
             }
         }

@@ -10,6 +10,7 @@ class ActionAbstract
     protected $_keyField = null;
     protected $_scriptUrl = null;
     protected $_hideAddButton = false;
+    protected $_rowsCount = 0;
 
     public function __construct()
     {
@@ -56,7 +57,8 @@ class ActionAbstract
 
     public function renderListRow($row)
     {
-        echo '<tr class="dataTableRow">';
+        $this->_rowsCount++;
+        echo '<tr class="dataTableRow' . ((($this->_rowsCount%2) == 0)? ' white-row': '') . '">';
         foreach($this->_gridFields as $field => $title)
         {
             echo '<td class="dataTableContent">' . $row[$field] . '</td>';
@@ -70,8 +72,8 @@ class ActionAbstract
     }
     public function getListLineActions($row)
     {
-        return '<a class="ae-action" href="' . $this->_scriptUrl . '?action=edit&id=' . $row[$this->_keyField] . '">Edit</a> |
-        <a onclick="return confirm(\'Are you sure you want to remove this record?\')" href="' . $this->_scriptUrl . '?action=remove&id=' . $row[$this->_keyField] . '">Remove</a>';
+        return '<a class="ae-action" href="' . $this->_scriptUrl . (strpos($this->_scriptUrl, '?')? '&': '?') . 'action=edit&id=' . $row[$this->_keyField] . '">Edit</a> |
+        <a onclick="return confirm(\'Are you sure you want to remove this record?\')" href="' . $this->_scriptUrl . (strpos($this->_scriptUrl, '?')? '&': '?') . 'action=remove&id=' . $row[$this->_keyField] . '">Remove</a>';
     }
 
     protected function _getGridReq()
@@ -258,6 +260,9 @@ class ActionAbstract
         .action-abstract .dataTableRow:hover{
             background-color: #ccc;
         }
+        .white-row{
+            background-color: #fff !important;
+        }
     </Style>
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#FFFFFF" class="action-abstract">
@@ -308,7 +313,7 @@ class ActionAbstract
                     <td class="pageHeading" style="padding:10px;"><?php echo $this->_pageTitle?></td>
                     <td class="pageHeading" style="padding:10px;text-align: right">
                         <?php if(!$this->_hideAddButton):?>
-                            <a href="<?php echo $this->_scriptUrl.'?action=add'?>" class="ae-action">Add</a>
+                            <a href="<?php echo $this->_scriptUrl . (strpos($this->_scriptUrl, '?')? '&': '?') . 'action=add'?>" class="ae-action">Add</a>
                         <?php endif;?>
                     </td>
                 </tr>

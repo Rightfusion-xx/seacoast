@@ -31,7 +31,7 @@ if(!empty($_REQUEST['action']) && $_REQUEST['action'] == 'callback' && !empty($_
             `customers_id` = \'' . $_SESSION['customer_id'] . '\'
     ');
 
-    $messageStack->add_session('top_messages','Shopping cart published', 'success');
+    $messageStack->add_session('top_messages', SHOPPINGCART_PUBLISHED_MESSAGE, 'success');
 
     header('Location: /shopping_cart.php'.(!empty($_SESSION['temp_products_id'])?'?products_id='.$_SESSION['temp_products_id'] : ''));
 
