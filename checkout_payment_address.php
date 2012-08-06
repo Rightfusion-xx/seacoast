@@ -11,7 +11,7 @@
 */
 
   require('includes/application_top.php');
-  
+
   $hide_cart=true;
 
 // if the customer is not logged on, redirect them to the login page
@@ -151,10 +151,10 @@
         $billto = tep_db_insert_id();
 
      //   if (tep_session_is_registered('payment')) tep_session_unregister('payment');
- if (!tep_session_is_registered('registered_now')) { 
- tep_redirect(tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));   
+ if (!tep_session_is_registered('registered_now')) {
+ tep_redirect(tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
 } else {
-tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL')); 
+tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL'));
      }
       }
 // process the selected billing destination
@@ -178,9 +178,9 @@ tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL'));
       if ($check_address['total'] == '1') {
 
       //  if ($reset_payment == true) tep_session_unregister('payment');
-        if (!tep_session_is_registered('registered_now')) {  tep_redirect(tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));   
+        if (!tep_session_is_registered('registered_now')) {  tep_redirect(tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
 } else {
-tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL')); 
+tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL'));
      }
       } else {
         tep_session_unregister('billto');
@@ -190,9 +190,9 @@ tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL'));
       if (!tep_session_is_registered('billto')) tep_session_register('billto');
       $billto = $customer_default_address_id;
 
-      if (!tep_session_is_registered('registered_now')) {  tep_redirect(tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));   
+      if (!tep_session_is_registered('registered_now')) {  tep_redirect(tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
 } else {
-tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL')); 
+tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL'));
      }
     }
   }
@@ -222,9 +222,9 @@ tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL'));
   if (!tep_session_is_registered('billto')) {
     $billto = $customer_default_address_id;
   }
-  // +Country-State Selector 
+  // +Country-State Selector
   if (!isset($country)){$country = DEFAULT_COUNTRY;}
-  // -Country-State Selector 
+  // -Country-State Selector
 
   $breadcrumb->add(NAVBAR_TITLE_1, tep_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'));
   $breadcrumb->add(NAVBAR_TITLE_2, tep_href_link(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL'));
@@ -288,12 +288,12 @@ function check_form_optional(form_name) {
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 
- 
+
 
 <!-- header //-->
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
 <!-- header_eof //-->
-
+<div class="container">
 <!-- body //-->
 <table border="0" width="100%" cellspacing="3" cellpadding="3">
   <tr>
@@ -306,7 +306,7 @@ function check_form_optional(form_name) {
 
     <td width="100%" valign="top">
 
-		
+
 		<?php echo tep_draw_form('checkout_address', tep_href_link(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL'), 'post', 'onSubmit="return check_form_optional(checkout_address);"'); ?><table border="0" width="100%" cellspacing="0" cellpadding="12">
       <tr>
         <td><TABLE WIDTH="100%" BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="#336699"><TR><TD>
@@ -536,9 +536,9 @@ function check_form_optional(form_name) {
         </table></TD></TR></TABLE></TD></TR></TABLE></td>
       </tr>
     </table></form></td>
-		
 
-		
+
+
 <!-- body_text_eof //-->
     <TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" rowspan="2"><table border="0" width="<?php echo BOX_WIDTH; ?>" cellspacing="0" cellpadding="2">
 <!-- right_navigation //-->
@@ -549,7 +549,7 @@ function check_form_optional(form_name) {
 </table>
 <!-- body_eof //-->
 
-
+</div>
 <!-- footer //-->
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
 <!-- footer_eof //-->

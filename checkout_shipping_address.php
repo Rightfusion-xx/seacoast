@@ -11,7 +11,7 @@
 */
 
   require('includes/application_top.php');
-  
+
   $hide_cart=true;
 
 // if the customer is not logged on, redirect them to the login page
@@ -163,10 +163,10 @@
 
       //  if (tep_session_is_registered('shipping')) tep_session_unregister('shipping');
 
-     if (!tep_session_is_registered('registered_now')) {  
-tep_redirect(tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));   
+     if (!tep_session_is_registered('registered_now')) {
+tep_redirect(tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
 } else {
-tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL')); 
+tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL'));
      }
       }
 // process the selected shipping destination
@@ -189,10 +189,10 @@ tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL'));
 
       if ($check_address['total'] == '1') {
      //   if ($reset_shipping == true) tep_session_unregister('shipping');
-      if (!tep_session_is_registered('registered_now')) {  
-tep_redirect(tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));   
+      if (!tep_session_is_registered('registered_now')) {
+tep_redirect(tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
 } else {
-tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL')); 
+tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL'));
      }
       } else {
         tep_session_unregister('sendto');
@@ -201,10 +201,10 @@ tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL'));
       if (!tep_session_is_registered('sendto')) tep_session_register('sendto');
       $sendto = $customer_default_address_id;
 
-if (!tep_session_is_registered('registered_now')) {  
-tep_redirect(tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));   
+if (!tep_session_is_registered('registered_now')) {
+tep_redirect(tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
 } else {
-tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL')); 
+tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL'));
      }
     }
   }
@@ -234,9 +234,9 @@ tep_redirect(tep_href_link(FILENAME_CHECKOUT_CONFIRMATION, '', 'SSL'));
    if (!tep_session_is_registered('sendto')) {
      $sendto = $customer_default_address_id;
    }
-   // +Country-State Selector 
+   // +Country-State Selector
    if (!isset($country)){$country = DEFAULT_COUNTRY;}
-   // -Country-State Selector  
+   // -Country-State Selector
 
   $breadcrumb->add(NAVBAR_TITLE_1, tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
   $breadcrumb->add(NAVBAR_TITLE_2, tep_href_link(FILENAME_CHECKOUT_SHIPPING_ADDRESS, '', 'SSL'));
@@ -300,12 +300,12 @@ function check_form_optional(form_name) {
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 
- 
+
 
 <!-- header //-->
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
 <!-- header_eof //-->
-
+<div class="container">
 <!-- body //-->
 
 <!-- left_navigation //-->
@@ -314,12 +314,12 @@ function check_form_optional(form_name) {
 
 <td valign="top" colspan="2" valign="top"><?php require(DIR_WS_INCLUDES . 'titlebar.php'); ?></td></tr><tr><!-- body_text //-->
     <td width="100%" valign="top">
-		
+
     <?php // ISM start
-    require (DIR_WS_INCLUDES . 'skin_top.php'); 
+    require (DIR_WS_INCLUDES . 'skin_top.php');
     // ISM end ?>
-		
-		
+
+
 		<?php echo tep_draw_form('checkout_address', tep_href_link(FILENAME_CHECKOUT_SHIPPING_ADDRESS, '', 'SSL'), 'post', 'onSubmit="return check_form_optional(checkout_address);"'); ?><table border="0" width="100%" cellspacing="0" cellpadding="0">
       <tr>
         <td><table border="0" width="100%" cellspacing="0" cellpadding="0">
@@ -544,9 +544,9 @@ function check_form_optional(form_name) {
     </table></form></td>
 
     <?php // ISM start
-    require (DIR_WS_INCLUDES . 'skin_bottom.php'); 
+    require (DIR_WS_INCLUDES . 'skin_bottom.php');
     // ISM end ?>
-		
+
 <!-- body_text_eof //-->
 
 <!-- right_navigation //-->
@@ -554,11 +554,12 @@ function check_form_optional(form_name) {
 <!-- right_navigation_eof //-->
 
 <!-- body_eof //-->
-
+</div>
 <!-- footer //-->
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
 <!-- footer_eof //-->
 <br>
+
 </body>
 </html>
 <?php require(DIR_WS_INCLUDES . 'application_bottom.php'); ?>
