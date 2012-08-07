@@ -7,14 +7,14 @@
       <div class="span12">
          <div class="header row">
           <ul class="span6">
-              <li><a href="/brand.php" title="Our Brands" class="relative<?php echo ((stristr($_SERVER['PHP_SELF'], 'brand.php') != false) ? ' active': '')?>"><i class="left"></i><i class="right"></i>Our Brands</a></li>
+              <li><a title="Our Brands" href="/brand.php" title="Our Brands" class="relative<?php echo ((stristr($_SERVER['PHP_SELF'], 'brand.php') != false) ? ' active': '')?>"><i class="left"></i><i class="right"></i>Our Brands</a></li>
               <?php if(!$_SESSION['cm_is_member']):?>
                   <li><a href="/community/" title="Join Vitamins-Direct" class="relative<?php echo ((stristr($_SERVER['PHP_SELF'], 'community') != false) ? ' active': '')?>"><i class="left"></i><i class="right"></i>Join Vitamins-Direct</a></li>
               <?php endif; ?>
-              <li><a href="/shipping.php" title="" class="relative<?php echo ((stristr($_SERVER['PHP_SELF'], 'shipping.php') != false) ? ' active': '')?>"><i class="left"></i><i class="right"></i>FAQ & Shipping</a></li>
+              <li><a href="/shipping.php" title="FAQ & Shipping" class="relative<?php echo ((stristr($_SERVER['PHP_SELF'], 'shipping.php') != false) ? ' active': '')?>"><i class="left"></i><i class="right"></i>FAQ & Shipping</a></li>
               <?php if(tep_session_is_registered('customer_id')):?>
                   <li>
-                      <a class="relative<?php echo ((stristr($_SERVER['PHP_SELF'], FILENAME_ACCOUNT) != false) ? ' active': '')?>" href="<?php echo tep_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>">
+                      <a title="My Account" class="relative<?php echo ((stristr($_SERVER['PHP_SELF'], FILENAME_ACCOUNT) != false) ? ' active': '')?>" href="<?php echo tep_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>">
                           <i class="left"></i><i class="right"></i>My Account
                       </a>
                   </li>
@@ -48,7 +48,7 @@
            </div>
 
            <div class="span5">
-              <a href="<?php echo (tep_session_is_registered('customer_id') ? tep_href_link(FILENAME_LOGOFF, '', 'SSL') : tep_href_link(FILENAME_ACCOUNT, '', 'SSL'))?>" class="log-button fl-right relative">
+              <a title="<?php echo (tep_session_is_registered('customer_id') ? HEADER_TITLE_LOGOFF : HEADER_TITLE_LOGIN)?>" href="<?php echo (tep_session_is_registered('customer_id') ? tep_href_link(FILENAME_LOGOFF, '', 'SSL') : tep_href_link(FILENAME_ACCOUNT, '', 'SSL'))?>" class="log-button fl-right relative">
                   <i class="left"></i>
                   <i class="right"></i>
                   <label></label>
