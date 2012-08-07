@@ -48,6 +48,16 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
     <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <?php require('includes/form_check.js.php'); ?>
+    <script type="text/javascript">(function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if(d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo FB_APP_ID?>";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    FB.init({appId: "<?php echo FB_APP_ID?>", status: true, cookie: true});
+    </script>
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
     <!-- ClickTale Top part -->
@@ -65,7 +75,7 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
         <div class="row">
             <div class="span12">
                 <h1>
-                    <?php echo $owner['customers_firstname']?>'s Vitamin Cabinet
+                    <?php echo $owner['customers_firstname']?>'s Shopping Cart
                 </h1>
                     <?php
                     for ($i = 0, $n = sizeof($products); $i < $n; $i++) {
@@ -127,7 +137,7 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                 <?php if(tep_db_num_rows($other_products)): ?>
                 <div>
                     <h1>
-                        <?php echo $owner['customers_firstname']?>'s previously purchased products
+                        <?php echo $owner['customers_firstname']?>'s Vitamin Cabinet
                     </h1>
                     <table style="border-top:1px solid lightgray" class="table table-striped">
                         <thead>
@@ -159,6 +169,7 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                 <?php endif;?>
             </div>
         </div>
+        <div class="fb-comments" data-href="http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']?>" data-num-posts="4" data-width="1170"></div>
     </div>
 <?php
 require (DIR_WS_INCLUDES . 'footer.php');

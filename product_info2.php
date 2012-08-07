@@ -531,8 +531,7 @@ if($seacoast_crawler)
     echo '<div>', $product_info['products_id'], '</div><div>', HTTP_SERVER . $_SERVER['REQUEST_URI'], '</div>';
 }
 ?>
-<div class="fb-comments" data-href="http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']?>"
-     data-num-posts="4" data-width="770"></div>
+<div class="fb-comments" data-href="http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']?>" data-num-posts="4" data-width="770"></div>
 </div>
 <?php $product_info['products_name'] = '';?>
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/header_template.php" afterPath="$PROJECT_DIR$/includes/header_template.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/product_info2.php" afterPath="$PROJECT_DIR$/product_info2.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/saved_cart.php" afterPath="$PROJECT_DIR$/saved_cart.php" />
     </list>
     <ignored path="Seacoast Vitamins.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -78,10 +79,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="header_template.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="header_template.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/includes/header_template.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="122" selection-start="3180" selection-end="3180" vertical-scroll-proportion="0.651774">
+            <state line="50" column="122" selection-start="3180" selection-end="3180" vertical-scroll-proportion="-9.725491">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="saved_cart.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/saved_cart.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="164" column="44" selection-start="8072" selection-end="8072" vertical-scroll-proportion="2.2080104">
+              <folding>
+                <marker date="1344335778006" expanded="true" signature="6127:6357" placeholder="..." />
+                <marker date="1344335778006" expanded="true" signature="6164:6320" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="product_info2.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/product_info2.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="533" column="0" selection-start="21460" selection-end="21607" vertical-scroll-proportion="-21.576923">
               <folding />
             </state>
           </provider>
@@ -111,8 +133,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/includes/classes/shopping_cart.php" />
-        <option value="$PROJECT_DIR$/checkout_shipping_address.php" />
         <option value="$PROJECT_DIR$/checkout_payment_address.php" />
         <option value="$PROJECT_DIR$/includes/fec/ajax_shipping.php" />
         <option value="$PROJECT_DIR$/admin/orders_tracking.php" />
@@ -127,6 +147,8 @@
         <option value="$PROJECT_DIR$/hub.php" />
         <option value="$PROJECT_DIR$/includes/configure.php" />
         <option value="$PROJECT_DIR$/includes/header_template.php" />
+        <option value="$PROJECT_DIR$/product_info2.php" />
+        <option value="$PROJECT_DIR$/saved_cart.php" />
       </list>
     </option>
   </component>
@@ -481,22 +503,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/admin/orders_tracking.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="5" selection-start="3624" selection-end="3624" vertical-scroll-proportion="0.014143094">
-          <folding>
-            <marker date="1344266892602" expanded="false" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/includes/database_tables.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="9" selection-start="1149" selection-end="1149" vertical-scroll-proportion="0.33279613">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/create_account.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="459" column="202" selection-start="9485" selection-end="9681" vertical-scroll-proportion="0.46134454">
@@ -592,8 +598,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/includes/header_template.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="122" selection-start="3180" selection-end="3180" vertical-scroll-proportion="0.651774">
+        <state line="50" column="122" selection-start="3180" selection-end="3180" vertical-scroll-proportion="-9.725491">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/product_info2.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="533" column="0" selection-start="21460" selection-end="21607" vertical-scroll-proportion="-21.576923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/saved_cart.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="164" column="44" selection-start="8072" selection-end="8072" vertical-scroll-proportion="2.2080104">
+          <folding>
+            <marker date="1344335778006" expanded="true" signature="6127:6357" placeholder="..." />
+            <marker date="1344335778006" expanded="true" signature="6164:6320" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
