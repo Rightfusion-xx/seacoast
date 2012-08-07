@@ -61,14 +61,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="saved_cart.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="saved_cart.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/saved_cart.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="30" selection-start="450" selection-end="450" vertical-scroll-proportion="-6.6666665">
+            <state line="186" column="42" selection-start="9681" selection-end="9681" vertical-scroll-proportion="0.55714285">
               <folding>
-                <marker date="1344339567782" expanded="true" signature="7683:7913" placeholder="..." />
-                <marker date="1344339567782" expanded="true" signature="7720:7876" placeholder="..." />
+                <marker date="1344344102061" expanded="true" signature="7683:7913" placeholder="..." />
+                <marker date="1344344102061" expanded="true" signature="7720:7876" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="database_tables.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/includes/database_tables.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="60" column="0" selection-start="1235" selection-end="1235" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -76,7 +85,7 @@
       <file leaf-file-name="shopping_cart.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/shopping_cart.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="414" column="38" selection-start="26118" selection-end="26957" vertical-scroll-proportion="-22.384615">
+            <state line="397" column="55" selection-start="25449" selection-end="25449" vertical-scroll-proportion="-19.115385">
               <folding />
             </state>
           </provider>
@@ -85,7 +94,7 @@
       <file leaf-file-name="shopping_cart.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/includes/classes/shopping_cart.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="17" selection-start="716" selection-end="716" vertical-scroll-proportion="-14.96">
+            <state line="579" column="54" selection-start="24222" selection-end="24237" vertical-scroll-proportion="-40.52">
               <folding />
             </state>
           </provider>
@@ -94,16 +103,7 @@
       <file leaf-file-name="checkout_shipping.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/checkout_shipping.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="0" selection-start="92" selection-end="342" vertical-scroll-proportion="-1.9615384">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="header_template.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/includes/header_template.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="77" column="44" selection-start="5860" selection-end="5860" vertical-scroll-proportion="0.4188615">
+            <state line="7" column="11" selection-start="340" selection-end="340" vertical-scroll-proportion="-4.576923">
               <folding />
             </state>
           </provider>
@@ -137,9 +137,9 @@
         <option value="$PROJECT_DIR$/includes/configure.php" />
         <option value="$PROJECT_DIR$/product_info2.php" />
         <option value="$PROJECT_DIR$/shopping_cart.php" />
-        <option value="$PROJECT_DIR$/saved_cart.php" />
-        <option value="$PROJECT_DIR$/includes/classes/shopping_cart.php" />
         <option value="$PROJECT_DIR$/includes/header_template.php" />
+        <option value="$PROJECT_DIR$/includes/classes/shopping_cart.php" />
+        <option value="$PROJECT_DIR$/saved_cart.php" />
       </list>
     </option>
   </component>
@@ -494,13 +494,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/admin/customers.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="819" column="0" selection-start="34727" selection-end="34727" vertical-scroll-proportion="0.8963466">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/configuration.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="84" column="5" selection-start="2860" selection-end="2860" vertical-scroll-proportion="1.1628665">
@@ -571,41 +564,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shopping_cart.php">
+    <entry file="file://$PROJECT_DIR$/includes/header_template.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="414" column="38" selection-start="26118" selection-end="26957" vertical-scroll-proportion="-22.384615">
+        <state line="99" column="56" selection-start="7655" selection-end="7655" vertical-scroll-proportion="0.6389125">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/saved_cart.php">
+    <entry file="file://$PROJECT_DIR$/admin/includes/database_tables.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="30" selection-start="450" selection-end="450" vertical-scroll-proportion="-6.6666665">
-          <folding>
-            <marker date="1344339567782" expanded="true" signature="7683:7913" placeholder="..." />
-            <marker date="1344339567782" expanded="true" signature="7720:7876" placeholder="..." />
-          </folding>
+        <state line="60" column="0" selection-start="1235" selection-end="1235" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/includes/classes/shopping_cart.php">
+    <entry file="file://$PROJECT_DIR$/shopping_cart.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="17" selection-start="716" selection-end="716" vertical-scroll-proportion="-14.96">
+        <state line="397" column="55" selection-start="25449" selection-end="25449" vertical-scroll-proportion="-19.115385">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/checkout_shipping.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="92" selection-end="342" vertical-scroll-proportion="-1.9615384">
+        <state line="7" column="11" selection-start="340" selection-end="340" vertical-scroll-proportion="-4.576923">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/includes/header_template.php">
+    <entry file="file://$PROJECT_DIR$/includes/classes/shopping_cart.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="44" selection-start="5860" selection-end="5860" vertical-scroll-proportion="0.4188615">
+        <state line="579" column="54" selection-start="24222" selection-end="24237" vertical-scroll-proportion="-40.52">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/saved_cart.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="186" column="42" selection-start="9681" selection-end="9681" vertical-scroll-proportion="0.55714285">
+          <folding>
+            <marker date="1344344102061" expanded="true" signature="7683:7913" placeholder="..." />
+            <marker date="1344344102061" expanded="true" signature="7720:7876" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

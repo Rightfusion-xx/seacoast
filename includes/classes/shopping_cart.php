@@ -28,7 +28,14 @@ class shoppingCart
         {
             $contents[$products['products_id']] = array('qty' => $products['customers_basket_quantity']);
             // attributes
-            $attributes_query = tep_db_query("select products_options_id, products_options_value_id from " . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . " where customers_id = '" . (int)$customer_id . "' and products_id = '" . tep_db_input($products['products_id']) . "'");
+            $attributes_query = tep_db_query("
+                SELECT
+                    products_options_id,
+                    products_options_value_id
+                FROM " . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . "
+                WHERE
+                    customers_id = '" . (int)$customer_id . "' and products_id = '" . tep_db_input($products['products_id']) . "'
+            ");
             while($attributes = tep_db_fetch_array($attributes_query))
             {
                 $contents[$products['products_id']]['attributes'][$attributes['products_options_id']] = $attributes['products_options_value_id'];

@@ -165,14 +165,13 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                     <table style="border-top:1px solid lightgray" class="table table-striped">
                         <thead>
                             <th>Product Name</th>
-                            <th>Price</th>
+                            <th>MSRP</th>
+                            <th>Your Price</th>
+                            <th>Savings</th>
                         </thead>
                         <tbody>
                             <?php while($row = tep_db_fetch_array($other_products)):?>
                             <?php if($row['products_id'] == CM_FTPID) continue;?>
-                            <pre>
-                                <?php var_dump($row)?>
-                            </pre>
                             <tr>
                                 <td>
                                     <a href="<?php echo tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $row['products_id'])?>">
@@ -182,9 +181,25 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                                     </a>
                                 </td>
                                 <td  style="width:75px;">
+                                    <s><?php
+                                    echo ($row['products_id'] == CM_FTPID ? '&nbsp;' : '<b>' .
+                                        $currencies->display_price(($row['products_price'] > $row['products_msrp'])?$row['products_price']:$row['products_msrp'], tep_get_tax_rate($row['products_tax_class_id']), 1) . '</b>')
+                                    ?></s>
+                                </td>
+                                <td  style="width:75px;">
                                     <?php
                                     echo ($row['products_id'] == CM_FTPID ? '&nbsp;' : '<b>' .
                                         $currencies->display_price($row['products_price'], tep_get_tax_rate($row['products_tax_class_id']), 1) . '</b>')
+                                    ?>
+                                </td>
+                                <td  style="width:75px;">
+                                    <?php
+                                    echo ($row['products_id'] == CM_FTPID ? '&nbsp;' : '<b>' .
+                                        $currencies->display_price(
+                                            (($row['products_price'] > $row['products_msrp']) ? $row['products_price'] : $row['products_msrp']) - $row['products_price'],
+                                            tep_get_tax_rate($row['products_tax_class_id']),
+                                            1
+                                        ) . '</b>')
                                     ?>
                                 </td>
                             </tr>
