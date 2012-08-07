@@ -1,8 +1,6 @@
 <?php
 $hide_cart = true;
 require ("includes/application_top.php");
-
-
 require(DIR_WS_CLASSES . 'http_client.php');
 require(DIR_WS_CLASSES . 'geo_locator.php');
 require(DIR_WS_CLASSES . 'shipping.php');
@@ -88,27 +86,21 @@ if (isset($_SESSION['country']))
         $order->delivery['postcode'] = $_SESSION[postcode];
     }
 }
-else
-{ // IF LOGGED IN, DELIVERY ADDRESS WILL BE POPULATED AUTOMATICALLY THROUGH ORDER CONSTRUCTOR
-}
-
 $total_weight = $cart->show_weight();
-
 $shipping_module = new shipping();
 $cheapestShippingRate = $shipping_module->getCheapestRate();
-
 ?>
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html <?php echo HTML_PARAMS;?>>
 	<head>
-            <link rel="icon" type="image/png" href="/favicon.ico">
-            <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET;?>">
-            <meta name="robots" content="index, follow">
-            <title><?php echo TITLE;?></title>
-            <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
-            <link rel="stylesheet" type="text/css" href="stylesheet.css">
-            <?php require('includes/form_check.js.php'); ?>
-        </head>
+        <link rel="icon" type="image/png" href="/favicon.ico">
+        <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET;?>">
+        <meta name="robots" content="index, follow">
+        <title><?php echo TITLE;?></title>
+        <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
+        <link rel="stylesheet" type="text/css" href="stylesheet.css">
+        <?php require('includes/form_check.js.php'); ?>
+    </head>
 	<body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 		<!-- ClickTale Top part -->
 		<script type="text/javascript">
@@ -116,75 +108,94 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 		</script>
 		<!-- ClickTale end of Top part -->
 		<!-- header //-->
-		<?php
-			require (DIR_WS_INCLUDES . 'header.php');
-		?>
+		<?php require (DIR_WS_INCLUDES . 'header.php'); ?>
 		<!-- header_eof //-->
-
-
-			<?php
-
-			if (isset($_GET['products_id']) && !$cart -> in_cart($_GET['products_id'])) {
+        <?php
+			if (isset($_GET['products_id']) && !$cart -> in_cart($_GET['products_id']))
+            {
                 $cart->add_cart($_GET['products_id']);
 			}
-
-
-                        ?>
-<?php
-	// the second condition "$cart->in_cart" is to cover a situation where user might enter
-	// a random number for products_id query string. (AH 30 January 2012)
-	if (isset($_GET['products_id']) && $cart->in_cart($_GET['products_id']) && strlen($_POST['qty'])<1)
-	{
-
-                $product_info_query = tep_db_query("select pd.products_target_keyword, p.products_keywords, p.products_die, p.products_sku, p.products_upc,
-                p.products_dieqty, pd.products_head_title_tag, pd.products_head_keywords_tag,
-                pd.products_head_desc_tag, pd.products_type,
-                pd.products_departments,pd.products_ailments,pd.products_uses,
-                p.products_weight, p.products_ordered, pd.products_head_keywords_tag,
-                pd.products_viewed, date_format(p.products_date_added,'%m/%d/%Y') as
-                products_date_added, p.products_last_modified,
-                p.products_id, pd.products_name, pd.products_description, p.products_model,
-                p.products_quantity, p.products_image, pd.products_url, p.products_msrp,
-                p.products_price, p.products_tax_class_id, p.products_date_available,
-                p.manufacturers_id, m.manufacturers_name, pd.products_takeaway
-                from " . TABLE_PRODUCTS . " p join  " . TABLE_PRODUCTS_DESCRIPTION . " pd on
-                p.products_id=pd.products_id join ". TABLE_MANUFACTURERS ." m on m.manufacturers_id=p.manufacturers_id
-                where p.products_status = '1' and p.products_id = '" . (int)$_REQUEST['products_id'] .
-            "' and pd.language_id =' " . (int)$languages_id . "'");
-
-
-            if(!($product_info = tep_db_fetch_array($product_info_query))){
-            //No product found, redirect.
-            redir301(HTTP_SERVER);
-        }
-        // $is_cm_eligible=strpos($product_info['products_name'],'*') ? 0 : 1;
-        $is_cm_eligible=1;//strpos($product_info['products_name'],'*') ? 0 : 1;
-
-    //Get price
-    //check for product specials
-    $new_price = tep_get_products_special_price($product_info['products_id']);
-
-    //Get product name
-    $products_name = $product_info['products_name'];
-
-    //Get price
-    if ($new_price != '')
-        { $price=($new_price);}
-          else
-          { $price=$product_info['products_price'];}
-
-    //Calculate membership discounts
-    if($product_info['manufacturers_id']==69)
-    {
-        $cm_price=$price*.75; //25% Off
-    }
-    elseif(!strpos($product_info['products_name'],'*'))
-    {
-        $cm_price=$price*.85; //15% Off
-    }
-    else {
-        $cm_price=$price;
-    }
+            // the second condition "$cart->in_cart" is to cover a situation where user might enter
+            // a random number for products_id query string. (AH 30 January 2012)
+            if (isset($_GET['products_id']) && $cart->in_cart($_GET['products_id']) && strlen($_POST['qty'])<1)
+            {
+                $product_info_query = tep_db_query("
+                    select
+                        pd.products_target_keyword,
+                        p.products_keywords,
+                        p.products_die,
+                        p.products_sku,
+                        p.products_upc,
+                        p.products_dieqty,
+                        pd.products_head_title_tag,
+                        pd.products_head_keywords_tag,
+                        pd.products_head_desc_tag,
+                        pd.products_type,
+                        pd.products_departments,
+                        pd.products_ailments,
+                        pd.products_uses,
+                        p.products_weight,
+                        p.products_ordered,
+                        pd.products_head_keywords_tag,
+                        pd.products_viewed,
+                        date_format(p.products_date_added,'%m/%d/%Y') as products_date_added,
+                        p.products_last_modified,
+                        p.products_id,
+                        pd.products_name,
+                        pd.products_description,
+                        p.products_model,
+                        p.products_quantity,
+                        p.products_image,
+                        pd.products_url,
+                        p.products_msrp,
+                        p.products_price,
+                        p.products_tax_class_id,
+                        p.products_date_available,
+                        p.manufacturers_id,
+                        m.manufacturers_name,
+                        pd.products_takeaway
+                    from " . TABLE_PRODUCTS . " p
+                    join  " . TABLE_PRODUCTS_DESCRIPTION . " pd on p.products_id=pd.products_id
+                    join ". TABLE_MANUFACTURERS ." m on m.manufacturers_id=p.manufacturers_id
+                    where
+                        p.products_status = '1' and
+                        p.products_id = '" . (int)$_REQUEST['products_id'] . "' and
+                        pd.language_id =' " . (int)$languages_id . "'
+                ");
+                if(!($product_info = tep_db_fetch_array($product_info_query)))
+                {
+                    //No product found, redirect.
+                    redir301(HTTP_SERVER);
+                }
+                // $is_cm_eligible=strpos($product_info['products_name'],'*') ? 0 : 1;
+                $is_cm_eligible=1;//strpos($product_info['products_name'],'*') ? 0 : 1;
+                //Get price
+                //check for product specials
+                $new_price = tep_get_products_special_price($product_info['products_id']);
+                //Get product name
+                $products_name = $product_info['products_name'];
+                //Get price
+                if ($new_price != '')
+                {
+                    $price=($new_price);
+                }
+                else
+                {
+                    $price=$product_info['products_price'];
+                }
+                //Calculate membership discounts
+                if($product_info['manufacturers_id']==69)
+                {
+                    $cm_price=$price*.75; //25% Off
+                }
+                elseif(!strpos($product_info['products_name'],'*'))
+                {
+                    $cm_price=$price*.85; //15% Off
+                }
+                else
+                {
+                    $cm_price=$price;
+                }
 ?>
     <div class="container">
         <div class="row">
@@ -300,8 +311,11 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
             </div>
         </div>
     </div>
-<?php }else{
-    echo tep_draw_form('cart_quantity', tep_href_link(FILENAME_SHOPPING_CART, '', 'SSL'), 'post');
+<?php
+            }
+            else
+            {
+                echo tep_draw_form('cart_quantity', tep_href_link(FILENAME_SHOPPING_CART, '', 'SSL'), 'post');
 ?>
 <div class="container">
     <div class="row">
@@ -377,12 +391,12 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                     $info_box_contents[$cur_row][] = array(
                                         'align' => 'right',
                                         'params' => 'class="productListing-data" valign="top"',
-                                        'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b>' . $currencies
+                                        'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b><s>' . $currencies
                                             ->display_price(
                                                 ($products[$i]['final_price'] > $products[$i]['msrp'])?$products[$i]['final_price']:$products[$i]['msrp'],
                                                 tep_get_tax_rate($products[$i]['tax_class_id']),
                                                 $products[$i]['quantity']
-                                            ) . '</b>'
+                                            ) . '</s></b>'
                                     );
                                     $info_box_contents[$cur_row][] = array(
                                         'align' => 'right',
@@ -393,7 +407,8 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                         'align' => 'right',
                                         'params' => 'class="productListing-data" valign="top"',
                                         'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b>' . $currencies->display_price(
-                                            $products[$i]['savings'],
+                                            //$products[$i]['savings'],
+                                            (($products[$i]['final_price'] > $products[$i]['msrp']) ? $products[$i]['final_price'] : $products[$i]['msrp']) - $products[$i]['final_price'],
                                             tep_get_tax_rate($products[$i]['tax_class_id']),
                                             $products[$i]['quantity']
                                         ) . '</b>'
@@ -423,7 +438,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
             }
             $pl .= '</tr>';
         }
-        $pl.='<tr><td colspan="2">
+        $pl.='<tr><td colspan="3">
                 <input type="hidden" name="action" value="update_product" />
                 <input type="submit" value="Remove Selected">
                 </td><td><input type="submit" value="Update Quantity" /></td><td></td><td></td></tr>';

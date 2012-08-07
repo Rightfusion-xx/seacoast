@@ -18,7 +18,12 @@ class shoppingCart
         //ICW RPLACE LINE
         global $gv_id, $REMOTE_ADDR;
         $contents = array();
-        $products_query = tep_db_query("select products_id, customers_basket_quantity from " . TABLE_CUSTOMERS_BASKET . " where customers_id = '" . (int)$customer_id . "'");
+        $products_query = tep_db_query("
+            select
+                products_id,
+                customers_basket_quantity
+            from " . TABLE_CUSTOMERS_BASKET . "
+            where customers_id = '" . (int)$customer_id . "'");
         while($products = tep_db_fetch_array($products_query))
         {
             $contents[$products['products_id']] = array('qty' => $products['customers_basket_quantity']);
@@ -524,7 +529,13 @@ class shoppingCart
                 $prid           = $products['products_id'];
                 $products_price = $products['products_price'];
 
-                $specials_query = tep_db_query("select specials_new_products_price from " . TABLE_SPECIALS . " where products_id = '" . (int)$prid . "' and status = '1'");
+                $specials_query = tep_db_query("
+                    SELECT
+                        specials_new_products_price
+                    FROM " . TABLE_SPECIALS . "
+                    WHERE
+                        products_id = '" . (int)$prid . "' and status = '1'
+                ");
                 if(tep_db_num_rows($specials_query))
                 {
                     $specials       = tep_db_fetch_array($specials_query);
@@ -532,7 +543,9 @@ class shoppingCart
                 }
 
                 //Community Members - Calculate Savings
-                $is_member = tep_db_fetch_array(tep_db_query('select case when cm_expiration>=curdate() and cm_expiration IS NOT NULL then 1 else 0 end as ismember from customers_info where customers_info_id=' . (int)$customer_id . ''));
+                $is_member = tep_db_fetch_array(tep_db_query('
+                    SELECT case when cm_expiration>=curdate() and cm_expiration IS NOT NULL then 1 else 0 end as ismember from customers_info where customers_info_id=' . (int)$customer_id . '
+                '));
                 if($this->in_cart(CM_FTPID) || $this->in_cart(CM_PID) || (int)$is_member['ismember'] == 1)
                 {
                     $products_savings = 0;

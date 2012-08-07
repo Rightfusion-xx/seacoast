@@ -19,19 +19,17 @@ if(!$owner)
     exit();
 }
 $products = $cart->get_customer_cart($owner['customers_id']);
-
-
 $history_query_raw = "
-                    SELECT DISTINCT
-                        tp.*,
-                        tpd.products_name
-                    FROM `" . TABLE_ORDERS_PRODUCTS . "` AS `top`
-                    INNER JOIN `" . TABLE_ORDERS . "`  AS `to` ON (`to`.`orders_id` = top.orders_id)
-                    INNER JOIN `" . TABLE_PRODUCTS . "` AS `tp` ON (tp.products_id = top.products_id)
-                    INNER JOIN `" . TABLE_PRODUCTS_DESCRIPTION . "` AS `tpd` ON (tp.products_id = tpd.products_id AND tpd.language_id = '1')
-                    WHERE to.customers_id = '" . $owner['customers_id'] . "'
-                    LIMIT 0, 20
-                    ";
+    SELECT DISTINCT
+        tp.*,
+        tpd.products_name
+    FROM `" . TABLE_ORDERS_PRODUCTS . "` AS `top`
+    INNER JOIN `" . TABLE_ORDERS . "`  AS `to` ON (`to`.`orders_id` = top.orders_id)
+    INNER JOIN `" . TABLE_PRODUCTS . "` AS `tp` ON (tp.products_id = top.products_id)
+    INNER JOIN `" . TABLE_PRODUCTS_DESCRIPTION . "` AS `tpd` ON (tp.products_id = tpd.products_id AND tpd.language_id = '1')
+    WHERE to.customers_id = '" . $owner['customers_id'] . "'
+    LIMIT 0, 20
+";
 
 $other_products = tep_db_query($history_query_raw);
 
@@ -81,19 +79,42 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                     for ($i = 0, $n = sizeof($products); $i < $n; $i++) {
                         $info_box_contents[] = array();
                         $cur_row = sizeof($info_box_contents) - 1;
-                        $products_name = '' . '<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $products[$i]['id']) . '"><b>' .
-                            $products[$i]['name'] . '</b></a>';
-
-                        if (isset($products[$i]['attributes']) && is_array($products[$i]['attributes'])) {
+                        $products_name = '' . '<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $products[$i]['id']) . '"><b>' . $products[$i]['name'] . '</b></a>';
+                        if (isset($products[$i]['attributes']) && is_array($products[$i]['attributes']))
+                        {
                             reset($products[$i]['attributes']);
-                            while (list($option, $value) = each($products[$i]['attributes'])) {
+                            while (list($option, $value) = each($products[$i]['attributes']))
+                            {
                                 $products_name .= '<br><small><i> - ' . $products[$i][$option]['products_options_name'] . ' ' . $products[$i][$option]['products_options_values_name'] . '</i></small>';
                             }
                         }
                         $products_name .= '';
                         $info_box_contents[$cur_row][] = array('params' => 'class="productListing-data"', 'text' => $products_name);
-                        $info_box_contents[$cur_row][] = array('align' => 'right', 'params' => 'class="productListing-data" valign="top"', 'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b>' .
-                            $currencies -> display_price($products[$i]['final_price'], tep_get_tax_rate($products[$i]['tax_class_id']), 1) . '</b>');
+                        $info_box_contents[$cur_row][] = array(
+                            'align' => 'right',
+                            'params' => 'class="productListing-data" valign="top"',
+                            'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b><s>' . $currencies
+                                ->display_price(
+                                ($products[$i]['final_price'] > $products[$i]['msrp'])?$products[$i]['final_price']:$products[$i]['msrp'],
+                                tep_get_tax_rate($products[$i]['tax_class_id']),
+                                $products[$i]['quantity']
+                            ) . '</s></b>'
+                        );
+                        $info_box_contents[$cur_row][] = array(
+                            'align' => 'right',
+                            'params' => 'class="productListing-data" valign="top"',
+                            'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b>' . $currencies->display_price($products[$i]['final_price'], tep_get_tax_rate($products[$i]['tax_class_id']), $products[$i]['quantity']) . '</b>'
+                        );
+                        $info_box_contents[$cur_row][] = array(
+                            'align' => 'right',
+                            'params' => 'class="productListing-data" valign="top"',
+                            'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b>' . $currencies->display_price(
+                            //$products[$i]['savings'],
+                                (($products[$i]['final_price'] > $products[$i]['msrp']) ? $products[$i]['final_price'] : $products[$i]['msrp']) - $products[$i]['final_price'],
+                                tep_get_tax_rate($products[$i]['tax_class_id']),
+                                $products[$i]['quantity']
+                            ) . '</b>'
+                        );
                     }
 
                     // shopping cart table starts here (AH 07 Feb 2012)
@@ -103,7 +124,9 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                         $pl =  '<table style="border-top:1px solid lightgray" class="table table-striped">';
                         $pl .= '<thead>';
                         $pl .= '<th>Product Name</th>';
-                        $pl .= '<th style="width:75px;">Price</th>';
+                        $pl .= '<th style="width:75px;">MSRP</th>';
+                        $pl .= '<th style="width:75px;">Your Price</th>';
+                        $pl .= '<th style="width:75px;">Savings</th>';
                         $pl .= '</thead>';
                         $pl .= '<tbody>';
                         for ($i=1; $i<count($info_box_contents); $i++)
@@ -147,6 +170,9 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                         <tbody>
                             <?php while($row = tep_db_fetch_array($other_products)):?>
                             <?php if($row['products_id'] == CM_FTPID) continue;?>
+                            <pre>
+                                <?php var_dump($row)?>
+                            </pre>
                             <tr>
                                 <td>
                                     <a href="<?php echo tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $row['products_id'])?>">
