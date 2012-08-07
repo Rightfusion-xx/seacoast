@@ -395,7 +395,6 @@ $breadcrumb->add(NAVBAR_TITLE_2, tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', '
 <!-- header //-->
 <?php $_REQUEST['page_caption'] = 'Select Shipping';?>
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
-
 <!-- header_eof //-->
 <!-- body //-->
     <div class="container">

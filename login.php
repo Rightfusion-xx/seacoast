@@ -77,7 +77,7 @@ if(isset($HTTP_GET_VARS['action']))
                         WHERE customers_email_address = '" . tep_db_input($user->email) . "'
                     ");
                     $customer = tep_db_fetch_array($check_email_query);
-                    tep_db_query("insert into " . TABLE_CUSTOMERS_INFO . " (customers_info_id, customers_info_number_of_logons, customers_info_date_account_created) values ('" . (int)$customer_id . "', '0', now())");
+                    tep_db_query("insert into " . TABLE_CUSTOMERS_INFO . " (customers_info_id, customers_info_number_of_logons, customers_info_date_account_created) values ('" . $customer['customers_id'] . "', '0', now())");
                 }
                 tep_db_query("
                     INSERT INTO `" . TABLE_CUSTOMER_SNS . "`
