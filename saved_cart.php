@@ -210,7 +210,7 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                 <?php endif;?>
             </div>
         </div>
-        <div class="fb-comments" data-href="http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']?>" data-num-posts="4" data-width="1170"></div>
+        <div class="fb-comments" data-href="http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']?>" data-num-posts="4" ></div>
     </div>
 <?php
 require (DIR_WS_INCLUDES . 'footer.php');
