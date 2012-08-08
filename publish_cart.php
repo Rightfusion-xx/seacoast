@@ -37,7 +37,7 @@ if(!empty($_REQUEST['action']) && $_REQUEST['action'] == 'callback' && !empty($_
             `customers_id` = \'' . $_SESSION['customer_id'] . '\'
     ');
 
-    $messageStack->add_session('top_messages', SHOPPINGCART_PUBLISHED_MESSAGE, 'success');
+    $messageStack->add_session('top_messages', SHOPPINGCART_PUBLISHED_MESSAGE, 'regular');
 
     if(empty($_SESSION['returnto']))
     {

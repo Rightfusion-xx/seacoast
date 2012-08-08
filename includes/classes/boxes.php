@@ -21,63 +21,83 @@
 	var $table_string = '';
 
 // class constructor
-    function tableBox($contents, $direct_output = false, $skin_this = false, $header_text='', $header_link=false, $slice_set='') {
-
-      $tableBox_string = '<table border="' . tep_output_string($this->table_border) . '" width="' . tep_output_string($this->table_width) . '" cellspacing="' . tep_output_string($this->table_cellspacing) . '" cellpadding="' . tep_output_string($this->table_cellpadding) . '"';
-      if (tep_not_null($this->table_parameters)) $tableBox_string .= ' ' . $this->table_parameters;
-      $tableBox_string .= '>' . "\n";
-
-      for ($i=0, $n=sizeof($contents); $i<$n; $i++) {
-        if (isset($contents[$i]['form']) && tep_not_null($contents[$i]['form'])) $tableBox_string .= $contents[$i]['form'] . "\n";
-        $tableBox_string .= '  <tr';
-        if (tep_not_null($this->table_row_parameters)) $tableBox_string .= ' ' . $this->table_row_parameters;
-        if (isset($contents[$i]['params']) && tep_not_null($contents[$i]['params'])) $tableBox_string .= ' ' . $contents[$i]['params'];
+    function tableBox($contents, $direct_output = false, $skin_this = false, $header_text = '', $header_link = false, $slice_set = '')
+    {
+        $tableBox_string = '<table border="' . tep_output_string($this->table_border) . '" width="' . tep_output_string($this->table_width) . '" cellspacing="' . tep_output_string($this->table_cellspacing) . '" cellpadding="' . tep_output_string($this->table_cellpadding) . '"';
+        if(tep_not_null($this->table_parameters))
+            $tableBox_string .= ' ' . $this->table_parameters;
         $tableBox_string .= '>' . "\n";
+        for($i = 0, $n = sizeof($contents); $i < $n; $i++)
+        {
+            if(isset($contents[$i]['form']) && tep_not_null($contents[$i]['form']))
+                $tableBox_string .= $contents[$i]['form'] . "\n";
+            $tableBox_string .= '  <tr';
+            if(tep_not_null($this->table_row_parameters))
+                $tableBox_string .= ' ' . $this->table_row_parameters;
+            if(isset($contents[$i]['params']) && tep_not_null($contents[$i]['params']))
+                $tableBox_string .= ' ' . $contents[$i]['params'];
+            $tableBox_string .= '>' . "\n";
 
-        if (isset($contents[$i][0]) && is_array($contents[$i][0])) {
-          for ($x=0, $n2=sizeof($contents[$i]); $x<$n2; $x++) {
-            if (isset($contents[$i][$x]['text']) && tep_not_null($contents[$i][$x]['text'])) {
-              $tableBox_string .= '    <td';
-              if (isset($contents[$i][$x]['align']) && tep_not_null($contents[$i][$x]['align'])) $tableBox_string .= ' align="' . tep_output_string($contents[$i][$x]['align']) . '"';
-              if (isset($contents[$i][$x]['params']) && tep_not_null($contents[$i][$x]['params'])) {
-                $tableBox_string .= ' ' . $contents[$i][$x]['params'];
-              } elseif (tep_not_null($this->table_data_parameters)) {
-                $tableBox_string .= ' ' . $this->table_data_parameters;
-              }
-              $tableBox_string .= '>';
-              if (isset($contents[$i][$x]['form']) && tep_not_null($contents[$i][$x]['form'])) $tableBox_string .= $contents[$i][$x]['form'];
-              $tableBox_string .= $contents[$i][$x]['text'];
-              if (isset($contents[$i][$x]['form']) && tep_not_null($contents[$i][$x]['form'])) $tableBox_string .= '</form>';
-              $tableBox_string .= '</td>' . "\n";
+            if(isset($contents[$i][0]) && is_array($contents[$i][0]))
+            {
+                for($x = 0, $n2 = sizeof($contents[$i]); $x < $n2; $x++)
+                {
+                    if(isset($contents[$i][$x]['text']) && tep_not_null($contents[$i][$x]['text']))
+                    {
+                        $tableBox_string .= '    <td';
+                        if(isset($contents[$i][$x]['align']) && tep_not_null($contents[$i][$x]['align']))
+                            $tableBox_string .= ' align="' . tep_output_string($contents[$i][$x]['align']) . '"';
+                        if(isset($contents[$i][$x]['params']) && tep_not_null($contents[$i][$x]['params']))
+                        {
+                            $tableBox_string .= ' ' . $contents[$i][$x]['params'];
+                        }
+                        elseif(tep_not_null($this->table_data_parameters))
+                        {
+                            $tableBox_string .= ' ' . $this->table_data_parameters;
+                        }
+                        $tableBox_string .= '>';
+                        if(isset($contents[$i][$x]['form']) && tep_not_null($contents[$i][$x]['form']))
+                            $tableBox_string .= $contents[$i][$x]['form'];
+                        $tableBox_string .= $contents[$i][$x]['text'];
+                        if(isset($contents[$i][$x]['form']) && tep_not_null($contents[$i][$x]['form']))
+                            $tableBox_string .= '</form>';
+                        $tableBox_string .= '</td>' . "\n";
+                    }
+                }
             }
-          }
-        } else {
-          $tableBox_string .= '    <td';
-          if (isset($contents[$i]['align']) && tep_not_null($contents[$i]['align'])) $tableBox_string .= ' align="' . tep_output_string($contents[$i]['align']) . '"';
-          if (isset($contents[$i]['params']) && tep_not_null($contents[$i]['params'])) {
-            $tableBox_string .= ' ' . $contents[$i]['params'];
-          } elseif (tep_not_null($this->table_data_parameters)) {
-            $tableBox_string .= ' ' . $this->table_data_parameters;
-          }
-          $tableBox_string .= '>' . $contents[$i]['text'] . '</td>' . "\n";
+            else
+            {
+                $tableBox_string .= '    <td';
+                if(isset($contents[$i]['align']) && tep_not_null($contents[$i]['align']))
+                    $tableBox_string .= ' align="' . tep_output_string($contents[$i]['align']) . '"';
+                if(isset($contents[$i]['params']) && tep_not_null($contents[$i]['params']))
+                {
+                    $tableBox_string .= ' ' . $contents[$i]['params'];
+                }
+                elseif(tep_not_null($this->table_data_parameters))
+                {
+                    $tableBox_string .= ' ' . $this->table_data_parameters;
+                }
+                $tableBox_string .= '>' . $contents[$i]['text'] . '</td>' . "\n";
+            }
+
+            $tableBox_string .= '  </tr>' . "\n";
+            if(isset($contents[$i]['form']) && tep_not_null($contents[$i]['form']))
+                $tableBox_string .= '</form>' . "\n";
         }
 
-        $tableBox_string .= '  </tr>' . "\n";
-        if (isset($contents[$i]['form']) && tep_not_null($contents[$i]['form'])) $tableBox_string .= '</form>' . "\n";
-      }
+        $tableBox_string .= '</table>' . "\n";
 
-      $tableBox_string .= '</table>' . "\n";
-			
-
-      if ($direct_output == true) echo $tableBox_string;
-      $this->table_string = $tableBox_string;
-      return $tableBox_string;
+        if($direct_output == true)
+            echo $tableBox_string;
+        $this->table_string = $tableBox_string;
+        return $tableBox_string;
     }
  }
 
 
   class infoBox extends tableBox {
-    function infoBox($contents, $direct_output = true) 
+    function infoBox($contents, $direct_output = true)
     {
     global $infobox_header_text, $infobox_header_link;
       $info_box_contents = array();
@@ -103,7 +123,7 @@
       $info_box_contents[] = array(array('text' => tep_draw_separator('pixel_trans.gif', '100%', '1')));
       return $this->tableBox($info_box_contents);
     }
-		
+
 			function newinfoboxcontents($contents) {
 			global $infobox_header_text, $infobox_header_link, $skin_slice_set;
 		  $this->table_cellpadding = '0';
@@ -119,12 +139,12 @@
 
       if ($infobox_header_link != false) {
       $infobox_link = '<a href="' . $infobox_header_link . '">' . tep_image(DIR_WS_IMAGES . 'infobox/arrow_right.gif', ICON_ARROW_RIGHT) . '</a>';
-      }	
+      }
       return $this->tableBox($info_box_contents, false, true, $infobox_header_text, $infobox_header_link, $skin_slice_set);
-	
+
     }
   }
-	
+
 
   class infoBoxHeading extends tableBox {
     function infoBoxHeading($contents, $left_corner = true, $right_corner = true, $right_arrow = false, $direct_output = true) {
@@ -132,7 +152,7 @@
 
       $this->table_cellpadding = '0';
 
-      
+
       if ($right_arrow == true) {
         $right_arrow = '<a href="' . $right_arrow . '">' . tep_image(DIR_WS_IMAGES . 'infobox/arrow_right.gif', ICON_ARROW_RIGHT) . '</a>';
       } else {
@@ -171,7 +191,7 @@
 
     function contentBoxContents($contents, $skin_this = false) {
     $this->table_cellpadding = '4';
- 	 	  $this->table_parameters = 'class="infoBoxContents"';			 
+ 	 	  $this->table_parameters = 'class="infoBoxContents"';
       return $this->tableBox($contents);
     }
   }
@@ -179,7 +199,7 @@
   class contentBoxHeading extends tableBox {
     function contentBoxHeading($contents, $skin_this = false) {
 		    global $contentbox_header_text;
-		 
+
 
         $this->table_width = '100%';
         $this->table_cellpadding = '0';
