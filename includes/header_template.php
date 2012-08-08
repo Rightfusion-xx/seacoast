@@ -87,68 +87,68 @@
                 <div class="span12 search controllers relative">
                     <a href="<?php echo HTTP_SERVER?>" class="logo fl-left" title="Vitamins, Exclusive Discounts, Direct to You."></a>
                     <div class="min-width-align relative<?php echo (tep_session_is_registered('customer_id') ? ' narrow-width':'')?>"">
-                    <div class="search-container fl-left relative<?php echo (tep_session_is_registered('customer_id') ? ' narrow':'')?>">
-                        <form action="/topic.php" method="get" style="display:inline;" id="width_change">
-                            <input id="search_input_1" type="text" name="health" maxlength="250" onFocus="changeSubmitSmall()" onBlur="resetSubmitSmall()" value="<?php echo htmlentities($_REQUEST['health'])?>">
-                            <input type="submit" value="" tytle="Search Seacoast" onclick="this.parentNode.submit();">
-                            <div id="expansion_button" onclick="resizeInput()"></div>
-                        </form>
-                        <script type="text/javascript">
-                            function changeSubmitSmall(){
-                                document.getElementById("search_input_1").setAttribute("class", "focused");
-                            }
-                            function resetSubmitSmall(){
-                                document.getElementById("search_input_1").removeAttribute("class", "focused");
-                                document.getElementById("width_change").removeAttribute("class", "width-223");
-                                document.getElementById("expansion_button").setAttribute("style", "display: block;");
-                            }
-                            function resizeInput(){
-                                document.getElementById("width_change").setAttribute("class", "width-223");
-                                document.getElementById("expansion_button").setAttribute("style", "display: none;");
-                            }
-                        </script>
-                    </div>
-                    <a href="<?php echo (tep_session_is_registered('customer_id') ? tep_href_link(FILENAME_LOGOFF, '', 'SSL') : tep_href_link(FILENAME_ACCOUNT, '', 'SSL'))?>" class="log-button fl-right relative">
-                        <i class="left"></i>
-                        <i class="right"></i>
-                        <label></label>
-                        <span><?php echo (tep_session_is_registered('customer_id') ? HEADER_TITLE_LOGOFF : HEADER_TITLE_LOGIN)?></span>
-                    </a>
-                    <div class="account-control fl-right relative<?php echo (tep_session_is_registered('customer_id') ? ' account-button-on':'')?>">
-                        <div class="basket relative fl-right">
-                            <label></label>
-                            <p class="relative">
-                                <i class="left"></i>
-                                <i class="right"></i>
-                                <?php if($cart->count_contents() > 0):?>
-                                <a href="/shopping_cart.php">
-                                    <span class="items"><?php echo $cart->count_contents()?> <span>item<?php if($cart->count_contents()>1) echo 's';?>:</span></span>
-                                    <strong>$<?php echo number_format($cart->show_total(),2);?></strong>
-                                    <span>(Savings of <strong>$<?php echo number_format($cart->show_savings(),2); ?></strong>)</span>
-                                </a>
-                                <?php else:?>
-                                <a href="javascript:;" title="">
-                                    <span>Shopping cart empty</span>
-                                </a>
-                                <?php endif;?>
-                            </p>
+                        <div class="search-container fl-left relative<?php echo (tep_session_is_registered('customer_id') ? ' narrow':'')?>">
+                            <form action="/topic.php" method="get" style="display:inline;" id="width_change">
+                                <input id="search_input_1" type="text" name="health" maxlength="250" onFocus="changeSubmitSmall()" onBlur="resetSubmitSmall()" value="<?php echo htmlentities($_REQUEST['health'])?>">
+                                <input type="submit" value="" tytle="Search Seacoast" onclick="this.parentNode.submit();">
+                                <div id="expansion_button" onclick="resizeInput()"></div>
+                            </form>
+                            <script type="text/javascript">
+                                function changeSubmitSmall(){
+                                    document.getElementById("search_input_1").setAttribute("class", "focused");
+                                }
+                                function resetSubmitSmall(){
+                                    document.getElementById("search_input_1").removeAttribute("class", "focused");
+                                    document.getElementById("width_change").removeAttribute("class", "width-223");
+                                    document.getElementById("expansion_button").setAttribute("style", "display: block;");
+                                }
+                                function resizeInput(){
+                                    document.getElementById("width_change").setAttribute("class", "width-223");
+                                    document.getElementById("expansion_button").setAttribute("style", "display: none;");
+                                }
+                            </script>
                         </div>
-                        <?php if(tep_session_is_registered('customer_id')):?>
-                        <a class="relative account-button fl-left<?php echo ((stristr($_SERVER['PHP_SELF'], FILENAME_ACCOUNT) != false) ? ' active': '')?>" href="<?php echo tep_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>">
+                        <a href="<?php echo (tep_session_is_registered('customer_id') ? tep_href_link(FILENAME_LOGOFF, '', 'SSL') : tep_href_link(FILENAME_ACCOUNT, '', 'SSL'))?>" class="log-button fl-right relative">
                             <i class="left"></i>
                             <i class="right"></i>
                             <label></label>
+                            <span><?php echo (tep_session_is_registered('customer_id') ? HEADER_TITLE_LOGOFF : HEADER_TITLE_LOGIN)?></span>
                         </a>
-                        <?php endif;?>
+                        <div class="account-control fl-right relative<?php echo (tep_session_is_registered('customer_id') ? ' account-button-on':'')?>">
+                            <div class="basket relative fl-right">
+                                <label></label>
+                                <p class="relative">
+                                    <i class="left"></i>
+                                    <i class="right"></i>
+                                    <?php if($cart->count_contents() > 0):?>
+                                    <a href="/shopping_cart.php">
+                                        <span class="items"><?php echo $cart->count_contents()?> <span>item<?php if($cart->count_contents()>1) echo 's';?>:</span></span>
+                                        <strong>$<?php echo number_format($cart->show_total(),2);?></strong>
+                                        <span>(Savings of <strong>$<?php echo number_format($cart->show_savings(),2); ?></strong>)</span>
+                                    </a>
+                                    <?php else:?>
+                                    <a href="javascript:;" title="">
+                                        <span>Shopping cart empty</span>
+                                    </a>
+                                    <?php endif;?>
+                                </p>
+                            </div>
+                            <?php if(tep_session_is_registered('customer_id')):?>
+                            <a class="relative account-button fl-left<?php echo ((stristr($_SERVER['PHP_SELF'], FILENAME_ACCOUNT) != false) ? ' active': '')?>" href="<?php echo tep_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>">
+                                <i class="left"></i>
+                                <i class="right"></i>
+                                <label></label>
+                            </a>
+                            <?php endif;?>
+                        </div>
                     </div>
                 </div>
+                <div class="clear"></div>
             </div>
-            <div class="clear"></div>
-        </div>
-        <div class="content row">
-            <h2 class="span12"><?php echo(!empty($_REQUEST['page_caption']) ? $_REQUEST['page_caption'] :'Vitamins - Direct To Members from Seacoast Vitamins')?></h2>
+            <div class="content row">
+                <h2 class="span12"><?php echo(!empty($_REQUEST['page_caption']) ? $_REQUEST['page_caption'] :'Vitamins - Direct To Members from Seacoast Vitamins')?></h2>
+            </div>
         </div>
     </div>
-</div>
-<?php echo $messageStack->output('top_messages');?>
+    <?php echo $messageStack->output('top_messages');?>
 </div>
