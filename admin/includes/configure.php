@@ -26,7 +26,7 @@
   define('DIR_WS_ADMIN', '/'); // absolute path required
   define('DIR_FS_ADMIN', '/seacoast/www/admin/'); // absolute pate required
   define('DIR_WS_CATALOG', '/'); // absolute path required
-  define('DIR_FS_CATALOG', '/seacoast/www/'); // absolute path required
+  define('DIR_FS_CATALOG', str_replace('admin', '', $_SERVER['DOCUMENT_ROOT'])); // absolute path required
   define('DIR_WS_IMAGES', 'images/');
   define('DIR_WS_ICONS', DIR_WS_IMAGES . 'icons/');
   define('DIR_WS_CATALOG_IMAGES', DIR_WS_CATALOG . 'images/');
@@ -46,10 +46,10 @@
   define('DIR_FS_BACKUP', DIR_FS_ADMIN . 'backups/');
 
 // define our database connection
-  define('DB_SERVER', 'localhost'); // eg, localhost - should not be empty for productive servers
-  define('DB_SERVER_USERNAME', 'root');
-  define('DB_SERVER_PASSWORD', '');
-  define('DB_DATABASE', 'neal_seacost_oc');
+  define('DB_SERVER', 'db.server.int'); // eg, localhost - should not be empty for productive servers
+  define('DB_SERVER_USERNAME', 'php');
+  define('DB_SERVER_PASSWORD', 'php');
+  define('DB_DATABASE', 'demo_seacoast_os');
   define('USE_PCONNECT', 'true'); // use persisstent connections?
   define('STORE_SESSIONS', 'mysql'); // leave empty '' for default handler or set to 'mysql'
 

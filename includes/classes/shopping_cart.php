@@ -18,12 +18,24 @@ class shoppingCart
         //ICW RPLACE LINE
         global $gv_id, $REMOTE_ADDR;
         $contents = array();
-        $products_query = tep_db_query("select products_id, customers_basket_quantity from " . TABLE_CUSTOMERS_BASKET . " where customers_id = '" . (int)$customer_id . "'");
+        $products_query = tep_db_query("
+            select
+                products_id,
+                customers_basket_quantity
+            from " . TABLE_CUSTOMERS_BASKET . "
+            where customers_id = '" . (int)$customer_id . "'");
         while($products = tep_db_fetch_array($products_query))
         {
             $contents[$products['products_id']] = array('qty' => $products['customers_basket_quantity']);
             // attributes
-            $attributes_query = tep_db_query("select products_options_id, products_options_value_id from " . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . " where customers_id = '" . (int)$customer_id . "' and products_id = '" . tep_db_input($products['products_id']) . "'");
+            $attributes_query = tep_db_query("
+                SELECT
+                    products_options_id,
+                    products_options_value_id
+                FROM " . TABLE_CUSTOMERS_BASKET_ATTRIBUTES . "
+                WHERE
+                    customers_id = '" . (int)$customer_id . "' and products_id = '" . tep_db_input($products['products_id']) . "'
+            ");
             while($attributes = tep_db_fetch_array($attributes_query))
             {
                 $contents[$products['products_id']]['attributes'][$attributes['products_options_id']] = $attributes['products_options_value_id'];
@@ -378,7 +390,18 @@ class shoppingCart
             }
 
             // products price
-            $product_query = tep_db_query("select products_name, manufacturers_id, p.products_id, products_price, products_tax_class_id, products_weight from " . TABLE_PRODUCTS . " p join products_description pd on pd.products_id=p.products_id where p.products_id = '" . (int)$products_id . "'");
+            $product_query = tep_db_query("
+                SELECT
+                    products_name,
+                    manufacturers_id,
+                    p.products_id,
+                    products_price,
+                    products_tax_class_id,
+                    products_weight,
+                    products_msrp
+                FROM " . TABLE_PRODUCTS . " p
+                join products_description pd on pd.products_id=p.products_id
+                WHERE p.products_id = '" . (int)$products_id . "'");
             if($product = tep_db_fetch_array($product_query))
             {
                 // ICW ORDER TOTAL CREDIT CLASS Start Amendment
@@ -415,6 +438,8 @@ class shoppingCart
                         $this->remove(CM_PID);
                     }
                 }
+
+                $productFinalPrice = ($products_price + $this->attributes_price($products_id));
 
                 $products_savings = 0;
                 if($product['manufacturers_id'] == 69)
@@ -504,13 +529,33 @@ class shoppingCart
         reset($contents);
         while(list($products_id,) = each($contents))
         {
-            $products_query = tep_db_query("select p.manufacturers_id, p.products_id, pd.products_name, p.products_model, p.products_image, p.products_price, p.products_weight, p.products_carrot, p.products_tax_class_id from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd where p.products_id = '" . (int)$products_id . "' and pd.products_id = p.products_id and pd.language_id = '" . (int)$languages_id . "'");
+            $products_query = tep_db_query("
+                SELECT
+                    p.manufacturers_id,
+                    p.products_id,
+                    pd.products_name,
+                    p.products_model,
+                    p.products_image,
+                    p.products_price,
+                    p.products_weight,
+                    p.products_carrot,
+                    p.products_msrp,
+                    p.products_tax_class_id
+                FROM " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd
+                WHERE p.products_id = '" . (int)$products_id . "' and pd.products_id = p.products_id and pd.language_id = '" . (int)$languages_id . "'
+            ");
             if($products = tep_db_fetch_array($products_query))
             {
                 $prid           = $products['products_id'];
                 $products_price = $products['products_price'];
 
-                $specials_query = tep_db_query("select specials_new_products_price from " . TABLE_SPECIALS . " where products_id = '" . (int)$prid . "' and status = '1'");
+                $specials_query = tep_db_query("
+                    SELECT
+                        specials_new_products_price
+                    FROM " . TABLE_SPECIALS . "
+                    WHERE
+                        products_id = '" . (int)$prid . "' and status = '1'
+                ");
                 if(tep_db_num_rows($specials_query))
                 {
                     $specials       = tep_db_fetch_array($specials_query);
@@ -518,34 +563,38 @@ class shoppingCart
                 }
 
                 //Community Members - Calculate Savings
-                $is_member = tep_db_fetch_array(tep_db_query('select case when cm_expiration>=curdate() and cm_expiration IS NOT NULL then 1 else 0 end as ismember from customers_info where customers_info_id=' . (int)$customer_id . ''));
+                $is_member = tep_db_fetch_array(tep_db_query('
+                    SELECT case when cm_expiration>=curdate() and cm_expiration IS NOT NULL then 1 else 0 end as ismember from customers_info where customers_info_id=' . (int)$customer_id . '
+                '));
                 if($this->in_cart(CM_FTPID) || $this->in_cart(CM_PID) || (int)$is_member['ismember'] == 1)
                 {
                     $products_savings = 0;
 
                     if($products['manufacturers_id'] == 69)
                     {
-                        $products_savings = $products_price * 0.25;
+                        $products_savings = (($products_price > $products['products_msrp']) ? $products_price : $products['products_msrp']) * 0.25;
                     }
                     elseif(!strpos($products['products_name'], '*'))
                     {
-                        $products_savings = $products_price * 0.15;
+                        $products_savings = (($products_price > $products['products_msrp']) ? $products_price : $products['products_msrp']) * 0.15;
                     }
                     $products_price -= $products_savings;
                 }
-
+                $productFinalPrice = ($products_price + $this->attributes_price($products_id));
                 $products_array[] = array(
                     'id'           => $products_id,
                     'name'         => $products['products_name'],
                     'model'        => $products['products_model'],
                     'image'        => $products['products_image'],
                     'price'        => $products_price,
-                    'savings'      => $products_savings,
+                    'products_price'=>$products['products_price'],
+                    'savings'      => (($products['products_msrp'] > $products_price) ? $products['products_msrp'] : $products_price) - $productFinalPrice,//$products_savings,
                     'quantity'     => $this->contents[$products_id]['qty'],
                     'weight'       => $products['products_weight'],
-                    'final_price'  => ($products_price + $this->attributes_price($products_id)),
+                    'final_price'  => $productFinalPrice,
                     'tax_class_id' => $products['products_tax_class_id'],
-                    'attributes'   => (isset($this->contents[$products_id]['attributes']) ? $this->contents[$products_id]['attributes'] : '')
+                    'attributes'   => (isset($this->contents[$products_id]['attributes']) ? $this->contents[$products_id]['attributes'] : ''),
+                    'msrp'         => $products['products_msrp']
                 );
             }
         }

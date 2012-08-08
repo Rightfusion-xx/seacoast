@@ -19,19 +19,17 @@ if(!$owner)
     exit();
 }
 $products = $cart->get_customer_cart($owner['customers_id']);
-
-
 $history_query_raw = "
-                    SELECT DISTINCT
-                        tp.*,
-                        tpd.products_name
-                    FROM `" . TABLE_ORDERS_PRODUCTS . "` AS `top`
-                    INNER JOIN `" . TABLE_ORDERS . "`  AS `to` ON (`to`.`orders_id` = top.orders_id)
-                    INNER JOIN `" . TABLE_PRODUCTS . "` AS `tp` ON (tp.products_id = top.products_id)
-                    INNER JOIN `" . TABLE_PRODUCTS_DESCRIPTION . "` AS `tpd` ON (tp.products_id = tpd.products_id AND tpd.language_id = '1')
-                    WHERE to.customers_id = '" . $owner['customers_id'] . "'
-                    LIMIT 0, 20
-                    ";
+    SELECT DISTINCT
+        tp.*,
+        tpd.products_name
+    FROM `" . TABLE_ORDERS_PRODUCTS . "` AS `top`
+    INNER JOIN `" . TABLE_ORDERS . "`  AS `to` ON (`to`.`orders_id` = top.orders_id)
+    INNER JOIN `" . TABLE_PRODUCTS . "` AS `tp` ON (tp.products_id = top.products_id)
+    INNER JOIN `" . TABLE_PRODUCTS_DESCRIPTION . "` AS `tpd` ON (tp.products_id = tpd.products_id AND tpd.language_id = '1')
+    WHERE to.customers_id = '" . $owner['customers_id'] . "'
+    LIMIT 0, 20
+";
 
 $other_products = tep_db_query($history_query_raw);
 
@@ -48,6 +46,18 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
     <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <?php require('includes/form_check.js.php'); ?>
+    <script type="text/javascript" src="/jquery/js/jquery-1.3.2.min.js"></script>
+    <script src="//connect.facebook.net/en_US/all.js"></script>
+    <script type="text/javascript">(function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if(d.getElementById(id)) return;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=<?php echo FB_APP_ID?>";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    FB.init({appId: "<?php echo FB_APP_ID?>", status: true, cookie: true});
+    </script>
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
     <!-- ClickTale Top part -->
@@ -65,25 +75,48 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
         <div class="row">
             <div class="span12">
                 <h1>
-                    <?php echo $owner['customers_firstname']?>'s Vitamin Cabinet
+                    <?php echo $owner['customers_firstname']?>'s Shopping Cart
                 </h1>
                     <?php
                     for ($i = 0, $n = sizeof($products); $i < $n; $i++) {
                         $info_box_contents[] = array();
                         $cur_row = sizeof($info_box_contents) - 1;
-                        $products_name = '' . '<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $products[$i]['id']) . '"><b>' .
-                            $products[$i]['name'] . '</b></a>';
-
-                        if (isset($products[$i]['attributes']) && is_array($products[$i]['attributes'])) {
+                        $products_name = '' . '<a href="' . tep_href_link(FILENAME_PRODUCT_INFO, 'products_id=' . $products[$i]['id']) . '"><b>' . $products[$i]['name'] . '</b></a>';
+                        if (isset($products[$i]['attributes']) && is_array($products[$i]['attributes']))
+                        {
                             reset($products[$i]['attributes']);
-                            while (list($option, $value) = each($products[$i]['attributes'])) {
+                            while (list($option, $value) = each($products[$i]['attributes']))
+                            {
                                 $products_name .= '<br><small><i> - ' . $products[$i][$option]['products_options_name'] . ' ' . $products[$i][$option]['products_options_values_name'] . '</i></small>';
                             }
                         }
                         $products_name .= '';
                         $info_box_contents[$cur_row][] = array('params' => 'class="productListing-data"', 'text' => $products_name);
-                        $info_box_contents[$cur_row][] = array('align' => 'right', 'params' => 'class="productListing-data" valign="top"', 'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b>' .
-                            $currencies -> display_price($products[$i]['final_price'], tep_get_tax_rate($products[$i]['tax_class_id']), 1) . '</b>');
+                        $info_box_contents[$cur_row][] = array(
+                            'align' => 'right',
+                            'params' => 'class="productListing-data" valign="top"',
+                            'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b><s>' . $currencies
+                                ->display_price(
+                                ($products[$i]['final_price'] > $products[$i]['msrp'])?$products[$i]['final_price']:$products[$i]['msrp'],
+                                tep_get_tax_rate($products[$i]['tax_class_id']),
+                                $products[$i]['quantity']
+                            ) . '</s></b>'
+                        );
+                        $info_box_contents[$cur_row][] = array(
+                            'align' => 'right',
+                            'params' => 'class="productListing-data" valign="top"',
+                            'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b>' . $currencies->display_price($products[$i]['final_price'], tep_get_tax_rate($products[$i]['tax_class_id']), $products[$i]['quantity']) . '</b>'
+                        );
+                        $info_box_contents[$cur_row][] = array(
+                            'align' => 'right',
+                            'params' => 'class="productListing-data" valign="top"',
+                            'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b>' . $currencies->display_price(
+                            //$products[$i]['savings'],
+                                (($products[$i]['final_price'] > $products[$i]['msrp']) ? $products[$i]['final_price'] : $products[$i]['msrp']) - $products[$i]['final_price'],
+                                tep_get_tax_rate($products[$i]['tax_class_id']),
+                                $products[$i]['quantity']
+                            ) . '</b>'
+                        );
                     }
 
                     // shopping cart table starts here (AH 07 Feb 2012)
@@ -93,7 +126,9 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                         $pl =  '<table style="border-top:1px solid lightgray" class="table table-striped">';
                         $pl .= '<thead>';
                         $pl .= '<th>Product Name</th>';
-                        $pl .= '<th style="width:75px;">Price</th>';
+                        $pl .= '<th style="width:75px;">MSRP</th>';
+                        $pl .= '<th style="width:75px;">Your Price</th>';
+                        $pl .= '<th style="width:75px;">Savings</th>';
                         $pl .= '</thead>';
                         $pl .= '<tbody>';
                         for ($i=1; $i<count($info_box_contents); $i++)
@@ -127,12 +162,14 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                 <?php if(tep_db_num_rows($other_products)): ?>
                 <div>
                     <h1>
-                        <?php echo $owner['customers_firstname']?>'s previously purchased products
+                        <?php echo $owner['customers_firstname']?>'s Vitamin Cabinet
                     </h1>
                     <table style="border-top:1px solid lightgray" class="table table-striped">
                         <thead>
                             <th>Product Name</th>
-                            <th>Price</th>
+                            <th>MSRP</th>
+                            <th>Your Price</th>
+                            <th>Savings</th>
                         </thead>
                         <tbody>
                             <?php while($row = tep_db_fetch_array($other_products)):?>
@@ -146,9 +183,25 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                                     </a>
                                 </td>
                                 <td  style="width:75px;">
+                                    <s><?php
+                                    echo ($row['products_id'] == CM_FTPID ? '&nbsp;' : '<b>' .
+                                        $currencies->display_price(($row['products_price'] > $row['products_msrp'])?$row['products_price']:$row['products_msrp'], tep_get_tax_rate($row['products_tax_class_id']), 1) . '</b>')
+                                    ?></s>
+                                </td>
+                                <td  style="width:75px;">
                                     <?php
                                     echo ($row['products_id'] == CM_FTPID ? '&nbsp;' : '<b>' .
                                         $currencies->display_price($row['products_price'], tep_get_tax_rate($row['products_tax_class_id']), 1) . '</b>')
+                                    ?>
+                                </td>
+                                <td  style="width:75px;">
+                                    <?php
+                                    echo ($row['products_id'] == CM_FTPID ? '&nbsp;' : '<b>' .
+                                        $currencies->display_price(
+                                            (($row['products_price'] > $row['products_msrp']) ? $row['products_price'] : $row['products_msrp']) - $row['products_price'],
+                                            tep_get_tax_rate($row['products_tax_class_id']),
+                                            1
+                                        ) . '</b>')
                                     ?>
                                 </td>
                             </tr>
@@ -159,6 +212,25 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                 <?php endif;?>
             </div>
         </div>
+        <div id="facebook-comments" class="fb-comments" data-href="http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']?>" data-num-posts="4" ></div>
+        <script type="text/javascript">
+            (function(){
+                function initCommentSize()
+                {
+                    var iframe = $("#facebook-comments iframe").get(0);
+                    if(typeof(iframe) == "undefined")
+                    {
+                        setTimeout(function(){initCommentSize()}, 100);
+                        return false;
+                    }
+                    $(iframe).css('width', '100%');
+                    $(iframe.parentNode).css('width', '100%');
+                    $(iframe.parentNode.parentNode).css('width', '100%');
+                }
+
+                initCommentSize();
+            })()
+        </script>
     </div>
 <?php
 require (DIR_WS_INCLUDES . 'footer.php');

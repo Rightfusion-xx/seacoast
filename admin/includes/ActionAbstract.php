@@ -10,6 +10,7 @@ class ActionAbstract
     protected $_keyField = null;
     protected $_scriptUrl = null;
     protected $_hideAddButton = false;
+    protected $_rowsCount = 0;
 
     public function __construct()
     {
@@ -56,18 +57,23 @@ class ActionAbstract
 
     public function renderListRow($row)
     {
-        echo '<tr class="dataTableRow">';
+        $this->_rowsCount++;
+        echo '<tr class="dataTableRow' . ((($this->_rowsCount%2) == 0)? ' white-row': '') . '">';
         foreach($this->_gridFields as $field => $title)
         {
             echo '<td class="dataTableContent">' . $row[$field] . '</td>';
         }
         echo '<td class="dataTableContent" style="width:75px;">
                     <nobr>
-                        <a class="ae-action" href="' . $this->_scriptUrl . '?action=edit&id=' . $row[$this->_keyField] . '">Edit</a> |
-                        <a onclick="return confirm(\'Are you sure you want to remove this record?\')" href="' . $this->_scriptUrl . '?action=remove&id=' . $row[$this->_keyField] . '">Remove</a>
+                        ' . $this->getListLineActions($row) . '
                     </nobr>
                 </td>';
         echo '</tr>';
+    }
+    public function getListLineActions($row)
+    {
+        return '<a class="ae-action" href="' . $this->_scriptUrl . (strpos($this->_scriptUrl, '?')? '&': '?') . 'action=edit&id=' . $row[$this->_keyField] . '">Edit</a> |
+        <a onclick="return confirm(\'Are you sure you want to remove this record?\')" href="' . $this->_scriptUrl . (strpos($this->_scriptUrl, '?')? '&': '?') . 'action=remove&id=' . $row[$this->_keyField] . '">Remove</a>';
     }
 
     protected function _getGridReq()
@@ -174,7 +180,7 @@ class ActionAbstract
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
     <!-- WOL 1.6 - Cleaned up refresh -->
-    <?php if( $HTTP_SERVER_VARS["QUERY_STRING"] > 0 ){  ?>
+    <?php if(!empty($HTTP_SERVER_VARS["QUERY_STRING"]) && $HTTP_SERVER_VARS["QUERY_STRING"] > 0 ){  ?>
     <meta http-equiv="refresh" content="<?php echo $HTTP_SERVER_VARS["QUERY_STRING"];?>;URL=top_messages.php?<?php echo $HTTP_SERVER_VARS["QUERY_STRING"];?>">
     <?php } ?>
     <!-- WOL 1.6 EOF -->
@@ -226,8 +232,40 @@ class ActionAbstract
             })
         });
     </script>
+    <Style>
+        .action-abstract .dataTableHeadingContent{
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            line-height: 25px;
+            font-size: 14px;
+            background-color: #777;
+        }
+        .action-abstract .dataTableContent{
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            line-height: 25px;
+            font-size: 13px;
+
+        }
+        .action-abstract .dataTableRow{
+            background-color: #F0F1F1;
+        }
+        .action-abstract .dataTableRow .dataTableContent{
+            border-bottom: 1px dotted #333;
+        }
+        .action-abstract .dataTableRow:hover{
+            background-color: #ccc;
+        }
+        .white-row{
+            background-color: #fff !important;
+        }
+    </Style>
 </head>
-<body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#FFFFFF">
+<body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0" bgcolor="#FFFFFF" class="action-abstract">
 <!-- header //-->
     <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
 <table border="0" width="100%" cellspacing="2" cellpadding="2">
@@ -275,7 +313,7 @@ class ActionAbstract
                     <td class="pageHeading" style="padding:10px;"><?php echo $this->_pageTitle?></td>
                     <td class="pageHeading" style="padding:10px;text-align: right">
                         <?php if(!$this->_hideAddButton):?>
-                            <a href="<?php echo $this->_scriptUrl.'?action=add'?>" class="ae-action">Add</a>
+                            <a href="<?php echo $this->_scriptUrl . (strpos($this->_scriptUrl, '?')? '&': '?') . 'action=add'?>" class="ae-action">Add</a>
                         <?php endif;?>
                     </td>
                 </tr>

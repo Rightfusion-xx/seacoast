@@ -1,10 +1,5 @@
 <?php // inject header to appropriate place
-
 $start=ob_get_length();
-
-?>
-  <?php
-
   if (isset($HTTP_GET_VARS['error_message']) && tep_not_null($HTTP_GET_VARS['error_message'])) {
   ?>
   <table border="0" width="100%" cellspacing="0" cellpadding="2">
@@ -114,23 +109,11 @@ View all <a href="/search_topics.php">health topics</a>.
 </div>
 
 
-<?php
-if($authenticated && $do_admin)
-{
-     ?>
-
-    <link type="text/css" href="/jquery/css/ui-lightness/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
+<?php if($authenticated && $do_admin):?>
+<link type="text/css" href="/jquery/css/ui-lightness/jquery-ui-1.7.1.custom.css" rel="Stylesheet" />
 <script type="text/javascript" src="/jquery/js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="/jquery/js/jquery-ui-1.7.1.custom.min.js"></script>
-
-
-
-      <?php
-
-
-}
-
-?>
+<?php endif;?>
 
 
 
@@ -282,5 +265,3 @@ if(!$cart->in_cart(CM_FTPID) && !$cart->in_cart(CM_PID) && !$_SESSION['cm_is_mem
   echo $messageStack->output('header');
   }
   ?>
-
-

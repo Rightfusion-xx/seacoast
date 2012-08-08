@@ -1,43 +1,42 @@
 <?php
-
-  require_once('includes/application_top.php');  
+  require_once('includes/application_top.php');
   require(DIR_WS_FUNCTIONS . '/render_products.php');
-  require(DIR_WS_FUNCTIONS . '/search_tools.php');  
-  
-  if(preg_match('/\/([a-z0-9-]+)$/', $_SERVER['REQUEST_URI'],$tag))  
+  require(DIR_WS_FUNCTIONS . '/search_tools.php');
+
+  if(preg_match('/\/([a-z0-9-]+)$/', $_SERVER['REQUEST_URI'],$tag))
   {
       $tag=substr($tag[0],1);
-      
-      if($hub =tep_db_fetch_array(tep_db_query('select p.*, pm.meta_value, pm2.meta_value as searchterm from wp_posts p join wp_postmeta pm on pm.post_id=id 
+
+      if($hub =tep_db_fetch_array(tep_db_query('select p.*, pm.meta_value, pm2.meta_value as searchterm from wp_posts p join wp_postmeta pm on pm.post_id=id
                                             left outer join wp_postmeta pm2 on pm2.post_id=pm.post_id and pm2.meta_key="searchterm"
                                             where pm.meta_key="hub" and pm.meta_value="'.tep_db_input($tag).'"')))
                                             {
-                                                
 
-  
-  
+
+
+
 
  if(strlen($hub['post_content'])){
-     
-     
+
+
  unset($_GET);
-  header("HTTP/1.0 200 OK");  
-        $_REQUEST['tag']=$tag; 
+  header("HTTP/1.0 200 OK");
+        $_REQUEST['tag']=$tag;
         $_GET['tag']=$tag;
-        $_SERVER['PHP_SELF']='/hub.php';  
+        $_SERVER['PHP_SELF']='/hub.php';
         $modURL=true;
 
-        
+
 $found_products=false;
 if(strlen($hub['searchterm']))
 {
-    $results['searchterm']=$hub['searchterm'];     
+    $results['searchterm']=$hub['searchterm'];
 }
 else
 {
-    $results['searchterm']=$tag; 
+    $results['searchterm']=$tag;
 }
- 
+
 
 topic_search($results);
 
@@ -75,9 +74,9 @@ if($results['total_prods']>0)
                   {
                     $ailments[trim($item)]+=1;
                   }
-                  
 
-                }               
+
+                }
 
 
                 $index++;
@@ -86,7 +85,7 @@ if($results['total_prods']>0)
 
             arsort($uses, SORT_NUMERIC);
             arsort($ailments, SORT_NUMERIC);
-            
+
             $ailments=array_keys($ailments);
             $uses=array_keys($uses);
             //echo $ailments[4];
@@ -97,16 +96,16 @@ if($results['total_prods']>0)
 
 $products_name=$searchterm;
 
- 
+
 ?>
 <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html <?php echo HTML_PARAMS; ?>>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
-<base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
-<title><?php echo $hub['post_title'] ?></title>
-<meta name="description" content="<?php echo $hub['post_excerpt']?>"/>
-<link rel="stylesheet" type="text/css" href="/stylesheet.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
+    <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
+    <title><?php echo $hub['post_title'] ?></title>
+    <meta name="description" content="<?php echo $hub['post_excerpt']?>"/>
+    <link rel="stylesheet" type="text/css" href="/stylesheet.css">
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 
@@ -115,10 +114,10 @@ $products_name=$searchterm;
 <!-- header_eof //-->
 
 <!-- body //-->
-
+<div class="container">
 		<div id="content">
         <?php
-        
+
         $mt=preg_split('/[|]{1}/',$hub['post_title']) ;
         $first=true;
         foreach($mt as $item)
@@ -130,64 +129,57 @@ $products_name=$searchterm;
             }
             else
             {
-                echo '<p>',$item,'</p>';                 
+                echo '<p>',$item,'</p>';
             }
-            
-            
+
+
         }
-    
+
         ?>
-		
+
 		<div name="article" style="width:40em;float:left;margin-right:20px;">
 		       <?php echo $hub['post_content']; ?>
 		</div>
-	    	
-		  
-		
-		<?php 		    
 
-            
-            
-            
+
+
+		<?php
+
+
+
+
 
 		      if($results['total_prods']>0)
 		    {
 		    		    //Show all the products
                         echo '<h2>Quick Price Comparisons</h2><br/>';
                         echo $listing_text;
-		                                        
-	
-		    
-		}
-		
-				   
-		  
-		       
-		            
-		            
-		        
 
-		    
-		    
-		unset($product_info); 
-		?>		
+
+
+		}
+
+
+
+
+
+
+
+
+
+
+		unset($product_info);
+		?>
 
          <br/><br/>
         <hr class="sectiondivider"/>
-                           <?php include(DIR_WS_MODULES . 'similar_picks.php');?>
-                           
 
-                           
-      
-		
-		                           <?php //include(DIR_WS_MODULES . 'similar_picks.php');?>
-		                     
-		    
+
 		</div>
 		<br style="clear:both";/><br/>
-		
 
 
+</div>
 <!-- footer //-->
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
 <!-- footer_eof //-->
@@ -196,14 +188,14 @@ $products_name=$searchterm;
 
 </body>
 </html>
-<?php require(DIR_WS_INCLUDES . 'application_bottom.php'); 
+<?php require(DIR_WS_INCLUDES . 'application_bottom.php');
 
  }
- 
+
  //must force an exit on this one.
  exit();
   }
   }
-  
+
 ?>
 

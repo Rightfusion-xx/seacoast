@@ -384,8 +384,9 @@ define('BOX_TOOLS_WHOS_ONLINE', 'Who\'s Online');
 
 define('BOX_TOOLS_TOP_MESSAGES', 'Searces Top Messages');
 define('BOX_EMAIL_TEMPLATES', 'System Email Templates');
-define('BOX_NEWSLETTER_SUBSCRIBERS', 'Newsletter Subscribers');
+define('BOX_NEWSLETTER_SUBSCRIBERS', 'Contact Lists');
 define('BOX_NEWSLETTERS', 'Newsletters');
+define('BOX_NEWSLETTER_ITEMS', 'Email Templates');
 // localizaion box text in includes/boxes/localization.php
 
 

@@ -5,6 +5,136 @@ ob_start();?>
 <?php
 global $nav;
 $nav = ob_get_clean();
+
+class actionClass extends ActionAbstract
+{
+    protected $_table = 'newsletter_subscribers';
+
+    protected $_keyField = 'customers_id';
+    protected $_pageTitle = 'Newsletter Subscribers';
+    protected $_scriptUrl = '/newsletter_subscribers.php';
+
+    protected $_gridFields = array(
+        'customers_id'                     => 'Customer id',
+        'customer_name_concated'           => 'Customer Name',
+        'customers_email_address'          => 'Customer e-mail',
+        'newsletter_categories_subscribed' => 'Subscribed to'
+    );
+
+    protected function _getGridReq()
+    {
+        return '
+            SELECT
+                CONCAT (c.customers_firstname, \' \', c.customers_lastname) AS customer_name_concated,
+                concat(\'"\', GROUP_CONCAT(nc.category_title SEPARATOR \'"; "\'), \'"\') AS newsletter_categories_subscribed,
+                c.*
+            FROM `customers` AS c
+            INNER JOIN `' . $this->_table . '` AS s ON (s.customer_id = c.customers_id)
+            INNER JOIN `newsletter_categories` AS nc ON (s.newsletter_id = nc.category_id)
+            GROUP BY c.customers_id
+        ';
+    }
+
+    public function getListLineActions($row)
+    {
+        return '<a class="ae-action" href="' . $this->_scriptUrl . '?action=edit&id=' . $row[$this->_keyField] . '">Edit</a> |
+        <a onclick="return confirm(\'Are you sure you want to unsubscribe?\')" href="' . $this->_scriptUrl . '?action=remove&id=' . $row[$this->_keyField] . '">Unsubscribe all</a>';
+    }
+
+    public function removeAction()
+    {
+        tep_db_query('
+            DELETE FROM `newsletter_subscribers`
+            WHERE `customer_id` = \'' . $_GET['id'] . '\'
+        ');
+        tep_redirect($this->_scriptUrl);
+        exit();
+    }
+
+    public function outTitleRow()
+    {?>
+    <table border="0" width="100%" cellspacing="0" cellpadding="2">
+        <tr>
+            <td class="pageHeading" style="padding:10px;"><?php echo $this->_pageTitle?></td>
+            <td class="pageHeading" style="padding:10px;text-align: right">
+            </td>
+        </tr>
+    </table>
+    <?php
+    }
+
+    public function editAction()
+    {
+        if(!empty($_POST))
+        {
+            tep_db_query('DELETE FROM newsletter_subscribers WHERE `customer_id` = \'' . (int)$_GET['id'] . '\'');
+
+            if(!empty($_POST['subscrube_to']))
+            {
+                $insValues = array();
+                foreach($_POST['subscrube_to'] as $nId)
+                {
+                    $insValues[] = '(\'' . (int)$_GET['id'] . '\', \'' . (int)$nId . '\')';
+                }
+                tep_db_query('
+                    INSERT INTO `newsletter_subscribers` (`customer_id`, `newsletter_id`) VALUES ' . implode(', ', $insValues) . '
+                ');
+            }
+            tep_redirect($this->_scriptUrl);
+            exit();
+        }
+
+        if(empty($_GET['ajax']))
+        {
+            $this->headOut();
+        }
+        echo '<form id="main_form" method="post" action="' . $_SERVER['REQUEST_URI'] . '">' . $this->getForm(array()) . '</form>';
+
+        if(empty($_GET['ajax']))
+        {
+            $this->footOut();
+        }
+    }
+
+    public function getForm($data = array())
+    {
+        $body = '';
+        $availableNewsletters = tep_db_query('
+            SELECT * FROM `newsletter_categories` WHERE `is_enabled` = \'yes\'
+        ');
+
+        $subscribed = array();
+        $subscribedQ = tep_db_query('SELECT `newsletter_id` FROM `newsletter_subscribers` WHERE `customer_id` = \'' . (int)$_GET['id'] . '\'');
+        while($row = tep_db_fetch_array($subscribedQ))
+        {
+            $subscribed[] = $row['newsletter_id'];
+        }
+
+        while($row = tep_db_fetch_array($availableNewsletters))
+        {
+            $body .= '
+                <tr>
+                    <td valign="top">
+                        <input type="checkbox" name="subscrube_to[]" value="' . $row['category_id'] . '"' . (in_array($row['category_id'], $subscribed)?' checked="checked"':'') . ' />
+                    </td>
+                    <td>
+                        ' . $row['category_title'] . '
+                        <div style="margin:0px;padding:0px;margin-left:20px;margin-bottom:5px;">
+                            ' . str_replace(array('<p>','</p>'), array('',''), $row['category_description']) . '
+                        </div>
+                    </td>
+                </tr>
+            ';
+        }
+        return '
+            <table>
+                    ' . $body . '
+            </table>
+        ';
+    }
+}
+
+/*
 class emailTemplates extends ActionAbstract
 {
     protected $_table = 'newsletter_emails';
@@ -125,6 +255,7 @@ class emailTemplates extends ActionAbstract
 
 $emailTemplates = new emailTemplates();
 
-
-$emailTemplates->run();
+*/
+$obj = new actionClass();
+$obj->run();
 ?>

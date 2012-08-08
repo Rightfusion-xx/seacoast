@@ -11,7 +11,7 @@ $rscache=new megacache(60*60*24);
         {
         
 // Select the other products in the same category
-    $searches_query = tep_db_query("select query,  hits FROM site_queries WHERE param_id='" . tep_db_input($_SERVER['REQUEST_URI']) ."' order by hits desc, time_created asc LIMIT 0,20" );
+    $searches_query = tep_db_query("select query,  hits FROM site_queries WHERE param_id='" . tep_db_input($_SERVER['REQUEST_URI']) ."' order by hits desc LIMIT 0,20" );
 
     
 // Write the output containing each of the products

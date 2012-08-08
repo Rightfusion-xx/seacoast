@@ -23,9 +23,9 @@ $linkcachetime=60*10;
 <html <?php echo HTML_PARAMS; ?>>
 
 <head>
-<title>Vitamins, Minerals, Supplements | Seacoast Vitamins</title>
- <meta name="Description" content="Seacoast Vitamins - the vitamins store that provides quality vitamins, minerals, herbs, and all your nutritional supplement needs at everday low prices. Free health information." />
- <meta name="Keywords" content="vitamins, herbs, herbal extracts, alternative medicines, homeopathic, health, natural, nutritional supplements, healthy living, ADHD, cancer, prostate, diabetes, arthritis" /> 
+<title>Vitamins Supplements & Minerals Online Discount Store | SEACOAST</title>
+ <meta name="Description" content="Supplements & vitamins, minerals & herbs online store. Best product quality & discounts in the industry. Buy organic & natural health vits at SEACOAST Today!" />
+ <meta name="Keywords" content="vitamin, supplement, vits, minerals, herbs, buy vitamins online, discount, health" /> 
  <meta name="robots" content="noodp" /> 
  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
  <meta property="fb:admins" content="652610239" />
@@ -45,7 +45,6 @@ $linkcachetime=60*10;
 <div class="container">
 <div class="row">
 <div class="span12">
-
 
                   <?php require(DIR_WS_INCLUDES . 'whyshop.php'); ?>
 

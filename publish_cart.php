@@ -4,6 +4,12 @@ require ("includes/application_top.php");
 
 $server_url=((substr($_SERVER['SERVER_PROTOCOL'],0,4)=="HTTP")?"http://":"https://").$_SERVER['HTTP_HOST'];
 
+if(!empty($_GET['returnto']))
+{
+    tep_session_register('returnto');
+    $_SESSION['returnto'] = $returnto = $_GET['returnto'];
+}
+
 if (isset($_GET['products_id']) && !$cart -> in_cart($_GET['products_id'])) {
     $cart->add_cart($_GET['products_id']);
     if(!empty($_GET['products_id']))
@@ -31,9 +37,18 @@ if(!empty($_REQUEST['action']) && $_REQUEST['action'] == 'callback' && !empty($_
             `customers_id` = \'' . $_SESSION['customer_id'] . '\'
     ');
 
-    $messageStack->add_session('top_messages','Shopping cart published', 'success');
+    $messageStack->add_session('top_messages', SHOPPINGCART_PUBLISHED_MESSAGE, 'regular');
 
-    header('Location: /shopping_cart.php'.(!empty($_SESSION['temp_products_id'])?'?products_id='.$_SESSION['temp_products_id'] : ''));
+    if(empty($_SESSION['returnto']))
+    {
+        header('Location: /shopping_cart.php'.(!empty($_SESSION['temp_products_id'])?'?products_id='.$_SESSION['temp_products_id'] : ''));
+    }
+    else
+    {
+        header('Location: ' . $_SESSION['returnto']);
+        unset($_SESSION['returnto']);
+        tep_session_unregister($_SESSION['returnto']);
+    }
 
     if(!empty($_SESSION['temp_products_id']))
     {

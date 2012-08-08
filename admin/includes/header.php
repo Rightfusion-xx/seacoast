@@ -1,12 +1,6 @@
-
-
-
-
 <div clss="hide-when-print">
 <?php
-
-
-  if ($messageStack->size > 0) {
+  if(!empty($messageStack) && $messageStack->size > 0) {
     echo $messageStack->output();
   }
 
