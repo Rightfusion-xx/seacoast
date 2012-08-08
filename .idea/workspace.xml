@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/includes/configure.php" afterPath="$PROJECT_DIR$/admin/includes/configure.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/modules.php" afterPath="$PROJECT_DIR$/admin/modules.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/checkout_shipping.php" afterPath="$PROJECT_DIR$/checkout_shipping.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/header_template.php" afterPath="$PROJECT_DIR$/includes/header_template.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/publish_cart.php" afterPath="$PROJECT_DIR$/publish_cart.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/fec/payment_box.php" afterPath="$PROJECT_DIR$/includes/fec/payment_box.php" />
     </list>
     <ignored path="Seacoast Vitamins.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -63,28 +64,57 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="header_template.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/includes/header_template.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="110" column="175" selection-start="8610" selection-end="8653" vertical-scroll-proportion="-13.538462">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="checkout_shipping.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/checkout_shipping.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="450" column="115" selection-start="16942" selection-end="16942" vertical-scroll-proportion="-15.764706">
+            <state line="489" column="54" selection-start="19706" selection-end="19706" vertical-scroll-proportion="-13.666667">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="publish_cart.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/publish_cart.php">
+      <file leaf-file-name="payment_box.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/includes/fec/payment_box.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="54" selection-start="1657" selection-end="1657" vertical-scroll-proportion="0.6712329">
+            <state line="33" column="9" selection-start="1495" selection-end="1495" vertical-scroll-proportion="-21.576923">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="account_cm.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/account_cm.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="65" column="27" selection-start="2036" selection-end="2036" vertical-scroll-proportion="-15.884615">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="payment.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/includes/classes/payment.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="5" selection-start="5" selection-end="5" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="modules.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/admin/modules.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="156" column="45" selection-start="7460" selection-end="7460" vertical-scroll-proportion="0.43330503">
+              <folding>
+                <element signature="e#6#226#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="configure.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/includes/configure.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="44" column="32" selection-start="2063" selection-end="2085" vertical-scroll-proportion="-25.16">
               <folding />
             </state>
           </provider>
@@ -93,16 +123,7 @@
       <file leaf-file-name="configure.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/includes/configure.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="0" selection-start="2395" selection-end="2452" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="html_output.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/includes/functions/html_output.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="12" selection-start="1212" selection-end="1212" vertical-scroll-proportion="-23.48">
+            <state line="31" column="24" selection-start="1343" selection-end="1343" vertical-scroll-proportion="-16.32">
               <folding />
             </state>
           </provider>
@@ -123,9 +144,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/includes/footer.php" />
-        <option value="$PROJECT_DIR$/includes/application_bottom.php" />
-        <option value="$PROJECT_DIR$/hub.php" />
         <option value="$PROJECT_DIR$/product_info2.php" />
         <option value="$PROJECT_DIR$/shopping_cart.php" />
         <option value="$PROJECT_DIR$/includes/classes/shopping_cart.php" />
@@ -136,9 +154,12 @@
         <option value="$PROJECT_DIR$/checkout_shipping_address.php" />
         <option value="$PROJECT_DIR$/login.php" />
         <option value="$PROJECT_DIR$/includes/header_template.php" />
-        <option value="$PROJECT_DIR$/includes/configure.php" />
-        <option value="$PROJECT_DIR$/checkout_shipping.php" />
         <option value="$PROJECT_DIR$/publish_cart.php" />
+        <option value="$PROJECT_DIR$/checkout_shipping.php" />
+        <option value="$PROJECT_DIR$/admin/includes/configure.php" />
+        <option value="$PROJECT_DIR$/includes/configure.php" />
+        <option value="$PROJECT_DIR$/includes/fec/payment_box.php" />
+        <option value="$PROJECT_DIR$/admin/modules.php" />
       </list>
     </option>
   </component>
@@ -493,31 +514,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/shopping_cart.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="397" column="55" selection-start="25449" selection-end="25449" vertical-scroll-proportion="-19.115385" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/classes/shopping_cart.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="579" column="54" selection-start="24222" selection-end="24237" vertical-scroll-proportion="-40.52" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/includes/database_tables.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="60" column="0" selection-start="1235" selection-end="1235" vertical-scroll-proportion="0.40128928" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/includes/database_tables.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="25" selection-start="704" selection-end="719" vertical-scroll-proportion="0.20970395" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/saved_cart.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="205" column="44" selection-start="10924" selection-end="10924" vertical-scroll-proportion="-68.333336" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/checkout_payment_address.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="469" column="26" selection-start="16525" selection-end="16525" vertical-scroll-proportion="0.33305013" />
@@ -557,13 +553,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/includes/configure.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="0" selection-start="2395" selection-end="2452" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/includes/header_template.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="110" column="175" selection-start="8610" selection-end="8653" vertical-scroll-proportion="-13.538462">
@@ -571,17 +560,61 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/checkout_shipping.php">
+    <entry file="file://$PROJECT_DIR$/publish_cart.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="450" column="115" selection-start="16942" selection-end="16942" vertical-scroll-proportion="-15.764706">
+        <state line="48" column="37" selection-start="1602" selection-end="1602" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/publish_cart.php">
+    <entry file="file://$PROJECT_DIR$/checkout_shipping.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="54" selection-start="1657" selection-end="1657" vertical-scroll-proportion="0.6712329">
+        <state line="489" column="54" selection-start="19706" selection-end="19706" vertical-scroll-proportion="-13.666667">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/configure.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="24" selection-start="1343" selection-end="1343" vertical-scroll-proportion="-16.32">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/account_cm.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="27" selection-start="2036" selection-end="2036" vertical-scroll-proportion="-15.884615">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/classes/payment.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="5" selection-start="5" selection-end="5" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/fec/payment_box.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="9" selection-start="1495" selection-end="1495" vertical-scroll-proportion="-21.576923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/includes/configure.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="32" selection-start="2063" selection-end="2085" vertical-scroll-proportion="-25.16">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/modules.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="156" column="45" selection-start="7460" selection-end="7460" vertical-scroll-proportion="0.43330503">
+          <folding>
+            <element signature="e#6#226#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

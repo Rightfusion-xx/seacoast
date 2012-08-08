@@ -487,7 +487,7 @@ $breadcrumb->add(NAVBAR_TITLE_2, tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', '
                             <?php if ($show_total ==1)   require('total_box.php');?>
                         </noscript>
                         <?php require('includes/fec/comment_box.php');?>
-                        <?php	require('includes/fec/payment_box.php');?>
+                        <?php require('includes/fec/payment_box.php');?>
                         <tr>
                             <td>
                                 <table border="0" cellspacing="1" cellpadding="2" class="infoBox">

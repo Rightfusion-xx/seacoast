@@ -26,7 +26,7 @@
   define('DIR_WS_ADMIN', '/'); // absolute path required
   define('DIR_FS_ADMIN', '/seacoast/www/admin/'); // absolute pate required
   define('DIR_WS_CATALOG', '/'); // absolute path required
-  define('DIR_FS_CATALOG', '/seacoast/www/'); // absolute path required
+  define('DIR_FS_CATALOG', str_replace('admin', '', $_SERVER['DOCUMENT_ROOT'])); // absolute path required
   define('DIR_WS_IMAGES', 'images/');
   define('DIR_WS_ICONS', DIR_WS_IMAGES . 'icons/');
   define('DIR_WS_CATALOG_IMAGES', DIR_WS_CATALOG . 'images/');
