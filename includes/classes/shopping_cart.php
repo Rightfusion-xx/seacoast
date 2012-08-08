@@ -390,7 +390,18 @@ class shoppingCart
             }
 
             // products price
-            $product_query = tep_db_query("select products_name, manufacturers_id, p.products_id, products_price, products_tax_class_id, products_weight from " . TABLE_PRODUCTS . " p join products_description pd on pd.products_id=p.products_id where p.products_id = '" . (int)$products_id . "'");
+            $product_query = tep_db_query("
+                SELECT
+                    products_name,
+                    manufacturers_id,
+                    p.products_id,
+                    products_price,
+                    products_tax_class_id,
+                    products_weight,
+                    products_msrp
+                FROM " . TABLE_PRODUCTS . " p
+                join products_description pd on pd.products_id=p.products_id
+                WHERE p.products_id = '" . (int)$products_id . "'");
             if($product = tep_db_fetch_array($product_query))
             {
                 // ICW ORDER TOTAL CREDIT CLASS Start Amendment
@@ -427,6 +438,8 @@ class shoppingCart
                         $this->remove(CM_PID);
                     }
                 }
+
+                $productFinalPrice = ($products_price + $this->attributes_price($products_id));
 
                 $products_savings = 0;
                 if($product['manufacturers_id'] == 69)
@@ -567,17 +580,17 @@ class shoppingCart
                     }
                     $products_price -= $products_savings;
                 }
-
+                $productFinalPrice = ($products_price + $this->attributes_price($products_id));
                 $products_array[] = array(
                     'id'           => $products_id,
                     'name'         => $products['products_name'],
                     'model'        => $products['products_model'],
                     'image'        => $products['products_image'],
                     'price'        => $products_price,
-                    'savings'      => $products_savings,
+                    'savings'      => (($products['products_msrp'] > $products_price) ? $products['products_msrp'] : $products_price) - $productFinalPrice,//$products_savings,
                     'quantity'     => $this->contents[$products_id]['qty'],
                     'weight'       => $products['products_weight'],
-                    'final_price'  => ($products_price + $this->attributes_price($products_id)),
+                    'final_price'  => $productFinalPrice,
                     'tax_class_id' => $products['products_tax_class_id'],
                     'attributes'   => (isset($this->contents[$products_id]['attributes']) ? $this->contents[$products_id]['attributes'] : ''),
                     'msrp'         => $products['products_msrp']

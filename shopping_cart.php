@@ -333,6 +333,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                 $info_box_contents[0][] = array('align' => 'right', 'params' => 'style="font-weight:bold;"', 'text' => 'Savings');
                                 $any_out_of_stock = 0;
                                 $products = $cart->get_products();
+                                $totalSavings = 0;
                                 for ($i = 0, $n = sizeof($products); $i < $n; $i++)
                                 {
                                     // Push all attributes information in an array
@@ -412,6 +413,18 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                             tep_get_tax_rate($products[$i]['tax_class_id']),
                                             $products[$i]['quantity']
                                         ) . '</b>'
+                                    );
+
+                                    $totalSavings += floatval(
+                                        substr(
+                                            $products[$i]['id'] == CM_FTPID ? ' ' : $currencies
+                                                ->display_price(
+                                                (($products[$i]['final_price'] > $products[$i]['msrp']) ? $products[$i]['final_price'] : $products[$i]['msrp']) - $products[$i]['final_price'],
+                                                tep_get_tax_rate($products[$i]['tax_class_id']),
+                                                $products[$i]['quantity']
+                                            ),
+                                            1
+                                        )
                                     );
                                 }
                                 // shopping cart table starts here (AH 07 Feb 2012)
@@ -499,8 +512,8 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
             <?php endif;?>
         </div>
         <div class="span6">
-            <?php if($cart->show_savings()>0):?>
-                <b>Member Only Savings: <span style="color:#ff0000;background:yellow;">$<?php echo number_format($cart -> show_savings(), 2);?></span></b><br/>
+            <?php if($totalSavings>0):?>
+                <b>Member Savings: <span style="color:#ff0000;background:yellow;">$<?php echo number_format($totalSavings, 2);?></span></b><br/>
             <?php endif;?>
             <?php echo SUB_TITLE_SUB_TOTAL;?>
             <?php echo $currencies->format($cart->show_total());?>
