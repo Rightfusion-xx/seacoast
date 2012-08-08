@@ -228,6 +228,7 @@ body{
 }
 
 .user-controls .basket{
+    cursor: pointer;
     padding-left: 52px;
     width: 90%;
 }
@@ -337,7 +338,6 @@ body{
     width: 18px;
     top: 6px;
     cursor: pointer;
-<<<<<<< HEAD
 }
 
 .account-button label{
@@ -348,18 +348,6 @@ body{
     width: 16px;
 }
 
-=======
-}
-
-.account-button label{
-    background: url(./seacost_sprite.png) -171px -88px;
-    height: 25px;
-    left: 50%;
-    margin-left: -8px;
-    width: 16px;
-}
-
->>>>>>> b39aa8f2bad1cda63fbb488fb26f7d9032df8586
 .user-controls .log-button i, .account-button i{
     background: url(./seacost_sprite.png) no-repeat;
     height: 39px;
@@ -400,16 +388,12 @@ body{
 
 .account-control{
     padding-right: 20px;
-<<<<<<< HEAD
     width: 75%;
-=======
-    width: 76%;
->>>>>>> b39aa8f2bad1cda63fbb488fb26f7d9032df8586
 }
 
 .account-control.account-button-on{
     padding-right: 80px;
-    width: 70%;
+    width: 68%;
 }
 
 .content h2{
@@ -421,6 +405,11 @@ body{
 .basket a{
     text-decoration: none;
     color: #fff;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .basket a:hover{
@@ -493,13 +482,10 @@ body{
         width: 100%;
     }
 
-<<<<<<< HEAD
     .account-control{
         width: 64%;
     }
 
-=======
->>>>>>> b39aa8f2bad1cda63fbb488fb26f7d9032df8586
     .account-control.account-button-on{
         width: 60%;
     }
@@ -558,12 +544,10 @@ body{
         width: auto;
     }
 
-<<<<<<< HEAD
-=======
     .account-control{
         width: 65%;
     }
->>>>>>> b39aa8f2bad1cda63fbb488fb26f7d9032df8586
+
 
     .account-control.account-button-on{
         width: 30%;
@@ -606,11 +590,7 @@ body{
     }
 }
 
-<<<<<<< HEAD
 @media(max-width:670px){
-=======
-@media(max-width:635px){
->>>>>>> b39aa8f2bad1cda63fbb488fb26f7d9032df8586
     .user-controls .span6.search .search-container{
         position: absolute;
         right: 0;
@@ -629,11 +609,7 @@ body{
     .header ul.right-menu{
         float: none;
         margin: 0 auto;
-<<<<<<< HEAD
         width: 416px;
-=======
-        width: 400px;
->>>>>>> b39aa8f2bad1cda63fbb488fb26f7d9032df8586
         padding: 0;
     }
 
@@ -705,11 +681,7 @@ body{
 @media(max-width:450px){
     .header ul.right-menu{
         margin: 0 auto;
-<<<<<<< HEAD
         width: 270px;
-=======
-        width: 240px;
->>>>>>> b39aa8f2bad1cda63fbb488fb26f7d9032df8586
     }
 
     .header ul.right-menu li{

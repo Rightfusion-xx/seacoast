@@ -1,9 +1,12 @@
+<!--[if lt IE 9]>
+     <script type="text/javascript" src="/jquery/css3-mediaqueries.js"></script>
+ <![endif]-->
 <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
 <link href="/font/fonts.css" rel="stylesheet">
 <link href="/css/main.css" rel="stylesheet">
+
 <div class="container">
-<<<<<<< HEAD
    <div class="row">
       <div class="span12">
          <div class="header row-fluid">
@@ -57,7 +60,7 @@
                   <span><?php echo (tep_session_is_registered('customer_id') ? HEADER_TITLE_LOGOFF : HEADER_TITLE_LOGIN)?></span>
               </a>
               <div class="account-control fl-right relative<?php echo (tep_session_is_registered('customer_id') ? ' account-button-on':'')?>">
-                  <div class="basket relative fl-right">
+                  <div class="basket relative fl-right" onclick="return location.href = '<?php if($cart->count_contents() > 0):?> /shopping_cart.php <?php endif;?>'">
                       <label></label>
                       <p class="relative">
                           <i class="left"></i>
@@ -116,7 +119,7 @@
                        <span><?php echo (tep_session_is_registered('customer_id') ? HEADER_TITLE_LOGOFF : HEADER_TITLE_LOGIN)?></span>
                    </a>
                    <div class="account-control fl-right relative<?php echo (tep_session_is_registered('customer_id') ? ' account-button-on':'')?>">
-                       <div class="basket relative fl-right">
+                       <div class="basket relative fl-right" onclick="return location.href = '<?php if($cart->count_contents() > 0):?> /shopping_cart.php <?php endif;?>'">
                            <label></label>
                            <p class="relative">
                                <i class="left"></i>
