@@ -46,6 +46,8 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
     <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <?php require('includes/form_check.js.php'); ?>
+    <script type="text/javascript" src="/jquery/js/jquery-1.3.2.min.js"></script>
+    <script src="//connect.facebook.net/en_US/all.js"></script>
     <script type="text/javascript">(function(d, s, id){
         var js, fjs = d.getElementsByTagName(s)[0];
         if(d.getElementById(id)) return;
@@ -210,7 +212,25 @@ $psavings = $cart -> show_total() > 0 ? number_format($cart -> show_potential_sa
                 <?php endif;?>
             </div>
         </div>
-        <div class="fb-comments" data-href="http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']?>" data-num-posts="4" ></div>
+        <div id="facebook-comments" class="fb-comments" data-href="http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']?>" data-num-posts="4" ></div>
+        <script type="text/javascript">
+            (function(){
+                function initCommentSize()
+                {
+                    var iframe = $("#facebook-comments iframe").get(0);
+                    if(typeof(iframe) == "undefined")
+                    {
+                        setTimeout(function(){initCommentSize()}, 100);
+                        return false;
+                    }
+                    $(iframe).css('width', '100%');
+                    $(iframe.parentNode).css('width', '100%');
+                    $(iframe.parentNode.parentNode).css('width', '100%');
+                }
+
+                initCommentSize();
+            })()
+        </script>
     </div>
 <?php
 require (DIR_WS_INCLUDES . 'footer.php');
