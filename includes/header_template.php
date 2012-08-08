@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
 <link href="/font/fonts.css" rel="stylesheet">
 <link href="/css/main.css" rel="stylesheet">
 <div class="container">

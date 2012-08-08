@@ -387,7 +387,7 @@ body{
 
 .account-control{
     padding-right: 20px;
-    width: 76%;
+    width: 75%;
 }
 
 .account-control.account-button-on{
@@ -476,6 +476,10 @@ body{
         width: 100%;
     }
 
+    .account-control{
+        width: 64%;
+    }
+
     .account-control.account-button-on{
         width: 60%;
     }
@@ -534,9 +538,6 @@ body{
         width: auto;
     }
 
-    .account-control{
-        width: 65%;
-    }
 
     .account-control.account-button-on{
         width: 30%;
@@ -579,7 +580,7 @@ body{
     }
 }
 
-@media(max-width:635px){
+@media(max-width:670px){
     .user-controls .span6.search .search-container{
         position: absolute;
         right: 0;
@@ -598,7 +599,7 @@ body{
     .header ul.right-menu{
         float: none;
         margin: 0 auto;
-        width: 400px;
+        width: 416px;
         padding: 0;
     }
 
@@ -670,7 +671,7 @@ body{
 @media(max-width:450px){
     .header ul.right-menu{
         margin: 0 auto;
-        width: 240px;
+        width: 270px;
     }
 
     .header ul.right-menu li{
