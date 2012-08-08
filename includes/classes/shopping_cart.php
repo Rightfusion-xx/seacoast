@@ -587,6 +587,7 @@ class shoppingCart
                     'model'        => $products['products_model'],
                     'image'        => $products['products_image'],
                     'price'        => $products_price,
+                    'products_price'=>$products['products_price'],
                     'savings'      => (($products['products_msrp'] > $products_price) ? $products['products_msrp'] : $products_price) - $productFinalPrice,//$products_savings,
                     'quantity'     => $this->contents[$products_id]['qty'],
                     'weight'       => $products['products_weight'],

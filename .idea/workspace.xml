@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1c645298-4c0b-4d3f-8172-4cd1595630a5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/classes/boxes.php" afterPath="$PROJECT_DIR$/includes/classes/boxes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/classes/message_stack.php" afterPath="$PROJECT_DIR$/includes/classes/message_stack.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/publish_cart.php" afterPath="$PROJECT_DIR$/publish_cart.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/includes/classes/shopping_cart.php" afterPath="$PROJECT_DIR$/includes/classes/shopping_cart.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/shopping_cart.php" afterPath="$PROJECT_DIR$/shopping_cart.php" />
     </list>
     <ignored path="Seacoast Vitamins.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,58 +61,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="saved_cart.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/saved_cart.php">
+      <file leaf-file-name="shopping_cart.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/shopping_cart.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="239" column="49" selection-start="12201" selection-end="12201" vertical-scroll-proportion="-0.65384614">
-              <folding>
-                <marker date="1344423862756" expanded="true" signature="7829:8059" placeholder="..." />
-                <marker date="1344423862756" expanded="true" signature="7866:8022" placeholder="..." />
-              </folding>
+            <state line="396" column="135" selection-start="25328" selection-end="25328" vertical-scroll-proportion="0.57570714">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="shopping_cart.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shopping_cart.php">
+        <entry file="file://$PROJECT_DIR$/includes/classes/shopping_cart.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="514" column="34" selection-start="32145" selection-end="32145" vertical-scroll-proportion="-0.65384614">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="publish_cart.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/publish_cart.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="87" selection-start="1303" selection-end="1303" vertical-scroll-proportion="-25.52">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application_top.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/includes/application_top.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="661" column="39" selection-start="22483" selection-end="22483" vertical-scroll-proportion="-17.4">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="message_stack.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/includes/classes/message_stack.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="9" selection-start="3197" selection-end="3197" vertical-scroll-proportion="0.6784539">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="header_template.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/includes/header_template.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="152" column="36" selection-start="11365" selection-end="11371" vertical-scroll-proportion="-41.0">
+            <state line="589" column="35" selection-start="24415" selection-end="24429" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -145,11 +105,11 @@
         <option value="$PROJECT_DIR$/admin/modules.php" />
         <option value="$PROJECT_DIR$/saved_cart.php" />
         <option value="$PROJECT_DIR$/includes/shopping_cart.php" />
-        <option value="$PROJECT_DIR$/includes/classes/shopping_cart.php" />
-        <option value="$PROJECT_DIR$/shopping_cart.php" />
         <option value="$PROJECT_DIR$/includes/classes/boxes.php" />
         <option value="$PROJECT_DIR$/publish_cart.php" />
         <option value="$PROJECT_DIR$/includes/classes/message_stack.php" />
+        <option value="$PROJECT_DIR$/includes/classes/shopping_cart.php" />
+        <option value="$PROJECT_DIR$/shopping_cart.php" />
       </list>
     </option>
   </component>
@@ -225,20 +185,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Seacoast" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Seacoast Vitamins" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Seacoast" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="includes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -420,7 +366,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="2576" height="1426" extended-state="1" />
+    <frame x="-8" y="-8" width="2576" height="1426" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -544,17 +490,12 @@
         <state line="196" column="50" selection-start="8540" selection-end="8540" vertical-scroll-proportion="-12.078431" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/includes/classes/shopping_cart.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="628" column="13" selection-start="25471" selection-end="25471" vertical-scroll-proportion="0.33333334" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/saved_cart.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="239" column="49" selection-start="12201" selection-end="12201" vertical-scroll-proportion="-0.65384614">
           <folding>
-            <marker date="1344423862756" expanded="true" signature="7829:8059" placeholder="..." />
-            <marker date="1344423862756" expanded="true" signature="7866:8022" placeholder="..." />
+            <marker date="1344423862756" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1344423862756" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -562,13 +503,6 @@
     <entry file="file://$PROJECT_DIR$/includes/application_top.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="661" column="39" selection-start="22483" selection-end="22483" vertical-scroll-proportion="-17.4">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shopping_cart.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="514" column="34" selection-start="32145" selection-end="32145" vertical-scroll-proportion="-0.65384614">
           <folding />
         </state>
       </provider>
@@ -598,7 +532,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/includes/classes/message_stack.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="9" selection-start="3197" selection-end="3197" vertical-scroll-proportion="0.6784539">
+        <state line="108" column="9" selection-start="3197" selection-end="3197" vertical-scroll-proportion="-33.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/includes/classes/shopping_cart.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="589" column="35" selection-start="24415" selection-end="24429" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shopping_cart.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="396" column="135" selection-start="25328" selection-end="25328" vertical-scroll-proportion="0.57570714">
           <folding />
         </state>
       </provider>

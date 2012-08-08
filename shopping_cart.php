@@ -394,7 +394,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                         'params' => 'class="productListing-data" valign="top"',
                                         'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b><s>' . $currencies
                                             ->display_price(
-                                                ($products[$i]['final_price'] > $products[$i]['msrp'])?$products[$i]['final_price']:$products[$i]['msrp'],
+                                                ($products[$i]['products_price'] > $products[$i]['msrp'])?$products[$i]['products_price']:$products[$i]['msrp'],
                                                 tep_get_tax_rate($products[$i]['tax_class_id']),
                                                 $products[$i]['quantity']
                                             ) . '</s></b>'
@@ -409,7 +409,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                         'params' => 'class="productListing-data" valign="top"',
                                         'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b>' . $currencies->display_price(
                                             //$products[$i]['savings'],
-                                            (($products[$i]['final_price'] > $products[$i]['msrp']) ? $products[$i]['final_price'] : $products[$i]['msrp']) - $products[$i]['final_price'],
+                                            (($products[$i]['products_price'] > $products[$i]['msrp']) ? $products[$i]['products_price'] : $products[$i]['msrp']) - $products[$i]['final_price'],
                                             tep_get_tax_rate($products[$i]['tax_class_id']),
                                             $products[$i]['quantity']
                                         ) . '</b>'
@@ -419,7 +419,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                         substr(
                                             $products[$i]['id'] == CM_FTPID ? ' ' : $currencies
                                                 ->display_price(
-                                                (($products[$i]['final_price'] > $products[$i]['msrp']) ? $products[$i]['final_price'] : $products[$i]['msrp']) - $products[$i]['final_price'],
+                                                (($products[$i]['products_price'] > $products[$i]['msrp']) ? $products[$i]['products_price'] : $products[$i]['msrp']) - $products[$i]['final_price'],
                                                 tep_get_tax_rate($products[$i]['tax_class_id']),
                                                 $products[$i]['quantity']
                                             ),
