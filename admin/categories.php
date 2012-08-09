@@ -326,7 +326,7 @@ if (is_dir(DIR_FS_CATALOG_IMAGES)) {
 	$messageStack -> add(ERROR_CATALOG_IMAGE_DIRECTORY_DOES_NOT_EXIST, 'error');
 }
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS;?>>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET;?>">

@@ -95,9 +95,16 @@ if($_SESSION['customer_id'])
     tep_session_unregister('cc_expires_month');
     tep_session_unregister('cc_expires_year');
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/font/fonts.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/jquery/respond.src.js"></script>
+    <![endif]-->
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
     <title><?php echo TITLE; ?></title>
     <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">

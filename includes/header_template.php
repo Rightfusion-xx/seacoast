@@ -1,11 +1,3 @@
-<!--[if lt IE 9]>
-     <script type="text/javascript" src="/jquery/css3-mediaqueries.js"></script>
- <![endif]-->
-<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
-<link href="/font/fonts.css" rel="stylesheet">
-<link href="/css/main.css" rel="stylesheet">
-
 <div class="container">
    <div class="row">
       <div class="span12">

@@ -42,7 +42,7 @@
    $yf_state='<a href="/yoga/yf_state.php?studio='.strtolower(urlencode($city_info['stateabbr'])).'">Yoga Studios in '.ucwords(strtolower($city_info['statename'])).'</a>';
 ?>
 
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
 

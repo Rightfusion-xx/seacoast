@@ -90,9 +90,16 @@ $total_weight = $cart->show_weight();
 $shipping_module = new shipping();
 $cheapestShippingRate = $shipping_module->getCheapestRate();
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS;?>>
 	<head>
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+        <link href="/css/main.css" rel="stylesheet">
+        <link href="/font/fonts.css" rel="stylesheet">
+        <!--[if lt IE 9]>
+            <script type="text/javascript" src="/jquery/respond.src.js"></script>
+        <![endif]-->
         <link rel="icon" type="image/png" href="/favicon.ico">
         <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET;?>">
         <meta name="robots" content="index, follow">
