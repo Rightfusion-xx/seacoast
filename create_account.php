@@ -443,7 +443,7 @@ $breadcrumb->add(NAVBAR_TITLE, tep_href_link(FILENAME_CREATE_ACCOUNT, '', 'SSL')
 
 ?>
 
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 
 <html <?php echo HTML_PARAMS; ?>>
 

@@ -95,7 +95,7 @@ if($_SESSION['customer_id'])
     tep_session_unregister('cc_expires_month');
     tep_session_unregister('cc_expires_year');
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">

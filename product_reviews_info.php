@@ -45,7 +45,7 @@ require (DIR_WS_LANGUAGES . $language . '/' . FILENAME_PRODUCT_REVIEWS_INFO);
 
 $breadcrumb -> add(NAVBAR_TITLE, tep_href_link(FILENAME_PRODUCT_REVIEWS, tep_get_all_get_params()));
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS;?>>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET;?>">

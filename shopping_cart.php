@@ -90,7 +90,7 @@ $total_weight = $cart->show_weight();
 $shipping_module = new shipping();
 $cheapestShippingRate = $shipping_module->getCheapestRate();
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS;?>>
 	<head>
         <link rel="icon" type="image/png" href="/favicon.ico">
@@ -100,6 +100,10 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
         <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
         <link rel="stylesheet" type="text/css" href="stylesheet.css">
         <?php require('includes/form_check.js.php'); ?>
+        <script type="text/javascript" src="/jquery/jquery-1.7.2.min.js"></script>
+        <!--[if lt IE 9]>
+            <script type="text/javascript" src="/jquery/css3-mediaqueries.js"></script>
+        <![endif]-->
     </head>
 	<body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 		<!-- ClickTale Top part -->
@@ -317,7 +321,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
             {
                 echo tep_draw_form('cart_quantity', tep_href_link(FILENAME_SHOPPING_CART, '', 'SSL'), 'post');
 ?>
-<div class="container">
+<div class="container"> sdaggggggggggggggggg
     <div class="row">
         <div class="span12">
             <?php $_REQUEST['page_caption'] = 'Seacoast Vitamins-Direct Savings';?>

@@ -317,7 +317,7 @@ $breadcrumb->add(NAVBAR_TITLE_2, tep_href_link(FILENAME_CHECKOUT_SHIPPING_ADDRES
 $addresses_count = tep_count_customer_address_book_entries();
 
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">

@@ -297,7 +297,7 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
 
 
 ?>
-      <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+      <!doctype html>
 
 <html <?php echo HTML_PARAMS; ?>>
 

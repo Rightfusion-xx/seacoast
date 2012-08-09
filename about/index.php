@@ -3,7 +3,7 @@ require($_SERVER['DOCUMENT_ROOT'].'/includes/application_top.php');
 require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_PRODUCT_INFO);
 ?>
 
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
 <title>About Seacoast Vitamins</title>

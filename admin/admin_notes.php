@@ -55,7 +55,7 @@ We will report you to your ISP if you abuse our websites!
       break;
 
     case 'update':
-      tep_db_query("update " . TABLE_ADMIN_NOTES . " set contr_last_modified = now(), status =  '" . $status . "', admin_note =  '" . $admin_note_new . "', category =  '" . $file_type_id . "', config_comments = '" . $config_comments . "', last_update = '" . $last_update . "' where contr_id = '" . $HTTP_POST_VARS['contr_id'] . "'");
+      tep_db_query("update " . TABLE_ADMIN_NOTES . " set contr_last_modified = now(), status =  '" . $status . "',ï¿½admin_note =  '" . $admin_note_new . "',ï¿½category =  '" . $file_type_id . "', config_comments = '" . $config_comments . "', last_update = '" . $last_update . "' where contr_id = '" . $HTTP_POST_VARS['contr_id'] . "'");
       tep_redirect(tep_href_link(FILENAME_ADMIN_NOTES, 'page=' . $HTTP_GET_VARS['page'] . '&sID=' . $contr_id . '&sort=' . $HTTP_GET_VARS['sort']));
       break;
     case 'deleteconfirm':
@@ -65,7 +65,7 @@ We will report you to your ISP if you abuse our websites!
       break;
   }
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">

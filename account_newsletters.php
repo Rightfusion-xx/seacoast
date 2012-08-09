@@ -37,7 +37,7 @@ while($row = tep_db_fetch_array($subscribedQ))
 }
 $_REQUEST['page_caption'] = MY_NEWSLETTERS_TITLE;
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
@@ -189,7 +189,7 @@ $newsletter = tep_db_fetch_array($newsletter_query);
   $breadcrumb->add(NAVBAR_TITLE_1, tep_href_link(FILENAME_ACCOUNT, '', 'SSL'));
   $breadcrumb->add(NAVBAR_TITLE_2, tep_href_link(FILENAME_ACCOUNT_NEWSLETTERS, '', 'SSL'));
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">

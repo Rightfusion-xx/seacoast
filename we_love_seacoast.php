@@ -50,7 +50,7 @@
     
   require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_DEFAULT);
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
   <title>Tell Your Friends About Seacoast for $10 Free</title>

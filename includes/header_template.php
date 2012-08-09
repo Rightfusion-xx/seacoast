@@ -1,6 +1,7 @@
 <!--[if lt IE 9]>
      <script type="text/javascript" src="/jquery/css3-mediaqueries.js"></script>
  <![endif]-->
+<script type="text/javascript" src="/jquery/jquery-1.3.min.js"></script>
 <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
 <link href="/font/fonts.css" rel="stylesheet">
