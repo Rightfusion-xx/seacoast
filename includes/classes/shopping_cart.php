@@ -514,11 +514,14 @@ class shoppingCart
                 $this->total_virtual += tep_add_tax($products_price, $products_tax) * $qty * $no_count; // ICW CREDIT CLASS;
                 $this->weight_virtual += ($qty * $products_weight) * $no_count; // ICW CREDIT CLASS;
                 $this->total += tep_add_tax($products_price, $products_tax) * $qty;
-                $this->savings += (
-                    (
-                    ($product['products_msrp'] > $product['products_price']) ? $product['products_msrp']:$product['products_price']
-                    ) - $products_price
-                ) * $qty;
+                if(!in_array($product['products_id'], array(CM_FTPID, CM_PID)))
+                {
+                    $this->savings += (
+                        (
+                        ($product['products_msrp'] > $product['products_price']) ? $product['products_msrp']:$product['products_price']
+                        ) - $products_price
+                    ) * $qty;
+                }
                 $this->weight += ($qty * $products_weight);
             }
 
