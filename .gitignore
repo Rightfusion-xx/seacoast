@@ -54,3 +54,4 @@ images/
 *.settings
 
 includes/configure.php
+/.idea/workspace.xml
