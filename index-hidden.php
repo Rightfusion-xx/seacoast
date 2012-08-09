@@ -23,6 +23,13 @@ $linkcachetime=60*10;
 <html <?php echo HTML_PARAMS; ?>>
 
 <head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/font/fonts.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/jquery/respond.src.js"></script>
+    <![endif]-->
 <title>Vitamins Supplements & Minerals Online Discount Store | SEACOAST</title>
  <meta name="Description" content="Supplements & vitamins, minerals & herbs online store. Best product quality & discounts in the industry. Buy organic & natural health vits at SEACOAST Today!" />
  <meta name="Keywords" content="vitamin, supplement, vits, minerals, herbs, buy vitamins online, discount, health" /> 

@@ -548,6 +548,13 @@ function init_cache_info( $cache_type = SUMMARY_DATA )
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/font/fonts.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/jquery/respond.src.js"></script>
+    <![endif]-->
 <style type="text/css">
 body {
     background-color: #ffffff;

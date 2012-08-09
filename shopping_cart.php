@@ -93,6 +93,13 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 <!doctype html>
 <html <?php echo HTML_PARAMS;?>>
 	<head>
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+        <link href="/css/main.css" rel="stylesheet">
+        <link href="/font/fonts.css" rel="stylesheet">
+        <!--[if lt IE 9]>
+            <script type="text/javascript" src="/jquery/respond.src.js"></script>
+        <![endif]-->
         <link rel="icon" type="image/png" href="/favicon.ico">
         <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET;?>">
         <meta name="robots" content="index, follow">
@@ -100,10 +107,6 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
         <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
         <link rel="stylesheet" type="text/css" href="stylesheet.css">
         <?php require('includes/form_check.js.php'); ?>
-        <script type="text/javascript" src="/jquery/jquery-1.7.2.min.js"></script>
-        <!--[if lt IE 9]>
-            <script type="text/javascript" src="/jquery/css3-mediaqueries.js"></script>
-        <![endif]-->
     </head>
 	<body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 		<!-- ClickTale Top part -->
@@ -321,7 +324,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
             {
                 echo tep_draw_form('cart_quantity', tep_href_link(FILENAME_SHOPPING_CART, '', 'SSL'), 'post');
 ?>
-<div class="container"> sdaggggggggggggggggg
+<div class="container">
     <div class="row">
         <div class="span12">
             <?php $_REQUEST['page_caption'] = 'Seacoast Vitamins-Direct Savings';?>

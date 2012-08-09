@@ -35,11 +35,14 @@
 <!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
-
-
-
-
-  <title>Top Selling Vitamin Brands & Manufacturers</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/font/fonts.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="/jquery/respond.src.js"></script>
+    <![endif]-->
+    <title>Top Selling Vitamin Brands & Manufacturers</title>
 
 <meta name="keywords" content="vitamin manufacturers"/>
 <meta name="description" content="Best brands and manufacturers of nutritional supplements."/>

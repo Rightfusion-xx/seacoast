@@ -302,6 +302,13 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
 <html <?php echo HTML_PARAMS; ?>>
 
 <head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/font/fonts.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="/jquery/respond.src.js"></script>
+    <![endif]-->
 <title>Seacoast | This Page Isn't Real...</title>
  <meta name="Description" content="A little 404 not found problem..." />
  <meta name="Keywords" content="404, not found" />

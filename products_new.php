@@ -19,6 +19,7 @@
 <!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
 <?php
 

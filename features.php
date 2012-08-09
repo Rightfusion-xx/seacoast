@@ -17,6 +17,13 @@
 <html <?php echo HTML_PARAMS; ?>>
 
 <head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/font/fonts.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/jquery/respond.src.js"></script>
+    <![endif]-->
 <title>Featured Articles & Health Products</title>
  <meta name="Description" content="Points of interest for a naturally healthy lifestyle." />
  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
