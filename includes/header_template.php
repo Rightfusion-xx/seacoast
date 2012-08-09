@@ -7,7 +7,7 @@
               <?php if(!$_SESSION['cm_is_member']):?>
                   <li><a href="/community/" title="Join Vitamins-Direct" class="relative<?php echo ((stristr($_SERVER['PHP_SELF'], 'community') != false) ? ' active': '')?>"><i class="left"></i><i class="right"></i>Join Vitamins-Direct</a></li>
               <?php endif; ?>
-              <li><a href="/shipping.php" title="" class="relative<?php echo ((stristr($_SERVER['PHP_SELF'], 'shipping.php') != false) ? ' active': '')?>"><i class="left"></i><i class="right"></i>FAQ & Shipping</a></li>
+              <li><a href="/shipping.php" title="FAQ & Shipping" class="relative<?php echo ((stristr($_SERVER['PHP_SELF'], 'shipping.php') != false) ? ' active': '')?>"><i class="left"></i><i class="right"></i>FAQ & Shipping</a></li>
           </ul>
           <div class="span6 blue">
               <ul class="right-menu">
@@ -15,7 +15,7 @@
                   <?php if(!$_SESSION['cm_is_member']):?>
                   <li class="second"><a href="/community/" title="Join Vitamins-Direct" class="relative<?php echo ((stristr($_SERVER['PHP_SELF'], 'community') != false) ? ' active': '')?>"><i class="left"></i><i class="right"></i>Join Vitamins-Direct</a></li>
                   <?php endif; ?>
-                  <li class="last"><a href="/shipping.php" title="" class="relative<?php echo ((stristr($_SERVER['PHP_SELF'], 'shipping.php') != false) ? ' active': '')?>"><i class="left"></i><i class="right"></i>FAQ & Shipping</a></li>
+                  <li class="last"><a href="/shipping.php" title="FAQ & Shipping" class="relative<?php echo ((stristr($_SERVER['PHP_SELF'], 'shipping.php') != false) ? ' active': '')?>"><i class="left"></i><i class="right"></i>FAQ & Shipping</a></li>
               </ul>
               <div class="clear"></div>
               <span class="country relative"><i></i>800.555.6792</span>
@@ -45,7 +45,7 @@
            </div>
 
            <div class="span6 controllers big">
-              <a href="<?php echo (tep_session_is_registered('customer_id') ? tep_href_link(FILENAME_LOGOFF, '', 'SSL') : tep_href_link(FILENAME_ACCOUNT, '', 'SSL'))?>" class="log-button fl-right relative">
+              <a title="<?php echo (tep_session_is_registered('customer_id') ? HEADER_TITLE_LOGOFF : HEADER_TITLE_LOGIN)?>" href="<?php echo (tep_session_is_registered('customer_id') ? tep_href_link(FILENAME_LOGOFF, '', 'SSL') : tep_href_link(FILENAME_ACCOUNT, '', 'SSL'))?>" class="log-button fl-right relative">
                   <i class="left"></i>
                   <i class="right"></i>
                   <label></label>
@@ -71,7 +71,7 @@
                       </p>
                   </div>
                   <?php if(tep_session_is_registered('customer_id')):?>
-                      <a class="relative account-button fl-left<?php echo ((stristr($_SERVER['PHP_SELF'], FILENAME_ACCOUNT) != false) ? ' active': '')?>" href="<?php echo tep_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>">
+                      <a title="Account" class="relative account-button fl-left<?php echo ((stristr($_SERVER['PHP_SELF'], FILENAME_ACCOUNT) != false) ? ' active': '')?>" href="<?php echo tep_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>">
                           <i class="left"></i>
                           <i class="right"></i>
                           <label></label>
