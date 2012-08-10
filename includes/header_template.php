@@ -117,8 +117,9 @@
                                <i class="left"></i>
                                <i class="right"></i>
                                <?php if($cart->count_contents() > 0):?>
+                               <span class="items"><?php echo $cart->count_contents()?> <span>item<?php if($cart->count_contents()>1) echo 's';?>:</span></span>
                                <a href="/shopping_cart.php">
-                                   <span class="items"><?php echo $cart->count_contents()?> <span>item<?php if($cart->count_contents()>1) echo 's';?>:</span></span>
+
                                    <strong>$<?php echo number_format($cart->show_total(),2);?></strong>
                                    <span>(Savings of <strong>$<?php echo number_format($cart->show_savings(),2); ?></strong>)</span>
                                </a>

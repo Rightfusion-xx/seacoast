@@ -38,7 +38,7 @@ input{
 /*-------------------------------control styles end----------------------------------------*/
 
 /*-------------------------------color styles----------------------------------------------*/
-.turquoise, a, .content h2{
+.turquoise, a, .content h2, .content h1{
     color: #24B4B9;
 }
 
@@ -197,6 +197,7 @@ body{
     box-shadow: none;
     height: auto;
     text-indent: 10px;
+    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
@@ -396,7 +397,7 @@ body{
     width: 68%;
 }
 
-.content h2{
+.content h2, .content h1{
     font: 24px/32px SwankyandMooMooRegular;
     text-align: center;
     padding: 15px 0;
@@ -587,6 +588,7 @@ body{
         right: -10px;
         top: -10px;
         overflow: hidden;
+        z-index: 1;
     }
 }
 
