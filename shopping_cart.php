@@ -339,6 +339,9 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                 $info_box_contents[0][] = array('align' => 'right', 'params' => 'style="font-weight:bold;"', 'text' => TABLE_HEADING_TOTAL);
                                 $info_box_contents[0][] = array('align' => 'right', 'params' => 'style="font-weight:bold;"', 'text' => 'Savings');
                                 $any_out_of_stock = 0;
+
+
+                                    $test = 0;
                                 $products = $cart->get_products();
                                 //$totalSavings = 0;
                                 for ($i = 0, $n = sizeof($products); $i < $n; $i++)
@@ -411,6 +414,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                         'params' => 'class="productListing-data" valign="top"',
                                         'text' => $products[$i]['id'] == CM_FTPID ? '&nbsp;' : '<b>' . $currencies->display_price($products[$i]['final_price'], tep_get_tax_rate($products[$i]['tax_class_id']), $products[$i]['quantity']) . '</b>'
                                     );
+                                    $test += ($products[$i]['final_price']*$products[$i]['quantity']);
                                     $info_box_contents[$cur_row][] = array(
                                         'align' => 'right',
                                         'params' => 'class="productListing-data" valign="top"',
