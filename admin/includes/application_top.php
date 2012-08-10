@@ -138,7 +138,11 @@ if( isset($_SERVER['PHP_AUTH_USER']) && !$authenticated)
     }
 
 }
-$authenticated = true;
+if($_SERVER['HTTP_HOST'] == 'admin-sea-coast.loc' || $_SERVER['HTTP_HOST'] == 'admin.sea-coast.nova-design.net')
+{
+    $authenticated = true;
+}
+//
 
 if (!$authenticated && !$system_login) {
     if($tries>=3)
