@@ -479,7 +479,6 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                 </table>
                                 </div>
                                 </div>
-
     <div class="row">
         <div class="span12">
             <?php if($cart->in_cart(CM_FTPID) || (!$_SESSION['cm_is_member']) && $psavings>0):?>
@@ -525,7 +524,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
         <div class="span6">
             <?php $totalSavings = $cart->show_savings();?>
             <?php if($totalSavings>0):?>
-                <b>Member Savings: <span style="color:#ff0000;background:yellow;">$<?php echo number_format($totalSavings, 2);?></span></b><br/>
+                <b>Member Savings: <span style="color:#ff0000;background:yellow;"><?php echo $currencies->format($totalSavings);?></span></b><br/>
             <?php endif;?>
             <?php echo SUB_TITLE_SUB_TOTAL;?>
             <?php echo $currencies->format($cart->show_total());?>
