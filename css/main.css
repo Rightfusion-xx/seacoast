@@ -90,7 +90,7 @@ body{
     text-decoration: none;
 }
 
-.header ul li a.active i{
+.header ul li a.active em{
     background: url("./seacost_sprite.png") no-repeat;
     position: absolute;
     top: 0;
@@ -98,12 +98,12 @@ body{
     width: 13px;
 }
 
-.header ul li a.active i.left{
+.header ul li a.active em.left{
     left: -13px;
     background-position: -162px -61px;
 }
 
-.header ul li a.active i.right{
+.header ul li a.active em.right{
     right: -13px;
     background-position: -175px -61px;
 }
@@ -115,7 +115,7 @@ body{
     padding-left: 30px;
 }
 
-.header div span i{
+.header div span em{
     background: url("./seacost_sprite.png") no-repeat;
     left: 0;
     height: 19px;
@@ -125,11 +125,11 @@ body{
 }
 
 .header > div.blue{text-align: right;}
-.header div span.country i{
+.header div span.country em{
     background-position: 0 -61px;
 }
 
-.header div span.world i{
+.header div span.world em{
     background-position: -24px -60px;
     height: 23px;
     top: -2px;
@@ -199,6 +199,8 @@ body{
     text-indent: 10px;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+    *padding-right: 0;
+    *height: 22px;
 }
 
 .user-controls .search-container input[type="text"]:focus{
@@ -217,13 +219,15 @@ body{
     right: 10px;
     cursor: pointer;
     box-shadow: none;
+    *top: 8px;
+    *right: 0;
 }
 
 .focused + input[type="submit"]{
    background: url("./seacost_sprite.png") -137px -86px no-repeat!important;   
 }
 
-.user-controls .search-container i.right{
+.user-controls .search-container em.right{
     background-position: right -60px;
     right: -4px;
 }
@@ -245,6 +249,7 @@ body{
 
 .user-controls .basket:hover label{
     background-position: 2px -119px;
+    cursor: pointer;
 }
 
 .user-controls .basket p{
@@ -267,38 +272,38 @@ body{
     background: url("./green_button_active.png") repeat-x;
 }
 
-.user-controls .basket p i{
+.user-controls .basket p em{
     background: url("./seacost_sprite.png") no-repeat;
     position: absolute;
     top: 0;
     height: 39px;
 }
 
-.user-controls .basket p i.left{
+.user-controls .basket p em.left{
     background-position: -121px -60px;
     left: -14px;
     width: 14px;
 }
 
-.user-controls .basket p i.right{
+.user-controls .basket p em.right{
     background-position: -13px -80px;
     right: -4px;
     width: 4px;
 }
 
-.user-controls .basket:hover p i.left{
+.user-controls .basket:hover p em.left{
     background-position: -121px -100px;
 }
 
-.user-controls .basket:hover p i.right{
+.user-controls .basket:hover p em.right{
     background-position: -138px -120px;
 }
 
-.user-controls .basket:active p i.left{
+.user-controls .basket:active p em.left{
     background-position: -64px -120px;
 }
 
-.user-controls .basket:active p i.right{
+.user-controls .basket:active p em.right{
     background-position: -142px -120px;
 }
 
@@ -349,7 +354,7 @@ body{
     width: 16px;
 }
 
-.user-controls .log-button i, .account-button i{
+.user-controls .log-button em, .account-button em{
     background: url(./seacost_sprite.png) no-repeat;
     height: 39px;
     position: absolute;
@@ -357,29 +362,29 @@ body{
     width: 4px;
 }
 
-.user-controls .log-button i.left, .account-button i.left{
+.user-controls .log-button em.left, .account-button em.left{
     background-position: 0 -80px;
     left: -4px;
 }
 
-.user-controls .log-button i.right, .account-button i.right{
+.user-controls .log-button em.right, .account-button em.right{
     background-position: -4px -80px;
     right: -4px;
 }
 
-.user-controls .log-button:hover i.left, .account-button:hover i.left{
+.user-controls .log-button:hover em.left, .account-button:hover em.left{
     background-position: -192px 0;
 }
 
-.user-controls .log-button:hover i.right, .account-button:hover i.right{
+.user-controls .log-button:hover em.right, .account-button:hover em.right{
     background-position: right 0;
 }
 
-.user-controls .log-button:active i.left, .account-button:active i.left{
+.user-controls .log-button:active em.left, .account-button:active em.left{
     background-position: -108px -120px;
 }
 
-.user-controls .log-button:active i.right, .account-button:active i.right{
+.user-controls .log-button:active em.right, .account-button:active em.right{
     background-position: -112px -120px;
 }
 
@@ -390,6 +395,8 @@ body{
 .account-control{
     padding-right: 20px;
     width: 75%;
+    *padding-right: 30px;
+    *width: 70%;
 }
 
 .account-control.account-button-on{
@@ -406,8 +413,8 @@ body{
 .basket a{
     text-decoration: none;
     color: #fff;
-    display: block;
-    width: 100%;
+    display: inline-block;
+    width: auto;
     height: 100%;
     overflow: hidden;
     white-space: nowrap;
@@ -416,6 +423,111 @@ body{
 .basket a:hover{
     text-decoration: none;
     color: #fff;
+}
+
+.q-tip{
+    background: #88D98A;
+    position: absolute;
+    max-width: 220px;
+    padding: 10px;
+    word-wrap: break-word;
+    right: -60px;
+    top: 40px;
+    visibility: hidden;
+    font-weight: bold;
+}
+
+.button-container{
+    max-width: 316px;
+    min-width: 136px;
+    text-shadow: 1px 1px 0 #0E770E;
+}
+
+.button-container, .button-container label{
+    font: 13px Verdana;
+}
+
+.button-container a{
+    background: url("./price_button.png") 0 0 no-repeat;
+    display: block;
+    color: #FFF;
+    height: 90px;
+}
+
+.button-container label{
+    color: #FFF;
+    position: relative;
+}
+
+.button-container a:hover{
+    background-position: 0 -89px;
+}
+
+.button-container a:active{
+    background-position: 0 -182px;
+}
+
+.button-container .button-head{
+    display: block;
+    height: 43px;
+}
+
+.button-container .button-head > span.price{
+    display: block;
+    width: 65%;
+    text-indent: 10px;
+    padding: 13px 0 0;
+}
+
+.button-container .button-head > span.discount{
+    display: block;
+    position: relative;
+    top: 10px;
+    width: 30%;
+}
+
+.button-container label em{
+    background: url("./seacost_sprite.png") no-repeat;
+    height: 25px;
+    position: absolute;
+    top: 0;
+    width: 6px;
+}
+
+.button-container label em.left{
+    background-position: -35px -176px;
+    left: -6px;
+}
+
+.button-container label em.right{
+    background-position: -41px -176px;
+    right: -6px;
+}
+.button-container label.sale{
+    background: #F73838;
+    font: bold 18px Verdana;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    text-shadow: none;
+    padding: 0 4px;
+    margin-left: -5px;
+}
+
+.button-container .button-footer{
+    display: block;
+    padding-left: 50px;
+    font: bold 20px Verdana;
+    padding-top: 7px;
+}
+
+.button-container .button-footer label{
+    background: url("./seacost_sprite.png") 0 -176px no-repeat;
+    height: 26px;
+    position: absolute;
+    width: 32px;
+    left: 8px;
+    top: 10px;
 }
 
 @media(max-width:1200px){
@@ -511,18 +623,19 @@ body{
 }
 
 @media(max-width:720px){
-    .user-controls .span6.search{
-        width: 65.95744680199999%;
-    }
-
-    .user-controls .span6.controllers{
-        float: right;
-        width: 31.914893614%;
-    }
-
     .user-controls .basket label, .user-controls .basket p a span, .user-controls .basket p a strong,
-    .user-controls .log-button span, .user-controls .basket .items span{
+    .user-controls .log-button span, .user-controls .basket .items span, .user-controls .span6.search.big,
+    .user-controls .span6.controllers.big{
         display: none;
+    }
+
+    .span12.search.controllers{
+        display: block;
+        zoom: 1;
+    }
+
+    .user-controls .search-container{
+        width: 60%;
     }
 
     .user-controls .basket p a{
@@ -546,25 +659,24 @@ body{
     }
 
     .account-control{
-        width: 65%;
+        width: 10%;
     }
-
 
     .account-control.account-button-on{
-        width: 30%;
+        width: 10%;
     }
 
-    .user-controls .basket p i.left{
+    .user-controls .basket p em.left{
         background-position: -9px -80px;
         left: -4px;
         width: 4px;
     }
 
-    .user-controls .basket:hover p i.left{
+    .user-controls .basket:hover p em.left{
         background-position: -146px -120px;
     }
 
-    .user-controls .basket:active p i.left{
+    .user-controls .basket:active p em.left{
         background-position: -150px -120px;
     }
 
@@ -590,9 +702,60 @@ body{
         overflow: hidden;
         z-index: 1;
     }
+
+    #width_change input[type="text"]{
+        *height: 24px;
+    }
+
+    #width_change input[type="submit"]{
+        *right: -5px;
+    }
 }
 
 @media(max-width:670px){
+    .button-container a{
+        background: url("./price_button_small.png") 0 0 no-repeat;
+        height: 145px;
+        width: 136px;
+    }
+
+    .button-container a:hover{
+        background-position: -165px 0;
+    }
+
+    .button-container a:active{
+        background-position: right 0;
+    }
+
+    .button-container .button-head > span.discount{
+        top: 7px;
+        width: 100%;
+    }
+
+    .button-container .button-head{
+        height: 75px;
+    }
+
+    .button-container .button-head > span.price{
+        text-align: justify;
+        text-indent: 0;
+        padding: 5px 14px 0;
+        width: auto;
+    }
+
+    .button-container .button-head > span.discount{
+        text-align: center;
+    }
+
+    .button-container .button-footer{
+        font-size: 14px;
+    }
+
+    .button-container .button-footer label{
+        top: 21px;
+        left: 14px;
+    }
+
     .user-controls .span6.search .search-container{
         position: absolute;
         right: 0;
@@ -601,10 +764,6 @@ body{
     }
 
     .header .span6.blue span{
-        display: none;
-    }
-
-    .user-controls .span6.search.big, .user-controls .span6.controllers.big{
         display: none;
     }
 
@@ -632,12 +791,14 @@ body{
         width: 32px;
     }
 
-    .user-controls .search-container input[type="submit"]{
-        right: 0;
+    .user-controls .min-width-align .search-container{
+        *width: 40px;
+        *margin-top: -3px;
+        *height: 44px;
     }
 
-    .span12.search.controllers{
-        display: block;
+    .user-controls .search-container input[type="submit"]{
+        right: 0;
     }
 
     .account-control{
@@ -646,6 +807,11 @@ body{
 
     .span12.search.controllers .account-control.account-button-on{
         padding-right: 0;
+    }
+
+    .user-controls{
+        *padding-top: 20px;
+        *position: relative;
     }
 
     .user-controls .account-control .basket{
@@ -742,6 +908,4 @@ body{
     .container{
         width: 320px;
     }
-
-
 }
