@@ -50,7 +50,7 @@ if(OPTIMIZE_IMAGES)
     }
 
 }
-$stop_tidy = true;
+//$stop_tidy = true;
 if(!$stop_tidy)
 {
 //Tidy HTML output

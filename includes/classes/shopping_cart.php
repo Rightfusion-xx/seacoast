@@ -374,15 +374,20 @@ class shoppingCart
         $this->weight            = 0;
         $this->savings           = 0;
         $this->potential_savings = 0;
-        if(!is_array($this->contents))
-            return 0;
+        if(!is_array($this->contents)) return 0;
 
         reset($this->contents);
-        while(list($products_id,) = each($this->contents))
+        foreach($this->contents as $products_id => $qty)
         {
-            $qty = $this->contents[$products_id]['qty'];
+            $qty = $qty['qty'];
 
-            $product_info = tep_db_fetch_array(tep_db_query('select products_die, products_dieqty from products p where p.products_id=' . (int)$products_id));
+            $product_info = tep_db_fetch_array(tep_db_query('
+                SELECT
+                    products_die,
+                    products_dieqty
+                FROM products p
+                WHERE p.products_id=' . (int)$products_id
+            ));
             if($product_info['products_die'] && $qty > $product_info['products_dieqty'])
             {
                 $qty = $product_info['products_dieqty'];
@@ -406,8 +411,15 @@ class shoppingCart
             {
                 // ICW ORDER TOTAL CREDIT CLASS Start Amendment
                 $no_count  = 1;
-                $gv_query  = tep_db_query("select products_model from " . TABLE_PRODUCTS . " where products_id = '" . (int)$products_id . "'");
-                $gv_result = tep_db_fetch_array($gv_query);
+                $gv_result = tep_db_fetch_array(
+                    tep_db_query("
+                        SELECT
+                            products_model
+                        FROM " . TABLE_PRODUCTS . "
+                        WHERE
+                            products_id = '" . (int)$products_id . "'
+                    ")
+                );
                 if(preg_match('/^GIFT/', $gv_result['products_model']))
                 {
                     $no_count = 0;
@@ -417,8 +429,16 @@ class shoppingCart
                 $products_tax    = tep_get_tax_rate($product['products_tax_class_id']);
                 $products_price  = $product['products_price'];
                 $products_weight = $product['products_weight'];
+                $products_msrp   = (($product['products_price'] > $product['products_msrp']) ? $product['products_price'] : $product['products_msrp']);
 
-                $specials_query = tep_db_query("select specials_new_products_price from " . TABLE_SPECIALS . " where products_id = '" . (int)$prid . "' and status = '1'");
+                $specials_query = tep_db_query("
+                    SELECT
+                        specials_new_products_price
+                    FROM " . TABLE_SPECIALS . "
+                    WHERE
+                        products_id = '" . (int)$prid . "' and
+                        status = '1'
+                ");
                 if(tep_db_num_rows($specials_query))
                 {
                     $specials       = tep_db_fetch_array($specials_query);
@@ -426,12 +446,22 @@ class shoppingCart
                 }
 
                 //Community Members - Calculate Savings
-                $is_member = tep_db_fetch_array(tep_db_query('select case when cm_expiration>=curdate() and cm_expiration IS NOT NULL then 1 else 0 end as ismember from customers_info where customers_info_id=' . (int)$customer_id . ''));
+                $is_member = tep_db_fetch_array(
+                    tep_db_query('
+                        select
+                            case when
+                                cm_expiration >= curdate() and cm_expiration IS NOT NULL
+                            then
+                                1 else 0
+                            end as ismember
+                        from customers_info
+                        where customers_info_id=' . (int)$customer_id . '
+                    ')
+                );
                 $is_member = (int)$is_member['ismember'];
 
                 if($is_member)
                 {
-
                     if($this->in_cart(CM_FTPID) || $this->in_cart(CM_PID))
                     {
                         $this->remove(CM_FTPID);
@@ -439,8 +469,28 @@ class shoppingCart
                     }
                 }
 
-                $productFinalPrice = ($products_price + $this->attributes_price($products_id));
+                $products_price = ($products_price + $this->attributes_price($products_id));
+                if($this->in_cart(CM_FTPID) || $this->in_cart(CM_PID) || (int)$is_member == 1)
+                {
+                    $products_savings = 0;
 
+                    if($product['manufacturers_id'] == 69)
+                    {
+                        $products_savings = (($products_price > $product['products_msrp']) ? $products_price : $product['products_msrp']) * 0.25;
+                    }
+                    elseif(!strpos($product['products_name'], '*'))
+                    {
+                        $products_savings = (($products_price > $product['products_msrp']) ? $products_price : $product['products_msrp']) * 0.15;
+                    }
+                    $products_price -= $products_savings;
+                }
+
+                //$products_savings = //(($product['products_msrp'] > $product['products_price']) ? $products['products_msrp'] : $product['products_price']) - $products_price;
+
+                //$this->savings += $products_savings * $qty;
+                /*echo "<pre>";
+                var_dump($products_price);
+                echo "</pre>";
                 $products_savings = 0;
                 if($product['manufacturers_id'] == 69)
                 {
@@ -459,11 +509,19 @@ class shoppingCart
                 else
                 {
                     $this->potential_savings += $products_savings * $qty;
-                }
+                }*/
 
                 $this->total_virtual += tep_add_tax($products_price, $products_tax) * $qty * $no_count; // ICW CREDIT CLASS;
                 $this->weight_virtual += ($qty * $products_weight) * $no_count; // ICW CREDIT CLASS;
                 $this->total += tep_add_tax($products_price, $products_tax) * $qty;
+                if(!in_array($product['products_id'], array(CM_FTPID, CM_PID)))
+                {
+                    $this->savings += (
+                        (
+                        ($product['products_msrp'] > $product['products_price']) ? $product['products_msrp']:$product['products_price']
+                        ) - $products_price
+                    ) * $qty;
+                }
                 $this->weight += ($qty * $products_weight);
             }
 
@@ -606,7 +664,6 @@ class shoppingCart
     function show_total()
     {
         $this->calculate();
-
         return $this->total;
     }
 

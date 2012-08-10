@@ -5,7 +5,7 @@ ob_start();?>
 <?php
 global $nav;
 $nav = ob_get_clean();
-
+/*
 class actionClass extends ActionAbstract
 {
     protected $_table = 'newsletter_subscribers';
@@ -16,7 +16,7 @@ class actionClass extends ActionAbstract
 
     protected $_gridFields = array(
         'customers_id'                     => 'Customer id',
-        'customer_name_concated'           => 'Customer Name',
+        'customer_name_concated'           => 'Customer Name',//customers_firstname, customers_lastname
         'customers_email_address'          => 'Customer e-mail',
         'newsletter_categories_subscribed' => 'Subscribed to'
     );
@@ -256,6 +256,119 @@ class emailTemplates extends ActionAbstract
 $emailTemplates = new emailTemplates();
 
 */
+
+class actionClass extends ActionAbstract
+{
+    protected $_table = 'newsletter_contects_queries';
+
+    protected $_keyField = 'query_id';
+    protected $_pageTitle = 'Contects Queries';
+    protected $_scriptUrl = '/newsletter_subscribers.php';
+
+    protected $_gridFields = array(
+        'query_id'      => 'List id',
+        'query_title'   => 'List Title',
+        //'query_query'   => 'List Query',
+        'query_created' => 'List Created'
+    );
+
+    public function subscribersListAction()
+    {
+        $customerFields = array(
+            'customers_id'                     => 'Customer id',
+            'customers_firstname'              => 'Customer Name', //customers_firstname, customers_lastname
+            'customers_lastname'               => 'Customer Last Name',
+            'customers_email_address'          => 'Customer e-mail'
+        );
+        $this->_pageTitle = '<a href="'.$this->_scriptUrl.'">' . $this->_pageTitle . '</a> &gt; Customers';
+
+        $this->_hideAddButton = true;
+
+        $row = tep_db_fetch_array(tep_db_query('
+            SELECT
+                *
+            FROM `' . $this->_table . '`
+            WHERE `' . $this->_keyField . '` = \'' . $_GET['id'] . '\'
+        '));
+        $query = $row['query_query'];
+        $this->headOut();
+        ?>
+        <table border="0" width="100%" cellspacing="0" cellpadding="2">
+                            <tr class="dataTableHeadingRow">
+                                <?php foreach($customerFields as $field => $title):?>
+                                <td class="dataTableHeadingContent"><?php echo $title?></td>
+                                <?php endforeach;?>
+                            </tr>
+        <?php
+        $req = tep_db_query($query);
+
+        if(tep_db_num_rows($req) > 0)
+        {
+            while($row = tep_db_fetch_array($req))
+            {
+                $this->renderSubscriberListRow($row);
+            }
+        }
+        else
+        {
+            ?>
+            <tr class="dataTableRow">
+                <td class="dataTableContent" colspan="<?php echo (count($this->_gridFields)+1);?>" style="text-align: center; padding: 10px;"> No data to show </td>
+            </tr>
+        <?
+        }
+        echo "</table>";
+        $this->footOut();
+    }
+
+    public function renderSubscriberListRow($row)
+    {
+
+        $customerFields = array(
+            'customers_id'                     => 'Customer id',
+            'customers_firstname'              => 'Customer Name', //customers_firstname, customers_lastname
+            'customers_lastname'               => 'Customer Last Name',
+            'customers_email_address'          => 'Customer e-mail'
+        );
+        $this->_rowsCount++;
+        echo '<tr class="dataTableRow' . ((($this->_rowsCount%2) == 0)? ' white-row': '') . '">';
+        foreach($customerFields as $field => $title)
+        {
+            echo '<td class="dataTableContent">' . $row[$field] . '</td>';
+        }
+        echo '</tr>';
+    }
+
+    public function getListLineActions($row)
+    {
+        return '
+        <a class="" href="' . $this->_scriptUrl . (strpos($this->_scriptUrl, '?')? '&': '?') . 'action=subscribersList&id=' . $row[$this->_keyField] . '">View Users</a> |
+        <a class="ae-action" href="' . $this->_scriptUrl . (strpos($this->_scriptUrl, '?')? '&': '?') . 'action=edit&id=' . $row[$this->_keyField] . '">Edit</a> |
+        <a onclick="return confirm(\'Are you sure you want to remove this record?\')" href="' . $this->_scriptUrl . (strpos($this->_scriptUrl, '?')? '&': '?') . 'action=remove&id=' . $row[$this->_keyField] . '">Remove</a>';
+    }
+
+    public function getForm($data)
+    {
+        $defaultQuery = 'SELECT
+    `c`.*
+FROM `customers` AS `c`
+INNER JOIN `newsletter_subscribers` AS s ON (s.customer_id = c.customers_id)
+INNER JOIN `newsletter_categories` AS nc ON (s.newsletter_id = nc.category_id)';
+        return '
+            <table width="100%">
+                <tr>
+                    <td>Title:</td>
+                    <td><input style="width:100%" type="text" name="query_title" value="' . $data['query_title'] .'" /></td>
+                </tr>
+                <tr>
+                    <td>Query:</td>
+                    <td><textarea  wrap="off" name="query_query" style="width:100%;height:300px;">' . (!empty($data['query_query'])? $data['query_query']: $defaultQuery) .'</textarea></td>
+                </tr>
+                <input type="hidden" value="' . (empty($data['query_created']) ? date('Y-m-d H:i:s') : $data['query_created']) . '" name="query_created" />
+            </table>
+        ';
+    }
+}
 $obj = new actionClass();
 $obj->run();
 ?>

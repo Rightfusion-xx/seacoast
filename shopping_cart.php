@@ -340,7 +340,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                 $info_box_contents[0][] = array('align' => 'right', 'params' => 'style="font-weight:bold;"', 'text' => 'Savings');
                                 $any_out_of_stock = 0;
                                 $products = $cart->get_products();
-                                $totalSavings = 0;
+                                //$totalSavings = 0;
                                 for ($i = 0, $n = sizeof($products); $i < $n; $i++)
                                 {
                                     // Push all attributes information in an array
@@ -421,7 +421,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                             $products[$i]['quantity']
                                         ) . '</b>'
                                     );
-
+/*
                                     $totalSavings += floatval(
                                         substr(
                                             $products[$i]['id'] == CM_FTPID ? ' ' : $currencies
@@ -432,7 +432,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                             ),
                                             1
                                         )
-                                    );
+                                    );*/
                                 }
                                 // shopping cart table starts here (AH 07 Feb 2012)
                                 $pl =  '<table style="border-top:1px solid lightgray" class="table table-striped">';
@@ -519,6 +519,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
             <?php endif;?>
         </div>
         <div class="span6">
+            <?php $totalSavings = $cart->show_savings();?>
             <?php if($totalSavings>0):?>
                 <b>Member Savings: <span style="color:#ff0000;background:yellow;">$<?php echo number_format($totalSavings, 2);?></span></b><br/>
             <?php endif;?>
