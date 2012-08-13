@@ -456,7 +456,7 @@ $breadcrumb->add(NAVBAR_TITLE_2, tep_href_link(FILENAME_CHECKOUT_SHIPPING, '', '
                                     $requestUri = tep_href_link($requestUri[0], '', 'SSL');
                                 ?>
                                 <a style="display:block" href="<?php echo tep_href_link('publish_cart.php', 'returnto=' . urlencode($requestUri), 'SSL')?>">
-                                    <?php echo (defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && (MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true')) ? GET_FREE_SHIPPING_ENABLED_MESSAGE : GET_FREE_SHIPPING_MESSAGE)?>
+                                    <?php echo (defined('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING') && MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING == 'true') ? GET_FREE_SHIPPING_ENABLED_MESSAGE : GET_FREE_SHIPPING_MESSAGE?>
                                 </a>
                             </td>
                         </tr>
