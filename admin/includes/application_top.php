@@ -157,12 +157,6 @@ if (!$authenticated && !$system_login) {
 }
 
 
-
-
-
-
-
-
 // set the session cookie parameters
 
    if (function_exists('session_set_cookie_params')) {
