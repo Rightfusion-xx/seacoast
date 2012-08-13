@@ -224,7 +224,7 @@ body{
 }
 
 .focused + input[type="submit"]{
-   background: url("./seacost_sprite.png") -137px -86px no-repeat!important;   
+   background: url("./seacost_sprite.png") -137px -86px no-repeat!important;
 }
 
 .user-controls .search-container em.right{
@@ -418,6 +418,7 @@ body{
     height: 100%;
     overflow: hidden;
     white-space: nowrap;
+    width: 100%;
 }
 
 .basket a:hover{
@@ -646,7 +647,7 @@ body{
         position: relative;
         top: 6px;
     }
-    
+
     .user-controls .basket p{
         min-width: 0;
         padding: 0;
