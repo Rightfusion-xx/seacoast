@@ -67,8 +67,8 @@ if(isset($HTTP_GET_VARS['action']))
                 {
                     tep_db_query("
                     INSERT INTO " . TABLE_CUSTOMERS . "
-                        (customers_gender, customers_firstname, customers_lastname, customers_email_address, customers_password)
-                    VALUES ('" . substr($user->gender, 0, 1) . "', '" . $user->first_name . "', '" . $user->last_name . "', '" . $user->email . "', '" . tep_encrypt_password($user->email) . "')
+                        (customers_gender, customers_firstname, customers_lastname, customers_email_address, customers_password, customers_newsletter)
+                    VALUES ('" . substr($user->gender, 0, 1) . "', '" . $user->first_name . "', '" . $user->last_name . "', '" . $user->email . "', '" . tep_encrypt_password($user->email). "','" . 1 . "')
                     ");
                     $check_email_query = tep_db_query("
                         SELECT
