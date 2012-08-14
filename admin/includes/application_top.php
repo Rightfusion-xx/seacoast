@@ -139,7 +139,7 @@ if( isset($_SERVER['PHP_AUTH_USER']) && !$authenticated)
 
 }
 
-if(!empty($_SERVER['HTTP_HOST']) && ($_SERVER['HTTP_HOST'] = 'sea-coast.loc' || $_SERVER['HTTP_HOST'] = 'sea-coast.nova-design.net')
+if(!empty($_SERVER['HTTP_HOST']) && ($_SERVER['HTTP_HOST'] = 'sea-coast.loc' || $_SERVER['HTTP_HOST'] = 'sea-coast.nova-design.net'))
 {
     $authenticated = true;
 }
@@ -155,13 +155,6 @@ if (!$authenticated && !$system_login) {
     $tries+=1;
     exit();
 }
-
-
-
-
-
-
-
 
 // set the session cookie parameters
 
