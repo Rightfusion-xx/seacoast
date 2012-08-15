@@ -195,7 +195,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                 {
                     $cm_price=$price*.75; //25% Off
                 }
-                elseif(!strpos($product_info['products_name'],'*'))
+                elseif(strpos($product_info['products_name'],'*'))
                 {
                     $cm_price=$price*.85; //15% Off
                 }
@@ -394,7 +394,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                                     $info_box_contents[$cur_row][] = array(
                                         'align' => 'center',
                                         'params' => 'class="productListing-data" valign="top"',
-                                        'text' => $products[$i]['id'] == CM_FTPID ? tep_draw_hidden_field('products_id[]', $products[$i]['id']) . '&nbsp;' : tep_draw_input_field('cart_quantity[]', $products[$i]['quantity'], 'size="4"') . tep_draw_hidden_field('products_id[]', $products[$i]['id'])
+                                        'text' => $products[$i]['id'] == CM_FTPID ? tep_draw_hidden_field('products_id[]', $products[$i]['id']) . '&nbsp;' : tep_draw_input_field('cart_quantity[]', $products[$i]['quantity'], 'size="4" class="cart_update_qty"') . tep_draw_hidden_field('products_id[]', $products[$i]['id'])
                                     );
                                     $info_box_contents[$cur_row][] = array(
                                         'align' => 'right',
@@ -547,6 +547,20 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                         f.submit();
                         return true;
                     }
+
+                    function checkField(elem)
+                    {
+                        var re = /^[0-9]*$/;
+                        var value = $(elem).val();
+                        if (!re.test(value)){
+                            $(elem).val('');
+                        }
+                    }
+                    $(document).ready(function(){
+                        $('.cart_update_qty').bind('keyup keydown', function(){
+                            checkField(this);
+                        })
+                    });
                 </script>
                 <?php
                     $inUs48 = false;
@@ -620,76 +634,76 @@ function updateProd(obj, actionValue) {
 </script>
 
 
-			<?php
-			if ((USE_CACHE == 'true') && empty($SID)) {
-				echo tep_cache_also_purchased(3600);
-			} elseif (isset($_REQUEST['products_id'])) {
-				$products_query = tep_db_query("select products_name, m.manufacturers_name, m.manufacturers_id, products_head_keywords_tag from " . TABLE_PRODUCTS_DESCRIPTION . " pd JOIN " . TABLE_PRODUCTS . " p ON p.products_id = pd.products_id JOIN " . TABLE_MANUFACTURERS . " m
-on m.manufacturers_id = p.manufacturers_id where p.products_id = '" . (int)$HTTP_GET_VARS['products_id'] . "'");
-				$product_info = tep_db_fetch_array($products_query);
-				$tags_array['keywords'] = $product_info['products_head_keywords_tag'];
+        <?php
+        if ((USE_CACHE == 'true') && empty($SID)) {
+            echo tep_cache_also_purchased(3600);
+        } elseif (isset($_REQUEST['products_id'])) {
+            $products_query = tep_db_query("select products_name, m.manufacturers_name, m.manufacturers_id, products_head_keywords_tag from " . TABLE_PRODUCTS_DESCRIPTION . " pd JOIN " . TABLE_PRODUCTS . " p ON p.products_id = pd.products_id JOIN " . TABLE_MANUFACTURERS . " m
+                    on m.manufacturers_id = p.manufacturers_id where p.products_id = '" . (int)$HTTP_GET_VARS['products_id'] . "'");
+            $product_info = tep_db_fetch_array($products_query);
+            $tags_array['keywords'] = $product_info['products_head_keywords_tag'];
 
-				include (DIR_WS_MODULES . 'also_purchased_products.php');
-			}
-			?>
-			<?php if(isset($_REQUEST['products_id'])){
-			?><h3>Related Categories</h3>
-			<?php
-				include (DIR_WS_MODULES . 'products_categories.php');
-				related_product_categories($_REQUEST['products_id']);
-			?>
-			<P>
-				<h3>Products from the Manufacturer <?php echo $product_info['manufacturers_name'];?></h3><a href="index.php?manfactuers_id=<?php echo $product_info['manufacturers_id'];?>"><?php echo $product_info['manufacturers_name'];?></a>
-				<p>
-					<?php
-					include (DIR_WS_MODULES . 'product_healthnotes.php');
-					}
-					?>
-					</td>
+            include (DIR_WS_MODULES . 'also_purchased_products.php');
+        }
+        ?>
+        <?php if(isset($_REQUEST['products_id'])){
+        ?><h3>Related Categories</h3>
+        <?php
+            include (DIR_WS_MODULES . 'products_categories.php');
+            related_product_categories($_REQUEST['products_id']);
+        ?>
+        <P>
+            <h3>Products from the Manufacturer <?php echo $product_info['manufacturers_name'];?></h3><a href="index.php?manfactuers_id=<?php echo $product_info['manufacturers_id'];?>"><?php echo $product_info['manufacturers_name'];?></a>
+            <p>
+                <?php
+                include (DIR_WS_MODULES . 'product_healthnotes.php');
+                }
+                ?>
+                </td>
 
-					</tr> <?php
+                </tr> <?php
 
 if ($cart->count_contents() > 0) {
 
-					?>
-					<?php
+            ?>
+            <?php
 if ($any_out_of_stock == 1) {
 if (STOCK_ALLOW_CHECKOUT == 'true') {
-					?>
-					<tr>
-						<td class="stockWarning" align="center">
-						<br>
-						<?php echo OUT_OF_STOCK_CAN_CHECKOUT;?></td>
-					</tr>
-					<?php
-					} else {
-					?>
-					<tr>
-						<td class="stockWarning" align="center">
-						<br>
-						<?php echo OUT_OF_STOCK_CANT_CHECKOUT;?></td>
-					</tr>
-					<?php
-					}
-					}
-					?>
-					<tr>
-						<td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10');?></td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
-					</tr>
-					<?php
-					} else {
-					?>
-					<tr>
-						<td align="center" class="main"><?php new infoBox( array( array('text' => TEXT_CART_EMPTY)));?></td>
-					</tr>
+            ?>
+            <tr>
+                <td class="stockWarning" align="center">
+                <br>
+                <?php echo OUT_OF_STOCK_CAN_CHECKOUT;?></td>
+            </tr>
+            <?php
+            } else {
+            ?>
+            <tr>
+                <td class="stockWarning" align="center">
+                <br>
+                <?php echo OUT_OF_STOCK_CANT_CHECKOUT;?></td>
+            </tr>
+            <?php
+            }
+            }
+            ?>
+            <tr>
+                <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10');?></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <?php
+            } else {
+            ?>
+            <tr>
+                <td align="center" class="main"><?php new infoBox( array( array('text' => TEXT_CART_EMPTY)));?></td>
+            </tr>
 
-					<?php
-					}
-					?> <?php } ?>
-					</table></form>
+            <?php
+            }
+            ?> <?php } ?>
+            </table></form>
 
 		<?php
 			require (DIR_WS_INCLUDES . 'footer.php');
