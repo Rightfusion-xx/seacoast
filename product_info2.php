@@ -90,7 +90,6 @@ else
     }
 
     $lastmod                = strtotime($product_info['products_last_modified']);
-    $is_cm_eligible         = strpos($product_info['products_name'], '*') ? 0 : 1;
     $tags_array['keywords'] = $product_info['products_head_keywords_tag'];
     tep_db_query("update " . TABLE_PRODUCTS_DESCRIPTION . " set products_viewed = products_viewed+1 where products_id = '" . (int)$HTTP_GET_VARS['products_id'] . "' and language_id = '" . (int)$languages_id . "'");
 
@@ -117,13 +116,8 @@ else
     {
         $cm_price = $price * .75; //25% Off
     }
-    elseif(!strpos($product_info['products_name'], '*'))
-    {
         $cm_price = $price * .85; //15% Off
-    }
-    else
-    {
-        $cm_price = $price;
+
     }
 
     //Get review details
@@ -273,7 +267,7 @@ if(!$cache->doCache('products_main' . $pmod, true, $lastmod))
     <?php if($isAsterisked):?>
     <div class="alert alert-info">
         <a href="<?php echo '/shopping_cart.php?products_id=' . $product_info['products_id']; ?>">
-        The prices is Less Than <?php echo $currencies->display_price($product_info['products_price'], tep_get_tax_rate($product_info['products_tax_class_id']))?>, but it's Too Low to show you until you add it to your cart!
+        The price is <b>less than</b> <?php echo $currencies->display_price($product_info['products_price'], tep_get_tax_rate($product_info['products_tax_class_id']))?>, but it's Too Low to show you until you add it to your cart!
             </a>
     </div>
     <?php endif; ?>
