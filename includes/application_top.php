@@ -704,7 +704,14 @@ if(strlen($handler['redirect'])>0)
 
 $pmod=1.0;
 
+//check if is parameter 'rt' for free shipping
 
+if(isset($_GET['rt']) && $_GET['rt'] == 'fs'){
+    if(!tep_session_is_registered('free_us_48')){
+        tep_session_register('free_us_48');
+    }
+    $free_us_48 = true;
+}
 
 ////////////////////////////////////////////////////////////////////
 
@@ -720,7 +727,8 @@ if(intval(FREE_SHIPPING_CART_SIZE) > 0 && count($cart->contents) >= FREE_SHIPPIN
 elseif($_SESSION['customer_id'])
 {
     $customer = tep_db_fetch_array(tep_db_query('select * from customers where customers_id="'.tep_db_input($_SESSION['customer_id']).'"'));
-    if($customer['customers_basket_published'] == 'yes')
+
+    if($customer['customers_basket_published'] == 'yes' || isset($free_us_48) && $free_us_48 == true)
     {
         define('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING', 'true');
         define('MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING_over', 999999999999999999);
