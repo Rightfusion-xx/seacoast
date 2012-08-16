@@ -190,6 +190,7 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                 {
                     $price=$product_info['products_price'];
                 }
+
                 //Calculate membership discounts
                 if($product_info['manufacturers_id']==69)
                 {
@@ -700,7 +701,7 @@ if (STOCK_ALLOW_CHECKOUT == 'true') {
             } else {
             ?>
             <tr>
-                <td align="center" class="main"><?php new infoBox( array( array('text' => TEXT_CART_EMPTY)));?></td>
+                <td align="center" class="main" style="padding-left: 50px;"><?php new infoBox( array( array('text' => TEXT_CART_EMPTY )));?></td>
             </tr>
 
             <?php
