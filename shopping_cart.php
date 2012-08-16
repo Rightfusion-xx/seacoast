@@ -174,8 +174,9 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                     //No product found, redirect.
                     redir301(HTTP_SERVER);
                 }
-                // $is_cm_eligible=strpos($product_info['products_name'],'*') ? 0 : 1;
-                $is_cm_eligible=1;//strpos($product_info['products_name'],'*') ? 0 : 1;
+                
+                
+                $is_cm_eligible=1;
                 //Get price
                 //check for product specials
                 $new_price = tep_get_products_special_price($product_info['products_id']);
@@ -191,18 +192,15 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
                     $price=$product_info['products_price'];
                 }
                 //Calculate membership discounts
-                if($product_info['manufacturers_id']==69)
+                if($product_info['manufacturers_id']==69) 
                 {
                     $cm_price=$price*.75; //25% Off
                 }
-                elseif(strpos($product_info['products_name'],'*'))
+                else
                 {
                     $cm_price=$price*.85; //15% Off
                 }
-                else
-                {
-                    $cm_price=$price;
-                }
+
 ?>
     <div class="container">
         <div class="row">

@@ -452,7 +452,7 @@ class shoppingCart
                 if($product['manufacturers_id']==69){
                     $products_savings=number_format($products_price*0.25,2);
                 }
-                elseif(strpos($product['products_name'],'*')==0)
+                else
                 {
                     $products_savings=number_format($products_price*0.15,2);
                 }
@@ -560,7 +560,7 @@ class shoppingCart
                     if($products['manufacturers_id']==69){
                         $products_savings=$products_price*0.25;
                     }
-                    elseif(!strpos($products['products_name'],'*'))
+                    else
                     {
                         $products_savings=$products_price*0.15;
                     }
