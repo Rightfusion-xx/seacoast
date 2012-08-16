@@ -168,7 +168,7 @@
            <div class="clear"></div>
       </div>
         <div class="content row">
-            <h1 class="span12"><?php echo(!empty($_REQUEST['page_caption']) ? $_REQUEST['page_caption'] :'Vitamins - Direct To Members from Seacoast Vitamins')?></h1>
+            <h2 class="span12"><?php echo(!empty($_REQUEST['page_caption']) ? $_REQUEST['page_caption'] :'Vitamins - Direct To Members from Seacoast Vitamins')?></h2>
         </div>
       </div>
    </div>
