@@ -90,7 +90,6 @@ else
     }
 
     $lastmod                = strtotime($product_info['products_last_modified']);
-    $is_cm_eligible         = strpos($product_info['products_name'], '*') ? 0 : 1;
     $tags_array['keywords'] = $product_info['products_head_keywords_tag'];
     tep_db_query("update " . TABLE_PRODUCTS_DESCRIPTION . " set products_viewed = products_viewed+1 where products_id = '" . (int)$HTTP_GET_VARS['products_id'] . "' and language_id = '" . (int)$languages_id . "'");
 
@@ -117,13 +116,10 @@ else
     {
         $cm_price = $price * .75; //25% Off
     }
-    elseif(!strpos($product_info['products_name'], '*'))
-    {
-        $cm_price = $price * .85; //15% Off
-    }
     else
     {
-        $cm_price = $price;
+        $cm_price = $price * .85; //15% Off
+
     }
 
     //Get review details
@@ -265,15 +261,16 @@ if(!$cache->doCache('products_main' . $pmod, true, $lastmod))
             }
             elseif($product_info['products_price'] > 0)
             {
-                echo '<span style="color:#000;font-weight:bold;">' . $currencies->display_price($product_info['products_price'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '';
+                echo '<span style="color:#000;font-weight:bold;"><strike>' . $currencies->display_price($product_info['products_price'], tep_get_tax_rate($product_info['products_tax_class_id'])) . '</strike>';
             }?>
         </a>
     </div>
 
     <?php if($isAsterisked):?>
-    <div class="alert alert-info">
+    <div class="alert alert-success">
+    <h4><b>Heads Up!</b></h4>
         <a href="<?php echo '/shopping_cart.php?products_id=' . $product_info['products_id']; ?>">
-        The prices is Less Than <?php echo $currencies->display_price($product_info['products_price'], tep_get_tax_rate($product_info['products_tax_class_id']))?>, but it's Too Low to show you until you add it to your cart!
+        The price is <b>less than</b> <?php echo $currencies->display_price($product_info['products_price'], tep_get_tax_rate($product_info['products_tax_class_id']))?>, but it's <b>too low</b> to show you until you add it to your cart!
             </a>
     </div>
     <?php endif; ?>
@@ -396,6 +393,8 @@ if(!$cache->doCache('products_main2' . $pmod, true, $lastmod))
         <?php } ?>
 
     <?php $hubs = match_hub_links($page_links, true); ?>
+    <p></p>
+    <div class="fb-comments" data-href="http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']?>" data-num-posts="4" data-width="470"></div>
 
 
                 </div>
@@ -538,7 +537,7 @@ if($seacoast_crawler)
     echo '<div>', $product_info['products_id'], '</div><div>', HTTP_SERVER . $_SERVER['REQUEST_URI'], '</div>';
 }
 ?>
-<div class="fb-comments" data-href="http://<?php echo $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']?>" data-num-posts="4" data-width="770"></div>
+
 </div>
 <?php $product_info['products_name'] = '';?>
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
