@@ -25,9 +25,9 @@
                                'text' => $orders_status['orders_status_name']);
     $orders_status_array[$orders_status['orders_status_id']] = $orders_status['orders_status_name'];
   }
-  
 
-  
+
+
   $action = (isset($HTTP_GET_VARS['action']) ? $HTTP_GET_VARS['action'] : '');
 
   if (tep_not_null($action)) {
@@ -36,9 +36,9 @@
         $comments = tep_db_prepare_input($HTTP_POST_VARS['comments']);
         $order=new order($oID);
         $payhistory=paytools($order);
-        
 
-   
+
+
     switch ($action) {
       case 'makepayment':
       if($_REQUEST['amount']<=0.00)
@@ -87,7 +87,7 @@
           }
           else
           {
-  
+
               $messageStack->add_session($pay_result[0],'warning');
               $messageStack->add_session($pay_result[3],'warning');
               tep_redirect(tep_href_link(FILENAME_ORDERS, tep_get_all_get_params(array('action')) . 'action=edit'));
@@ -95,7 +95,7 @@
           }
         }
 
-        
+
       }
       elseif($_REQUEST['type']=='payment')
       {
@@ -111,11 +111,11 @@
           if($_REQUEST['amount']<$order->info['ot_total'])
           {
             $order->info['ot_total']=$_REQUEST['amount'];
-            
+
             if($_REQUEST['memo']!='')
             {
               $order->info['description']=$_REQUEST['memo'];
-              
+
             }
             else
             {
@@ -151,15 +151,15 @@
             $messageStack->add_session($pay_result[3],'warning');
             tep_redirect(tep_href_link(FILENAME_ORDERS, tep_get_all_get_params(array('action')) . 'action=edit'));
         }
-        
-       
+
+
       }
       }
 
     }
 
 
-            
+
 
       case 'update_order':
 
@@ -169,7 +169,7 @@
 
         if ( ($check_status['orders_status'] != $status) || tep_not_null($comments)) {
           tep_db_query("update " . TABLE_ORDERS . " set orders_status = '" . tep_db_input($status) . "', last_modified = now() where orders_id = '" . (int)$oID . "'");
-            
+
             $preg_hold_inv='/^(1|3|4|7|10|11)$/';
             if(preg_match($preg_hold_inv,$check_status['orders_status']) && !preg_match($preg_hold_inv,$status))
             {
@@ -179,7 +179,7 @@
             {
                 $order->deductInventory();
             }
-            
+
           $customer_notified = '0';
           if (isset($HTTP_POST_VARS['notify']) && ($HTTP_POST_VARS['notify'] == 'on')) {
             $notify_comments = '';
@@ -230,7 +230,7 @@ $email='';
       }
 
       tep_redirect(tep_href_link(FILENAME_ORDERS, tep_get_all_get_params(array('action')) . 'action=edit'));
-      break;		
+      break;
     }
   }
 
@@ -244,7 +244,7 @@ $email='';
       $messageStack->add(sprintf(ERROR_ORDER_DOES_NOT_EXIST, $oID), 'error');
     }
   }
-  
+
 function paytools(&$order)
 {
     //Paytools
@@ -257,7 +257,7 @@ function paytools(&$order)
     array_push($pay_history,$ph['results']);
 
   }
-  
+
   //If old PayFlow Pro transaction exists, allow a refund from the manager.
   if($order->info['paid']=='1' && count($pay_history)<1)
   {
@@ -266,7 +266,7 @@ function paytools(&$order)
   }
   ////////////////////
 
-  
+
   foreach($pay_history as $ph)
   {
     if($ph[0]=='1')
@@ -292,10 +292,10 @@ function paytools(&$order)
   $pay_history['total_paid']=$total_paid;
 
   return($pay_history);
-}  
+}
 
     paytools($order);
-    
+
 
 
 ?>
@@ -362,14 +362,14 @@ function printInvoice(auto)
             </td>
             <td class="pageHeading" align="right"><?php echo tep_draw_separator('pixel_trans.gif', 1, HEADING_IMAGE_HEIGHT); ?></td>
             <td class="pageHeading" align="right"><?php echo ' <a href="' . tep_href_link(FILENAME_ORDERS_EDIT, 'oID=' . $_GET['oID']) . '">' . tep_image_button('button_edit.gif', IMAGE_EDIT) . '</a> <a href="' . tep_href_link(FILENAME_ORDERS_INVOICE, 'oID=' . $_GET['oID']) . '" TARGET="_blank">' . tep_image_button('button_invoice.gif', IMAGE_ORDERS_INVOICE) . '</a> <a href="' . tep_href_link(FILENAME_ORDERS, tep_get_all_get_params(array('action'))) . '">' . tep_image_button('button_back.gif', IMAGE_BACK) . '</a> '; ?>
-            
+
             </td>
           </tr>
         </table>
-        
+
         <table width="100%" border="0">
-          
-          
+
+
       <tr>
         <td class="main" width="50%" valign="top"><table border="1" cellspacing="0" cellpadding="5" width="100%">
           <tr>
@@ -427,7 +427,7 @@ function printInvoice(auto)
         </table></td>
       </form></tr>
          </td></tr></table>
-         
+
          </td></tr></table>
 
 
@@ -516,7 +516,7 @@ case 10: $max_comment = '(I can smell the fraud from here)'; break;
             <td class="main"><?php echo ENTRY_CREDIT_CARD_CVVNUMBER; ?></td>
             <td class="main"><?php echo $order->info['cvvnumber']; ?></td>
           </tr>
-<?php // end cvv contribution ?>		  
+<?php // end cvv contribution ?>
  </table>
 
         <hr/>
@@ -530,12 +530,12 @@ case 10: $max_comment = '(I can smell the fraud from here)'; break;
               <tr>
                 <td class="main" valign="top"><b><?php echo ENTRY_CUSTOMER; ?></b><br/><a href="customers.php?cID=<?php echo $order->customer['id']  ?>&action=edit">[view profile]
                 <br/>
-                <?php 
-                
+                <?php
+
                 $prevorders=tep_db_fetch_array(tep_db_query('select count(*) as cnt from orders where orders_status<>6 and orders_id<>'.(int)$oID.' and customers_id='.(int)$order->customer['id']));
                 echo '<a href="/orders.php?cID=',$order->customer['id'],'">',$prevorders['cnt'], ' Previous Orders</a>'
-                
-                ?> 
+
+                ?>
                 </td>
                 <td class="main"><?php echo tep_address_format($order->customer['format_id'], $order->customer, 1, '', '<br>'); ?></td>
               </tr>
@@ -611,8 +611,8 @@ case 10: $max_comment = '(I can smell the fraud from here)'; break;
 
       if (isset($order->products[$i]['attributes']) && (sizeof($order->products[$i]['attributes']) > 0)) {
         for ($j = 0, $k = sizeof($order->products[$i]['attr
-        
-        
+
+
         ibutes']); $j < $k; $j++) {
           echo '<br><nobr><small>&nbsp;<i> - ' . $order->products[$i]['attributes'][$j]['option'] . ': ' . $order->products[$i]['attributes'][$j]['value'];
           if ($order->products[$i]['attributes'][$j]['price'] != '0') echo ' (' . $order->products[$i]['attributes'][$j]['prefix'] . $currencies->format($order->products[$i]['attributes'][$j]['price'] * $order->products[$i]['qty'], true, $order->info['currency'], $order->info['currency_value']) . ')';
@@ -634,12 +634,25 @@ case 10: $max_comment = '(I can smell the fraud from here)'; break;
           <tr>
             <td align="right" colspan="9"><table border="0" cellspacing="0" cellpadding="2">
 <?php
+    $orderTax = 0;
     for ($i = 0, $n = sizeof($order->totals); $i < $n; $i++) {
-      echo '              <tr>' . "\n" .
-           '                <td align="right" class="smallText">' . $order->totals[$i]['title'] . '</td>' . "\n" .
-           '                <td align="right" class="smallText">' . $order->totals[$i]['text'] . '</td>' . "\n" .
-           '              </tr>' . "\n";
+        if ($order->totals[$i]['title'] == ':') {
+            $orderTax = $order->totals[$i]['value'];
+        }
     }
+
+    for ($i = 0, $n = sizeof($order->totals); $i < $n; $i++) {
+        if ($order->totals[$i]['title'] != ':'){
+            if ($order->totals[$i]['title'] == 'Total:'){
+                $order->totals[$i]['text'] = '$' . ($order->totals[$i]['value'] - $orderTax);
+            }
+
+              echo '              <tr>' . "\n" .
+                   '                <td align="right" class="smallText">' . $order->totals[$i]['title'] . '</td>' . "\n" .
+                   '                <td align="right" class="smallText">' . $order->totals[$i]['text'] . '</td>' . "\n" .
+                   '              </tr>' . "\n";
+        }
+    }  die;
 ?>
             </table></td>
           </tr>
@@ -681,10 +694,10 @@ case 10: $max_comment = '(I can smell the fraud from here)'; break;
             <td class="main"><?php echo $order->info['cc_expires']; ?></td>
           </tr>
           </table>
-          
-          
-          
-          
+
+
+
+
 <!--Payment info-->
         <form action="<?php echo FILENAME_ORDERS?>?action=makepayment&transid=1111&oID=<?php echo $oID?>" method="post" name="paytools">
         <input name="action" value="makepayment" type="hidden"/>
@@ -731,7 +744,7 @@ case 10: $max_comment = '(I can smell the fraud from here)'; break;
                </table>
             </p>
             <?php echo '<p><b>Total Paid: $'.$payhistory['total_paid'].'</b></p>';
-            
+
             ?>
 
             <?php }  ?>
@@ -754,9 +767,9 @@ case 10: $max_comment = '(I can smell the fraud from here)'; break;
              </p>
              </div>
 
-             <script type="text/javascript">  
+             <script type="text/javascript">
                      function update_payment_type(paytype,amt)
-                     { 
+                     {
                        document.paytools.amount.value=amt;
 
                        if(paytype=='refund')
@@ -764,7 +777,7 @@ case 10: $max_comment = '(I can smell the fraud from here)'; break;
                          document.paytools.type.value='refund';
                          document.getElementById('prompt_payamt').innerHTML='Refund Amount';
                          document.getElementById('prompt_heading').innerHTML='Issue Refund';
-                         
+
                        }
                        else
                        {
@@ -808,7 +821,7 @@ case 10: $max_comment = '(I can smell the fraud from here)'; break;
               </form></tr>
               <tr><?php echo tep_draw_form('status', FILENAME_ORDERS, '', 'get'); ?>
                 <td class="smallText" align="right"><?php echo HEADING_TITLE_STATUS . ' ' . tep_draw_pull_down_menu('status', array_merge(array(array('id' => '', 'text' => TEXT_ALL_ORDERS)), $orders_statuses), '', 'onChange="this.form.submit();"'); ?></td>
-              </form></tr>            
+              </form></tr>
             </table></td>
           </tr>
 
@@ -923,7 +936,7 @@ $contents[] = array('text' => '<br>' . TEXT_DATE_ORDER_CREATED . ' ' . tep_date_
 </html>
 
 
-<?php require(DIR_WS_INCLUDES . 'application_bottom.php'); 
+<?php require(DIR_WS_INCLUDES . 'application_bottom.php');
 
 ?>
 
@@ -933,11 +946,11 @@ $contents[] = array('text' => '<br>' . TEXT_DATE_ORDER_CREATED . ' ' . tep_date_
 function CapturePayment($order)
 {
 /*
-    $pfpXml='<?xml version="1.0" encoding="UTF-8"?><XMLPayRequest Timeout="30" version = "2.0" xmlns="http://www.paypal.com/XMLPay"> 
+    $pfpXml='<?xml version="1.0" encoding="UTF-8"?><XMLPayRequest Timeout="30" version = "2.0" xmlns="http://www.paypal.com/XMLPay">
                 <RequestData>
                     <Vendor>'.PFP_VENDOR.'</Vendor>
                     <Partner>'.PFP_PARTNER.'</Partner>';
-                    
+
     $pfpXml.='<Transactions>
                 <Transaction>
                     <Authorization>
@@ -957,8 +970,8 @@ function CapturePayment($order)
                         </PayData>
                     </Authorization>
                 </Transaction>
-                </Transactions>';          
-    
+                </Transactions>';
+
     $pfpXml.='</RequestData>
                 <RequestAuth>
                     <UserPass>
@@ -967,16 +980,16 @@ function CapturePayment($order)
                     </UserPass>
                 </RequestAuth>
             </XMLPayRequest>';
-    
+
     $remote=curl_init();
     $headers = array(
             "Content-Length: ".strlen($pfpXml),
             "Content-Type: text/xml",
             "Host: ".PFP_HOST",
             "X-VPS-REQUEST-ID: ".time(),
-            "X-VPS-CLIENTTIMEOUT: 45"); 
-       
-    curl_setopt($remote, CURLOPT_HTTPHEADER, $headers);    
+            "X-VPS-CLIENTTIMEOUT: 45");
+
+    curl_setopt($remote, CURLOPT_HTTPHEADER, $headers);
     curl_setopt($remote, CURLOPT_URL,'https://'.PFP_HOST.'/transaction');
 	curl_setopt($remote, CURLOPT_VERBOSE, 1);
 
@@ -994,7 +1007,7 @@ function CapturePayment($order)
 	//getting response from server
 	echo $pfpXml.'<br/>';
 	$response = curl_exec($remote);
-	
+
 	echo $response;
 	echo curl_getinfo($remote);
 */
