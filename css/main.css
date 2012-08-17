@@ -1,0 +1,912 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.header ul, ol{
+    list-style: none;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+input{
+    outline: none;
+}
+
+/*-------------------------------control styles--------------------------------------------*/
+.fl-left, .header ul li{
+    float: left;
+}
+
+.fl-right{
+    float: right;
+}
+
+.block-center{
+    margin: 0 auto;
+}
+
+.relative{
+    position: relative;
+}
+
+.clear{
+    clear: both;
+}
+/*-------------------------------control styles end----------------------------------------*/
+
+/*-------------------------------color styles----------------------------------------------*/
+.turquoise, a, .content h2, .content h1{
+    color: #24B4B9;
+}
+
+.blue{
+    color: #6391B5;
+}
+/*-------------------------------color styles end------------------------------------------*/
+
+body{
+    font: 14px/18px Verdana, Tahoma;
+}
+
+.content-width{
+    width: 1170px;
+}
+
+.header, .user-controls{
+    /*margin: 0 57px;*/
+}
+
+.header .right-menu{
+    display: none;
+}
+
+.header ul li{
+    margin: 24px 0;
+}
+
+.header ul li a{
+    display: block;
+    color: #24B4B9;
+    height: 22px;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    padding: 0 5px;
+    margin: 0 13px;
+    text-decoration: underline;
+}
+
+.header ul li a:hover{
+    text-decoration: none;
+}
+
+.header ul li a.active{
+    background: #38C9CE;
+    color: #FFF;
+    cursor: default;
+    text-decoration: none;
+}
+
+.header ul li a.active em{
+    background: url("./seacost_sprite.png") no-repeat;
+    position: absolute;
+    top: 0;
+    height: 22px;
+    width: 13px;
+}
+
+.header ul li a.active em.left{
+    left: -13px;
+    background-position: -162px -61px;
+}
+
+.header ul li a.active em.right{
+    right: -13px;
+    background-position: -175px -61px;
+}
+
+.header div span{
+    font: 20px RotondaCRegular;
+    display: inline-block;
+    margin: 24px 0 24px 15px;
+    padding-left: 30px;
+}
+
+.header div span em{
+    background: url("./seacost_sprite.png") no-repeat;
+    left: 0;
+    height: 19px;
+    width: 23px;
+    position: absolute;
+    top: 0;
+}
+
+.header > div.blue{text-align: right;}
+.header div span.country em{
+    background-position: 0 -61px;
+}
+
+.header div span.world em{
+    background-position: -24px -60px;
+    height: 23px;
+    top: -2px;
+    width: 25px;
+}
+
+.header div span.country{
+   margin-left: 0;
+}
+
+.span12.search.controllers{
+    display: none;
+}
+
+.user-controls .logo{
+    background: url("./seacost_sprite.png") no-repeat;
+    height: 60px;
+    margin-right: 60px;
+    width: 180px;
+}
+
+#expansion_button{
+    background: transparent;
+    cursor: pointer;
+    height: 39px;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 40px;
+}
+
+.user-controls .search-container{
+    height: 40px;
+    width: 57%;
+    z-index: 1;
+}
+
+.width-223{
+    display: inline-block!important;
+    width: 182px!important;
+}
+
+.width-223 input[type="submit"]{
+    right: -140px!important;
+}
+
+.narrow .width-223{
+    display: inline-block!important;
+    width: 223px!important;
+}
+
+.narrow .width-223 input[type="submit"]{
+    right: -180px!important;
+}
+
+.user-controls .search-container input[type="text"]{
+    background: #C4E0F2;
+    border: 3px solid transparent!important;
+    color: #FFF;
+    font-size: 16px;
+    padding: 7px 35px 7px 0;
+    width: 100%;
+    margin: 0;
+    box-shadow: none;
+    height: auto;
+    text-indent: 10px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    *padding-right: 0;
+    *height: 22px;
+}
+
+.user-controls .search-container input[type="text"]:focus{
+   background: #FFF;
+   border: 3px solid #78a2c2!important;
+   color: #666;
+}
+
+.user-controls .search-container input[type="submit"]{
+    background: url("./seacost_sprite.png") -137px -60px no-repeat;
+    border: 0;
+    height: 25px;
+    width: 25px;
+    top: 6px;
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    box-shadow: none;
+    *top: 8px;
+    *right: 0;
+}
+
+.focused + input[type="submit"]{
+   background: url("./seacost_sprite.png") -137px -86px no-repeat!important;
+}
+
+.user-controls .search-container em.right{
+    background-position: right -60px;
+    right: -4px;
+}
+
+.user-controls .basket{
+    cursor: pointer;
+    padding-left: 52px;
+    width: 90%;
+}
+
+.user-controls .basket label{
+    background: url("./seacost_sprite.png") -52px -60px;
+    position: absolute;
+    left: 0;
+    top: -10px;
+    height: 52px;
+    width: 66px;
+}
+
+.user-controls .basket:hover label{
+    background-position: 2px -119px;
+    cursor: pointer;
+}
+
+.user-controls .basket p{
+    background: #88D98A;
+    color: #FFF;
+    height: 39px;
+    line-height: 39px;
+    padding: 0 5px;
+    margin: 0 4px 0 14px;
+    min-width: 200px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.user-controls .basket:hover p{
+    background: #53Cf56;
+}
+
+.user-controls .basket:active p{
+    background: url("./green_button_active.png") repeat-x;
+}
+
+.user-controls .basket p em{
+    background: url("./seacost_sprite.png") no-repeat;
+    position: absolute;
+    top: 0;
+    height: 39px;
+}
+
+.user-controls .basket p em.left{
+    background-position: -121px -60px;
+    left: -14px;
+    width: 14px;
+}
+
+.user-controls .basket p em.right{
+    background-position: -13px -80px;
+    right: -4px;
+    width: 4px;
+}
+
+.user-controls .basket:hover p em.left{
+    background-position: -121px -100px;
+}
+
+.user-controls .basket:hover p em.right{
+    background-position: -138px -120px;
+}
+
+.user-controls .basket:active p em.left{
+    background-position: -64px -120px;
+}
+
+.user-controls .basket:active p em.right{
+    background-position: -142px -120px;
+}
+
+.user-controls .basket p strong{
+    color: #366D38;
+}
+
+.user-controls .log-button, .account-button{
+    color: #FFF;
+    background: #94C2E0;
+    margin: 0 4px 0 4px;
+    height: 39px;
+    padding: 0 6px 0 31px;
+    line-height: 39px;
+}
+
+.user-controls .log-button:hover, .account-button:hover{
+    background: #418CBD;
+}
+
+.user-controls .log-button:active, .account-button:active{
+    background: url("./blue_button_active.png") repeat-x;
+}
+
+.account-button{
+    padding: 0;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    width: 32px;
+}
+
+.user-controls .log-button label, .account-button label{
+    background: url(./seacost_sprite.png) -22px -88px;
+    height: 23px;
+    position: absolute;
+    left: 5px;
+    width: 18px;
+    top: 6px;
+    cursor: pointer;
+}
+
+.account-button label{
+    background: url(./seacost_sprite.png) -171px -88px;
+    height: 25px;
+    left: 50%;
+    margin-left: -8px;
+    width: 16px;
+}
+
+.user-controls .log-button em, .account-button em{
+    background: url(./seacost_sprite.png) no-repeat;
+    height: 39px;
+    position: absolute;
+    top: 0;
+    width: 4px;
+}
+
+.user-controls .log-button em.left, .account-button em.left{
+    background-position: 0 -80px;
+    left: -4px;
+}
+
+.user-controls .log-button em.right, .account-button em.right{
+    background-position: -4px -80px;
+    right: -4px;
+}
+
+.user-controls .log-button:hover em.left, .account-button:hover em.left{
+    background-position: -192px 0;
+}
+
+.user-controls .log-button:hover em.right, .account-button:hover em.right{
+    background-position: right 0;
+}
+
+.user-controls .log-button:active em.left, .account-button:active em.left{
+    background-position: -108px -120px;
+}
+
+.user-controls .log-button:active em.right, .account-button:active em.right{
+    background-position: -112px -120px;
+}
+
+.user-controls .log-button:hover, .account-button label:hover{
+    text-decoration: none;
+}
+
+.account-control{
+    padding-right: 20px;
+    width: 75%;
+    *padding-right: 30px;
+    *width: 70%;
+}
+
+.account-control.account-button-on{
+    padding-right: 80px;
+    width: 68%;
+}
+
+.content h2, .content h1{
+    font: 24px/32px SwankyandMooMooRegular;
+    text-align: center;
+    padding: 15px 0;
+}
+
+.basket a{
+    text-decoration: none;
+    color: #fff;
+    display: inline-block;
+    width: auto;
+    height: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.basket a:hover{
+    text-decoration: none;
+    color: #fff;
+}
+
+.q-tip{
+    background: #88D98A;
+    position: absolute;
+    max-width: 220px;
+    padding: 10px;
+    word-wrap: break-word;
+    right: -60px;
+    top: 40px;
+    visibility: hidden;
+    font-weight: bold;
+}
+
+.button-container{
+    max-width: 316px;
+    min-width: 136px;
+    text-shadow: 1px 1px 0 #0E770E;
+}
+
+.button-container, .button-container label{
+    font: 13px Verdana;
+}
+
+.button-container a{
+    background: url("./price_button.png") 0 0 no-repeat;
+    display: block;
+    color: #FFF;
+    height: 90px;
+}
+
+.button-container label{
+    color: #FFF;
+    position: relative;
+}
+
+.button-container a:hover{
+    background-position: 0 -89px;
+}
+
+.button-container a:active{
+    background-position: 0 -182px;
+}
+
+.button-container .button-head{
+    display: block;
+    height: 43px;
+}
+
+.button-container .button-head > span.price{
+    display: block;
+    width: 65%;
+    text-indent: 10px;
+    padding: 13px 0 0;
+}
+
+.button-container .button-head > span.discount{
+    display: block;
+    position: relative;
+    top: 10px;
+    width: 30%;
+}
+
+.button-container label em{
+    background: url("./seacost_sprite.png") no-repeat;
+    height: 25px;
+    position: absolute;
+    top: 0;
+    width: 6px;
+}
+
+.button-container label em.left{
+    background-position: -35px -176px;
+    left: -6px;
+}
+
+.button-container label em.right{
+    background-position: -41px -176px;
+    right: -6px;
+}
+.button-container label.sale{
+    background: #F73838;
+    font: bold 18px Verdana;
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    text-shadow: none;
+    padding: 0 4px;
+    margin-left: -5px;
+}
+
+.button-container .button-footer{
+    display: block;
+    padding-left: 50px;
+    font: bold 20px Verdana;
+    padding-top: 7px;
+}
+
+.button-container .button-footer label{
+    background: url("./seacost_sprite.png") 0 -176px no-repeat;
+    height: 26px;
+    position: absolute;
+    width: 32px;
+    left: 8px;
+    top: 10px;
+}
+
+@media(max-width:1200px){
+    .user-controls .logo{
+        margin-right: 30px;
+    }
+
+    .user-controls .search-container{
+        width: 54%;
+    }
+
+    .account-control.account-button-on{
+        width: 57%;
+    }
+}
+
+@media(max-width:980px){
+    .header .left-menu{
+        visibility: hidden;
+    }
+
+    .header .right-menu{
+        display: block;
+        float: right;
+        margin: 0;
+        padding: 0 13px 0 0;
+    }
+
+    .header ul.right-menu li{
+        margin: 24px 0 0;
+    }
+
+    .header .span6.left-menu{
+        width: 31.491712705%;
+    }
+
+    .header .span6.left-menu li{
+        display: none;
+    }
+
+    .header .span6.blue{
+        width: 65.74585634900001%;
+    }
+
+    .header ul.right-menu li a{
+        margin: 0 0 0 26px;
+    }
+
+    .user-controls .logo{
+        left: 0;
+        margin: 0;
+        position: absolute;
+        top: -90px;
+    }
+
+    .user-controls .span6.search{
+        width: 31.491712705%;
+    }
+
+    .user-controls .span6.controllers{
+        width: 65.74585634900001%;
+    }
+
+    .user-controls .search-container{
+        width: 100%;
+    }
+
+    .account-control{
+        width: 64%;
+    }
+
+    .account-control.account-button-on{
+        width: 60%;
+    }
+}
+
+@media(max-width:768px){
+    .header .span6.left-menu{
+        display: none;
+    }
+
+    .header .span6.blue{
+        width: 100%;
+    }
+
+    .user-controls .span6.search{
+        float: left;
+    }
+
+    .user-controls .span6.controllers{
+        float: right;
+    }
+}
+
+@media(max-width:720px){
+    .user-controls .basket label, .user-controls .basket p a span, .user-controls .basket p a strong,
+    .user-controls .log-button span, .user-controls .basket .items span, .user-controls .span6.search.big,
+    .user-controls .span6.controllers.big{
+        display: none;
+    }
+
+    .span12.search.controllers{
+        display: block;
+        zoom: 1;
+    }
+
+    .user-controls .search-container{
+        width: 60%;
+    }
+
+    .user-controls .basket p a{
+        background: url("./seacost_sprite.png") -168px -119px;
+        width: 32px;
+        height: 26px;
+        display: block;
+        position: relative;
+        top: 6px;
+    }
+
+    .user-controls .basket p{
+        min-width: 0;
+        padding: 0;
+        width: 32px;
+    }
+
+    .user-controls .basket{
+        padding-left: 0;
+        width: auto;
+    }
+
+    .account-control{
+        width: 10%;
+    }
+
+    .account-control.account-button-on{
+        width: 10%;
+    }
+
+    .user-controls .basket p em.left{
+        background-position: -9px -80px;
+        left: -4px;
+        width: 4px;
+    }
+
+    .user-controls .basket:hover p em.left{
+        background-position: -146px -120px;
+    }
+
+    .user-controls .basket:active p em.left{
+        background-position: -150px -120px;
+    }
+
+    .user-controls .log-button{
+        padding: 0;
+        width: 32px;
+    }
+
+    .user-controls .log-button label{
+        left: 7px;
+    }
+
+    .user-controls .basket .items{
+        background: url("./seacost_sprite.png") -81px -119px;
+        height: 24px;
+        line-height: 24px;
+        display: block;
+        position: absolute;
+        text-align: center;
+        width: 24px;
+        right: -10px;
+        top: -10px;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    #width_change input[type="text"]{
+        *height: 24px;
+    }
+
+    #width_change input[type="submit"]{
+        *right: -5px;
+    }
+}
+
+@media(max-width:670px){
+    .button-container a{
+        background: url("./price_button_small.png") 0 0 no-repeat;
+        height: 145px;
+        width: 136px;
+    }
+
+    .button-container a:hover{
+        background-position: -165px 0;
+    }
+
+    .button-container a:active{
+        background-position: right 0;
+    }
+
+    .button-container .button-head > span.discount{
+        top: 7px;
+        width: 100%;
+    }
+
+    .button-container .button-head{
+        height: 75px;
+    }
+
+    .button-container .button-head > span.price{
+        text-align: justify;
+        text-indent: 0;
+        padding: 5px 14px 0;
+        width: auto;
+    }
+
+    .button-container .button-head > span.discount{
+        text-align: center;
+    }
+
+    .button-container .button-footer{
+        font-size: 14px;
+    }
+
+    .button-container .button-footer label{
+        top: 21px;
+        left: 14px;
+    }
+
+    .user-controls .span6.search .search-container{
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 10;
+    }
+
+    .header .span6.blue span{
+        display: none;
+    }
+
+    .header ul.right-menu{
+        float: none;
+        margin: 0 auto;
+        width: 416px;
+        padding: 0;
+    }
+
+    .header ul.right-menu li{
+        margin: 24px 9px 24px 9px;
+    }
+
+    .header ul.right-menu li a{
+        margin: 0;
+    }
+
+    .user-controls .logo{
+        position: static;
+        margin-right: 40px;
+    }
+
+    .user-controls .search-container{
+        width: 32px;
+    }
+
+    .user-controls .min-width-align .search-container{
+        *width: 40px;
+        *margin-top: -3px;
+        *height: 44px;
+    }
+
+    .user-controls .search-container input[type="submit"]{
+        right: 0;
+    }
+
+    .account-control{
+        width: 25%;
+    }
+
+    .span12.search.controllers .account-control.account-button-on{
+        padding-right: 0;
+    }
+
+    .user-controls{
+        *padding-top: 20px;
+        *position: relative;
+    }
+
+    .user-controls .account-control .basket{
+        position: absolute;
+        right: 30px;
+        top: 0;
+    }
+
+    .user-controls .account-button-on .basket{
+        right: 80px;
+    }
+
+    .account-control.account-button-on{
+        width: 10%;
+    }
+
+    .user-controls .search-container{
+        position: absolute;
+        top: 0;
+        right: 150px;
+    }
+
+    .user-controls .search-container.narrow{
+        right: 190px;
+    }
+}
+
+@media(max-width:480px){
+    .container{
+        min-width: 320px;
+        width: 100%;
+    }
+}
+
+@media(max-width:450px){
+    .header ul.right-menu{
+        margin: 0 auto;
+        width: 270px;
+    }
+
+    .header ul.right-menu li{
+        margin: 15px 0;
+    }
+
+    .header ul.right-menu li
+    .header ul.right-menu li.first{
+        float: left;
+    }
+
+    .header ul.right-menu li.second{
+        float: right;
+    }
+
+    .header ul.right-menu li.last{
+        float: none;
+        display: block;
+        text-align: center;
+        clear: both;
+        width: 125px;
+        margin: 15px auto;
+    }
+
+    .user-controls{
+        padding-top: 65px;
+    }
+
+    .user-controls .logo{
+        left: 50%;
+        position: absolute;
+        margin-left: -90px;
+        top: -70px;
+    }
+
+    .min-width-align{
+        margin: 0 auto 10px;
+        height: 39px;
+        width: 180px;
+    }
+
+    .min-width-align.narrow-width{
+        width: 220px;
+    }
+
+    .user-controls .search-container{
+        right: 150px;
+    }
+
+    .min-width-align.narrow-width .user-controls .search-container{
+        right: 190px;
+    }
+}
+
+@media(max-width:320px){
+    .container{
+        width: 320px;
+    }
+}

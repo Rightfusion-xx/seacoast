@@ -12,11 +12,18 @@
   require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_DEFAULT);
 
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 
 <html <?php echo HTML_PARAMS; ?>>
 
 <head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/font/fonts.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/jquery/respond.src.js"></script>
+    <![endif]-->
 <title>Complete Vitamin Supplement Catalog</title>
  <meta name="Description" content="A-Z index catalog of nutritional and natural health products." />
  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />

@@ -33,7 +33,7 @@ function autotab(original,destination){if (original.getAttribute&&original.value
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 
- 
+
 
 <!-- header //-->
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
@@ -50,7 +50,6 @@ function autotab(original,destination){if (original.getAttribute&&original.value
       </TABLE></TD>
 <!-- body_text //-->
     <td width="100%" valign="top">
-
 		<?php echo tep_draw_form('cart_quantity', tep_href_link(FILENAME_SHOPPING_CART, 'action=update_product')); ?><table border="0" width="100%" cellspacing="0" cellpadding="12">
       <tr>
         <td>

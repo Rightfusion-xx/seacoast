@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="homepage" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" debug_break_at_the_first_line="true" server_name="localhost">
+  <configuration default="false" name="homepage" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="localhost">
     <RunnerSettings RunnerId="PhpWebAppDebugRunner" />
     <ConfigurationWrapper RunnerId="PhpWebAppDebugRunner" />
     <method />

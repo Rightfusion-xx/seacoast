@@ -1,6 +1,13 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html>
 <head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/font/fonts.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/jquery/respond.src.js"></script>
+    <![endif]-->
 <title>oscommerce</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" href="mymenu.css" type="text/css">

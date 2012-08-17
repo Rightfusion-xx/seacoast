@@ -32,14 +32,17 @@
 
   require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_DEFAULT);
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
-
-
-
-
-  <title>Top Selling Vitamin Brands & Manufacturers</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/font/fonts.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="/jquery/respond.src.js"></script>
+    <![endif]-->
+    <title>Top Selling Vitamin Brands & Manufacturers</title>
 
 <meta name="keywords" content="vitamin manufacturers"/>
 <meta name="description" content="Best brands and manufacturers of nutritional supplements."/>
@@ -49,44 +52,28 @@
 <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
-
-
-
-<!-- header //-->
-<?php require(DIR_WS_INCLUDES . 'header.php'); ?>
-<!-- header_eof //-->
-
-<div id="content">
-
-<h1>Best Selling Nutritional Supplement Brands & Manufacturers</h1>
-<p>
-Below are the best selling brands of supplements from manufacturers around the world. These manufacturers abide by
-good manufacturing principles and source their raw material ethically. Products and goods are required to meet
-nutritional standards and are subject to FDA regulations on nutritional supplements.
-</p>
-<?php
-
-$query=tep_db_query('SELECT manufacturers_name, manufacturers_id FROM manufacturers m order by manufacturers_name asc');
-
-echo '<ul>';
-while($manufacturer_info=tep_db_fetch_array($query))
-{
-
-    ?><li style="float:left;width:200px;margin-left:50px;"><a href="/index.php?manufacturers_id=<?php echo $manufacturer_info['manufacturers_id'];?>"><?php echo $manufacturer_info['manufacturers_name'];?></a></li>
-
+    <!-- header //-->
     <?php
-
-}
-echo '</ul>';
-
-?>
-
-</div>
-<br style="clear:both;"/>
-
-<?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
-<!-- footer_eof //-->
-<br>
+        require(DIR_WS_INCLUDES . 'header.php');
+        $_REQUEST['page_caption'] = 'Best Selling Nutritional Supplement Brands & Manufacturers';
+    ?>
+    <!-- header_eof //-->
+    <div id="content">
+        <p>
+            Below are the best selling brands of supplements from manufacturers around the world. These manufacturers abide by
+            good manufacturing principles and source their raw material ethically. Products and goods are required to meet
+            nutritional standards and are subject to FDA regulations on nutritional supplements.
+        </p>
+        <?php $query=tep_db_query('SELECT manufacturers_name, manufacturers_id FROM manufacturers m order by manufacturers_name asc');?>
+        <ul>
+            <?php while($manufacturer_info=tep_db_fetch_array($query)):?>
+                <li style="float:left;width:200px;margin-left:50px;"><a href="/index.php?manufacturers_id=<?php echo $manufacturer_info['manufacturers_id'];?>"><?php echo $manufacturer_info['manufacturers_name'];?></a></li>
+            <?php endwhile?>
+        </ul>
+    </div>
+    <br style="clear:both;"/>
+    <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
+    <!-- footer_eof //-->
 </body>
 </html>
 <?php require(DIR_WS_INCLUDES . 'application_bottom.php'); ?>

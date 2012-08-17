@@ -382,8 +382,11 @@ define('BOX_TOOLS_SERVER_INFO', 'Server Info');
 
 define('BOX_TOOLS_WHOS_ONLINE', 'Who\'s Online');
 
-
-
+define('BOX_TOOLS_TOP_MESSAGES', 'Searces Top Messages');
+define('BOX_EMAIL_TEMPLATES', 'System Email Templates');
+define('BOX_NEWSLETTER_SUBSCRIBERS', 'Contact Lists');
+define('BOX_NEWSLETTERS', 'Newsletters');
+define('BOX_NEWSLETTER_ITEMS', 'Email Templates');
 // localizaion box text in includes/boxes/localization.php
 
 
@@ -1145,7 +1148,7 @@ define('BOX_ARTICLES_AUTHORS', 'Authors');
 
 
 
-define('BOX_ARTICLES_REVIEWS', 'Reviews'); 
+define('BOX_ARTICLES_REVIEWS', 'Reviews');
 
 
 
@@ -1161,7 +1164,7 @@ define('IMAGE_NEW_ARTICLE', 'New Article');
 
 
 
-define('TEXT_DISPLAY_NUMBER_OF_AUTHORS', 'Displaying <b>%d</b> to <b>%d</b> (of <b>%d</b> authors)'); 
+define('TEXT_DISPLAY_NUMBER_OF_AUTHORS', 'Displaying <b>%d</b> to <b>%d</b> (of <b>%d</b> authors)');
 
 
 

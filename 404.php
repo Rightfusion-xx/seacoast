@@ -1,5 +1,11 @@
 <?php
 
+if(stristr($_SERVER['REQUEST_URI'], '/images/') && !stristr($_SERVER['HTTP_HOST'], 'seacoast.com'))
+{
+    header('Location: http://www.seacoast.com'.$_SERVER['REQUEST_URI']);
+    exit();
+}
+
 function set_old_uri()
 {
     global $old_uri;
@@ -14,11 +20,11 @@ function set_old_uri()
         }
         else
         {
-            $old_uri.='&';            
+            $old_uri.='&';
         }
-        
+
         $old_uri.=$item .'='.$_GET[$item];
-        
+
     }
 }
 
@@ -37,13 +43,13 @@ if(preg_match('/\/~.+?/',$_SERVER['REQUEST_URI']))
     header('HTTP/1.1 301 Moved Permanently');
     header('Location: http://www.seacoast.com/');
     exit();
-    
+
 }
 
-// Need to match the first /test/ as the processor command  
+// Need to match the first /test/ as the processor command
 if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
 {
- 
+
     $processor=$processor[0];
 
 
@@ -52,25 +58,25 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
         $url_title=str_replace('/','',$url_title[0]);
 
     }
-    if(preg_match('/(-p\d+$)/',$_SERVER['REQUEST_URI'],$pagenum))                                         
+    if(preg_match('/(-p\d+$)/',$_SERVER['REQUEST_URI'],$pagenum))
     {
-        $pagenum=substr($pagenum[0],2);  
+        $pagenum=substr($pagenum[0],2);
         $url_title=preg_replace('/-p'.$pagenum.'$/','',$url_title);
     }
     else
     {
-        $pagenum=1;                                                                                              
+        $pagenum=1;
     }
 
     if(strlen($processor))
     {
         $_GET=array();
-    }  
-                   
+    }
+
     if($pagenum>1)
     {
-        $_REQUEST['page']=$pagenum;  
-        $_GET['page']=$pagenum;  
+        $_REQUEST['page']=$pagenum;
+        $_GET['page']=$pagenum;
 
     }
 
@@ -79,18 +85,41 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
     {
         $products_id=$products_id[1];
     }
-
+    function convertUriVarsToReq($uri)
+    {
+        $uri = explode('/', $uri);
+        $key = null;
+        foreach($uri as $k => $part)
+        {
+            if($k == 0) continue;
+            if(($k % 2) == 0)
+            {
+                $_REQUEST[$key] = $part;
+                $_GET[$key] = $part;
+                $key = null;
+            }
+            else
+            {
+                $key = $part;
+            }
+        }
+    }
 
     switch($processor)
     {
+        case '/cart/':
+            convertUriVarsToReq($_SERVER['REQUEST_URI']);
+            include_once './saved_cart.php';
+            exit();
+            break;
         case '/images/':
             exit();
-            
+
         case '/health-guide/':
             header("HTTP/1.0 200 OK");
-            $_SERVER['PHP_SELF']='/health_library.php';  
+            $_SERVER['PHP_SELF']='/health_library.php';
             $modURL=true;
-            
+
             if(!$url_title)
             {
                 $_SERVER['REQUEST_URI']='/health_library.php?article=10002479';
@@ -98,49 +127,49 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
             else
             {
                 preg_match('/-(\d+)($|-)/',$url_title,$matches);
-                $_REQUEST['article']=$matches[1];   
-                $_GET['article']=$matches[1]; 
+                $_REQUEST['article']=$matches[1];
+                $_GET['article']=$matches[1];
                 //echo $matches[1];exit();
                 if(preg_match('/-(\d+)-(.+)$/',$url_title,$matches))
                 {
                     $_REQUEST['subcat']=$matches[2];
-                    $_GET['subcat']=$matches[2];  
-                    
+                    $_GET['subcat']=$matches[2];
+
                 }
             }
-            
+
             //$_SERVER['REQUEST_URI']='/catalog.php?page='.$pagenum;
             set_old_uri();
-            include('/health_library.php');
-            
+            include('./health_library.php');
+
             exit();
             break;
-            
+
         case '/catalog/':
-            header("HTTP/1.0 200 OK");  
-            $_GET['page']=$pagenum; 
-            $_REQUEST['page']=$pagenum; 
-            $_SERVER['PHP_SELF']='/catalog.php';  
+            header("HTTP/1.0 200 OK");
+            $_GET['page']=$pagenum;
+            $_REQUEST['page']=$pagenum;
+            $_SERVER['PHP_SELF']='/catalog.php';
             $modURL=true;
             set_old_uri();
             //$_SERVER['REQUEST_URI']='/catalog.php?page='.$pagenum;
-            include('/catalog.php');
+            include('./catalog.php');
             exit();
             break;
-            
+
         case '/topic/':
             header("HTTP/1.0 200 OK");
             if(preg_match('/^([a-z0-9]{1})(-([1-9]{1}[0-9]*))?$/',$url_title,$matches))
             {
                 $_GET['letter']=$matches[1];
                 $_REQUEST['letter']=$matches[1];
-                
+
                 if($matches[3])
                 {
                     $_GET['page']=$matches[3];
-                    $_REQUEST['page']=$matches[3];    
-                } 
-                
+                    $_REQUEST['page']=$matches[3];
+                }
+
             }
             else
             {
@@ -150,133 +179,140 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
                     redir301('/topic/'); exit();
                 }
             }
-           
-            $_SERVER['PHP_SELF']='/topic.php';  
+
+            $_SERVER['PHP_SELF']='./topic.php';
             $modURL=true;
             set_old_uri();
             //$_SERVER['REQUEST_URI']='/catalog.php?page='.$pagenum;
-            include('/search_topics.php');
+            include('./search_topics.php');
             exit();
             break;
         case '/remedies/':
-            header("HTTP/1.0 200 OK");  
-            $_REQUEST['use']=$url_title; 
-            $_GET['use']=$url_title; 
-            $_SERVER['PHP_SELF']='/natural_uses.php';  
+            header("HTTP/1.0 200 OK");
+            $_REQUEST['use']=$url_title;
+            $_GET['use']=$url_title;
+            $_SERVER['PHP_SELF']='/natural_uses.php';
             $modURL=true;
             set_old_uri();
-            include('/natural_uses.php');
+            include('./natural_uses.php');
             exit();
             break;
-            
+
         case '/ailment/':
-            header("HTTP/1.0 200 OK");  
-            $_REQUEST['remedy']=$url_title; 
-            $_GET['remedy']=$url_title; 
-            $_SERVER['PHP_SELF']='/ailments.php';  
+            header("HTTP/1.0 200 OK");
+            $_REQUEST['remedy']=$url_title;
+            $_GET['remedy']=$url_title;
+            $_SERVER['PHP_SELF']='/ailments.php';
             $modURL=true;
             set_old_uri();
-            include('/ailments.php');
+            include('./ailments.php');
             exit();
             break;
-            
+
         case '/use/':
-            header("HTTP/1.0 200 OK");  
-            $_REQUEST['benefits']=$url_title; 
-            $_GET['benefits']=$url_title; 
-            $_SERVER['PHP_SELF']='/departments.php';  
+            header("HTTP/1.0 200 OK");
+            $_REQUEST['benefits']=$url_title;
+            $_GET['benefits']=$url_title;
+            $_SERVER['PHP_SELF']='/departments.php';
             $modURL=true;
             set_old_uri();
-            include('/departments.php');
+            include('./departments.php');
             exit();
             break;
-            
+
         case '/supplement/':
-            header("HTTP/1.0 200 OK");  
+            header("HTTP/1.0 200 OK");
             preg_match('/(-\d+$|-\d+-p\d+$)/i', $_SERVER['REQUEST_URI'], $matches);
             preg_match('/-\d+/i',$matches[0],$matches);
             $cPath=substr($matches[0],1);
-            $_REQUEST['products_id']=(int)$cPath; 
-            $_GET['products_id']=(int)$cPath; 
-            $_SERVER['PHP_SELF']='/product_info2.php';  
+            $_REQUEST['products_id']=(int)$cPath;
+            $_GET['products_id']=(int)$cPath;
+            $_SERVER['PHP_SELF']='/product_info2.php';
             $modURL=true;
             set_old_uri();
-            include('/product_info.php');
+            include('./product_info.php');
             exit();
             break;
-            
-            
-         case '/guide/':
-            header("HTTP/1.0 200 OK");  
+
+
+        case '/guide/':
+            header("HTTP/1.0 200 OK");
             preg_match('/(-\d+$|-\d+-p\d+$)/i', $url_title, $matches);
             preg_match('/-\d+/i',$matches[0],$matches);
             $cPath=substr($matches[0],1);
-            $_REQUEST['cPath']=(int)$cPath; 
-            $_GET['cPath']=(int)$cPath; 
-            $_SERVER['PHP_SELF']='/index.php';  
+            $_REQUEST['cPath']=(int)$cPath;
+            $_GET['cPath']=(int)$cPath;
+            $_SERVER['PHP_SELF']='/index.php';
             $modURL=true;
             set_old_uri();
-            include('/index.php');
+            include('./index.php');
             exit();
             break;
-            
-            
-         case '/naturalist/':
-            header("HTTP/1.0 200 OK");  
+
+        case '/naturalist/':
+            header("HTTP/1.0 200 OK");
             preg_match('/(-\d+$|-\d+-p\d+$)/i', $url_title, $matches);
             preg_match('/-\d+/i',$matches[0],$matches);
             $cPath=substr($matches[0],1);
-            $_REQUEST['manufacturers_id']=(int)$cPath; 
-            $_GET['manufacturers_id']=(int)$cPath; 
-            $_SERVER['PHP_SELF']='/index.php';  
+            $_REQUEST['manufacturers_id']=(int)$cPath;
+            $_GET['manufacturers_id']=(int)$cPath;
+            $_SERVER['PHP_SELF']='/index.php';
             $modURL=true;
             set_old_uri();
-            include('/index.php');
+            include('./index.php');
+            $_SERVER['QUERY_STRING'] = 'indexphp?manufacturers_id='.$cPath;
             exit();
             break;
-        
-        
-        
+
+
+
         default:
 
             if($products_id)
             {
-                
+
                 header("HTTP/1.0 200 OK");
                 $_SERVER['PHP_SELF']='/product_info2.php';
                 $_REQUEST['products_id']=(int)$products_id;
                 $_GET['products_id']=(int)$products_id;
                 $modURL=true;
                 set_old_uri();
-                include('/product_info2.php');
+                include('./product_info2.php');
                 exit();
                 break;
 
             }
-        
-        
+
+
     }
 }
 
 //check for hub pages before continuing.
-        require_once('/hub.php'); 
-    
-   header("HTTP/1.0 404 Not Found"); 
+        require_once('./hub.php');
+
+   header("HTTP/1.0 404 Not Found");
   require_once('includes/application_top.php');
   require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_DEFAULT);
 
-   
+
 
 ?>
-      <!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+      <!doctype html>
 
 <html <?php echo HTML_PARAMS; ?>>
 
 <head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/font/fonts.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="/jquery/respond.src.js"></script>
+    <![endif]-->
 <title>Seacoast | This Page Isn't Real...</title>
  <meta name="Description" content="A little 404 not found problem..." />
- <meta name="Keywords" content="404, not found" /> 
- <meta name="robots" content="noodp" /> 
+ <meta name="Keywords" content="404, not found" />
+ <meta name="robots" content="noodp" />
  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 
 <link rel="stylesheet" type="text/css" href="/stylesheet.css">
@@ -294,22 +330,22 @@ if(preg_match('/\/([a-z0-9-]+)\//', $_SERVER['REQUEST_URI'],$processor))
 <div id="content">
 
                    <h1>Hmmmm, this page was never here...</h1>
-                   
+
                    <p>
                    <b>Try a search, instead:</b>
-                   
+
                    <form action="/topic.php" method="get">
                     <input type="text" name="health" size="40"><br/>
                     <input type="submit" value="Search">
-                   </form>  
+                   </form>
                    </p>
 
-              
+
 
                </div>
 
 
-<?php 
+<?php
 
 require(DIR_WS_INCLUDES . 'footer.php'); ?>
 

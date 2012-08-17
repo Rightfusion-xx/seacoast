@@ -12,28 +12,28 @@
 // * DIR_FS_* = Filesystem directories (local/physical)
 // * DIR_WS_* = Webserver directories (virtual/URL)
 
-  define('HTTP_DEV_SERVER', 'seacoast');
+  define('HTTP_DEV_SERVER', 'sea-coast.loc');
 
-  define('HTTP_SERVER', 'admin.seacoast'); // eg, http://localhost - should not be empty for productive servers
-//  define('HTTP_CATALOG_SERVER', 'http://seacoast');
-  define('HTTP_CATALOG_SERVER', 'http://admin.seacoast');
-  define('HTTPS_CATALOG_SERVER', 'http://admin.seacoast');
-  
+  define('HTTP_SERVER', ''); // eg, http://localhost - should not be empty for productive servers
+//  define('HTTP_CATALOG_SERVER', 'http://www.dev.nealbozeman.com');
+  define('HTTP_CATALOG_SERVER', 'http://admin-sea-coast.loc');
+  define('HTTPS_CATALOG_SERVER', 'http://admin-sea-coast.loc');
+
   define('PASSSWORD_FUNCTION_FILE', HTTP_SERVER.'/password_funcs.php' );
-  
+
   define('ENABLE_SSL_CATALOG', 'false'); // secure webserver for catalog module
   define('DIR_FS_DOCUMENT_ROOT', '/seacoast/www/'); // where the pages are located on the server
   define('DIR_WS_ADMIN', '/'); // absolute path required
   define('DIR_FS_ADMIN', '/seacoast/www/admin/'); // absolute pate required
   define('DIR_WS_CATALOG', '/'); // absolute path required
-  define('DIR_FS_CATALOG', '/seacoast/www/'); // absolute path required
+  define('DIR_FS_CATALOG', str_replace('admin', '', $_SERVER['DOCUMENT_ROOT'])); // absolute path required
   define('DIR_WS_IMAGES', 'images/');
   define('DIR_WS_ICONS', DIR_WS_IMAGES . 'icons/');
   define('DIR_WS_CATALOG_IMAGES', DIR_WS_CATALOG . 'images/');
   define('DIR_WS_INCLUDES', 'includes/');
-  
-  define('DIR_TEMP_FULL_PATH_INCLUDES','seacoast/includes/functions'); //(AH added to make change password work)
-  
+
+  define('DIR_TEMP_FULL_PATH_INCLUDES','www.dev.nealbozeman.com/includes/functions'); //(AH added to make change password work)
+
   define('DIR_WS_BOXES', DIR_WS_INCLUDES . 'boxes/');
   define('DIR_WS_FUNCTIONS', DIR_WS_INCLUDES . 'functions/');
   define('DIR_WS_CLASSES', DIR_WS_INCLUDES . 'classes/');
@@ -46,21 +46,21 @@
   define('DIR_FS_BACKUP', DIR_FS_ADMIN . 'backups/');
 
 // define our database connection
-  define('DB_SERVER', '127.0.0.1'); // eg, localhost - should not be empty for productive servers
-  define('DB_SERVER_USERNAME', 'root');
-  define('DB_SERVER_PASSWORD', '');
-  define('DB_DATABASE', 'seacoast');
+  define('DB_SERVER', 'db.server.int'); // eg, localhost - should not be empty for productive servers
+  define('DB_SERVER_USERNAME', 'php');
+  define('DB_SERVER_PASSWORD', 'php');
+  define('DB_DATABASE', 'demo_seacoast_os');
   define('USE_PCONNECT', 'true'); // use persisstent connections?
   define('STORE_SESSIONS', 'mysql'); // leave empty '' for default handler or set to 'mysql'
 
 
 //  define PayflowPro details
-  define('PFP_HOST', 'payflowpro.verisign.com'); 
-  define('PFP_PARTNER', 'wfb'); 
+  define('PFP_HOST', 'payflowpro.verisign.com');
+  define('PFP_PARTNER', 'wfb');
   define('PFP_VENDOR', 'sea227303849');
-  define('PFP_USER', 'sea227303849'); 
-  define('PFP_PASSWORD', 'naturalhealth22'); 
-  
+  define('PFP_USER', 'sea227303849');
+  define('PFP_PASSWORD', 'naturalhealth22');
+
 //define membership product ids
   define('CM_FTPID','2531'); //free trial
   define('CM_PID','2532'); //full membership

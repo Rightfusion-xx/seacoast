@@ -22,9 +22,16 @@
   $breadcrumb->add(NAVBAR_TITLE_1, tep_href_link(FILENAME_ACCOUNT, '', 'SSL'));
   $breadcrumb->add(NAVBAR_TITLE_2, tep_href_link(FILENAME_ACCOUNT_HISTORY, '', 'SSL'));
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/font/fonts.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/jquery/respond.src.js"></script>
+    <![endif]-->
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
 <title><?php echo TITLE; ?></title>
 <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
@@ -32,7 +39,7 @@
 </head>
 <body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
 
- 
+
 
 <!-- header //-->
 <?php require(DIR_WS_INCLUDES . 'header.php'); ?>
@@ -49,7 +56,7 @@
       </TABLE></TD>
 <td valign="top" colspan="2" valign="top"><?php require(DIR_WS_INCLUDES . 'titlebar.php'); ?></td></tr><tr><!-- body_text //-->
     <td width="100%" valign="top">
-		
+
 		<table border="0" width="100%" cellspacing="0" cellpadding="12">
       <tr>
         <td><TABLE WIDTH="100%" BORDER="0" CELLPADDING="1" CELLSPACING="0" BGCOLOR="#336699"><TR><TD>
@@ -69,7 +76,26 @@
 <?php
   $orders_total = tep_count_customer_orders();
 
-  if ($orders_total > 0) {
+  if ($orders_total > 0)
+  {
+      /*
+       * $history_query_raw = "
+        SELECT
+            o.orders_id,
+            o.date_purchased,
+            o.delivery_name,
+            o.billing_name,
+            ot.text as order_total,
+            s.orders_status_name
+        FROM " . TABLE_ORDERS . " as `o`
+        LEFT JOIN " . TABLE_ORDERS_TOTAL . " as `ot` ON (o.orders_id = ot.orders_id)
+        LEFT JOIN " . TABLE_ORDERS_STATUS . " as `s` ON (o.orders_status = s.orders_status_id)
+        WHERE
+            o.customers_id = '" . (int)$customer_id . "' AND
+            ot.class = 'ot_total' AND
+            s.language_id = '" . (int)$languages_id . "'
+        ORDER BY orders_id DESC";
+       * */
     $history_query_raw = "select o.orders_id, o.date_purchased, o.delivery_name, o.billing_name, ot.text as order_total, s.orders_status_name from " . TABLE_ORDERS . " o, " . TABLE_ORDERS_TOTAL . " ot, " . TABLE_ORDERS_STATUS . " s where o.customers_id = '" . (int)$customer_id . "' and o.orders_id = ot.orders_id and ot.class = 'ot_total' and o.orders_status = s.orders_status_id and s.language_id = '" . (int)$languages_id . "' order by orders_id DESC";
     $history_split = new splitPageResults($history_query_raw, MAX_DISPLAY_ORDER_HISTORY);
     $history_query = tep_db_query($history_split->sql_query);
@@ -157,7 +183,7 @@
         </table></TD></TR></TABLE></TD></TR></TABLE></td>
       </tr>
     </table></td>
-		
+
 <!-- body_text_eof //-->
    <TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" rowspan="2">
      <TABLE BORDER="0" WIDTH="<?php echo BOX_WIDTH; ?>" CELLSPACING="2" CELLPADDING="0">

@@ -17,33 +17,66 @@
   if ($messageStack->size('general') > 0) echo $messageStack->output('general');
 */
 
-  class messageStack extends tableBox {
-
-// class constructor
-    function messageStack() {
-      global $messageToStack;
-
-      $this->messages = array();
-
-      if (tep_session_is_registered('messageToStack')) {
-        for ($i=0, $n=sizeof($messageToStack); $i<$n; $i++) {
-          $this->add($messageToStack[$i]['class'], $messageToStack[$i]['text'], $messageToStack[$i]['type']);
+class messageStack extends tableBox
+{
+    // class constructor
+    function messageStack()
+    {
+        global $messageToStack;
+        $this->messages = array();
+        if (tep_session_is_registered('messageToStack'))
+        {
+            for ($i=0, $n=sizeof($messageToStack); $i<$n; $i++)
+            {
+                $this->add($messageToStack[$i]['class'], $messageToStack[$i]['text'], $messageToStack[$i]['type']);
+            }
+            tep_session_unregister('messageToStack');
         }
-        tep_session_unregister('messageToStack');
-      }
     }
 
 // class methods
-    function add($class, $message, $type = 'error') {
-      if ($type == 'error') {
-        $this->messages[] = array('params' => 'class="messageStackError"', 'class' => $class, 'text' => tep_image(DIR_WS_ICONS . 'error.gif', ICON_ERROR) . '&nbsp;' . $message);
-      } elseif ($type == 'warning') {
-        $this->messages[] = array('params' => 'class="messageStackWarning"', 'class' => $class, 'text' => tep_image(DIR_WS_ICONS . 'warning.gif', ICON_WARNING) . '&nbsp;' . $message);
-      } elseif ($type == 'success') {
-        $this->messages[] = array('params' => 'class="messageStackSuccess"', 'class' => $class, 'text' => tep_image(DIR_WS_ICONS . 'success.gif', ICON_SUCCESS) . '&nbsp;' . $message);
-      } else {
-        $this->messages[] = array('params' => 'class="messageStackError"', 'class' => $class, 'text' => $message);
-      }
+    function add($class, $message, $type = 'error')
+    {
+        if($type == 'error')
+        {
+            $this->messages[] = array(
+                'params' => 'class="messageStackError"',
+                'class'  => $class,
+                'text'   => tep_image(DIR_WS_ICONS . 'error.gif', ICON_ERROR) . '&nbsp;' . $message
+            );
+        }
+        elseif($type == 'warning')
+        {
+            $this->messages[] = array(
+                'params' => 'class="messageStackWarning"',
+                'class'  => $class,
+                'text'   => tep_image(DIR_WS_ICONS . 'warning.gif', ICON_WARNING) . '&nbsp;' . $message
+            );
+        }
+        elseif($type == 'success')
+        {
+            $this->messages[] = array(
+                'params' => 'class="messageStackSuccess"',
+                'class'  => $class,
+                'text'   => tep_image(DIR_WS_ICONS . 'success.gif', ICON_SUCCESS) . '&nbsp;' . $message
+            );
+        }
+        elseif($type == 'regular')
+        {
+            $this->messages[] = array(
+                'params' => 'class="messageStackRegular"',
+                'class'  => $class,
+                'text'   => $message
+            );
+        }
+        else
+        {
+            $this->messages[] = array(
+                'params' => 'class="messageStackError"',
+                'class'  => $class,
+                'text'   => $message
+            );
+        }
     }
 
     function add_session($class, $message, $type = 'error') {
@@ -61,17 +94,20 @@
       $this->messages = array();
     }
 
-    function output($class) {
-      $this->table_data_parameters = 'class="messageBox"';
 
-      $output = array();
-      for ($i=0, $n=sizeof($this->messages); $i<$n; $i++) {
-        if ($this->messages[$i]['class'] == $class) {
-          $output[] = $this->messages[$i];
+    function output($class)
+    {
+        $this->table_data_parameters = 'class="messageBox"';
+
+        $output = array();
+        for($i = 0, $n = sizeof($this->messages); $i < $n; $i++)
+        {
+            if($this->messages[$i]['class'] == $class)
+            {
+                $output[] = $this->messages[$i];
+            }
         }
-      }
-
-      return $this->tableBox($output);
+        return $this->tableBox($output);
     }
 
     function size($class) {

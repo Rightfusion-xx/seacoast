@@ -11,7 +11,7 @@
   if(!$product_info=tep_db_fetch_array($product_query)){redir301('/alternative-medicine/');}
   
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
 

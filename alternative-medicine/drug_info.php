@@ -20,7 +20,7 @@
   $tradename=ucwords(strtolower($drug_info['tradename']));
   if ($drug_info['rxotc']=='O'){$drugadmin= 'Over-the-Counter ';}else{$drugadmin= 'Prescription ';};
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
 

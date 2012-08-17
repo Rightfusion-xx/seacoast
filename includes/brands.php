@@ -14,7 +14,7 @@
 
         <li><font face="Arial, Helvetica, sans-serif" size="2"><a href="http://www.seacoastvitamins.com/index.php?manufacturers_id=10">Action 
 
-          Labs</a></font></li>
+          Labs</a></font></li>                                       s
 
         <li><font face="Arial, Helvetica, sans-serif" size="2"><a href="http://www.seacoastvitamins.com/index.php?manufacturers_id=12">American 
 

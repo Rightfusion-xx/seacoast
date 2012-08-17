@@ -118,22 +118,32 @@
                 $redirbadurl=true;
             }
             
-            if(strlen($_REQUEST['products_id'])>0 && strlen($_REQUEST['manufacturers_id'])>0 && $_REQUEST['action']!='buy_now')
+            try     // Run some tests on the Request string which may fail if they are an array.
             {
-                $url=substr($url,0,strpos($url,'?')+1) . 'products_id=' . $_REQUEST['products_id'];
-                $redirbadurl=true;
+                
+                if(strlen($_REQUEST['products_id'])>0 && strlen($_REQUEST['manufacturers_id'])>0 && $_REQUEST['action']!='buy_now')
+                {
+                    $url=substr($url,0,strpos($url,'?')+1) . 'products_id=' . $_REQUEST['products_id'];
+                    $redirbadurl=true;
+                }
+            
+            
+                if(strlen($_REQUEST['products_id'])>0 && strlen($_REQUEST['cPath'])>0 && $_REQUEST['action']!='buy_now')
+                {
+                    $url=substr($url,0,strpos($url,'?')+1) . 'products_id=' . $_REQUEST['products_id'];
+                    $redirbadurl=true;
+                }
+                if(strlen($_REQUEST['products_id'])>0 && $_REQUEST['page']!='')
+                {
+                    $url=substr($url,0,strpos($url,'?')+1) . 'products_id=' . $_REQUEST['products_id'];
+                    $redirbadurl=true;
+                }
+            }
+            catch(Exception $e)
+            {
+                //Do nothing, and keep processing.
             }
             
-            if(strlen($_REQUEST['products_id'])>0 && strlen($_REQUEST['cPath'])>0 && $_REQUEST['action']!='buy_now')
-            {
-                $url=substr($url,0,strpos($url,'?')+1) . 'products_id=' . $_REQUEST['products_id'];
-                $redirbadurl=true;
-            }
-            if(strlen($_REQUEST['products_id'])>0 && $_REQUEST['page']!='')
-            {
-                $url=substr($url,0,strpos($url,'?')+1) . 'products_id=' . $_REQUEST['products_id'];
-                $redirbadurl=true;
-            }
             if(strpos($_SERVER['REQUEST_URI'],'product_info.php')>0 && sizeof($_GET)>1 && $_REQUEST['action']!='add_product')
             {
                 $url=substr($url,0,strpos($url,'?')+1) . 'products_id=' . $_REQUEST['products_id'];

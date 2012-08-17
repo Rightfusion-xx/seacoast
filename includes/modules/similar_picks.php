@@ -16,7 +16,7 @@
                                                                
                                     param_id='/product_info.php?products_id=" . 
                                     tep_db_input((int)$_REQUEST['products_id']) ."' 
-                                    order by hits desc, time_created asc LIMIT 0,20;
+                                    order by hits desc LIMIT 0,20;
                                     ");
     
     
@@ -26,7 +26,7 @@
       $searches_query = tep_db_query("
                                     select query
                                     from site_queries sq 
-                                    where param_id='" . tep_db_input($_SERVER['REQUEST_URI']) ."' order by hits desc, time_created asc LIMIT 0,20;
+                                    where param_id='" . tep_db_input($_SERVER['REQUEST_URI']) ."' order by hits desc LIMIT 0,20;
                                     ");
   }
                                     

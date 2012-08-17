@@ -3,9 +3,9 @@
 $linkcachetime=60*10;
 
   //require($_SERVER['DOCUMENT_ROOT'].'/includes/application_top.php');
-  
+
   $cache=new megacache(600); //10 minute cache
-  
+
   if(!$cache->doCache('homepage'))
   {
   include_once($_SERVER['DOCUMENT_ROOT'].'/includes/functions/render_products.php');
@@ -18,15 +18,22 @@ $linkcachetime=60*10;
   require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_DEFAULT);
 
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 
 <html <?php echo HTML_PARAMS; ?>>
 
 <head>
 <title>Vitamins, Minerals, Supplements | Seacoast Vitamins</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/font/fonts.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/jquery/respond.src.js"></script>
+    <![endif]-->
  <meta name="Description" content="Seacoast Vitamins - the vitamins store that provides quality vitamins, minerals, herbs, and all your nutritional supplement needs at everday low prices. Free health information." />
- <meta name="Keywords" content="vitamins, herbs, herbal extracts, alternative medicines, homeopathic, health, natural, nutritional supplements, healthy living, ADHD, cancer, prostate, diabetes, arthritis" /> 
- <meta name="robots" content="noodp" /> 
+ <meta name="Keywords" content="vitamins, herbs, herbal extracts, alternative medicines, homeopathic, health, natural, nutritional supplements, healthy living, ADHD, cancer, prostate, diabetes, arthritis" />
+ <meta name="robots" content="noodp" />
  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
  <meta property="fb:admins" content="652610239" />
 
@@ -50,9 +57,9 @@ $linkcachetime=60*10;
                   <?php require($_SERVER['DOCUMENT_ROOT'].'/seotest/front_ads.php'); ?>
 
 
-</div>  
+</div>
 
-<?php 
+<?php
   $cache->addCache('homepage');
   } //end cache
 

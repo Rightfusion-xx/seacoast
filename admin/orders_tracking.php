@@ -486,7 +486,7 @@ if ($total_orders !=0) $shipping_avg = $shipping / $total_orders;
     	$daily_avg = number_format($daily_avg,2,'.',',');
 ?>
 
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">

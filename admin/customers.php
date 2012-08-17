@@ -9,79 +9,91 @@
 
   Released under the GNU General Public License
 */
+    require('includes/application_top.php');
+    $action = (isset($HTTP_GET_VARS['action']) ? $HTTP_GET_VARS['action'] : '');
+    $error = false;
+    $processed = false;
 
-  require('includes/application_top.php');
+    if (tep_not_null($action))
+    {
+        switch ($action)
+        {
+            case 'update':
+                $customers_id = tep_db_prepare_input($HTTP_GET_VARS['cID']);
+                $customers_firstname = tep_db_prepare_input($HTTP_POST_VARS['customers_firstname']);
+                $customers_lastname = tep_db_prepare_input($HTTP_POST_VARS['customers_lastname']);
+                $customers_email_address = tep_db_prepare_input($HTTP_POST_VARS['customers_email_address']);
+                $customers_telephone = tep_db_prepare_input($HTTP_POST_VARS['customers_telephone']);
+                $customers_fax = tep_db_prepare_input($HTTP_POST_VARS['customers_fax']);
+                $customers_newsletter = tep_db_prepare_input($HTTP_POST_VARS['customers_newsletter']);
+                $cm_renew = tep_db_prepare_input($HTTP_POST_VARS['cm_renew']);
+                $cm_expiration = tep_db_prepare_input($HTTP_POST_VARS['cm_expiration']);
+                $cm_price = tep_db_prepare_input($HTTP_POST_VARS['cm_price']);
 
-  $action = (isset($HTTP_GET_VARS['action']) ? $HTTP_GET_VARS['action'] : '');
+                $customers_gender = tep_db_prepare_input($HTTP_POST_VARS['customers_gender']);
+                $customers_dob = tep_db_prepare_input($HTTP_POST_VARS['customers_dob']);
 
-  $error = false;
-  $processed = false;
-  
+                $default_address_id = tep_db_prepare_input($HTTP_POST_VARS['default_address_id']);
+                $entry_street_address = tep_db_prepare_input($HTTP_POST_VARS['entry_street_address']);
+                $entry_suburb = tep_db_prepare_input($HTTP_POST_VARS['entry_suburb']);
+                $entry_postcode = tep_db_prepare_input($HTTP_POST_VARS['entry_postcode']);
+                $entry_city = tep_db_prepare_input($HTTP_POST_VARS['entry_city']);
+                $entry_country_id = tep_db_prepare_input($HTTP_POST_VARS['entry_country_id']);
 
+                $entry_company = tep_db_prepare_input($HTTP_POST_VARS['entry_company']);
+                $entry_state = tep_db_prepare_input($HTTP_POST_VARS['entry_state']);
+                if (isset($HTTP_POST_VARS['entry_zone_id']))
+                {
+                    $entry_zone_id = tep_db_prepare_input($HTTP_POST_VARS['entry_zone_id']);
+                }
 
-  if (tep_not_null($action)) {
-    switch ($action) {
-      case 'update':
-        $customers_id = tep_db_prepare_input($HTTP_GET_VARS['cID']);
-        $customers_firstname = tep_db_prepare_input($HTTP_POST_VARS['customers_firstname']);
-        $customers_lastname = tep_db_prepare_input($HTTP_POST_VARS['customers_lastname']);
-        $customers_email_address = tep_db_prepare_input($HTTP_POST_VARS['customers_email_address']);
-        $customers_telephone = tep_db_prepare_input($HTTP_POST_VARS['customers_telephone']);
-        $customers_fax = tep_db_prepare_input($HTTP_POST_VARS['customers_fax']);
-        $customers_newsletter = tep_db_prepare_input($HTTP_POST_VARS['customers_newsletter']);
-        $cm_renew = tep_db_prepare_input($HTTP_POST_VARS['cm_renew']);
-        $cm_expiration = tep_db_prepare_input($HTTP_POST_VARS['cm_expiration']);
-        $cm_price = tep_db_prepare_input($HTTP_POST_VARS['cm_price']);
-        
-        $customers_gender = tep_db_prepare_input($HTTP_POST_VARS['customers_gender']);
-        $customers_dob = tep_db_prepare_input($HTTP_POST_VARS['customers_dob']);
+                if (strlen($customers_firstname) < ENTRY_FIRST_NAME_MIN_LENGTH)
+                {
+                    $error = true;
+                    $entry_firstname_error = true;
+                }
+                else
+                {
+                    $entry_firstname_error = false;
+                }
 
-        $default_address_id = tep_db_prepare_input($HTTP_POST_VARS['default_address_id']);
-        $entry_street_address = tep_db_prepare_input($HTTP_POST_VARS['entry_street_address']);
-        $entry_suburb = tep_db_prepare_input($HTTP_POST_VARS['entry_suburb']);
-        $entry_postcode = tep_db_prepare_input($HTTP_POST_VARS['entry_postcode']);
-        $entry_city = tep_db_prepare_input($HTTP_POST_VARS['entry_city']);
-        $entry_country_id = tep_db_prepare_input($HTTP_POST_VARS['entry_country_id']);
+                if (strlen($customers_lastname) < ENTRY_LAST_NAME_MIN_LENGTH)
+                {
+                    $error = true;
+                    $entry_lastname_error = true;
+                }
+                else
+                {
+                    $entry_lastname_error = false;
+                }
+                if (ACCOUNT_DOB == 'true')
+                {
+                    if (checkdate(substr(tep_date_raw($customers_dob), 4, 2), substr(tep_date_raw($customers_dob), 6, 2), substr(tep_date_raw($customers_dob), 0, 4)))
+                    {
+                        $entry_date_of_birth_error = false;
+                    }
+                    else
+                    {
+                        $error = true;
+                        $entry_date_of_birth_error = true;
+                    }
+                }
+                if (strlen($customers_email_address) < ENTRY_EMAIL_ADDRESS_MIN_LENGTH)
+                {
+                    $error = true;
+                    $entry_email_address_error = true;
+                }
+                else
+                {
+                    $entry_email_address_error = false;
+                }
 
-        $entry_company = tep_db_prepare_input($HTTP_POST_VARS['entry_company']);
-        $entry_state = tep_db_prepare_input($HTTP_POST_VARS['entry_state']);
-        if (isset($HTTP_POST_VARS['entry_zone_id'])) $entry_zone_id = tep_db_prepare_input($HTTP_POST_VARS['entry_zone_id']);
-
-        if (strlen($customers_firstname) < ENTRY_FIRST_NAME_MIN_LENGTH) {
-          $error = true;
-          $entry_firstname_error = true;
-        } else {
-          $entry_firstname_error = false;
-        }
-
-        if (strlen($customers_lastname) < ENTRY_LAST_NAME_MIN_LENGTH) {
-          $error = true;
-          $entry_lastname_error = true;
-        } else {
-          $entry_lastname_error = false;
-        }
-
-        if (ACCOUNT_DOB == 'true') {
-          if (checkdate(substr(tep_date_raw($customers_dob), 4, 2), substr(tep_date_raw($customers_dob), 6, 2), substr(tep_date_raw($customers_dob), 0, 4))) {
-            $entry_date_of_birth_error = false;
-          } else {
+        if (!tep_validate_email($customers_email_address))
+        {
             $error = true;
-            $entry_date_of_birth_error = true;
-          }
-        }
-
-        if (strlen($customers_email_address) < ENTRY_EMAIL_ADDRESS_MIN_LENGTH) {
-          $error = true;
-          $entry_email_address_error = true;
+            $entry_email_address_check_error = true;
         } else {
-          $entry_email_address_error = false;
-        }
-
-        if (!tep_validate_email($customers_email_address)) {
-          $error = true;
-          $entry_email_address_check_error = true;
-        } else {
-          $entry_email_address_check_error = false;
+            $entry_email_address_check_error = false;
         }
 
         if (strlen($entry_street_address) < ENTRY_STREET_ADDRESS_MIN_LENGTH) {
@@ -191,7 +203,7 @@
             $sql_data_array['entry_state'] = $entry_state;
           }
         }
-        
+
         tep_db_query('update customers_info set cm_renew='.$cm_renew.', cm_expiration="'.$cm_expiration.'", cm_price='.$cm_price.' where customers_info_id='.(int)$customers_id);
 
         tep_db_perform(TABLE_ADDRESS_BOOK, $sql_data_array, 'update', "customers_id = '" . (int)$customers_id . "' and address_book_id = '" . (int)$default_address_id . "'");
@@ -228,13 +240,20 @@
         tep_redirect(tep_href_link(FILENAME_CUSTOMERS, tep_get_all_get_params(array('cID', 'action'))));
         break;
       default:
-        $customers_query = tep_db_query("select ci.cm_expiration, ci.cm_renew, ci.cm_price, c.customers_id, c.customers_gender, c.customers_firstname, c.customers_lastname, c.customers_dob, c.customers_email_address, a.entry_company, a.entry_street_address, a.entry_suburb, a.entry_postcode, a.entry_city, a.entry_state, a.entry_zone_id, a.entry_country_id, c.customers_telephone, c.customers_fax, c.customers_newsletter, c.customers_default_address_id from " . TABLE_CUSTOMERS . " c left outer join " . TABLE_ADDRESS_BOOK . " a on c.customers_default_address_id = a.address_book_id left outer join customers_info ci on ci.customers_info_id=c.customers_id where a.customers_id = c.customers_id and c.customers_id = '" . (int)$HTTP_GET_VARS['cID'] . "'");
+        $customers_query = tep_db_query("
+            SELECT
+                ci.cm_expiration,
+                ci.cm_renew, ci.cm_price,
+                c.customers_id,
+                c.customers_gender,
+                c.customers_firstname,
+                c.customers_lastname, c.customers_dob, c.customers_email_address, a.entry_company, a.entry_street_address, a.entry_suburb, a.entry_postcode, a.entry_city, a.entry_state, a.entry_zone_id, a.entry_country_id, c.customers_telephone, c.customers_fax, c.customers_newsletter, c.customers_default_address_id from " . TABLE_CUSTOMERS . " c left outer join " . TABLE_ADDRESS_BOOK . " a on c.customers_default_address_id = a.address_book_id left outer join customers_info ci on ci.customers_info_id=c.customers_id where a.customers_id = c.customers_id and c.customers_id = '" . (int)$HTTP_GET_VARS['cID'] . "'");
         $customers = tep_db_fetch_array($customers_query);
         $cInfo = new objectInfo($customers);
     }
   }
 ?>
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
@@ -776,20 +795,31 @@ function check_form() {
     $customers_split = new splitPageResults($HTTP_GET_VARS['page'], 100, $customers_query_raw, $customers_query_numrows);
     $customers_query = tep_db_query($customers_query_raw);
     while ($customers = tep_db_fetch_array($customers_query)) {
-      $info_query = tep_db_query("select cm_expiration, cm_renew, customers_info_date_account_created as date_account_created, customers_info_date_account_last_modified as date_account_last_modified, customers_info_date_of_last_logon as date_last_logon, customers_info_number_of_logons as number_of_logons from " . TABLE_CUSTOMERS_INFO . " where customers_info_id = '" . $customers['customers_id'] . "'");
-      $info=tep_db_fetch_array($info_query);
-      
+      $info_query = tep_db_query("
+            select
+                cm_expiration,
+                cm_renew,
+                customers_info_date_account_created as date_account_created,
+                customers_info_date_account_last_modified as date_account_last_modified,
+                customers_info_date_of_last_logon as date_last_logon,
+                customers_info_number_of_logons as number_of_logons
+            from " . TABLE_CUSTOMERS_INFO . " where customers_info_id = '" . $customers['customers_id'] . "'");
+        $info=tep_db_fetch_array($info_query);
+        if(!$info)
+        {
+            $info = array();
+        }
+
       if ((!isset($HTTP_GET_VARS['cID']) || (isset($HTTP_GET_VARS['cID']) && ($HTTP_GET_VARS['cID'] == $customers['customers_id']))) && !isset($cInfo)) {
         $country_query = tep_db_query("select countries_name from " . TABLE_COUNTRIES . " where countries_id = '" . (int)$customers['entry_country_id'] . "'");
         $country = tep_db_fetch_array($country_query);
 
         $reviews_query = tep_db_query("select count(*) as number_of_reviews from " . TABLE_REVIEWS . " where customers_id = '" . (int)$customers['customers_id'] . "'");
         $reviews = tep_db_fetch_array($reviews_query);
-
-        
         $customer_info = array_merge( $info, $reviews);
 
         $cInfo_array = array_merge($customers, $customer_info);
+
         $cInfo = new objectInfo($cInfo_array);
 
       }
@@ -840,19 +870,20 @@ function check_form() {
       $contents[] = array('align' => 'center', 'text' => '<br>' . tep_image_submit('button_delete.gif', IMAGE_DELETE) . ' <a href="' . tep_href_link(FILENAME_CUSTOMERS, tep_get_all_get_params(array('cID', 'action')) . 'cID=' . $cInfo->customers_id) . '">' . tep_image_button('button_cancel.gif', IMAGE_CANCEL) . '</a>');
       break;
     default:
-      if (isset($cInfo) && is_object($cInfo)) {
+      if (isset($cInfo) && is_object($cInfo))
+      {
         $heading[] = array('text' => '<b>' . $cInfo->customers_firstname . ' ' . $cInfo->customers_lastname . '</b>');
         $contents[] = array('align' => 'center', 'text' => '<a href="' . tep_href_link(FILENAME_CUSTOMERS, tep_get_all_get_params(array('cID', 'action')) . 'cID=' . $cInfo->customers_id . '&action=edit') . '">' . tep_image_button('button_edit.gif', IMAGE_EDIT) . '</a> <a href="' . tep_href_link(FILENAME_CUSTOMERS, tep_get_all_get_params(array('cID', 'action')) . 'cID=' . $cInfo->customers_id . '&action=confirm') . '">' . tep_image_button('button_delete.gif', IMAGE_DELETE) . '</a> <a href="' . tep_href_link(FILENAME_ORDERS, 'cID=' . $cInfo->customers_id) . '">' . tep_image_button('button_orders.gif', IMAGE_ORDERS) . '</a> <a href="' . tep_href_link(FILENAME_MAIL, 'selected_box=tools&customer=' . $cInfo->customers_email_address) . '">' . tep_image_button('button_email.gif', IMAGE_EMAIL) . '</a>');
         $contents[] = array('text' => '<br>' . TEXT_DATE_ACCOUNT_CREATED . ' ' . tep_date_short($cInfo->date_account_created));
         $contents[] = array('text' => '<br>' . TEXT_DATE_ACCOUNT_LAST_MODIFIED . ' ' . tep_date_short($cInfo->date_account_last_modified));
         $contents[] = array('text' => '<br>' . TEXT_INFO_DATE_LAST_LOGON . ' '  . tep_date_short($cInfo->date_last_logon));
-        $contents[] = array('text' => '<br>' . TEXT_INFO_NUMBER_OF_LOGONS . ' ' . $cInfo->number_of_logons);  
+        $contents[] = array('text' => '<br>' . TEXT_INFO_NUMBER_OF_LOGONS . ' ' . $cInfo->number_of_logons);
         $contents[] = array('text' => '<br>' . TEXT_INFO_NUMBER_OF_REVIEWS . ' ' . $cInfo->number_of_reviews);
         $contents[] = array('text' => '<br>' . 'Membership Expires: ' . ' ' . $cInfo->cm_expiration);
-        $contents[] = array('text' => '<br>' . 'Auto-Renew Membership: ' . ' ' . $cInfo->cm_renew);                
+        $contents[] = array('text' => '<br>' . 'Auto-Renew Membership: ' . ' ' . $cInfo->cm_renew);
         $contents[] = array('text' => '<br><b>Change Password</b><form action="'.$_SERVER['PHP_SELF'].'" method="post"><input type="text" name="newpassword"><input type="hidden" name="cID" value="'.$cInfo->customers_id.'"><input type="submit" value="Change"></form>');
         $contents[] = array('text' => '<br><b><A href="http://www.seacoastvitamins.com/customer_login.php?email_address='.$cInfo->customers_email_address.'" target="_blank">Login as User</a></b>');
-                        
+
           if(isset($_REQUEST['cID']) && isset($_REQUEST['newpassword']))
           {
                 require('../includes/functions/password_funcs.php');
@@ -862,7 +893,7 @@ function check_form() {
 
                 $contents[] = array('text' => '<b><span style="color:#ff0000">Password Updated</span></b>');
 
-          
+
           }
 
       }
@@ -882,12 +913,12 @@ function check_form() {
         </table></td>
       </tr>
 <?php
-  }         
-  
-   
+  }
+
+
 ?>
     </table></td>
-    
+
     <?php if($action=='edit')
     {
         ?>
@@ -898,13 +929,13 @@ function check_form() {
         $contents[] = array('text' => '<br>' . TEXT_DATE_ACCOUNT_CREATED . ' ' . tep_date_short($cInfo->date_account_created));
         $contents[] = array('text' => '<br>' . TEXT_DATE_ACCOUNT_LAST_MODIFIED . ' ' . tep_date_short($cInfo->date_account_last_modified));
         $contents[] = array('text' => '<br>' . TEXT_INFO_DATE_LAST_LOGON . ' '  . tep_date_short($cInfo->date_last_logon));
-        $contents[] = array('text' => '<br>' . TEXT_INFO_NUMBER_OF_LOGONS . ' ' . $cInfo->number_of_logons);  
+        $contents[] = array('text' => '<br>' . TEXT_INFO_NUMBER_OF_LOGONS . ' ' . $cInfo->number_of_logons);
         $contents[] = array('text' => '<br>' . TEXT_INFO_NUMBER_OF_REVIEWS . ' ' . $cInfo->number_of_reviews);
         $contents[] = array('text' => '<br>' . 'Membership Expires: ' . ' ' . $cInfo->cm_expiration);
-        $contents[] = array('text' => '<br>' . 'Auto-Renew Membership: ' . ' ' . $cInfo->cm_renew);                
+        $contents[] = array('text' => '<br>' . 'Auto-Renew Membership: ' . ' ' . $cInfo->cm_renew);
         $contents[] = array('text' => '<br><b>Change Password</b><form action="'.$_SERVER['PHP_SELF'].'" method="post"><input type="text" name="newpassword"><input type="hidden" name="cID" value="'.$cInfo->customers_id.'"><input type="submit" value="Change"></form>');
         $contents[] = array('text' => '<br><b><A href="http://www.seacoastvitamins.com/customer_login.php?email_address='.$cInfo->customers_email_address.'" target="_blank">Login as User</a></b>');
-                        
+
           if(isset($_REQUEST['cID']) && isset($_REQUEST['newpassword']))
           {
                 require('../includes/functions/password_funcs.php');
@@ -914,17 +945,17 @@ function check_form() {
 
                 $contents[] = array('text' => '<b><span style="color:#ff0000">Password Updated</span></b>');
 
-          
+
           }
 
-      }          
+      }
       $box = new box;
     echo $box->infoBox($heading, $contents);
     ?>
     </td>
-    <?php 
+    <?php
     }?>
-    
+
 <!-- body_text_eof //-->
   </tr>
 </table>

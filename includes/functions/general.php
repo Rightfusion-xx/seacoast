@@ -144,7 +144,7 @@
 
 
 
-    $product_query = tep_db_query("select products_name from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" . 
+    $product_query = tep_db_query("select products_name from " . TABLE_PRODUCTS_DESCRIPTION . " where products_id = '" .
 
 (int)$product_id . "' and language_id = '" . (int)$language . "'");
 
@@ -166,7 +166,7 @@
 
   function tep_get_products_special_price($product_id) {
 
-    $product_query = tep_db_query("select specials_new_products_price from " . TABLE_SPECIALS . " where products_id = '" . 
+    $product_query = tep_db_query("select specials_new_products_price from " . TABLE_SPECIALS . " where products_id = '" .
 
 (int)$product_id . "' and status");
 
@@ -190,7 +190,7 @@
 
     $products_id = tep_get_prid($products_id);
 
-    $stock_query = tep_db_query("select products_quantity from " . TABLE_PRODUCTS . " where products_id = '" . (int)$products_id . 
+    $stock_query = tep_db_query("select products_quantity from " . TABLE_PRODUCTS . " where products_id = '" . (int)$products_id .
 
 "'");
 
@@ -298,7 +298,7 @@
 
       while (list($key, $value) = each($HTTP_GET_VARS)) {
 
-        if ( (strlen($value) > 0) && ($key != tep_session_name()) && ($key != 'error') && (!in_array($key, $exclude_array)) && 
+        if ( (strlen($value) > 0) && ($key != tep_session_name()) && ($key != 'error') && (!in_array($key, $exclude_array)) &&
 
 ($key != 'x') && ($key != 'y') ) {
 
@@ -332,7 +332,7 @@
 
       if ($with_iso_codes == true) {
 
-        $countries = tep_db_query("select countries_name, countries_iso_code_2, countries_iso_code_3 from " . TABLE_COUNTRIES . " 
+        $countries = tep_db_query("select countries_name, countries_iso_code_2, countries_iso_code_3 from " . TABLE_COUNTRIES . "
 
 where countries_id = '" . (int)$countries_id . "' order by countries_name");
 
@@ -346,7 +346,7 @@ where countries_id = '" . (int)$countries_id . "' order by countries_name");
 
       } else {
 
-        $countries = tep_db_query("select countries_name from " . TABLE_COUNTRIES . " where countries_id = '" . (int)$countries_id 
+        $countries = tep_db_query("select countries_name from " . TABLE_COUNTRIES . " where countries_id = '" . (int)$countries_id
 
 . "'");
 
@@ -372,7 +372,7 @@ where countries_id = '" . (int)$countries_id . "' order by countries_name");
   function tep_get_countries_with_iso_code2()
   {
       $countries_array = array();
-      
+
       $countries = tep_db_query("select countries_id, countries_name, countries_iso_code_2 from " . TABLE_COUNTRIES . " order by countries_name");
       while ($countries_values = tep_db_fetch_array($countries)) {
           $countries_array[] = array('countries_id' => $countries_values['countries_iso_code_2'],
@@ -417,7 +417,7 @@ where countries_id = '" . (int)$countries_id . "' order by countries_name");
 
         $cPath_new = '';
 
-        $last_category_query = tep_db_query("select parent_id from " . TABLE_CATEGORIES . " where categories_id = '" . 
+        $last_category_query = tep_db_query("select parent_id from " . TABLE_CATEGORIES . " where categories_id = '" .
 
 (int)$cPath_array[($cp_size-1)] . "'");
 
@@ -425,7 +425,7 @@ where countries_id = '" . (int)$countries_id . "' order by countries_name");
 
 
 
-        $current_category_query = tep_db_query("select parent_id from " . TABLE_CATEGORIES . " where categories_id = '" . 
+        $current_category_query = tep_db_query("select parent_id from " . TABLE_CATEGORIES . " where categories_id = '" .
 
 (int)$current_category_id . "'");
 
@@ -517,7 +517,7 @@ where countries_id = '" . (int)$countries_id . "' order by countries_name");
 
   function tep_get_zone_name($country_id, $zone_id, $default_zone) {
 
-    $zone_query = tep_db_query("select zone_name from " . TABLE_ZONES . " where zone_country_id = '" . (int)$country_id . "' and 
+    $zone_query = tep_db_query("select zone_name from " . TABLE_ZONES . " where zone_country_id = '" . (int)$country_id . "' and
 
 zone_id = '" . (int)$zone_id . "'");
 
@@ -545,7 +545,7 @@ zone_id = '" . (int)$zone_id . "'");
 
   function tep_get_zone_code($country_id, $zone_id, $default_zone) {
 
-    $zone_query = tep_db_query("select zone_code from " . TABLE_ZONES . " where zone_country_id = '" . (int)$country_id . "' and 
+    $zone_query = tep_db_query("select zone_code from " . TABLE_ZONES . " where zone_country_id = '" . (int)$country_id . "' and
 
 zone_id = '" . (int)$zone_id . "'");
 
@@ -641,13 +641,13 @@ zone_id = '" . (int)$zone_id . "'");
 
 
 
-    $tax_query = tep_db_query("select sum(tax_rate) as tax_rate from " . TABLE_TAX_RATES . " tr left join " . 
+    $tax_query = tep_db_query("select sum(tax_rate) as tax_rate from " . TABLE_TAX_RATES . " tr left join " .
 
-TABLE_ZONES_TO_GEO_ZONES . " za on (tr.tax_zone_id = za.geo_zone_id) left join " . TABLE_GEO_ZONES . " tz on (tz.geo_zone_id = 
+TABLE_ZONES_TO_GEO_ZONES . " za on (tr.tax_zone_id = za.geo_zone_id) left join " . TABLE_GEO_ZONES . " tz on (tz.geo_zone_id =
 
-tr.tax_zone_id) where (za.zone_country_id is null or za.zone_country_id = '0' or za.zone_country_id = '" . (int)$country_id . "') 
+tr.tax_zone_id) where (za.zone_country_id is null or za.zone_country_id = '0' or za.zone_country_id = '" . (int)$country_id . "')
 
-and (za.zone_id is null or za.zone_id = '0' or za.zone_id = '" . (int)$zone_id . "') and tr.tax_class_id = '" . (int)$class_id . 
+and (za.zone_id is null or za.zone_id = '0' or za.zone_id = '" . (int)$zone_id . "') and tr.tax_class_id = '" . (int)$class_id .
 
 "' group by tr.tax_priority");
 
@@ -681,13 +681,13 @@ and (za.zone_id is null or za.zone_id = '0' or za.zone_id = '" . (int)$zone_id .
 
   function tep_get_tax_description($class_id, $country_id, $zone_id) {
 
-    $tax_query = tep_db_query("select tax_description from " . TABLE_TAX_RATES . " tr left join " . TABLE_ZONES_TO_GEO_ZONES . " 
+    $tax_query = tep_db_query("select tax_description from " . TABLE_TAX_RATES . " tr left join " . TABLE_ZONES_TO_GEO_ZONES . "
 
-za on (tr.tax_zone_id = za.geo_zone_id) left join " . TABLE_GEO_ZONES . " tz on (tz.geo_zone_id = tr.tax_zone_id) where 
+za on (tr.tax_zone_id = za.geo_zone_id) left join " . TABLE_GEO_ZONES . " tz on (tz.geo_zone_id = tr.tax_zone_id) where
 
-(za.zone_country_id is null or za.zone_country_id = '0' or za.zone_country_id = '" . (int)$country_id . "') and (za.zone_id is 
+(za.zone_country_id is null or za.zone_country_id = '0' or za.zone_country_id = '" . (int)$country_id . "') and (za.zone_id is
 
-null or za.zone_id = '0' or za.zone_id = '" . (int)$zone_id . "') and tr.tax_class_id = '" . (int)$class_id . "' order by 
+null or za.zone_id = '0' or za.zone_id = '" . (int)$zone_id . "') and tr.tax_class_id = '" . (int)$class_id . "' order by
 
 tr.tax_priority");
 
@@ -767,13 +767,13 @@ tr.tax_priority");
 
     if ($include_inactive == true) {
 
-      $products_query = tep_db_query("select count(*) as total from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_TO_CATEGORIES . " 
+      $products_query = tep_db_query("select count(*) as total from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_TO_CATEGORIES . "
 
 p2c where p.products_id = p2c.products_id and p2c.categories_id = '" . (int)$category_id . "'");
 
     } else {
 
-      $products_query = tep_db_query("select count(*) as total from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_TO_CATEGORIES . " 
+      $products_query = tep_db_query("select count(*) as total from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_TO_CATEGORIES . "
 
 p2c where p.products_id = p2c.products_id and p.products_status = '1' and p2c.categories_id = '" . (int)$category_id . "'");
 
@@ -785,7 +785,7 @@ p2c where p.products_id = p2c.products_id and p.products_status = '1' and p2c.ca
 
 
 
-    $child_categories_query = tep_db_query("select categories_id from " . TABLE_CATEGORIES . " where parent_id = '" . 
+    $child_categories_query = tep_db_query("select categories_id from " . TABLE_CATEGORIES . " where parent_id = '" .
 
 (int)$category_id . "'");
 
@@ -815,7 +815,7 @@ p2c where p.products_id = p2c.products_id and p.products_status = '1' and p2c.ca
 
   function tep_has_category_subcategories($category_id) {
 
-    $child_category_query = tep_db_query("select count(*) as count from " . TABLE_CATEGORIES . " where parent_id = '" . 
+    $child_category_query = tep_db_query("select count(*) as count from " . TABLE_CATEGORIES . " where parent_id = '" .
 
 (int)$category_id . "'");
 
@@ -845,7 +845,7 @@ p2c where p.products_id = p2c.products_id and p.products_status = '1' and p2c.ca
 
   function tep_get_address_format_id($country_id) {
 
-    $address_format_query = tep_db_query("select address_format_id as format_id from " . TABLE_COUNTRIES . " where countries_id = 
+    $address_format_query = tep_db_query("select address_format_id as format_id from " . TABLE_COUNTRIES . " where countries_id =
 
 '" . (int)$country_id . "'");
 
@@ -871,24 +871,15 @@ p2c where p.products_id = p2c.products_id and p.products_status = '1' and p2c.ca
 
 // TABLES: address_format
 
-  function tep_address_format($address_format_id, $address, $html, $boln, $eoln) {
-
-    $address_format_query = tep_db_query("select address_format as format from " . TABLE_ADDRESS_FORMAT . " where
-
-address_format_id = '" . (int)$address_format_id . "'");
-
+function tep_address_format($address_format_id, $address, $html, $boln, $eoln)
+{
+    $address_format_query = tep_db_query("select address_format as format from " . TABLE_ADDRESS_FORMAT . " where address_format_id = '" . (int)$address_format_id . "'");
     $address_format = tep_db_fetch_array($address_format_query);
-
-
-
     $company = tep_output_string_protected($address['company']);
-
-    if (isset($address['firstname']) && tep_not_null($address['firstname'])) {
-
+    if (isset($address['firstname']) && tep_not_null($address['firstname']))
+    {
       $firstname = tep_output_string_protected($address['firstname']);
-
       $lastname = tep_output_string_protected($address['lastname']);
-
     } elseif (isset($address['name']) && tep_not_null($address['name'])) {
 
       $firstname = tep_output_string_protected($address['name']);
@@ -936,7 +927,7 @@ address_format_id = '" . (int)$address_format_id . "'");
     $postcode = tep_output_string_protected($address['postcode']);
 
     $zip = $postcode;
-    
+
 
 
 
@@ -1008,7 +999,7 @@ address_format_id = '" . (int)$address_format_id . "'");
 
     return $address;
 
-  }
+}
 
 
 
@@ -1020,11 +1011,11 @@ address_format_id = '" . (int)$address_format_id . "'");
 
   function tep_address_label($customers_id, $address_id = 1, $html = false, $boln = '', $eoln = "\n") {
 
-    $address_query = tep_db_query("select entry_firstname as firstname, entry_lastname as lastname, entry_company as company, 
+    $address_query = tep_db_query("select entry_firstname as firstname, entry_lastname as lastname, entry_company as company,
 
-entry_street_address as street_address, entry_suburb as suburb, entry_city as city, entry_postcode as postcode, entry_state as 
+entry_street_address as street_address, entry_suburb as suburb, entry_city as city, entry_postcode as postcode, entry_state as
 
-state, entry_zone_id as zone_id, entry_country_id as country_id from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . 
+state, entry_zone_id as zone_id, entry_country_id as country_id from " . TABLE_ADDRESS_BOOK . " where customers_id = '" .
 
 (int)$customers_id . "' and address_book_id = '" . (int)$address_id . "'");
 
@@ -1064,9 +1055,9 @@ state, entry_zone_id as zone_id, entry_country_id as country_id from " . TABLE_A
 
 
 
-    $categories_query = tep_db_query("select c.categories_id, cd.categories_name from " . TABLE_CATEGORIES . " c, " . 
+    $categories_query = tep_db_query("select c.categories_id, cd.categories_name from " . TABLE_CATEGORIES . " c, " .
 
-TABLE_CATEGORIES_DESCRIPTION . " cd where parent_id = '" . (int)$parent_id . "' and c.categories_id = cd.categories_id and 
+TABLE_CATEGORIES_DESCRIPTION . " cd where parent_id = '" . (int)$parent_id . "' and c.categories_id = cd.categories_id and
 
 cd.language_id = '" . (int)$languages_id . "' order by sort_order, cd.categories_name");
 
@@ -1100,7 +1091,7 @@ cd.language_id = '" . (int)$languages_id . "' order by sort_order, cd.categories
 
 
 
-    $manufacturers_query = tep_db_query("select manufacturers_id, manufacturers_name from " . TABLE_MANUFACTURERS . " order by 
+    $manufacturers_query = tep_db_query("select manufacturers_id, manufacturers_name from " . TABLE_MANUFACTURERS . " order by
 
 manufacturers_name");
 
@@ -1126,7 +1117,7 @@ manufacturers_name");
 
   function tep_get_subcategories(&$subcategories_array, $parent_id = 0) {
 
-    $subcategories_query = tep_db_query("select categories_id from " . TABLE_CATEGORIES . " where parent_id = '" . (int)$parent_id 
+    $subcategories_query = tep_db_query("select categories_id from " . TABLE_CATEGORIES . " where parent_id = '" . (int)$parent_id
 
 . "'");
 
@@ -1772,11 +1763,11 @@ manufacturers_name");
 
     if ($sortby) {
 
-      $sort_prefix = '<a rel="nofollow" href="' . tep_href_link(basename($PHP_SELF), tep_get_all_get_params(array('page', 'info', 
+      $sort_prefix = '<a rel="nofollow" href="' . tep_href_link(basename($PHP_SELF), tep_get_all_get_params(array('page', 'info',
 
-'sort')) . 'page=1&sort=' . $colnum . ($sortby == $colnum . 'a' ? 'd' : 'a')) . '" title="' . tep_output_string(TEXT_SORT_PRODUCTS 
+'sort')) . 'page=1&sort=' . $colnum . ($sortby == $colnum . 'a' ? 'd' : 'a')) . '" title="' . tep_output_string(TEXT_SORT_PRODUCTS
 
-. ($sortby == $colnum . 'd' || substr($sortby, 0, 1) != $colnum ? TEXT_ASCENDINGLY : TEXT_DESCENDINGLY) . TEXT_BY . $heading) . '" 
+. ($sortby == $colnum . 'd' || substr($sortby, 0, 1) != $colnum ? TEXT_ASCENDINGLY : TEXT_DESCENDINGLY) . TEXT_BY . $heading) . '"
 
 class="productListing-heading">' ;
 
@@ -1800,7 +1791,7 @@ class="productListing-heading">' ;
 
   function tep_get_parent_categories(&$categories, $categories_id) {
 
-    $parent_categories_query = tep_db_query("select parent_id from " . TABLE_CATEGORIES . " where categories_id = '" . 
+    $parent_categories_query = tep_db_query("select parent_id from " . TABLE_CATEGORIES . " where categories_id = '" .
 
 (int)$categories_id . "'");
 
@@ -1834,7 +1825,7 @@ class="productListing-heading">' ;
 
 
 
-    $category_query = tep_db_query("select p2c.categories_id from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_TO_CATEGORIES . " 
+    $category_query = tep_db_query("select p2c.categories_id from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_TO_CATEGORIES . "
 
 p2c where p.products_id = '" . (int)$products_id . "' and p.products_status = '1' and p.products_id = p2c.products_id limit 1");
 
@@ -1992,8 +1983,8 @@ p2c where p.products_id = '" . (int)$products_id . "' and p.products_status = '1
     $message->build_message();
 
     echo $text.'<br />';
-	
-    
+
+
     $message->send($to_name, $to_email_address, $from_email_name, $from_email_address, $email_subject);
 
   }
@@ -2006,7 +1997,7 @@ p2c where p.products_id = '" . (int)$products_id . "' and p.products_status = '1
 
   function tep_has_product_attributes($products_id) {
 
-    $attributes_query = tep_db_query("select count(*) as count from " . TABLE_PRODUCTS_ATTRIBUTES . " where products_id = '" . 
+    $attributes_query = tep_db_query("select count(*) as count from " . TABLE_PRODUCTS_ATTRIBUTES . " where products_id = '" .
 
 (int)$products_id . "'");
 
@@ -2288,7 +2279,7 @@ p2c where p.products_id = '" . (int)$products_id . "' and p.products_status = '1
 
 
 
-    $currency_code = tep_db_query("select currencies_id from " . TABLE_CURRENCIES . " where code = '" . tep_db_input($code) . 
+    $currency_code = tep_db_query("select currencies_id from " . TABLE_CURRENCIES . " where code = '" . tep_db_input($code) .
 
 "'");
 
@@ -2478,7 +2469,7 @@ p2c where p.products_id = '" . (int)$products_id . "' and p.products_status = '1
 
 
 
-    $orders_check_query = tep_db_query("select count(*) as total from " . TABLE_ORDERS . " where customers_id = '" . (int)$id . 
+    $orders_check_query = tep_db_query("select count(*) as total from " . TABLE_ORDERS . " where customers_id = '" . (int)$id .
 
 "'");
 
@@ -2490,53 +2481,37 @@ p2c where p.products_id = '" . (int)$products_id . "' and p.products_status = '1
 
   }
 
-
-
-  function tep_count_customer_address_book_entries($id = '', $check_session = true) {
-
+function tep_count_customer_address_book_entries($id = '', $check_session = true)
+{
     global $customer_id;
-
-
-
-    if (is_numeric($id) == false) {
-
-      if (tep_session_is_registered('customer_id')) {
-
-        $id = $customer_id;
-
-      } else {
-
-        return 0;
-
-      }
-
+    if(is_numeric($id) == false)
+    {
+        if(tep_session_is_registered('customer_id'))
+        {
+            $id = $customer_id;
+        }
+        else
+        {
+            return 0;
+        }
     }
 
+    if($check_session == true)
+    {
 
+        if((tep_session_is_registered('customer_id') == false) || ($id != $customer_id))
+        {
 
-    if ($check_session == true) {
-
-      if ( (tep_session_is_registered('customer_id') == false) || ($id != $customer_id) ) {
-
-        return 0;
-
-      }
-
+            return 0;
+        }
     }
 
-
-
-    $addresses_query = tep_db_query("select count(*) as total from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . (int)$id . 
-
-"'");
+    $addresses_query = tep_db_query("select count(*) as total from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . (int)$id . "'");
 
     $addresses = tep_db_fetch_array($addresses_query);
 
-
-
     return $addresses['total'];
-
-  }
+}
 
 
 
@@ -2564,15 +2539,15 @@ p2c where p.products_id = '" . (int)$products_id . "' and p.products_status = '1
 
 	  global $cart, $languages_id;
 
-	
+
 
 	$result = '';
 
-	$ordered_products_query = tep_db_query("select op.products_id, 
+	$ordered_products_query = tep_db_query("select op.products_id,
 
 								op.orders_products_id,
 
-								op.products_quantity, 
+								op.products_quantity,
 
 								p.products_status,
 
@@ -2582,11 +2557,11 @@ p2c where p.products_id = '" . (int)$products_id . "' and p.products_status = '1
 
 								pd.products_name
 
-			from " . TABLE_ORDERS_PRODUCTS . " op, " . 
+			from " . TABLE_ORDERS_PRODUCTS . " op, " .
 
-			TABLE_PRODUCTS . " p, " . 
+			TABLE_PRODUCTS . " p, " .
 
-			TABLE_PRODUCTS_DESCRIPTION . " pd 
+			TABLE_PRODUCTS_DESCRIPTION . " pd
 
 			where op.orders_id = '" . $orders_id . "' and
 
@@ -2596,7 +2571,7 @@ p2c where p.products_id = '" . (int)$products_id . "' and p.products_status = '1
 
 			pd.language_id = '" . $languages_id . "'");
 
-	
+
 
 	while ($ordered_product = tep_db_fetch_array($ordered_products_query)) {
 
@@ -2616,9 +2591,9 @@ $ordered_product['products_quantity']);
 
 			   $attributes_count = 0;
 
-			   $attributes_query = tep_db_query("select po.products_options_id , 
+			   $attributes_query = tep_db_query("select po.products_options_id ,
 
-			pov.products_options_values_id 
+			pov.products_options_values_id
 
 			from " . TABLE_ORDERS_PRODUCTS_ATTRIBUTES . " opa,
 
@@ -2646,7 +2621,7 @@ $ordered_product['products_quantity']);
 
 			pov.language_id = '" . $languages_id . "'");
 
-	
+
 
 			   while ($attribute = tep_db_fetch_array($attributes_query)) {
 
@@ -2658,17 +2633,17 @@ $ordered_product['products_quantity']);
 
 			   }
 
-	
+
 
 	if ($attributes_count < 1) {
 
 		$result .= 'product: ' . $ordered_product['products_id'] . ' [' . $ordered_product['products_model'] . '] > ' .
 
-$ordered_product['products_name'] . ': Attributes changed<br>'; 
+$ordered_product['products_name'] . ': Attributes changed<br>';
 
 			  }
 
-	
+
 
 
 		$cart->add_cart($ordered_product['products_id'], $cart->get_quantity(tep_get_uprid($ordered_product
@@ -2681,7 +2656,7 @@ $ordered_product['products_name'] . ': Attributes changed<br>';
 
 	   } else {
 
-		  $result .= 'product: ' . $ordered_product['products_id'] . ' [' . $ordered_product['products_model'] . '] > ' . 
+		  $result .= 'product: ' . $ordered_product['products_id'] . ' [' . $ordered_product['products_model'] . '] > ' .
 
 $ordered_product['products_name'] . ': Not Available<br>';
 
@@ -2693,23 +2668,23 @@ $ordered_product['products_name'] . ': Not Available<br>';
 
 	}
 
-function genpassword($length=32) {  
+function genpassword($length=32) {
 
-    srand((double)microtime()*1000000);  
-      
-    $vowels = array("a", "e", "i", "o", "u");  
-    $cons = array("b", "c", "d", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "u", "v", "w", "tr",  
-    "cr", "br", "fr", "th", "dr", "ch", "ph", "wr", "st", "sp", "sw", "pr", "sl", "cl");  
-      
-    $num_vowels = count($vowels);  
-    $num_cons = count($cons);  
-      
-    for($i = 0; $i < $length; $i++){  
-        $password .= $cons[rand(0, $num_cons - 1)] . $vowels[rand(0, $num_vowels - 1)];  
-    }  
-      
-    return substr($password, 0, $length);  
-}  
+    srand((double)microtime()*1000000);
+
+    $vowels = array("a", "e", "i", "o", "u");
+    $cons = array("b", "c", "d", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "u", "v", "w", "tr",
+    "cr", "br", "fr", "th", "dr", "ch", "ph", "wr", "st", "sp", "sw", "pr", "sl", "cl");
+
+    $num_vowels = count($vowels);
+    $num_cons = count($cons);
+
+    for($i = 0; $i < $length; $i++){
+        $password .= $cons[rand(0, $num_cons - 1)] . $vowels[rand(0, $num_vowels - 1)];
+    }
+
+    return substr($password, 0, $length);
+}
 
 function gen_coupon_code ($length) {
   return strtoupper(genpassword($length));
@@ -2725,7 +2700,7 @@ function render_messages($arrMessages)
              echo $item.'<br/>';
         }
         echo '</p>';
-        
+
      }
 
 }
@@ -2734,7 +2709,7 @@ function render_messages($arrMessages)
 
 function parse_section($text_to_scan, $opening_delimeter, $closing_delimeter)
 {
-        
+
 		if(strpos($text_to_scan,$opening_delimeter)>0)
 		{
 		    //Offer spelling recommendation.
@@ -2743,9 +2718,9 @@ function parse_section($text_to_scan, $opening_delimeter, $closing_delimeter)
 
 ($opening_delimeter))
 		                -(strpos($text_to_scan,$opening_delimeter,0)+strlen($opening_delimeter)));
-		
+
 		}
-		
+
 		return($snippet);
 }
 
@@ -2762,7 +2737,7 @@ function format_seo_url($url) //exclude the base of the URL
     $url=str_replace(' ','-',$url);
     $url=str_replace('/','-',$url);
     $url=urlencode(strtolower($url));
-    
+
     if(strrpos($url,1)!='/'){$url=$url.'/';}
     return($url);
 }
@@ -2775,14 +2750,14 @@ function clean_string($string)
 
 function calculate_member_price($original_price, $manufacturers_id, $products_name)
 {
-	
+
 if($manufacturers_id==69)
     {
     	$cm_price=$original_price*.75; //25% Off
     }
     elseif(!strpos($products_name,'*'))
     {
-    	$cm_price=$original_price*.85; //15% Off 
+    	$cm_price=$original_price*.85; //15% Off
     }
     else {
     	$cm_price=$original_price;
@@ -2807,7 +2782,7 @@ function select_image($products_id, $products_image='', $manufacturers_id='')
 
     if  (strlen($products_image)>0 && (@filemtime($_SERVER['DOCUMENT_ROOT'].'/'.$product_image_path)<@filemtime($_SERVER
 
-['DOCUMENT_ROOT'].'/'.DIR_WS_IMAGES.$products_image) || !@filemtime($_SERVER['DOCUMENT_ROOT'].'/'.DIR_WS_IMAGES.$products_image)) 
+['DOCUMENT_ROOT'].'/'.DIR_WS_IMAGES.$products_image) || !@filemtime($_SERVER['DOCUMENT_ROOT'].'/'.DIR_WS_IMAGES.$products_image))
 
 || (strlen($product_image_path)<1 && strlen($products_image)>0)){
 
@@ -2827,16 +2802,16 @@ function select_image($products_id, $products_image='', $manufacturers_id='')
 }
 
 function populate_backlinks($delimiter=',')
-{                       
+{
   global $page_links;
   $page_links=$delimiter;
-  
+
   $context=stream_context_create(Array('http'=>Array('method'=>'GET','header'=>'Content-Type: application/json')));
-  
+
   if(!is_array($page_links))
   {
     if((int)$_REQUEST['products_id'])
-    { 
+    {
       $pl=json_decode(@file_get_contents(COUCH_DB_ADDRESS.'seacoast-page-links/_design/page_links/_view/incoming_links?key="'.urlencode('/product_info.php?products_id='.(int)$_REQUEST['products_id']).'"',false,$context),true);
       //$page_link_query=tep_db_query('select source_uri from seacoast_links.source_link where source_link=");
 
@@ -2852,24 +2827,24 @@ function populate_backlinks($delimiter=',')
     }
 
   }
-  
+
 }
 
 function catalog_links($tidydoc, $linkable, $cache_time=86400, $uri='')
 {
   if($uri=='')
   {
-      
-      $uri=$_SERVER['REQUEST_URI']; 
 
-      
-    
-  }                                                          
+      $uri=$_SERVER['REQUEST_URI'];
+
+
+
+  }
 
   $context=stream_context_create(Array('http'=>Array('method'=>'GET','header'=>'Content-Type: application/json')));
-  
+
   $last_modifieddb=json_decode(@file_get_contents(COUCH_DB_ADDRESS.'seacoast-page-links/'.urlencode($uri),false,$context),true);
-  
+
   if(strlen($last_modifieddb['time_updated'])>0)
   {
     $last_modified=(int)$last_modifieddb['time_updated'];
@@ -2878,18 +2853,18 @@ function catalog_links($tidydoc, $linkable, $cache_time=86400, $uri='')
   {
     $last_modified=0;
   }
-  
+
   $t=(int)time();
- 
-  
+
+
  // echo (((int)$last_modifed-(int)$t)+(int)$cache_time),'<br>',$cache_time,'<br>',$t,'<br>',$last_modified;exit();
   if($t-$last_modified-$cache_time>0)
   {
     // capture all links in the DB
     // First, create an array catalog.
-    
+
     $links_arr=array();
-    
+
     $pos=strpos($tidydoc, '<body');
     $cur=0;
 
@@ -2911,7 +2886,7 @@ function catalog_links($tidydoc, $linkable, $cache_time=86400, $uri='')
                           {array_push($links_arr, $cur);}
       }
     }
-                                   
+
     $cdb_docs=array("links"=>Array());
     $cdb_docs['time_updated']=time();
     $cdb_docs['_id']=tep_db_input($uri);
@@ -2919,10 +2894,10 @@ function catalog_links($tidydoc, $linkable, $cache_time=86400, $uri='')
     {
       array_push($cdb_docs['links'],tep_db_input($item));
     }
-    
-    // insert in to couch 
+
+    // insert in to couch
     $context=stream_context_create(Array('http'=>Array('method'=>'POST','header'=>'Content-Type: application/json','content'=> json_encode($cdb_docs))));
-    @file_get_contents(COUCH_DB_ADDRESS.'seacoast-page-links/',false,$context);                                                                        
+    @file_get_contents(COUCH_DB_ADDRESS.'seacoast-page-links/',false,$context);
 
   }
 
@@ -2941,7 +2916,7 @@ function link_exists($pattern, $strlinks, $delimiter=',')
   {
     $full_link='';
   }
-    
+
   return($full_link);
 }
 
@@ -2949,16 +2924,16 @@ function link_exists($pattern, $strlinks, $delimiter=',')
 function match_hub_links($page_links, $display_links=false)
 {
     $hubs=Array();
-   
+
 
     if(preg_match_all('/,\/hub\.php\?tag=([a-z0-9-]+)/',$page_links,$matches))
     {
         foreach($matches[1] as $item)
         {
-            
+
                 $keywords=Array();
-                
-                $hub_query=tep_db_query('select t.name from wp_posts p join wp_postmeta pm on pm.post_id=id 
+
+                $hub_query=tep_db_query('select t.name from wp_posts p join wp_postmeta pm on pm.post_id=id
                                         join wp_term_relationships tr on tr.object_id=p.ID
                                         join wp_term_taxonomy tt on tt.term_taxonomy_id=tr.term_taxonomy_id
                                         join wp_terms t on t.term_id=tt.term_id
@@ -2967,22 +2942,22 @@ function match_hub_links($page_links, $display_links=false)
                 {
                     array_push($keywords, $hub['name']);
                 }
-                array_push($hubs,Array($item=>$keywords)); 
+                array_push($hubs,Array($item=>$keywords));
             }
-            
-            
+
+
     }
-    
-        
+
+
     if($display_links)
     {
 
         display_match_hub_links($hubs);
-        
+
     }
-    
+
     return $hubs ;
-    
+
 }
 
 
@@ -2994,7 +2969,7 @@ function display_match_hub_links($hubs)
         $hub =tep_db_fetch_array(tep_db_query('select post_title, post_excerpt from wp_posts p join wp_postmeta pm on pm.post_id=id where pm.meta_key="hub" and meta_value="'.tep_db_input($tag).'"'));
         echo '<p><h2><a href="/hub.php?tag='.$tag.'">'.$hub['post_title'].'</a></h2>'.$hub['post_excerpt'].'';
     }
-    
+
 }
 
 function linkKeywordsToHubs(&$keywords, $content)
@@ -3004,31 +2979,31 @@ function linkKeywordsToHubs(&$keywords, $content)
     $start=0;
     $length=0;
     $newcontent="";
-    
+
     if(!$length=strpos($content,'<a '))
     {
         $length=strlen($content);
     }
-    
+
     do
     {
         foreach($keywords as $num=>$item)
         {
             if(preg_match('/\b'.$item["Keyword"].'\b/i',substr($content,$start,$length)))
             {
-                $newcontent.=preg_replace('/\b'.$item["Keyword"].'\b/i','<a href="/'.$item["Hub"].'">'.$item["Keyword"].'</a>',substr($content,$start,$length)).substr($content,$start+$length);  
+                $newcontent.=preg_replace('/\b'.$item["Keyword"].'\b/i','<a href="/'.$item["Hub"].'">'.$item["Keyword"].'</a>',substr($content,$start,$length)).substr($content,$start+$length);
                 unset($keywords[$num]);
-                
-                $newcontent=linkKeywordsToHubs($keywords,$newcontent);  
+
+                $newcontent=linkKeywordsToHubs($keywords,$newcontent);
                 return($newcontent); //should never process any further after matching once and being sent back in to the loop
-                break;       
-                
+                break;
+
             }
-           
+
         }
-        
-        $newcontent.=substr($content,$start,$length);  
-        
+
+        $newcontent.=substr($content,$start,$length);
+
         if(($length+$start)>=strlen($content))
         {
             return($newcontent);
@@ -3044,11 +3019,11 @@ function linkKeywordsToHubs(&$keywords, $content)
             else
             {
                 $length=$length+4-$start;
-                $newcontent.=substr($content,$start,$length); // save all the content in between links. 
+                $newcontent.=substr($content,$start,$length); // save all the content in between links.
                 $start=$start+$length;
-                
+
             }
-            
+
             if(!$length=strpos($content,'<a ',$start))
             {
                 $length=strlen($content)-$start;
@@ -3057,23 +3032,23 @@ function linkKeywordsToHubs(&$keywords, $content)
             {
                 $length=$length-$start;
             }
-            
-            
-            
+
+
+
         }
-        
+
     }while ($start<strlen($content));
-    
+
     return(trim($newcontent));
-    
-    
+
+
 }
 
 function getHubKeywordsAndRewriteContent($content)
 {
     $keycache=new megacache(60*60, "hubKeywordCache"); //1 hour
     $keywords=Array();
-    
+
     if($cache=$keycache->doCache("hubCache",false))
     {
         $keywords=unserialize($cache);
@@ -3086,28 +3061,28 @@ function getHubKeywordsAndRewriteContent($content)
                                 JOIN wp_term_taxonomy tt ON t.term_id=tt.term_id
                                 JOIN wp_term_relationships tr ON tr.term_taxonomy_id=tt.term_taxonomy_id
                                 JOIN wp_posts p ON p.ID=tr.object_id
-                                JOIN wp_postmeta pm ON pm.post_id=p.ID 
+                                JOIN wp_postmeta pm ON pm.post_id=p.ID
                                 WHERE tt.taxonomy='post_tag'
                                 AND meta_key='hub' order by length(t.name) desc") ;
-                                
+
         while($key=tep_db_fetch_array($keyquery))
         {
             array_push($keywords,Array("Keyword"=>$key["Keyword"],"Hub"=>$key["Hub"]));
         }
-        
+
         $keycache->addCache("hubCache",serialize($keywords));
-                
+
     }
-    
+
     return(linkKeywordsToHubs($keywords,$content));
-    
-    
+
+
 }
 
 function parse_nameparts($name)
 {
     // Get the short name and the attributes from a product title
-    
+
     $tname=preg_replace('/[^A-Za-z0-9-()!|,\s\.]/i','',$name);
     $tname=preg_split('/([^a-z0-9-\s!].+)/i',$tname,2,PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY );
     $tmisc=$tname[1];

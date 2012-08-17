@@ -3,23 +3,23 @@
 
 
   require('includes/application_top.php');
-  
-  // check for moded url
-  redirect_moded_url();                                                                                               
 
-  
+  // check for moded url
+  redirect_moded_url();
+
+
   if(!strlen($_SERVER['QUERY_STRING']))
   {
   	redir301('/');
   }
-  
+
   //Get the first letter of the category we're in
     if(strlen($url_title))
     {
         preg_match('/[a-z]/i',$url_title, $letter);
         $letter=trim($letter[0]);
     }
-  
+
   include_once('includes/functions/render_products.php');
 
   require(DIR_WS_LANGUAGES . $language . '/' . FILENAME_DEFAULT);
@@ -33,14 +33,14 @@
   $products_id=(int)$_REQUEST['products_id'];
 
 
-  
+
   if($products_id)
   {
-      
+
       //redirect to appropriate product.
-      
+
       // Deprecated - 301 products_id pages to product page.
-      $products_name=tep_db_fetch_array(tep_db_query("select concat(manufacturers_name,\" \",products_name) as products_name from products_description pd join products p on p.products_id=pd.products_id join manufacturers m on m.manufacturers_id=p.manufacturers_id where p.products_id=".(int)$products_id));                                                                        
+      $products_name=tep_db_fetch_array(tep_db_query("select concat(manufacturers_name,\" \",products_name) as products_name from products_description pd join products p on p.products_id=pd.products_id join manufacturers m on m.manufacturers_id=p.manufacturers_id where p.products_id=".(int)$products_id));
       $replacement="/supplement/".seo_url_title($products_name["products_name"]."-".$products_id, $page);
       redir301($replacement);
 
@@ -80,7 +80,7 @@ if($cPath || $manufacturers_id)
     $htc = tep_db_fetch_array($db_query);
     $title=$htc['htc_title'];
     // create column list
-    
+
     $select_column_list = '';
               $select_column_list .= 'p.products_model, ';
               $select_column_list .= 'pd.products_name, pd.products_head_desc_tag as product_desc, pd.products_uses, pd.products_ailments, pd.products_departments,  ';
@@ -123,9 +123,9 @@ if($cPath || $manufacturers_id)
     if((int)$cPath || (int)$manufacturers_id)
     {
       $disableoutput=true;
-    
+
       include(DIR_WS_MODULES . FILENAME_PRODUCT_LISTING);
-    
+
       if(strlen($firstprod))
       {
          if($manufacturers_id or isset($_REQUEST['page']))
@@ -147,7 +147,7 @@ if($cPath || $manufacturers_id)
             }
 
           }
-          $page_description.='<p>Now displaying products <b>'.(($listing_split->current_page_number*$listing_split->number_of_rows_per_page-$listing_split->number_of_rows_per_page)+1) . 
+          $page_description.='<p>Now displaying products <b>'.(($listing_split->current_page_number*$listing_split->number_of_rows_per_page-$listing_split->number_of_rows_per_page)+1) .
           '.) ' . $firstprod . '</b> through <b>' .(($listing_split->current_page_number*$listing_split->number_of_rows_per_page)-($listing_split->number_of_rows_per_page-$rows)).'.) '. $lastprod . '</b> out of <b>'.$listing_split->number_of_rows.' total.</b></p>';
 
 
@@ -160,15 +160,22 @@ if(!$products_id && !strlen($lastprod) && !cPath)
 {
     //No products found, so redirect
     redir301('/health-guides/');
-    exit();    
-}   
+    exit();
+}
 
 
 ?>
 
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!doctype html>
 <html <?php echo HTML_PARAMS; ?>>
 <head>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap-responsive.min.css">
+    <link href="/css/main.css" rel="stylesheet">
+    <link href="/font/fonts.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="/jquery/respond.src.js"></script>
+    <![endif]-->
 
 <title><?php echo $title ?></title>
 <meta name="description" content="<?php echo $description; ?>"/>
@@ -190,7 +197,7 @@ if(!$products_id && !strlen($lastprod) && !cPath)
     <p><a href="/health-guides/<?php echo strtolower($letter)?>/">Health Guides Index Starting From "<?php echo strtoupper($letter);?>"</a></p>
 
     <?php
-       
+
 }
 ?>
 <?php if($cPath || $manufacturers_id){ ?>
@@ -205,7 +212,7 @@ if(!$products_id && !strlen($lastprod) && !cPath)
 <?php
 
  if($cPath)
- {            
+ {
      $categories_query = tep_db_query("select c.categories_id, cd.categories_name, c.categories_image, c.parent_id from " . TABLE_CATEGORIES . " c join " . TABLE_CATEGORIES_DESCRIPTION . " cd on c.categories_id=cd.categories_id where c.parent_id = '" . (int)$current_category_id . "' and  cd.language_id = '" . (int)$languages_id . "' order by sort_order, cd.categories_name");
      $number_of_categories = tep_db_num_rows($categories_query);
 
@@ -236,15 +243,15 @@ if(!$products_id && !strlen($lastprod) && !cPath)
     $cat_query=tep_db_query('SELECT cd.categories_id, cd.categories_name, cd.categories_htc_desc_tag from categories_description cd
                                     join products_to_categories p2c on p2c.categories_id=cd.categories_id
                                     where p2c.products_id='.(int)$_REQUEST['products_id'].' order by categories_name asc');
-    
+
         ?>
         <h1><?php echo $product_info['manufacturers_name'], ' ',$product_info['products_name'], ' Health Guides';?></h1>
-     
+
         <p style="width:600px;"> Health Guides are simply categories in which <a href="/product_info.php?products_id=<?php echo $product_info['products_id'];?>"><?php echo $product_info['manufacturers_name'], ' ', $product_info['products_name'];?></a>
         can be located, along with additional resources and related products.
        </p>
 
-     
+
 
         <?php
         //Spool categories and intertwine with departments
@@ -252,30 +259,30 @@ if(!$products_id && !strlen($lastprod) && !cPath)
         while($cat=tep_db_fetch_array($cat_query))
         {
             array_push($categories,$cat);
-        }   
+        }
         foreach(explode(',',$product_info['products_departments']) as $item)
         {
             array_push($categories, array('categories_id'=>0, 'categories_name'=>ucwords(trim($item)), 'categories_htc_desc_tag'=>''));
         }
-        
+
         $found=false;
         foreach($categories as $cat)
         {
             if($cat['categories_id']==0)
             {
                 //Display a link to a department
-                $mflink=link_exists('/departments.php?benefits='.urlencode(strtolower($cat['categories_name'])),$page_links) ? 
+                $mflink=link_exists('/departments.php?benefits='.urlencode(strtolower($cat['categories_name'])),$page_links) ?
                                                                                      link_exists('/departments.php?benefits='.urlencode(strtolower($cat['categories_name'])),$page_links) :
                                                                                      '/departments.php?benefits='.urlencode(strtolower($cat['categories_name']));
             }
             else
             {
                 //Display a link to a category page
-                $mflink=link_exists('/index.php?cPath='.$cat['categories_id'],$page_links) ? 
+                $mflink=link_exists('/index.php?cPath='.$cat['categories_id'],$page_links) ?
                                                                                      link_exists('/index.php?cPath='.$cat['categories_id'],$page_links) :
                                                                                      '/index.php?cPath='.$cat['categories_id'];
             }
-          
+
           if(!$found)
           {
             echo '<div><ul>';
@@ -288,7 +295,7 @@ if(!$products_id && !strlen($lastprod) && !cPath)
           </p> </li>
 
           <?php
-          
+
           if(!$found)
           {    ?>
             <p>Sorry. No categories were found for this product.</p>
@@ -296,19 +303,19 @@ if(!$products_id && !strlen($lastprod) && !cPath)
           }
 
         }
-        
+
         if($found)
         {
           echo '</ul></div>';
         }
-        
+
         ?>
         <p>To view all major health guides, <a href="/health-guides/">click here</a>.</p>
 
 
         <?php
     }
-    
+
     if(strlen($listing_text))
     {
        echo '<p>'.$listing_text.'</p>';
@@ -317,9 +324,9 @@ if(!$products_id && !strlen($lastprod) && !cPath)
         ?>
 
     </div>
-    
+
     <br style="clear:both"/>
-    
+
 
 
 <?php require(DIR_WS_INCLUDES . 'footer.php'); ?>

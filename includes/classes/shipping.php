@@ -43,7 +43,7 @@
 
     function quote($method = '', $module = '') {
       global $total_weight, $shipping_weight, $shipping_quoted, $shipping_num_boxes;
-    
+
       $quotes_array = array();
 
       if (is_array($this->modules)) {
@@ -67,25 +67,25 @@
         reset($this->modules);
         while (list(, $value) = each($this->modules)) {
           $class = substr($value, 0, strrpos($value, '.'));
-          
-          if (tep_not_null($module)) 
+
+          if (tep_not_null($module))
           {
-            if ( ($module == $class) && ($GLOBALS[$class]->enabled) ) 
+            if ( ($module == $class) && ($GLOBALS[$class]->enabled) )
             {
               $include_quotes[] = $class;
             }
-          } 
-          elseif ($GLOBALS[$class]->enabled) 
+          }
+          elseif ($GLOBALS[$class]->enabled)
           {
             $include_quotes[] = $class;
           }
         }
 
         $size = sizeof($include_quotes);
-        for ($i=0; $i<$size; $i++) 
+        for ($i=0; $i<$size; $i++)
         {
           $quotes = $GLOBALS[$include_quotes[$i]]->quote($method);
-          if (is_array($quotes)) 
+          if (is_array($quotes))
           {
               $quotes_array[] = $quotes;
           }
@@ -98,16 +98,16 @@
     function getCheapestRate()
     {
         $quotes = $this->quote();
-        
+
         $rates = array();
 
-        for ($i=0; $i<sizeof($quotes); $i++) 
+        for ($i=0; $i<sizeof($quotes); $i++)
         {
             if (count($quotes[$i]['methods']) > 0)
             {
                 for ($n=0; $n<count($quotes[$i]['methods']); $n++)
                 {
-                    if (isset($quotes[$i]['methods'][$n]['cost']) && tep_not_null($quotes[$i]['methods'][$n]['cost'])) 
+                    if (isset($quotes[$i]['methods'][$n]['cost']) && tep_not_null($quotes[$i]['methods'][$n]['cost']))
                     {
                         $rates[] = array('id' => $quotes['id'] . '_' . $quotes['methods'][$i]['id'],
                                 'title' => $quotes['module'] . ' (' . $quotes['methods'][$i]['title'] . ')',
@@ -118,57 +118,59 @@
         }
         $cheapest = false;
         for ($i=0, $n=sizeof($rates); $i<$n; $i++) {
-            if (is_array($cheapest)) 
+            if (is_array($cheapest))
             {
                 if ($rates[$i]['cost'] < $cheapest['cost']) {
                     $cheapest = $rates[$i];
                 }
-            } 
+            }
             else {
             $cheapest = $rates[$i];
             }
         }
         return $cheapest['cost'];
     }
-    
-    function cheapest() {
-      if (is_array($this->modules)) {
-        $rates = array();
 
-        reset($this->modules);
-        while (list(, $value) = each($this->modules)) 
+    function cheapest()
+    {
+        if(is_array($this->modules))
         {
-          $class = substr($value, 0, strrpos($value, '.'));
-          
-          if ($GLOBALS[$class]->enabled) 
-          {
-            $quotes = $GLOBALS[$class]->quotes;
-            
-            for ($i=0, $n=sizeof($quotes['methods']); $i<$n; $i++) 
+            $rates = array();
+            reset($this->modules);
+            while (list(, $value) = each($this->modules))
             {
-              if (isset($quotes['methods'][$i]['cost']) && tep_not_null($quotes['methods'][$i]['cost'])) 
-              {
-                $rates[] = array('id' => $quotes['id'] . '_' . $quotes['methods'][$i]['id'],
+                $class = substr($value, 0, strrpos($value, '.'));
+                if($GLOBALS[$class]->enabled)
+                {
+                    $quotes = $GLOBALS[$class]->quotes;
+                    for ($i=0, $n=sizeof($quotes['methods']); $i<$n; $i++)
+                    {
+                        if(isset($quotes['methods'][$i]['cost']) && tep_not_null($quotes['methods'][$i]['cost']))
+                        {
+                            $rates[] = array('id' => $quotes['id'] . '_' . $quotes['methods'][$i]['id'],
                                  'title' => $quotes['module'] . ' (' . $quotes['methods'][$i]['title'] . ')',
                                  'cost' => $quotes['methods'][$i]['cost']);
-              }
+                        }
+                    }
+                }
             }
-          }
-        }
-
-        $cheapest = false;
-        for ($i=0, $n=sizeof($rates); $i<$n; $i++) {
-          if (is_array($cheapest)) {
-            if ($rates[$i]['cost'] < $cheapest['cost']) {
-              $cheapest = $rates[$i];
+            $cheapest = false;
+            for($i=0, $n=sizeof($rates); $i<$n; $i++)
+            {
+                if(is_array($cheapest))
+                {
+                    if($rates[$i]['cost'] < $cheapest['cost'])
+                    {
+                        $cheapest = $rates[$i];
+                    }
+                }
+                else
+                {
+                    $cheapest = $rates[$i];
+                }
             }
-          } else {
-            $cheapest = $rates[$i];
-          }
+            return $cheapest;
         }
-
-        return $cheapest;
-      }
     }
   }
 ?>

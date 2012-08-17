@@ -1,7 +1,9 @@
 <?php
 
+@ini_set('zlib.output_compression', 0);
+    @ini_set('implicit_flush', 1);
+
   set_time_limit(1200);
-  ob_start();
   
   $_SERVER['DOCUMENT_ROOT']='..';
   require('../includes/application_top.php');  
@@ -9,7 +11,7 @@
   $newline="\r\n";
   // Set headers as Text XML
   
-  //header('Content-type: text/xml');
+  header('Content-type: text/xml');
   
   // Here are the initial XML tags
 
@@ -26,7 +28,7 @@ $data="<?xml version=\"1.0\" encoding=\"UTF-8\" ?>".$newline.
 
         
     fwrite($file,utf8_encode($data));
-  
+  echo utf8_encode($data);
   // Get all product info
   $products=products::all(array('conditions'=>'products_status=1'));
   
@@ -75,21 +77,27 @@ $data="<?xml version=\"1.0\" encoding=\"UTF-8\" ?>".$newline.
         $data.="<g:image_link>http://www.seacoast.com/images/". xml_entities($product->products_image) ."</g:image_link>".$newline;
     }
     $data.="<g:condition>new</g:condition>".$newline;
-    $data.="<g:brand>".xml_entities($product->manufacturer->manufacturers_name)."</g:brand>" . $newline;
+    $data.="<g:brand>".xml_entities($product->manufacturer->manufacturers_name)."</g:brand>" . $newline;    
     if(strlen($product->products_upc)==12){ 
         $data.="<g:gtin>". $product->products_upc ."</g:gtin>" . $newline;
     }
+    if(strlen($product->products_sku)>0){ 
+        $data.="<g:mpn>". $product->products_sku ."</g:mpn>" . $newline;
+    }
     
     if($product->products_available>0){ $data.="<g:availability>in stock</g:availability>".$newline; }
+    else{ $data.="<g:availability>available for order</g:availability>".$newline; }
     if($product->products_weight>0){ $data.="<g:shipping_weight>".$product->products_weight." lbs</g:shipping_weight>" . $newline; }
     $data.="<g:product_type>Health &amp; Beauty &gt; Health Care &gt; Fitness &amp; Nutrition &gt; Vitamins &amp; Supplements</g:product_type>".$newline;
 
+    $data.="<g:google_product_category>Health &amp; Beauty &gt; Health Care &gt; Fitness &amp; Nutrition &gt; Vitamins &amp; Supplements</g:google_product_category>".$newline;
 
 
 $data.="</item>".$newline;
 fwrite($file,utf8_encode($data));
 unset($products[$index]);
 $index++;
+echo $data; 
   
                
   }
@@ -103,9 +111,11 @@ fwrite($file,utf8_encode($data));
 
 fclose($file);
                                  
-redir301('froogle.xml');
+//redir301('froogle.xml');
 
-exit();
+//exit();
+
+echo $data;
 
 
 //redir301('froogle.xml');

@@ -375,7 +375,7 @@ function doUpload($name, $width, $height, $aspect) {
 
                            // notify the user
                            $size = @imageInfo(IMAGE_DIR . $path);
-                           $info = "Image \'" . $name . "\' was $action to $size[0] × $size[1]";
+                           $info = "Image \'" . $name . "\' was $action to $size[0] ï¿½ $size[1]";
                         }
                      }
                   }
