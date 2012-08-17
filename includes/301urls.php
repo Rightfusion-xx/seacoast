@@ -121,19 +121,19 @@
             try     // Run some tests on the Request string which may fail if they are an array.
             {
                 
-                if(strlen($_REQUEST['products_id'])>0 && strlen($_REQUEST['manufacturers_id'])>0 && $_REQUEST['action']!='buy_now')
+                if(@strlen($_REQUEST['products_id'])>0 && @strlen($_REQUEST['manufacturers_id'])>0 && $_REQUEST['action']!='buy_now')
                 {
                     $url=substr($url,0,strpos($url,'?')+1) . 'products_id=' . $_REQUEST['products_id'];
                     $redirbadurl=true;
                 }
             
             
-                if(strlen($_REQUEST['products_id'])>0 && strlen($_REQUEST['cPath'])>0 && $_REQUEST['action']!='buy_now')
+                if(@strlen($_REQUEST['products_id'])>0 && @strlen($_REQUEST['cPath'])>0 && $_REQUEST['action']!='buy_now')
                 {
                     $url=substr($url,0,strpos($url,'?')+1) . 'products_id=' . $_REQUEST['products_id'];
                     $redirbadurl=true;
                 }
-                if(strlen($_REQUEST['products_id'])>0 && $_REQUEST['page']!='')
+                if(@strlen($_REQUEST['products_id'])>0 && $_REQUEST['page']!='')
                 {
                     $url=substr($url,0,strpos($url,'?')+1) . 'products_id=' . $_REQUEST['products_id'];
                     $redirbadurl=true;
