@@ -705,13 +705,16 @@ if(strlen($handler['redirect'])>0)
 $pmod=1.0;
 
 //check if is parameter 'rt' for free shipping
-
-if(isset($_GET['rt']) && $_GET['rt'] == 'fs'){
     if(!tep_session_is_registered('free_us_48')){
         tep_session_register('free_us_48');
+        $free_us_48 = false;
     }
-    $free_us_48 = true;
-}
+
+    if(isset($_GET['rt']) && $_GET['rt'] == 'fs'){
+        $free_us_48 = true;
+    }
+	
+//	var_dump($free_us_48);die;
 
 ////////////////////////////////////////////////////////////////////
 
