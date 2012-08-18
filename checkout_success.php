@@ -113,10 +113,19 @@ if($_SESSION['customer_id'])
     <title><?php echo TITLE; ?></title>
     <base href="<?php echo (($request_type == 'SSL') ? HTTPS_SERVER : HTTP_SERVER) . DIR_WS_CATALOG; ?>">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
-    <script type="text/javascript">
-        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+   
+</head>
+<body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
+<!-- header //-->
+<?php require(DIR_WS_INCLUDES . 'header.php'); ?>
+<!-- header_eof //-->
+<div class="container">
 
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol ) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+ <script type="text/javascript">
         var pageTracker = _gat._getTracker("UA-207538-1");
         pageTracker._initData();
         pageTracker._trackPageview();
@@ -132,13 +141,7 @@ if($_SESSION['customer_id'])
             "<?php echo $o_info->delivery['country']?>"                                       // Country
         );
     </script>
-</head>
-<body marginwidth="0" marginheight="0" topmargin="0" bottommargin="0" leftmargin="0" rightmargin="0">
-<!-- header //-->
-<?php require(DIR_WS_INCLUDES . 'header.php'); ?>
-<!-- header_eof //-->
-<div class="container">
-<!-- body //-->
+
 <table border="0" width="100%" cellspacing="3" cellpadding="3">
   <tr>
     <TD WIDTH="<?php echo BOX_WIDTH; ?>" VALIGN="top" rowspan="2"><table border="0" width="<?php echo BOX_WIDTH; ?>" cellspacing="0" cellpadding="2">
@@ -209,9 +212,6 @@ document.write('<'+ 'script type="text/javascript" src="https://merchants.nextag
 			  pageTracker._trackTrans();
 			</script>
 
-			<!--Merchant Advantage-->
-			<img src="zmam=56141451&zmas=1&zmaq=N&quantity=<?php echo $products_array[$i]['qty']?>&pcode=<?php echo $products_array[$i]['id']?>&zman=<?php echo $orders['orders_id']?>&zmat=<?php echo $products_array[$i]['price']*$products_array[$i]['qty']?>" width=0 height=0 border=0>
-      	    <!--End Merchant Advantage-->
 
       	<?php
 

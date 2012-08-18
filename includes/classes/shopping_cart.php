@@ -426,6 +426,7 @@ class shoppingCart
                 $products_tax = tep_get_tax_rate($product['products_tax_class_id']);
                 $products_price = $product['products_price'];
                 $products_weight = $product['products_weight'];
+                $products_msrp = $product['products_msrp'];
 
                 $specials_query = tep_db_query("select specials_new_products_price from " . TABLE_SPECIALS . " where products_id = '" . (int)$prid . "' and status = '1'");
                 if (tep_db_num_rows ($specials_query)) {
@@ -450,17 +451,19 @@ class shoppingCart
 
                 $products_savings=0;
                 if($product['manufacturers_id']==69){
-                    $products_savings=number_format($products_price*0.25,2);
+                    $products_savings=$products_msrp-number_format($products_price*0.75,2);
+                    $cm_price=number_format($products_price*0.75,2);
                 }
                 else
                 {
-                    $products_savings=number_format($products_price*0.15,2);
+                    $products_savings=$products_msrp-number_format($products_price*0.85,2);
+                    $cm_price=number_format($products_price*0.85,2);
                 }
 
 
                 if($this->in_cart(CM_FTPID) || $this->in_cart(CM_PID) || $is_member){
                     $this->savings += $products_savings*$qty;
-                    $products_price-=$products_savings;
+                    $products_price=$cm_price;
                 }else{
                     $this->potential_savings += $products_savings*$qty;
                 }
@@ -551,6 +554,8 @@ class shoppingCart
                     $specials = tep_db_fetch_array($specials_query);
                     $products_price = $specials['specials_new_products_price'];
                 }
+                
+                $products_msrp=$products['products_mmsrp']<$products_price ? $products_price : $products['products_msrp'];
 
                 //Community Members - Calculate Savings
                 $is_member=tep_db_fetch_array(tep_db_query('select case when cm_expiration>=curdate() and cm_expiration IS NOT NULL then 1 else 0 end as ismember from customers_info where customers_info_id='.(int)$customer_id.''));
@@ -558,13 +563,15 @@ class shoppingCart
                     $products_savings=0;
 
                     if($products['manufacturers_id']==69){
-                        $products_savings=$products_price*0.25;
+                        $products_savings=$products_msrp-number_format($products_price*0.75,2);
+                        $products_price=number_format($products_price*0.75,2);
                     }
                     else
                     {
-                        $products_savings=$products_price*0.15;
+                        $products_savings=$products_msrp-number_format($products_price*0.85,2);
+                        $products_price=number_format($products_price*0.85,2);
                     }
-                    $products_price-=$products_savings;
+                    
 
 
                 }
