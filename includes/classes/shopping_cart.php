@@ -555,7 +555,7 @@ class shoppingCart
                     $products_price = $specials['specials_new_products_price'];
                 }
                 
-                $products_msrp=$products['products_mmsrp']<$products_price ? $products_price : $products['products_msrp'];
+                $products_msrp=$products['products_msrp']<$products_price ? $products_price : $products['products_msrp'];
 
                 //Community Members - Calculate Savings
                 $is_member=tep_db_fetch_array(tep_db_query('select case when cm_expiration>=curdate() and cm_expiration IS NOT NULL then 1 else 0 end as ismember from customers_info where customers_info_id='.(int)$customer_id.''));
