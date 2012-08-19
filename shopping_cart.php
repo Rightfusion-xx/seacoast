@@ -326,7 +326,6 @@ $cheapestShippingRate = $shipping_module->getCheapestRate();
 <div class="container">
     <div class="row">
         <div class="span12">
-            <?php $_REQUEST['page_caption'] = 'Seacoast Vitamins-Direct Savings';?>
                 <table style="margin-top: 30px;" border="0" width="100%" cellspacing="0" cellpadding="2">
                     <tr>
                         <td colspan="5">
