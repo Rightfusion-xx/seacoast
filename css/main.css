@@ -539,6 +539,10 @@ form#login input[name="email_address"], form#login input[name="password"]{
     width: 100%;
 }
 
+#cart_quantity .boxText{
+    text-align: center;
+}
+
 @media(max-width:1200px){
     .user-controls .logo{
         margin-right: 30px;

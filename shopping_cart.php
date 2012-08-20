@@ -715,7 +715,7 @@ on m.manufacturers_id = p.manufacturers_id where p.products_id = '" . (int)$HTTP
         </td>
     </tr>
         <div class="span12">
-            <table width="100%">
+            <table width="100%" style="margin-left: -30px;">
                 <?php
 
                 if($cart->count_contents() > 0)
