@@ -531,6 +531,18 @@ body{
     top: 10px;
 }
 
+form#login input[name="email_address"], form#login input[name="password"]{
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 28px;
+    line-height: 28px;
+    width: 100%;
+}
+
+#cart_quantity .boxText{
+    text-align: center;
+}
+
 @media(max-width:1200px){
     .user-controls .logo{
         margin-right: 30px;

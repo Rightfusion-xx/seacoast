@@ -9,10 +9,6 @@ if($_SESSION['customer_id'])
             `customers_basket_published` = \'no\'
         WHERE customers_id="'.tep_db_input($_SESSION['customer_id']).'"
     ');
-
-    if(tep_session_is_registered('free_us_48')){
-        tep_session_unregister('free_us_48');
-    }
 }
 // if the customer is not logged on, redirect them to the shopping cart page
     if (!tep_session_is_registered('customer_id')) {

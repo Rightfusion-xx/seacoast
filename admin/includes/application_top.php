@@ -1,5 +1,4 @@
 <?php
-
 ob_start();
 
 
@@ -110,7 +109,7 @@ require(DIR_WS_FUNCTIONS . 'sessions.php');
 // set the session name and save path
 tep_session_name('osCAdminID');
 tep_session_save_path(SESSION_WRITE_DIRECTORY);
-
+tep_session_start();
 // authenticate user
 
 
@@ -126,10 +125,28 @@ if(!tep_session_is_registered('tries'))
     tep_session_register($tries);
 }
 
+
+
+if(!empty($_POST['auth_alternate']) && $_POST['auth_alternate'] == 'on')
+{
+    tep_session_register('alternate_auth_user');
+    $_SESSION['alternate_auth_user'] = array(
+        'email' => $_POST['auth_login'],
+        'pass' => $_POST['auth_password']
+    );
+}
+
+if(!empty($_SESSION['alternate_auth_user']))
+{
+    $_SERVER['PHP_AUTH_USER'] = $_SESSION['alternate_auth_user']['email'];
+    $_SERVER['PHP_AUTH_PW'] = $_SESSION['alternate_auth_user']['pass'];
+}
+
+//var_dump($_SESSION);
+//exit();
 if( isset($_SERVER['PHP_AUTH_USER']) && !$authenticated)
 {
     // Authenticate user
-
     $get_user=tep_db_fetch_array(tep_db_query('select * from customers c join user_rights ur on ur.customers_id=c.customers_id where customers_email_address="'.$_SERVER['PHP_AUTH_USER'].'" and user_rights like "%admin%"'));
 
     if(tep_validate_password($_SERVER['PHP_AUTH_PW'], $get_user['customers_password']))
@@ -145,8 +162,34 @@ if (!$authenticated && !$system_login) {
         $tries=1;
         tep_redirect('http://www.seacoastvitamins.com/');
     }
-    header('WWW-Authenticate: Basic realm="Seacoast"');
-    header('HTTP/1.0 401 Unauthorized');
+    if(empty($_SESSION['alternate_auth_user']))
+    {
+        header('WWW-Authenticate: Basic realm="Seacoast"');
+        header('HTTP/1.0 401 Unauthorized');
+    }
+    ?>
+    <form method="POST" style="margin: 200px auto;width: 450px;">
+        <fieldset>
+            <table align="center">
+                <input type="hidden" name="auth_alternate" value="on" />
+                <tr>
+                    <td colspan="2" align="center">Authentication</td>
+                </tr>
+                <tr>
+                    <td align="left">Login: </td>
+                    <td><input style="width: 300px;" type="text" name="auth_login" /></td>
+                </tr>
+                <tr>
+                    <td align="left">Password: </td>
+                    <td><input style="width: 300px;" type="password" name="auth_password" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="right"><input type="submit" value="Login"></td>
+                </tr>
+            </table>
+        </fieldset>
+    </form>
+    <?php
     $tries+=1;
     exit();
 }

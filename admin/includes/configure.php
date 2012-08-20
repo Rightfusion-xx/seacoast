@@ -12,12 +12,12 @@
 // * DIR_FS_* = Filesystem directories (local/physical)
 // * DIR_WS_* = Webserver directories (virtual/URL)
 
-  define('HTTP_DEV_SERVER', 'http://www.beta.seacoast.com/admin');
+  define('HTTP_DEV_SERVER', 'sea-coast.loc');
 
-  define('HTTP_SERVER', 'http://www.beta.seacoast.com/admin'); // eg, http://localhost - should not be empty for productive servers
+  define('HTTP_SERVER', ''); // eg, http://localhost - should not be empty for productive servers
 //  define('HTTP_CATALOG_SERVER', 'http://www.dev.nealbozeman.com');
-  define('HTTP_CATALOG_SERVER', 'http://http://www.beta.seacoast.com/');
-  define('HTTPS_CATALOG_SERVER', 'http://http://www.beta.seacoast.com/');
+  define('HTTP_CATALOG_SERVER', 'http://admin-sea-coast.loc');
+  define('HTTPS_CATALOG_SERVER', 'http://admin-sea-coast.loc');
 
   define('PASSSWORD_FUNCTION_FILE', HTTP_SERVER.'/password_funcs.php' );
 
@@ -46,10 +46,10 @@
   define('DIR_FS_BACKUP', DIR_FS_ADMIN . 'backups/');
 
 // define our database connection
-  define('DB_SERVER', 'localhost'); // eg, localhost - should not be empty for productive servers
-  define('DB_SERVER_USERNAME', 'root');
-  define('DB_SERVER_PASSWORD', 'seamarquette11');
-  define('DB_DATABASE', 'seacoast');
+  define('DB_SERVER', 'db.server.int'); // eg, localhost - should not be empty for productive servers
+  define('DB_SERVER_USERNAME', 'php');
+  define('DB_SERVER_PASSWORD', 'php');
+  define('DB_DATABASE', 'demo_seacoast_os');
   define('USE_PCONNECT', 'true'); // use persisstent connections?
   define('STORE_SESSIONS', 'mysql'); // leave empty '' for default handler or set to 'mysql'
 

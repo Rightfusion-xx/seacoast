@@ -198,7 +198,7 @@ $breadcrumb->add(NAVBAR_TITLE, tep_href_link(FILENAME_LOGIN, '', 'SSL'));
             color: transparent;
             display: block;
             height: 18px;
-            margin: 0 0 0 30px;
+            margin: 0 0 15px 0;
             width: 134px;
         }
     </style>
@@ -229,7 +229,7 @@ $breadcrumb->add(NAVBAR_TITLE, tep_href_link(FILENAME_LOGIN, '', 'SSL'));
                                     <td>
                                         <table border="0" width="100%" cellspacing="0" cellpadding="0">
                                             <tr>
-                                                <td class="pageHeading"><?php echo HEADING_TITLE; ?></td>
+                                                <td class="pageHeading" style="padding: 0 0 15px 0;"><?php echo HEADING_TITLE; ?></td>
                                             </tr>
                                         </table>
                                     </td>
