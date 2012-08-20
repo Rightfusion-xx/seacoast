@@ -35,9 +35,9 @@
             {
                 $cfg_groups = '';
 
-                $cfg_groups .= '<a href="' . tep_href_link('newsletters.php') . '" class="menuBoxContentLink">' . BOX_NEWSLETTERS . '</a><br>';
                 $cfg_groups .= '<a href="' . tep_href_link('newsletter_items.php') . '" class="menuBoxContentLink">' . BOX_NEWSLETTER_ITEMS . '</a><br>';
                 $cfg_groups .= '<a href="' . tep_href_link('newsletter_subscribers.php') . '" class="menuBoxContentLink">' . BOX_NEWSLETTER_SUBSCRIBERS . '</a><br>';
+                $cfg_groups .= '<a href="' . tep_href_link('newsletters.php') . '" class="menuBoxContentLink">' . BOX_NEWSLETTERS . '</a><br>';
                 $contents[] = array('text'  => $cfg_groups);
             }
             $box = new box;
