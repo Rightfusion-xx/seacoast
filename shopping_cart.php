@@ -666,8 +666,8 @@ else
     </div>
 </div>
 
-</div>
-</div>
+
+
 <script type="text/javascript">
     function updateProd(obj, actionValue){
         var f = document.forms(obj);
@@ -704,66 +704,71 @@ on m.manufacturers_id = p.manufacturers_id where p.products_id = '" . (int)$HTTP
     include (DIR_WS_MODULES . 'products_categories.php');
     related_product_categories($_REQUEST['products_id']);
     ?>
-<P>
-<h3>Products from the Manufacturer <?php echo $product_info['manufacturers_name'];?></h3><a
-    href="index.php?manfactuers_id=<?php echo $product_info['manufacturers_id'];?>"><?php echo $product_info['manufacturers_name'];?></a>
-				<p>
-					<?php
+<p>
+    <h3>Products from the Manufacturer <?php echo $product_info['manufacturers_name'];?></h3>
+    <a href="index.php?manfactuers_id=<?php echo $product_info['manufacturers_id'];?>"><?php echo $product_info['manufacturers_name'];?></a>
+</p>
+<?php
     include (DIR_WS_MODULES . 'product_healthnotes.php');
-}
-    ?>
-    </td>
+}?>
 
-    </tr> <?php
-
-    if($cart->count_contents() > 0)
-    {
-
-        ?>
-        <?php
-        if($any_out_of_stock == 1)
-        {
-            if(STOCK_ALLOW_CHECKOUT == 'true')
-            {
-                ?>
-                <tr>
-                    <td class="stockWarning" align="center">
-                        <br>
-                        <?php echo OUT_OF_STOCK_CAN_CHECKOUT;?></td>
-                </tr>
+        </td>
+    </tr>
+        <div class="span12">
+            <table width="100%">
                 <?php
-            }
-            else
-            {
-                ?>
-                <tr>
-                    <td class="stockWarning" align="center">
-                        <br>
-                        <?php echo OUT_OF_STOCK_CANT_CHECKOUT;?></td>
-                </tr>
-                <?php
-            }
-        }
-        ?>
-        <tr>
-            <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10');?></td>
-        </tr>
-        <tr>
-            <td>&nbsp;</td>
-        </tr>
-        <?php
-    }
-    else
-    {
-        ?>
-        <tr>
-            <td align="center" class="main"><?php new infoBox(array(array('text' => TEXT_CART_EMPTY)));?></td>
-        </tr>
 
-        <?php
-    }
-    ?> <?php } ?>
-    </table></form>
+                if($cart->count_contents() > 0)
+                {
+
+                    ?>
+                    <?php
+                    if($any_out_of_stock == 1)
+                    {
+                        if(STOCK_ALLOW_CHECKOUT == 'true')
+                        {
+                            ?>
+                            <tr>
+                                <td class="stockWarning" align="center">
+                                    <br>
+                                    <?php echo OUT_OF_STOCK_CAN_CHECKOUT;?></td>
+                            </tr>
+                            <?php
+                        }
+                        else
+                        {
+                            ?>
+                            <tr>
+                                <td class="stockWarning" align="center">
+                                    <br>
+                                    <?php echo OUT_OF_STOCK_CANT_CHECKOUT;?></td>
+                            </tr>
+                            <?php
+                        }
+                    }
+                    ?>
+                    <tr>
+                        <td><?php echo tep_draw_separator('pixel_trans.gif', '100%', '10');?></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <tr>
+                        <td align="center" class="main"><?php new infoBox(array(array('text' => TEXT_CART_EMPTY)));?></td>
+                    </tr>
+
+                    <?php
+                }
+                ?> <?php } ?>
+            </table>
+        </div>
+    </div>
+</form>
 
 <?php
 require (DIR_WS_INCLUDES . 'footer.php');
