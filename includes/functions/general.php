@@ -2755,13 +2755,11 @@ if($manufacturers_id==69)
     {
     	$cm_price=$original_price*.75; //25% Off
     }
-    elseif(!strpos($products_name,'*'))
+    else
     {
     	$cm_price=$original_price*.85; //15% Off
     }
-    else {
-    	$cm_price=$original_price;
-    }
+    
 
     return $cm_price;
 }
@@ -2821,11 +2819,15 @@ function populate_backlinks($delimiter=',')
       $pl=json_decode(@file_get_contents(COUCH_DB_ADDRESS.'seacoast-page-links/_design/page_links/_view/incoming_links?key="'.urlencode($_SERVER['REQUEST_URI']).'"',false,$context),true);
     }
 
-    foreach($pl['rows'] as $link)
+    if(count($pl['rows'] && is_array($pl['rows'])))
     {
-      $page_links.=$link['value'].$delimiter;
-    }
+        
+        foreach($pl['rows'] as $link)
+        {
+          $page_links.=$link['value'].$delimiter;
+        }
 
+    }
   }
 
 }

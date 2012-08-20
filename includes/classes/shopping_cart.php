@@ -3,7 +3,7 @@
 
 class shoppingCart
 {
-    var $contents, $total, $weight, $cartID, $content_type, $savings, $potential_savings, $been_used;
+    var $contents, $total, $weight, $cartID, $content_type, $savings, $potential_savings, $been_used, $msrp;
 
 
     function shoppingCart()
@@ -369,34 +369,27 @@ class shoppingCart
     function calculate()
     {
         global $customer_id;
-        $this->total_virtual     = 0; //ICW GIFT VOUCHER SYSTEM
-        $this->total             = 0;
-        $this->weight            = 0;
-        $this->savings           = 0;
-        $this->potential_savings = 0;
-        if(!is_array($this->contents)) return 0;
+        $this->total_virtual = 0; //ICW GIFT VOUCHER SYSTEM
+        $this->total = 0;
+        $this->weight = 0;
+        $this->savings=0;
+        $this->potential_savings=0;
+        $this->msrp = 0;
+        if (!is_array($this->contents)) return 0;
 
         reset($this->contents);
-        foreach($this->contents as $products_id => $qty)
-        {
-            $qty = $qty['qty'];
+        while (list($products_id, ) = each($this->contents)) {
+            $qty = $this->contents[$products_id]['qty'];
 
-            $product_info = tep_db_fetch_array(tep_db_query('
-                SELECT
-                    products_die,
-                    products_dieqty
-                FROM products p
-                WHERE p.products_id=' . (int)$products_id
-            ));
-            if($product_info['products_die'] && $qty > $product_info['products_dieqty'])
-            {
-                $qty = $product_info['products_dieqty'];
-                $this->update_quantity($products_id, $qty);
+            $product_info=tep_db_fetch_array(tep_db_query('select products_die, products_dieqty from products p where p.products_id='.(int)$products_id));
+            if($product_info['products_die'] && $qty>$product_info['products_dieqty']){
+                $qty=$product_info['products_dieqty'];
+                $this->update_quantity($products_id,$qty);
             }
 
             // products price
             $product_query = tep_db_query("
-                SELECT
+                select
                     products_name,
                     manufacturers_id,
                     p.products_id,
@@ -404,146 +397,103 @@ class shoppingCart
                     products_tax_class_id,
                     products_weight,
                     products_msrp
-                FROM " . TABLE_PRODUCTS . " p
+                from " . TABLE_PRODUCTS . " p
                 join products_description pd on pd.products_id=p.products_id
-                WHERE p.products_id = '" . (int)$products_id . "'");
-            if($product = tep_db_fetch_array($product_query))
-            {
+                where p.products_id = '" . (int)$products_id . "'");
+            if ($product = tep_db_fetch_array($product_query)) {
                 // ICW ORDER TOTAL CREDIT CLASS Start Amendment
-                $no_count  = 1;
-                $gv_result = tep_db_fetch_array(
-                    tep_db_query("
-                        SELECT
-                            products_model
-                        FROM " . TABLE_PRODUCTS . "
-                        WHERE
-                            products_id = '" . (int)$products_id . "'
-                    ")
-                );
-                if(preg_match('/^GIFT/', $gv_result['products_model']))
+                $no_count = 1;
+                if($product['products_msrp'] < $product['products_price'])
                 {
+                    $product['products_msrp'] = $product['products_price'];
+                }
+                if($products_id != CM_FTPID && $products_id != CM_PID)
+                {
+                    $this->msrp += $product['products_msrp']*$qty;
+                }
+
+                /**
+                 * $this->remove(CM_FTPID);
+                $this->remove(CM_PID);
+                 */
+                $gv_query = tep_db_query("select products_model from " . TABLE_PRODUCTS . " where products_id = '" . (int)$products_id . "'");
+                $gv_result = tep_db_fetch_array($gv_query);
+                if (preg_match('/^GIFT/', $gv_result['products_model'])) {
                     $no_count = 0;
                 }
                 // ICW ORDER TOTAL  CREDIT CLASS End Amendment
-                $prid            = $product['products_id'];
-                $products_tax    = tep_get_tax_rate($product['products_tax_class_id']);
-                $products_price  = $product['products_price'];
+                $prid = $product['products_id'];
+                $products_tax = tep_get_tax_rate($product['products_tax_class_id']);
+                $products_price = $product['products_price'];
                 $products_weight = $product['products_weight'];
-                $products_msrp   = (($product['products_price'] > $product['products_msrp']) ? $product['products_price'] : $product['products_msrp']);
+                $products_msrp = $product['products_msrp'];
 
-                $specials_query = tep_db_query("
-                    SELECT
-                        specials_new_products_price
-                    FROM " . TABLE_SPECIALS . "
-                    WHERE
-                        products_id = '" . (int)$prid . "' and
-                        status = '1'
-                ");
-                if(tep_db_num_rows($specials_query))
-                {
-                    $specials       = tep_db_fetch_array($specials_query);
+                $specials_query = tep_db_query("select specials_new_products_price from " . TABLE_SPECIALS . " where products_id = '" . (int)$prid . "' and status = '1'");
+                if (tep_db_num_rows ($specials_query)) {
+                    $specials = tep_db_fetch_array($specials_query);
                     $products_price = $specials['specials_new_products_price'];
                 }
 
                 //Community Members - Calculate Savings
-                $is_member = tep_db_fetch_array(
-                    tep_db_query('
-                        select
-                            case when
-                                cm_expiration >= curdate() and cm_expiration IS NOT NULL
-                            then
-                                1 else 0
-                            end as ismember
-                        from customers_info
-                        where customers_info_id=' . (int)$customer_id . '
-                    ')
-                );
-                $is_member = (int)$is_member['ismember'];
+                $is_member=tep_db_fetch_array(tep_db_query('select case when cm_expiration>=curdate() and cm_expiration IS NOT NULL then 1 else 0 end as ismember from customers_info where customers_info_id='.(int)$customer_id.''));
+                $is_member=(int)$is_member['ismember'];
 
                 if($is_member)
                 {
+
                     if($this->in_cart(CM_FTPID) || $this->in_cart(CM_PID))
                     {
                         $this->remove(CM_FTPID);
                         $this->remove(CM_PID);
                     }
+
                 }
 
-                $products_price = ($products_price + $this->attributes_price($products_id));
-                if($this->in_cart(CM_FTPID) || $this->in_cart(CM_PID) || (int)$is_member == 1)
-                {
-                    $products_savings = 0;
-
-                    if($product['manufacturers_id'] == 69)
-                    {
-                        $products_savings = (($products_price > $product['products_msrp']) ? $products_price : $product['products_msrp']) * 0.25;
-                    }
-                    elseif(!strpos($product['products_name'], '*'))
-                    {
-                        $products_savings = (($products_price > $product['products_msrp']) ? $products_price : $product['products_msrp']) * 0.15;
-                    }
-                    $products_price -= $products_savings;
-                }
-
-                //$products_savings = //(($product['products_msrp'] > $product['products_price']) ? $products['products_msrp'] : $product['products_price']) - $products_price;
-
-                //$this->savings += $products_savings * $qty;
-                /*echo "<pre>";
-                var_dump($products_price);
-                echo "</pre>";
-                $products_savings = 0;
-                if($product['manufacturers_id'] == 69)
-                {
-                    $products_savings = number_format($products_price * 0.25, 2);
-                }
-                elseif(strpos($product['products_name'], '*') == 0)
-                {
-                    $products_savings = number_format($products_price * 0.15, 2);
-                }
-
-                if($this->in_cart(CM_FTPID) || $this->in_cart(CM_PID) || $is_member)
-                {
-                    $this->savings += $products_savings * $qty;
-                    $products_price -= $products_savings;
+                $products_savings=0;
+                if($product['manufacturers_id']==69){
+                    $products_savings=$products_msrp-number_format($products_price*0.75,2);
+                    $cm_price=number_format($products_price*0.75,2);
                 }
                 else
                 {
-                    $this->potential_savings += $products_savings * $qty;
-                }*/
-
-                $this->total_virtual += tep_add_tax($products_price, $products_tax) * $qty * $no_count; // ICW CREDIT CLASS;
-                $this->weight_virtual += ($qty * $products_weight) * $no_count; // ICW CREDIT CLASS;
-                $this->total += tep_add_tax($products_price, $products_tax) * $qty;
-                if(!in_array($product['products_id'], array(CM_FTPID, CM_PID)))
-                {
-                    $this->savings += (
-                        (
-                        ($product['products_msrp'] > $product['products_price']) ? $product['products_msrp']:$product['products_price']
-                        ) - $products_price
-                    ) * $qty;
+                    $products_savings=$products_msrp-number_format($products_price*0.85,2);
+                    $cm_price=number_format($products_price*0.85,2);
                 }
+
+
+                if($this->in_cart(CM_FTPID) || $this->in_cart(CM_PID) || $is_member){
+                    $this->savings += $products_savings*$qty;
+                    $products_price=$cm_price;
+                }else{
+                    $this->potential_savings += $products_savings*$qty;
+                }
+
+
+
+                $this->total_virtual += tep_add_tax($products_price, $products_tax) * $qty * $no_count;// ICW CREDIT CLASS;
+                $this->weight_virtual += ($qty * $products_weight) * $no_count;// ICW CREDIT CLASS;
+                $this->total += tep_add_tax($products_price, $products_tax) * $qty;
                 $this->weight += ($qty * $products_weight);
+
+
             }
 
             // attributes price
-            if(isset($this->contents[$products_id]['attributes']))
+            if (isset($this->contents[$products_id]['attributes']))
             {
                 reset($this->contents[$products_id]['attributes']);
-                while(list($option, $value) = each($this->contents[$products_id]['attributes']))
-                {
+                while (list($option, $value) = each($this->contents[$products_id]['attributes'])) {
                     $attribute_price_query = tep_db_query("select options_values_price, price_prefix from " . TABLE_PRODUCTS_ATTRIBUTES . " where products_id = '" . (int)$prid . "' and options_id = '" . (int)$option . "' and options_values_id = '" . (int)$value . "'");
-                    $attribute_price       = tep_db_fetch_array($attribute_price_query);
-                    if($attribute_price['price_prefix'] == '+')
-                    {
+                    $attribute_price = tep_db_fetch_array($attribute_price_query);
+                    if ($attribute_price['price_prefix'] == '+') {
                         $this->total += $qty * tep_add_tax($attribute_price['options_values_price'], $products_tax);
-                    }
-                    else
-                    {
+                    } else {
                         $this->total -= $qty * tep_add_tax($attribute_price['options_values_price'], $products_tax);
                     }
                 }
             }
         }
+        $this->savings = $this->msrp - $this->total;
     }
 
 
@@ -572,23 +522,16 @@ class shoppingCart
         return $attributes_price;
     }
 
-
-    function get_products($contents = null)
-    {
+    function get_products() {
         global $languages_id, $customer_id;
-        if($contents == null)
-        {
-            $contents = &$this->contents;
-        }
-        if(!is_array($contents))
-            return false;
+
+        if (!is_array($this->contents)) return false;
 
         $products_array = array();
-        reset($contents);
-        while(list($products_id,) = each($contents))
-        {
+        reset($this->contents);
+        while (list($products_id, ) = each($this->contents)) {
             $products_query = tep_db_query("
-                SELECT
+                select
                     p.manufacturers_id,
                     p.products_id,
                     pd.products_name,
@@ -597,70 +540,62 @@ class shoppingCart
                     p.products_price,
                     p.products_weight,
                     p.products_carrot,
-                    p.products_msrp,
-                    p.products_tax_class_id
-                FROM " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd
-                WHERE p.products_id = '" . (int)$products_id . "' and pd.products_id = p.products_id and pd.language_id = '" . (int)$languages_id . "'
-            ");
-            if($products = tep_db_fetch_array($products_query))
-            {
-                $prid           = $products['products_id'];
+                    p.products_tax_class_id,
+                    p.products_msrp
+                from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd
+                where
+                    p.products_id = '" . (int)$products_id . "' and pd.products_id = p.products_id and pd.language_id = '" . (int)$languages_id . "'");
+            if ($products = tep_db_fetch_array($products_query)) {
+                $prid = $products['products_id'];
                 $products_price = $products['products_price'];
 
-                $specials_query = tep_db_query("
-                    SELECT
-                        specials_new_products_price
-                    FROM " . TABLE_SPECIALS . "
-                    WHERE
-                        products_id = '" . (int)$prid . "' and status = '1'
-                ");
-                if(tep_db_num_rows($specials_query))
-                {
-                    $specials       = tep_db_fetch_array($specials_query);
+                $specials_query = tep_db_query("select specials_new_products_price from " . TABLE_SPECIALS . " where products_id = '" . (int)$prid . "' and status = '1'");
+                if (tep_db_num_rows($specials_query)) {
+                    $specials = tep_db_fetch_array($specials_query);
                     $products_price = $specials['specials_new_products_price'];
                 }
+                
+                $products_msrp=$products['products_msrp']<$products_price ? $products_price : $products['products_msrp'];
 
                 //Community Members - Calculate Savings
-                $is_member = tep_db_fetch_array(tep_db_query('
-                    SELECT case when cm_expiration>=curdate() and cm_expiration IS NOT NULL then 1 else 0 end as ismember from customers_info where customers_info_id=' . (int)$customer_id . '
-                '));
-                if($this->in_cart(CM_FTPID) || $this->in_cart(CM_PID) || (int)$is_member['ismember'] == 1)
-                {
-                    $products_savings = 0;
+                $is_member=tep_db_fetch_array(tep_db_query('select case when cm_expiration>=curdate() and cm_expiration IS NOT NULL then 1 else 0 end as ismember from customers_info where customers_info_id='.(int)$customer_id.''));
+                if($this->in_cart(CM_FTPID) || $this->in_cart(CM_PID) || (int)$is_member['ismember']==1){
+                    $products_savings=0;
 
-                    if($products['manufacturers_id'] == 69)
-                    {
-                        $products_savings = (($products_price > $products['products_msrp']) ? $products_price : $products['products_msrp']) * 0.25;
+                    if($products['manufacturers_id']==69){
+                        $products_savings=$products_msrp-number_format($products_price*0.75,2);
+                        $products_price=number_format($products_price*0.75,2);
                     }
-                    elseif(!strpos($products['products_name'], '*'))
+                    else
                     {
-                        $products_savings = (($products_price > $products['products_msrp']) ? $products_price : $products['products_msrp']) * 0.15;
+                        $products_savings=$products_msrp-number_format($products_price*0.85,2);
+                        $products_price=number_format($products_price*0.85,2);
                     }
-                    $products_price -= $products_savings;
+                    
+
+
                 }
-                $productFinalPrice = ($products_price + $this->attributes_price($products_id));
+
                 $products_array[] = array(
-                    'id'           => $products_id,
-                    'name'         => $products['products_name'],
-                    'model'        => $products['products_model'],
-                    'image'        => $products['products_image'],
-                    'price'        => $products_price,
-                    'products_price'=>$products['products_price'],
-                    'savings'      => (($products['products_msrp'] > $products_price) ? $products['products_msrp'] : $products_price) - $productFinalPrice,//$products_savings,
-                    'quantity'     => $this->contents[$products_id]['qty'],
-                    'weight'       => $products['products_weight'],
-                    'final_price'  => $productFinalPrice,
+                    'id' => $products_id,
+                    'name' => $products['products_name'],
+                    'model' => $products['products_model'],
+                    'image' => $products['products_image'],
+                    'price' => $products_price,
+                    'savings' => $products_savings,
+                    'quantity' => $this->contents[$products_id]['qty'],
+                    'weight' => $products['products_weight'],
+                    'final_price' => ($products_price + $this->attributes_price($products_id)),
                     'tax_class_id' => $products['products_tax_class_id'],
-                    'attributes'   => (isset($this->contents[$products_id]['attributes']) ? $this->contents[$products_id]['attributes'] : ''),
-                    'msrp'         => $products['products_msrp']
+                    'attributes' => (isset($this->contents[$products_id]['attributes']) ? $this->contents[$products_id]['attributes'] : ''),
+                    'msrp'      => $products['products_msrp']
                 );
             }
         }
 
         return $products_array;
     }
-
-
+/**   ** */
     function show_total()
     {
         $this->calculate();
